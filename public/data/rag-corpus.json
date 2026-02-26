@@ -13246,6 +13246,33 @@
     "deepLink": "/leaders?leader=Tom%20Patterson"
   },
   {
+    "id": "leader-99",
+    "source": "leaders",
+    "title": "Damien Stehlé",
+    "content": "Name: Damien Stehlé\nCountry: France\nRole: Professor; CryptoLab Research Director\nOrganizations: ENS de Lyon; CryptoLab\nType: Academic | Category: Algorithm Inventor\nContribution: Co-designed ML-KEM (CRYSTALS-Kyber) and ML-DSA (CRYSTALS-Dilithium), two of three NIST PQC standards published in 2024. Founded CryptoLab's Lyon research center. ERC grant recipient for lattice-based cryptography research (LattAC project).",
+    "category": "Algorithm Inventor",
+    "metadata": { "country": "France", "type": "Academic" },
+    "deepLink": "/leaders?leader=Damien%20Stehl%C3%A9"
+  },
+  {
+    "id": "leader-100",
+    "source": "leaders",
+    "title": "Pierre-Alain Fouque",
+    "content": "Name: Pierre-Alain Fouque\nCountry: France\nRole: Professor\nOrganizations: Université de Rennes; IRISA/Inria\nType: Academic | Category: Algorithm Inventor\nContribution: Co-designer of FALCON (FN-DSA), NIST's lattice-based signature standard. Leads the CAPSULE team at IRISA/Inria focused on embedded security and cryptography. Coordinates the PQ-TLS project developing post-quantum HTTPS protocols.",
+    "category": "Algorithm Inventor",
+    "metadata": { "country": "France", "type": "Academic" },
+    "deepLink": "/leaders?leader=Pierre-Alain%20Fouque"
+  },
+  {
+    "id": "leader-101",
+    "source": "leaders",
+    "title": "Adeline Roux-Langlois",
+    "content": "Name: Adeline Roux-Langlois\nCountry: France\nRole: CNRS Directrice de recherche\nOrganizations: GREYC; Université de Caen Normandie\nType: Academic | Category: Standards\nContribution: Specialist in lattice-based cryptography security proofs. Key contributions to post-quantum anonymous credentials (CRYPTO 2023) and practical post-quantum privacy signatures (ACM CCS 2024). PhD from ENS de Lyon under Damien Stehlé.",
+    "category": "Standards",
+    "metadata": { "country": "France", "type": "Academic" },
+    "deepLink": "/leaders?leader=Adeline%20Roux-Langlois"
+  },
+  {
     "id": "module-pqc-101",
     "source": "modules",
     "title": "PQC 101",
