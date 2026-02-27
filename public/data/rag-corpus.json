@@ -8977,7 +8977,7 @@
     "metadata": {
       "industry": "Aerospace / Aviation",
       "threatId": "AERO-001",
-      "sourceUrl": "https://www.rtca.org/"
+      "sourceUrl": "https://www.rtca.org/security/"
     },
     "deepLink": "/threats?id=AERO-001&industry=Aerospace%20%2F%20Aviation"
   },
@@ -9003,7 +9003,7 @@
     "metadata": {
       "industry": "Aerospace / Aviation",
       "threatId": "AERO-003",
-      "sourceUrl": "https://www.icao.int/"
+      "sourceUrl": "https://www.icao.int/events/a41/resolutions"
     },
     "deepLink": "/threats?id=AERO-003&industry=Aerospace%20%2F%20Aviation"
   },
@@ -9029,7 +9029,7 @@
     "metadata": {
       "industry": "Automotive / Connected Vehicles",
       "threatId": "AUTO-002",
-      "sourceUrl": "https://www.sae.org/standards/"
+      "sourceUrl": "https://www.sae.org/standards/content/j3061_202112/"
     },
     "deepLink": "/threats?id=AUTO-002&industry=Automotive%20%2F%20Connected%20Vehicles"
   },
@@ -9068,7 +9068,7 @@
     "metadata": {
       "industry": "Cloud Computing / Data Centers",
       "threatId": "CLOUD-001",
-      "sourceUrl": "https://cloudsecurityalliance.org/"
+      "sourceUrl": "https://cloudsecurityalliance.org/research/working-groups/quantum-safe-security"
     },
     "deepLink": "/threats?id=CLOUD-001&industry=Cloud%20Computing%20%2F%20Data%20Centers"
   },
@@ -9081,7 +9081,7 @@
     "metadata": {
       "industry": "Cloud Computing / Data Centers",
       "threatId": "CLOUD-002",
-      "sourceUrl": "https://cloudsecurityalliance.org/"
+      "sourceUrl": "https://cloudsecurityalliance.org/research/working-groups/quantum-safe-security"
     },
     "deepLink": "/threats?id=CLOUD-002&industry=Cloud%20Computing%20%2F%20Data%20Centers"
   },
@@ -9107,7 +9107,7 @@
     "metadata": {
       "industry": "Cloud Computing / Data Centers",
       "threatId": "CLOUD-004",
-      "sourceUrl": "https://csrc.nist.gov/publications/detail/sp/800-210/final"
+      "sourceUrl": "https://csrc.nist.gov/pubs/sp/800/210/final"
     },
     "deepLink": "/threats?id=CLOUD-004&industry=Cloud%20Computing%20%2F%20Data%20Centers"
   },
@@ -9115,12 +9115,12 @@
     "id": "threat-CROSS-001",
     "source": "threats",
     "title": "Cross-Industry — Quantum-safe readiness gap: Organizations score average 25/100 on IBM Quantum-Sa",
-    "content": "Industry: Cross-Industry\nThreat: Quantum-safe readiness gap: Organizations score average 25/100 on IBM Quantum-Safe Readiness Index. 70% lack complete cryptographic inventory, creating massive vulnerability window. Estimated 5-6 year gap between CRQC arrival and organizational readiness completion.\nCriticality: Critical\nCryptography at Risk: All asymmetric cryptography, PKI infrastructure, key management systems\nPQC Replacement: Comprehensive CBOM, automated discovery tools, ML-KEM/ML-DSA migration\nSource: IBM Quantum-Safe Readiness Index 2025",
+    "content": "Industry: Cross-Industry\nThreat: Quantum-safe readiness gap: Organizations score average 25/100 on IBM Quantum-Safe Readiness Index. 70% lack complete cryptographic inventory, creating massive vulnerability window. Estimated 5-6 year gap between CRQC arrival and organizational readiness completion.\nCriticality: Critical\nCryptography at Risk: All asymmetric cryptography, PKI infrastructure, key management systems\nPQC Replacement: Comprehensive CBOM, automated discovery tools, ML-KEM/ML-DSA migration\nSource: IBM Institute for Business Value — Secure the Post-Quantum Future 2025",
     "category": "Critical",
     "metadata": {
       "industry": "Cross-Industry",
       "threatId": "CROSS-001",
-      "sourceUrl": "https://www.ibm.com/quantum/quantum-safe"
+      "sourceUrl": "https://www.ibm.com/thought-leadership/institute-business-value/en-us/report/2025-quantum-safe-readiness"
     },
     "deepLink": "/threats?id=CROSS-001&industry=Cross-Industry"
   },
@@ -9141,12 +9141,12 @@
     "id": "threat-CROSS-003",
     "source": "threats",
     "title": "Cross-Industry — Vendor dependency crisis: 62% of organizations incorrectly assume vendors will m",
-    "content": "Industry: Cross-Industry\nThreat: Vendor dependency crisis: 62% of organizations incorrectly assume vendors will manage quantum-safe transition automatically. Lack of contractual PQC requirements and service-level agreements for crypto-agility.\nCriticality: High\nCryptography at Risk: Third-party API keys, vendor-managed HSMs, cloud KMS\nPQC Replacement: Vendor PQC roadmap requirements, contractual crypto-agility clauses\nSource: IBM Quantum-Safe Readiness Index 2025",
+    "content": "Industry: Cross-Industry\nThreat: Vendor dependency crisis: 62% of organizations incorrectly assume vendors will manage quantum-safe transition automatically. Lack of contractual PQC requirements and service-level agreements for crypto-agility.\nCriticality: High\nCryptography at Risk: Third-party API keys, vendor-managed HSMs, cloud KMS\nPQC Replacement: Vendor PQC roadmap requirements, contractual crypto-agility clauses\nSource: IBM Institute for Business Value — Secure the Post-Quantum Future 2025",
     "category": "High",
     "metadata": {
       "industry": "Cross-Industry",
       "threatId": "CROSS-003",
-      "sourceUrl": "https://www.ibm.com/quantum/quantum-safe"
+      "sourceUrl": "https://www.ibm.com/thought-leadership/institute-business-value/en-us/report/2025-quantum-safe-readiness"
     },
     "deepLink": "/threats?id=CROSS-003&industry=Cross-Industry"
   },
@@ -9237,7 +9237,7 @@
     "metadata": {
       "industry": "Cryptocurrency / Blockchain",
       "threatId": "CRYPTO-002",
-      "sourceUrl": "https://ethereum.org/"
+      "sourceUrl": "https://ethereum.org/en/roadmap/future-proofing/"
     },
     "deepLink": "/threats?id=CRYPTO-002&industry=Cryptocurrency%20%2F%20Blockchain"
   },
@@ -9263,7 +9263,7 @@
     "metadata": {
       "industry": "Cryptocurrency / Blockchain",
       "threatId": "CRYPTO-004",
-      "sourceUrl": "https://cryptoconsortium.org/"
+      "sourceUrl": "https://cryptoconsortium.org/standards-2/"
     },
     "deepLink": "/threats?id=CRYPTO-004&industry=Cryptocurrency%20%2F%20Blockchain"
   },
@@ -9523,7 +9523,7 @@
     "metadata": {
       "industry": "Insurance",
       "threatId": "INS-001",
-      "sourceUrl": "https://content.naic.org/"
+      "sourceUrl": "https://content.naic.org/sites/default/files/model-law-668.pdf"
     },
     "deepLink": "/threats?id=INS-001&industry=Insurance"
   },
@@ -9549,7 +9549,7 @@
     "metadata": {
       "industry": "Insurance",
       "threatId": "INS-003",
-      "sourceUrl": "https://www.genevaassociation.org/"
+      "sourceUrl": "https://www.genevaassociation.org/research-topics/cyber"
     },
     "deepLink": "/threats?id=INS-003&industry=Insurance"
   },
@@ -9596,7 +9596,7 @@
     "id": "threat-IOT-004",
     "source": "threats",
     "title": "Internet of Things (IoT) — Smart city infrastructure quantum vulnerability: Traffic management, public safe",
-    "content": "Industry: Internet of Things (IoT)\nThreat: Smart city infrastructure quantum vulnerability: Traffic management, public safety cameras, environmental sensors, and municipal IoT systems form interconnected networks with diverse device types and long deployment cycles. ISO/IEC 30182 defines smart community infrastructure framework. City-wide mesh networks and cloud gateways aggregate sensitive data from thousands of endpoints.\nCriticality: High\nCryptography at Risk: City-wide IoT mesh networking, cloud gateway TLS, sensor authentication, municipal PKI\nPQC Replacement: Quantum-safe smart city architecture, hybrid mesh protocols, PQC-enabled gateways\nSource: ISO/IEC 30182 Smart Community Infrastructure",
+    "content": "Industry: Internet of Things (IoT)\nThreat: Smart city infrastructure quantum vulnerability: Traffic management, public safety cameras, environmental sensors, and municipal IoT systems form interconnected networks with diverse device types and long deployment cycles. ISO/IEC 30182 defines smart community infrastructure framework. City-wide mesh networks and cloud gateways aggregate sensitive data from thousands of endpoints.\nCriticality: High\nCryptography at Risk: City-wide IoT mesh networking, cloud gateway TLS, sensor authentication, municipal PKI\nPQC Replacement: Quantum-safe smart city architecture, hybrid mesh protocols, PQC-enabled gateways\nSource: ISO/IEC 30182 Smart City Concept Model",
     "category": "High",
     "metadata": {
       "industry": "Internet of Things (IoT)",
@@ -9627,7 +9627,7 @@
     "metadata": {
       "industry": "IT Industry / Software",
       "threatId": "IT-002",
-      "sourceUrl": "https://cabforum.org/"
+      "sourceUrl": "https://cabforum.org/working-groups/server/baseline-requirements/documents/"
     },
     "deepLink": "/threats?id=IT-002&industry=IT%20Industry%20%2F%20Software"
   },
@@ -9653,7 +9653,7 @@
     "metadata": {
       "industry": "IT Industry / Software",
       "threatId": "IT-004",
-      "sourceUrl": "https://slsa.dev/"
+      "sourceUrl": "https://slsa.dev/spec/v1.0/"
     },
     "deepLink": "/threats?id=IT-004&industry=IT%20Industry%20%2F%20Software"
   },
@@ -9666,7 +9666,7 @@
     "metadata": {
       "industry": "IT Industry / Software",
       "threatId": "IT-005",
-      "sourceUrl": "https://fidoalliance.org/"
+      "sourceUrl": "https://fidoalliance.org/white-paper-addressing-fido-alliances-technologies-in-post-quantum-world/"
     },
     "deepLink": "/threats?id=IT-005&industry=IT%20Industry%20%2F%20Software"
   },
@@ -9752,12 +9752,12 @@
     "id": "threat-MEDIA-003",
     "source": "threats",
     "title": "Media / Entertainment / DRM — Broadcast conditional access quantum exposure: DVB Conditional Access Systems us",
-    "content": "Industry: Media / Entertainment / DRM\nThreat: Broadcast conditional access quantum exposure: DVB Conditional Access Systems use ECM (Entitlement Control Messages) with RSA/ECDSA encryption protecting pay-TV content distribution. Set-top boxes and smart TVs with 7-10 year lifecycles have limited crypto-agility for PQC migration.\nCriticality: High\nCryptography at Risk: DVB-CSA encryption, ECM RSA/ECDSA, broadcast conditional access keys\nPQC Replacement: AES-128/256 CAS upgrade, ML-KEM for ECM distribution\nSource: ETSI DVB Conditional Access Standards",
+    "content": "Industry: Media / Entertainment / DRM\nThreat: Broadcast conditional access quantum exposure: DVB Conditional Access Systems use ECM (Entitlement Control Messages) with RSA/ECDSA encryption protecting pay-TV content distribution. Set-top boxes and smart TVs with 7-10 year lifecycles have limited crypto-agility for PQC migration.\nCriticality: High\nCryptography at Risk: DVB-CSA encryption, ECM RSA/ECDSA, broadcast conditional access keys\nPQC Replacement: AES-128/256 CAS upgrade, ML-KEM for ECM distribution\nSource: DVB Project — Conditional Access System Standards",
     "category": "High",
     "metadata": {
       "industry": "Media / Entertainment / DRM",
       "threatId": "MEDIA-003",
-      "sourceUrl": "https://www.etsi.org/technologies/quantum-safe-cryptography"
+      "sourceUrl": "https://dvb.org/solutions/security/"
     },
     "deepLink": "/threats?id=MEDIA-003&industry=Media%20%2F%20Entertainment%20%2F%20DRM"
   },
@@ -9783,7 +9783,7 @@
     "metadata": {
       "industry": "Payment Card Industry",
       "threatId": "PCI-002",
-      "sourceUrl": "https://www.pcisecuritystandards.org/document_library/?document=pci_dss"
+      "sourceUrl": "https://www.pcisecuritystandards.org/document_library/"
     },
     "deepLink": "/threats?id=PCI-002&industry=Payment%20Card%20Industry"
   },
@@ -9796,7 +9796,7 @@
     "metadata": {
       "industry": "Payment Card Industry",
       "threatId": "PCI-003",
-      "sourceUrl": "https://www.pcisecuritystandards.org/document_library/?category=pin_702c_security"
+      "sourceUrl": "https://www.pcisecuritystandards.org/document_library/"
     },
     "deepLink": "/threats?id=PCI-003&industry=Payment%20Card%20Industry"
   },
@@ -9809,7 +9809,7 @@
     "metadata": {
       "industry": "Rail / Transit",
       "threatId": "RAIL-001",
-      "sourceUrl": "https://www.era.europa.eu/"
+      "sourceUrl": "https://www.era.europa.eu/domains/infrastructure/european-rail-traffic-management-system-ertms_en"
     },
     "deepLink": "/threats?id=RAIL-001&industry=Rail%20%2F%20Transit"
   },
@@ -9835,7 +9835,7 @@
     "metadata": {
       "industry": "Retail / E-Commerce",
       "threatId": "RETAIL-001",
-      "sourceUrl": "https://www.pcisecuritystandards.org/"
+      "sourceUrl": "https://www.pcisecuritystandards.org/document_library/"
     },
     "deepLink": "/threats?id=RETAIL-001&industry=Retail%20%2F%20E-Commerce"
   },
@@ -9861,7 +9861,7 @@
     "metadata": {
       "industry": "Retail / E-Commerce",
       "threatId": "RETAIL-003",
-      "sourceUrl": "https://www.gs1.org/"
+      "sourceUrl": "https://www.gs1.org/standards"
     },
     "deepLink": "/threats?id=RETAIL-003&industry=Retail%20%2F%20E-Commerce"
   },
@@ -9887,7 +9887,7 @@
     "metadata": {
       "industry": "Supply Chain / Logistics",
       "threatId": "SUPPLY-002",
-      "sourceUrl": "https://dcsa.org/"
+      "sourceUrl": "https://dcsa.org/standards/bill-of-lading"
     },
     "deepLink": "/threats?id=SUPPLY-002&industry=Supply%20Chain%20%2F%20Logistics"
   },
@@ -9900,7 +9900,7 @@
     "metadata": {
       "industry": "Supply Chain / Logistics",
       "threatId": "SUPPLY-003",
-      "sourceUrl": "https://www.wcoomd.org/"
+      "sourceUrl": "https://www.wcoomd.org/en/topics/facilitation/instrument-and-tools/frameworks-of-standards/safe_package.aspx"
     },
     "deepLink": "/threats?id=SUPPLY-003&industry=Supply%20Chain%20%2F%20Logistics"
   },
@@ -9913,7 +9913,7 @@
     "metadata": {
       "industry": "Telecommunications",
       "threatId": "TELCO-001",
-      "sourceUrl": "https://www.gsma.com/security/"
+      "sourceUrl": "https://www.gsma.com/solutions-and-impact/technologies/security/"
     },
     "deepLink": "/threats?id=TELCO-001&industry=Telecommunications"
   },
@@ -9926,7 +9926,7 @@
     "metadata": {
       "industry": "Telecommunications",
       "threatId": "TELCO-002",
-      "sourceUrl": "https://www.gsma.com/security/post-quantum-telco-network-taskforce/"
+      "sourceUrl": "https://www.gsma.com/solutions-and-impact/technologies/security/post-quantum-telco-network-task-force/"
     },
     "deepLink": "/threats?id=TELCO-002&industry=Telecommunications"
   },
@@ -9991,7 +9991,7 @@
     "metadata": {
       "industry": "Water / Wastewater",
       "threatId": "WATER-002",
-      "sourceUrl": "https://www.awwa.org/"
+      "sourceUrl": "https://www.awwa.org/resource/cybersecurity-guidance/"
     },
     "deepLink": "/threats?id=WATER-002&industry=Water%20%2F%20Wastewater"
   },
@@ -15229,7 +15229,7 @@
     "id": "mc-compliancestrategy-introduction-1",
     "source": "module-content",
     "title": "Compliance & Regulatory Strategy — Introduction",
-    "content": "Module: Compliance & Regulatory Strategy\nComponent: Introduction\n\nEuropean bodies have published PQC migration guidance. ANSSI recommends hybrid cryptography combining classical and PQC algorithms. BSI endorses ML-KEM and ML-DSA with specific parameter recommendations. ETSI provides interoperability guidance for hybrid key exchanges.\nOrganizations typically approach PQC migration from one of two angles. The optimal strategy often combines both, using compliance deadlines as hard constraints and risk scoring to prioritize within those constraints.\n&bull; Driven by regulatory deadlines and audit requirements\n&bull; Risk: may miss high-risk systems outside compliance scope\n&bull; Best for: regulated industries (finance, government, healthcare)\n&bull; Prioritizes highest-risk assets regardless of regulatory scope\n&bull; Risk: may not satisfy auditors without compliance mapping\n&bull; Best for: technology companies, defense, intelligence\nKey deadlines are converging across jurisdictions, creating a narrow window for organizations to complete their PQC migration.\nThis workshop guides you through building a comprehensive compliance strategy in three steps:\nMap jurisdictions, build audit checklists, and construct compliance timelines.",
+    "content": "Module: Compliance & Regulatory Strategy\nComponent: Introduction\n\nEuropean bodies have published PQC migration guidance. ANSSI recommends hybrid cryptography combining classical and PQC algorithms. BSI endorses ML-KEM (FIPS&nbsp;203) and ML-DSA (FIPS&nbsp;204) with specific parameter recommendations. ETSI provides interoperability guidance for hybrid key exchanges.\nOrganizations typically approach PQC migration from one of two angles. The optimal strategy often combines both, using compliance deadlines as hard constraints and risk scoring to prioritize within those constraints.\n&bull; Driven by regulatory deadlines and audit requirements\n&bull; Risk: may miss high-risk systems outside compliance scope\n&bull; Best for: regulated industries (finance, government, healthcare)\n&bull; Prioritizes highest-risk assets regardless of regulatory scope\n&bull; Risk: may not satisfy auditors without compliance mapping\n&bull; Best for: technology companies, defense, intelligence\nKey deadlines are converging across jurisdictions, creating a narrow window for organizations to complete their PQC migration.\nThis workshop guides you through building a comprehensive compliance strategy in three steps:\nMap jurisdictions, build audit checklists, and construct compliance timelines.",
     "category": "learning",
     "metadata": {
       "module": "ComplianceStrategy",
@@ -15242,7 +15242,7 @@
     "id": "mc-compliancestrategy-jurisdictionmapper-0",
     "source": "module-content",
     "title": "Compliance & Regulatory Strategy — JurisdictionMapper",
-    "content": "Module: Compliance & Regulatory Strategy\nComponent: JurisdictionMapper\n\nCheck each jurisdiction where your organization operates or must comply with regulations.\nNo matching frameworks found for the selected jurisdictions. This may mean country-specific compliance data is not yet available.\n${earliestLabel} (${minYear}) has a deadline ${maxYear - minYear} years earlier than ${latestLabel} (${maxYear}). Your migration must meet the earliest deadline.\nCNSA 2.0 specifies ML-KEM-1024 and ML-DSA-87 minimum levels, while ANSSI/BSI recommend hybrid classical+PQC approaches. Ensure your deployment satisfies both the algorithm-level and hybrid requirements.\nANSSI (France) and BSI (Germany) emphasize hybrid mode as mandatory during transition, while NSA CNSA 2.0 focuses on pure PQC adoption. Plan for hybrid deployments that satisfy both.",
+    "content": "Module: Compliance & Regulatory Strategy\nComponent: JurisdictionMapper\n\nCheck each jurisdiction where your organization operates or must comply with regulations.\nNo matching frameworks found for the selected jurisdictions. This may mean country-specific compliance data is not yet available.\n${earliestLabel} (${minYear}) has a deadline ${maxYear - minYear} years earlier than ${latestLabel} (${maxYear}). Your migration must meet the earliest deadline.\nCNSA 2.0 requires ML-KEM-1024 and ML-DSA-87 minimum security levels for U.S. NSS. ANSSI/BSI recommend a hybrid classical+PQC approach during transition. These requirements are compatible: deploy hybrid mode at CNSA 2.0 minimum security levels to satisfy both.\nANSSI (France) and BSI (Germany) emphasize hybrid mode as mandatory during transition, while NSA CNSA 2.0 focuses on pure PQC adoption. Plan for hybrid deployments that satisfy both.",
     "category": "learning",
     "metadata": {
       "module": "ComplianceStrategy",
@@ -16674,7 +16674,7 @@
     "id": "mc-migrationprogram-introduction-0",
     "source": "module-content",
     "title": "Migration Program Management — Introduction",
-    "content": "Module: Migration Program Management\nComponent: Introduction\n\nis not a single project — it is a multi-year, cross-functional\nthat spans every system, vendor, and team that touches cryptography. Success requires structured planning, executive sponsorship, and continuous stakeholder alignment.\n“Migrating to post-quantum cryptography is as much an organizational challenge as it is a technical one. Agencies should establish a dedicated migration program with clear governance, milestones, and reporting structures.”\nA project delivers a specific output; a program coordinates multiple interdependent projects toward a strategic goal — full PQC readiness.\nThe longest sequence of dependent tasks determines your minimum migration timeline. Vendor PQC readiness is often the binding constraint.\nWithout C-suite commitment, PQC migration stalls. Budget, priority, and cross-department coordination require top-down authority.\ndefines a structured approach to PQC migration that serves as the foundation for enterprise migration programs. Each phase builds on the previous and has clear deliverables.\nEnterprise PQC migration programs that succeed share common characteristics. These success factors are drawn from early adopters and regulatory guidance.\nCISO or CTO-level ownership with regular board reporting. Migration budgets, cross-team authority, and organizational priority require executive mandate.\nSecurity, engineering, compliance, vendor management, and business stakeholders must all be represented. Crypto touches every layer of the stack.",
+    "content": "Module: Migration Program Management\nComponent: Introduction\n\nis not a single project — it is a multi-year, cross-functional\nthat spans every system, vendor, and team that touches cryptography. Success requires structured planning, executive sponsorship, and continuous stakeholder alignment.\nMigrating to post-quantum cryptography is as much an organizational challenge as it is a technical one. Agencies and enterprises should establish a dedicated migration program with clear governance, milestones, and reporting structures.\nAligned with CISA Post-Quantum Cryptography Initiative guidance (cisa.gov/pqc)\nA project delivers a specific output; a program coordinates multiple interdependent projects toward a strategic goal — full PQC readiness.\nThe longest sequence of dependent tasks determines your minimum migration timeline. Vendor PQC readiness is often the binding constraint.\nWithout C-suite commitment, PQC migration stalls. Budget, priority, and cross-department coordination require top-down authority.\ndefines a structured approach to PQC migration that serves as the foundation for enterprise migration programs. Each phase builds on the previous and has clear deliverables.\nEnterprise PQC migration programs that succeed share common characteristics. These success factors are drawn from early adopters and regulatory guidance.\nCISO or CTO-level ownership with regular board reporting. Migration budgets, cross-team authority, and organizational priority require executive mandate.",
     "category": "learning",
     "metadata": {
       "module": "MigrationProgram",
@@ -16687,7 +16687,7 @@
     "id": "mc-migrationprogram-introduction-1",
     "source": "module-content",
     "title": "Migration Program Management — Introduction",
-    "content": "Module: Migration Program Management\nComponent: Introduction\n\nStart with hybrid deployments in low-risk systems, validate, then expand. Big-bang migrations are too risky for cryptographic infrastructure.\nTrack systems inventoried, algorithms migrated, vendor readiness, compliance gaps closed, and budget utilization. What gets measured gets managed.\nThis workshop provides three interactive tools that produce real, exportable artifacts for your PQC migration program:\nBuild a migration roadmap, plan stakeholder communications, and design a KPI tracker.",
+    "content": "Module: Migration Program Management\nComponent: Introduction\n\nSecurity, engineering, compliance, vendor management, and business stakeholders must all be represented. Crypto touches every layer of the stack.\nStart with hybrid deployments in low-risk systems, validate, then expand. Big-bang migrations are too risky for cryptographic infrastructure.\nTrack systems inventoried, algorithms migrated, vendor readiness, compliance gaps closed, and budget utilization. What gets measured gets managed.\nThis workshop provides three interactive tools that produce real, exportable artifacts for your PQC migration program:\nBuild a migration roadmap, plan stakeholder communications, and design a KPI tracker.",
     "category": "learning",
     "metadata": {
       "module": "MigrationProgram",
@@ -17025,7 +17025,7 @@
     "id": "mc-pqcbusinesscase-roicalculator-0",
     "source": "module-content",
     "title": "PQC Business Case — ROICalculator",
-    "content": "Module: PQC Business Case\nComponent: ROICalculator\n\nBased on average regulatory penalty exposure of $2M, scaled by applicable framework coverage.\nNote: These are educational estimates for planning purposes. Actual costs vary significantly by organization size, geography, and regulatory environment.\nMigration Cost by Infrastructure\nAuto-scored from ${data.totalProducts} products in the migration catalog. Higher = larger investment needed.\nEstimated savings from preventing quantum-enabled breaches. Adjust based on your data sensitivity.\nAuto-scored from ${data.frameworksByIndustry.length} applicable compliance frameworks. Higher = greater regulatory exposure.\nExpected efficiency gains from crypto agility, reduced complexity, and modernized infrastructure.\nMarket differentiation, customer trust, and partner ecosystem alignment from early PQC adoption.",
+    "content": "Module: PQC Business Case\nComponent: ROICalculator\n\nBased on average regulatory penalty exposure of $2M, scaled by applicable framework coverage.\n(3-year total benefit &minus; migration cost) / migration cost.\nNote: These are educational estimates for planning purposes. Actual costs vary significantly by organization size, geography, and regulatory environment.\nMigration Cost by Infrastructure\nAuto-scored from ${data.totalProducts} products in the migration catalog. Higher = larger investment needed.\nEstimated savings from preventing quantum-enabled breaches. Adjust based on your data sensitivity.\nAuto-scored from ${data.frameworksByIndustry.length} applicable compliance frameworks. Higher = greater regulatory exposure.\nExpected efficiency gains from crypto agility, reduced complexity, and modernized infrastructure.\nMarket differentiation, customer trust, and partner ecosystem alignment from early PQC adoption.",
     "category": "learning",
     "metadata": {
       "module": "PQCBusinessCase",
@@ -17077,7 +17077,7 @@
     "id": "mc-pqcgovernance-kpidashboardbuilder-0",
     "source": "module-content",
     "title": "PQC Governance & Policy — KPIDashboardBuilder",
-    "content": "Module: PQC Governance & Policy\nComponent: KPIDashboardBuilder\n\nPercentage of systems scanned for cryptographic usage (CBOM coverage).\nPercentage of quantum-vulnerable algorithms replaced with PQC or hybrid alternatives.\nPQC-ready vendors as a percentage of total products (${execData.pqcReadyCount}/${execData.totalProducts} from catalog).\nPercentage of identified compliance gaps addressed (FIPS, CMMC, ANSSI, BSI).\nPercentage of relevant staff who have completed PQC awareness and technical training.\nPercentage of allocated PQC migration budget spent on plan (healthy range: 70-90%).",
+    "content": "Module: PQC Governance & Policy\nComponent: KPIDashboardBuilder\n\nPercentage of systems scanned for cryptographic usage (CBOM coverage).\nPercentage of quantum-vulnerable algorithms replaced with PQC or hybrid alternatives.\nPQC-ready vendors as a percentage of total products (${execData.pqcReadyCount}/${execData.totalProducts} from catalog).\nPercentage of identified compliance requirements addressed (FIPS, CMMC) and agency guidance recommendations followed (ANSSI, BSI).\nPercentage of relevant staff who have completed PQC awareness and technical training.\nPercentage of allocated PQC migration budget spent on plan (healthy range: 70-90%).",
     "category": "learning",
     "metadata": {
       "module": "PQCGovernance",
@@ -17090,7 +17090,20 @@
     "id": "mc-pqcgovernance-policytemplategenerator-0",
     "source": "module-content",
     "title": "PQC Governance & Policy — PolicyTemplateGenerator",
-    "content": "Module: PQC Governance & Policy\nComponent: PolicyTemplateGenerator\n\nSelect a policy type, fill in the template fields, and export a customized PQC policy document. Framework options are auto-populated from your assessment data when available.\nCryptographic Algorithm Policy\nDefine approved and prohibited algorithms for the organization.\nEstablish key lifecycle rules, HSM requirements, and PQC parameters.\nSet cryptographic readiness criteria for vendor procurement.\nDefine deadlines and phases for the PQC transition.\nOrganization and policy metadata.\nApplicable Standards / Frameworks\nAlgorithms approved for use in production systems.\nApproved Key Encapsulation Mechanisms\nAlgorithms that must be migrated away from.\nRules for key generation, storage, rotation, and destruction.\nFIPS 140-3 Level 2+ validation\nVendor Cryptographic Requirements\nMinimum cryptographic capabilities vendors must demonstrate.\nPublished PQC migration roadmap\nFIPS 140-3 validated crypto module\nCrypto-agile architecture (algorithm swappable)\nPhase deadlines for the PQC transition.\nPhase 1: Inventory & Assessment Complete By\nPhase 2: Hybrid Deployment Complete By\nPhase 3: Full PQC Migration Complete By\nCriteria for determining migration order.\nCompliance obligations (FIPS, CMMC, etc.)\nLong-term data retention requirements",
+    "content": "Module: PQC Governance & Policy\nComponent: PolicyTemplateGenerator\n\nSelect a policy type, fill in the template fields, and export a customized PQC policy document. Framework options are auto-populated from your assessment data when available.\nCryptographic Algorithm Policy\nDefine approved and prohibited algorithms for the organization.\nEstablish key lifecycle rules, HSM requirements, and PQC parameters.\nSet cryptographic readiness criteria for vendor procurement.\nDefine deadlines and phases for the PQC transition.\nOrganization and policy metadata.\nApplicable Standards / Frameworks\nAlgorithms approved for use in production systems.\nApproved Key Encapsulation Mechanisms\nFrodoKEM-1344-SHAKE (NIST IR 8413 candidate — pre-standard)\nAlgorithms disallowed for new deployments. Existing uses must be migrated according to the timeline policy.\nProhibited for New Deployments (quantum-vulnerable)\nECDSA (all curves) — vulnerable to Shor\\u2019s algorithm\nECDH (all curves) — vulnerable to Shor\\u2019s algorithm\nQuantum-Vulnerable \\u2014 Migration Required (FIPS-approved but not quantum-safe)\nEd25519 (FIPS 186-5 approved, but vulnerable to Shor\\u2019s algorithm \\u2014 must migrate before CRQC)\nEd448 (FIPS 186-5 approved, but vulnerable to Shor\\u2019s algorithm \\u2014 must migrate before CRQC)\nRules for key generation, storage, rotation, and destruction.\nFIPS 140-3 Level 2+ validation\nVendor Cryptographic Requirements\nMinimum cryptographic capabilities vendors must demonstrate.\nPublished PQC migration roadmap\nFIPS 140-3 validated crypto module",
+    "category": "learning",
+    "metadata": {
+      "module": "PQCGovernance",
+      "component": "PolicyTemplateGenerator",
+      "filePath": "PQCGovernance/components/PolicyTemplateGenerator.tsx"
+    },
+    "deepLink": "/learn/pqc-governance?tab=workshop"
+  },
+  {
+    "id": "mc-pqcgovernance-policytemplategenerator-1",
+    "source": "module-content",
+    "title": "PQC Governance & Policy — PolicyTemplateGenerator",
+    "content": "Module: PQC Governance & Policy\nComponent: PolicyTemplateGenerator\n\nCrypto-agile architecture (algorithm swappable)\nPhase deadlines for the PQC transition.\nPhase 1: Inventory & Assessment Complete By\nPhase 2: Hybrid Deployment Complete By\nPhase 3: Full PQC Migration Complete By\nCriteria for determining migration order.\nCompliance obligations (FIPS, CMMC, etc.)\nLong-term data retention requirements",
     "category": "learning",
     "metadata": {
       "module": "PQCGovernance",
@@ -17840,7 +17853,7 @@
     "id": "mc-vendorrisk-contractclausegenerator-0",
     "source": "module-content",
     "title": "Vendor & Supply Chain Risk — ContractClauseGenerator",
-    "content": "Module: Vendor & Supply Chain Risk\nComponent: ContractClauseGenerator\n\nBuild PQC-ready contract clauses for vendor agreements. Fill in each section with your organization's requirements, then switch to\nmode to see the generated contract language. Export as Markdown for legal review.\nDefine when vendors must achieve post-quantum cryptographic readiness.\n2026 — CNSA 2.0 networking equipment (NSS)\n2027 — Internal target (no major standards deadline)\n2030 — NIST IR 8547 RSA/ECC deprecation / CNSA 2.0 web & cloud (NSS)\n2033 — CNSA 2.0 final NSS deadline\nML-KEM (FIPS 203) — Key Encapsulation\nML-DSA (FIPS 204) — Digital Signatures\nSLH-DSA (FIPS 205) — Stateless Hash Signatures\nLMS/HSS (SP 800-208) — Stateful Hash Signatures\nRequire FIPS 140-3 validated cryptographic modules for all vendor products.\nRequired FIPS 140-3 Security Level\nValidation Achievement Timeline\nValidated Module Name and Version\nApproved Algorithm List (CAVP)\nMandate delivery of Cryptographic Bill of Materials for supply chain visibility.\nCycloneDX 1.6+ (with crypto extension)\nVendor-specific (with mapping)\nAll cryptographic algorithms and key sizes\nTLS/SSH/IPsec protocol versions\nCertificate types and validity\nCryptographic library dependencies\nQuantum vulnerability assessment per algorithm\nRequire advance notice for any changes to cryptographic implementations.\nInteroperability testing with buyer systems\nFIPS revalidation if module changes\nReserve the right to audit vendor cryptographic practices.\nOn-demand (with reasonable notice)\nCryptographic algorithm inventory\nCrypto incident response procedures",
+    "content": "Module: Vendor & Supply Chain Risk\nComponent: ContractClauseGenerator\n\nBuild PQC-ready contract clauses for vendor agreements. Fill in each section with your organization's requirements, then switch to\nmode to see the generated contract language. Export as Markdown for legal review.\nDefine when vendors must achieve post-quantum cryptographic readiness.\n2025 — CNSA 2.0 cryptographic hardware & networking products (NSS)\n2027 — Internal target (between major standards deadlines)\n2030 — CNSA 2.0 software/firmware/web/cloud (NSS); NIST IR 8547 RSA/ECC deprecation\n2033 — CNSA 2.0 legacy NSS systems (final deadline)\nML-KEM (FIPS 203) — Key Encapsulation\nML-DSA (FIPS 204) — Digital Signatures\nSLH-DSA (FIPS 205) — Stateless Hash Signatures\nLMS/HSS (SP 800-208) — Stateful Hash Signatures\nRequire FIPS 140-3 validated cryptographic modules for all vendor products.\nRequired FIPS 140-3 Security Level\nValidation Achievement Timeline\nValidated Module Name and Version\nApproved Algorithm List (CAVP)\nMandate delivery of Cryptographic Bill of Materials for supply chain visibility.\nCycloneDX 1.6+ (with crypto extension)\nVendor-specific (with mapping)\nAll cryptographic algorithms and key sizes\nTLS/SSH/IPsec protocol versions\nCertificate types and validity\nCryptographic library dependencies\nQuantum vulnerability assessment per algorithm\nRequire advance notice for any changes to cryptographic implementations.\nInteroperability testing with buyer systems\nFIPS revalidation if module changes\nReserve the right to audit vendor cryptographic practices.\nOn-demand (with reasonable notice)",
     "category": "learning",
     "metadata": {
       "module": "VendorRisk",
@@ -17853,7 +17866,7 @@
     "id": "mc-vendorrisk-introduction-0",
     "source": "module-content",
     "title": "Vendor & Supply Chain Risk — Introduction",
-    "content": "Module: Vendor & Supply Chain Risk\nComponent: Introduction\n\nYour organization's quantum readiness is only as strong as your weakest vendor. Third-party software, hardware, and cloud services form the backbone of enterprise cryptographic infrastructure. If a critical vendor lacks\n“Supply chain risks are among the most significant challenges for PQC migration. Organizations must evaluate vendors' cryptographic capabilities and ensure contractual commitments to post-quantum readiness.”\ntargets. Every unpatched vendor extends your exposure window.\nA single vendor dependency on classical-only crypto can block your entire PQC migration program.\nA vendor scorecard provides a structured, repeatable method for evaluating how well-prepared each vendor is for the post-quantum transition. Scores are weighted across dimensions that map to real migration risk factors.\n(Cryptographic Bill of Materials) extends the SBOM concept to track every cryptographic algorithm, key, certificate, and protocol used by a software product. Demanding CBOMs from vendors is the single most impactful step toward supply chain quantum readiness.\nAlgorithm inventory, key sizes, protocol versions, certificate types, and quantum vulnerability status per component.\nCycloneDX 1.6+ includes a crypto extension for machine-readable CBOM data. The CycloneDX community (cyclonedx.org) maintains the specification, originally an OWASP project.\nInclude CBOM delivery requirements in vendor contracts with defined frequency, format, and scope expectations.",
+    "content": "Module: Vendor & Supply Chain Risk\nComponent: Introduction\n\nYour organization's quantum readiness is only as strong as your weakest vendor. Third-party software, hardware, and cloud services form the backbone of enterprise cryptographic infrastructure. If a critical vendor lacks\n“Supply chain risks are among the most significant challenges for PQC migration. Organizations must evaluate vendors' cryptographic capabilities and ensure contractual commitments to post-quantum readiness.”\ntargets. Every unpatched vendor extends your exposure window.\nA single vendor dependency on classical-only crypto can block your entire PQC migration program.\nA vendor scorecard provides a structured, repeatable method for evaluating how well-prepared each vendor is for the post-quantum transition. Scores are weighted across dimensions that map to real migration risk factors.\n&bull; PQC algorithm support (ML-KEM/FIPS&nbsp;203, ML-DSA/FIPS&nbsp;204, SLH-DSA/FIPS&nbsp;205)\n(Cryptographic Bill of Materials) extends the SBOM concept to track every cryptographic algorithm, key, certificate, and protocol used by a software product. Demanding CBOMs from vendors is the single most impactful step toward supply chain quantum readiness.\nAlgorithm inventory, key sizes, protocol versions, certificate types, and quantum vulnerability status per component.\nCycloneDX 1.6+ includes a crypto extension for machine-readable CBOM data. The CycloneDX community (cyclonedx.org) maintains the specification, originally an OWASP project.",
     "category": "learning",
     "metadata": {
       "module": "VendorRisk",
@@ -17866,7 +17879,7 @@
     "id": "mc-vendorrisk-introduction-1",
     "source": "module-content",
     "title": "Vendor & Supply Chain Risk — Introduction",
-    "content": "Module: Vendor & Supply Chain Risk\nComponent: Introduction\n\nNot all “FIPS compliance” claims are equal. Understanding the tiers helps you assess real vendor cryptographic maturity.\nA structured approach to evaluating vendors ensures consistent, auditable assessments across your supply chain. Follow this framework when engaging vendors on PQC readiness.\nFIPS, CNSA 2.0, and international PQC compliance requirements\nArchitecture patterns for algorithm-agile vendor integration\nBuild vendor scorecards, generate contract clauses, and map supply chain risk.",
+    "content": "Module: Vendor & Supply Chain Risk\nComponent: Introduction\n\nInclude CBOM delivery requirements in vendor contracts with defined frequency, format, and scope expectations.\nNot all “FIPS compliance” claims are equal. Understanding the tiers helps you assess real vendor cryptographic maturity.\nA structured approach to evaluating vendors ensures consistent, auditable assessments across your supply chain. Follow this framework when engaging vendors on PQC readiness.\nFIPS, CNSA 2.0, and international PQC compliance requirements\nArchitecture patterns for algorithm-agile vendor integration\nBuild vendor scorecards, generate contract clauses, and map supply chain risk.",
     "category": "learning",
     "metadata": {
       "module": "VendorRisk",
