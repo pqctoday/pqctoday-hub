@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-03-01T03:45:03.444Z",
-  "chunkCount": 2258,
+  "generatedAt": "2026-03-01T04:41:43.976Z",
+  "chunkCount": 2290,
   "chunks": [
     {
       "id": "glossary-0",
@@ -20026,6 +20026,51 @@
       "deepLink": "/learn/quiz?category=algorithm-families"
     },
     {
+      "id": "quiz-algorithm-families-6",
+      "source": "quiz",
+      "title": "Quiz: Algorithm Families",
+      "content": "Quiz Category: Algorithm Families\n\nQ: What type of mathematical problem does HQC (Hamming Quasi-Cyclic) rely on for its security?\n  A) Lattice problems (shortest vector problem)\n  B) Code-based problems (decoding random linear codes)\n  C) Hash-based one-way functions\n  D) Isogeny problems on elliptic curves\nAnswer: B\nExplanation: HQC is a code-based KEM whose security relies on the hardness of decoding random linear codes over binary fields — specifically, the Hamming metric decoding problem. This is a fundamentally different hardness assumption from lattice-based schemes like ML-KEM, providing algorithmic diversity in the PQC portfolio. Code-based cryptography has been studied since McEliece's 1978 proposal, giving it one of the longest security track records in PQC.\n\nQ: Why did NIST select HQC as a fourth PQC standard in March 2025, rather than relying solely on ML-KEM?\n  A) HQC has smaller ciphertext sizes than ML-KEM\n  B) HQC provides algorithmic diversity based on a different hardness assumption (code-based vs. lattice)\n  C) HQC is faster than ML-KEM for all use cases\n  D) HQC was submitted earlier in the NIST competition\nAnswer: B\nExplanation: NIST selected HQC to serve as a backup KEM based on a completely different mathematical foundation from ML-KEM's lattice problem. If a breakthrough algorithm were discovered to efficiently solve lattice problems, ML-KEM would be broken — but HQC would remain secure. This redundancy mirrors the NIST strategy of standardizing both ML-DSA (lattice) and SLH-DSA (hash-based): defense-in-depth through algorithmic diversity.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "algorithm-families", "questionCount": "2" },
+      "deepLink": "/learn/quiz?category=algorithm-families"
+    },
+    {
+      "id": "quiz-algorithm-families-7",
+      "source": "quiz",
+      "title": "Quiz: Algorithm Families",
+      "content": "Quiz Category: Algorithm Families\n\nQ: How does HQC's ciphertext size compare to ML-KEM-768?\n  A) HQC produces smaller ciphertexts — approximately 800 bytes vs ML-KEM-768's 1,088 bytes\n  B) HQC produces larger ciphertexts — approximately 4,522 bytes vs ML-KEM-768's 1,088 bytes\n  C) They are equal — both were designed to the same NIST security Level 3 ciphertext target\n  D) HQC ciphertext size varies dynamically based on message length\nAnswer: B\nExplanation: HQC-128 ciphertext is approximately 4,522 bytes — roughly four times larger than ML-KEM-768's 1,088 bytes at equivalent security level. This size tradeoff is the primary deployment consideration: HQC is not a drop-in replacement for ML-KEM in bandwidth-constrained protocols like TLS. It is intended as a parallel alternative for systems where algorithmic diversity justifies the bandwidth cost.\n\nQ: True or False: HQC is expected to receive its own FIPS number (distinct from FIPS 203) approximately in 2027.\nAnswer: A\nExplanation: True. NIST announced HQC selection in March 2025 with a projected standardization timeline of 2026–2027. HQC will receive its own dedicated FIPS standard number, separate from FIPS 203 (ML-KEM). During the interim period, organizations can reference the HQC draft specification directly. The code-based design means it requires its own validation test vectors and CAVP testing protocol.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "algorithm-families", "questionCount": "2" },
+      "deepLink": "/learn/quiz?category=algorithm-families"
+    },
+    {
+      "id": "quiz-algorithm-families-8",
+      "source": "quiz",
+      "title": "Quiz: Algorithm Families",
+      "content": "Quiz Category: Algorithm Families\n\nQ: Which statement best describes HQC's performance characteristics relative to ML-KEM-512?\n  A) HQC-128 has faster key generation but slower encapsulation than ML-KEM-512\n  B) HQC-128 has roughly comparable decapsulation speed but approximately 4× larger public keys and ciphertexts than ML-KEM-512\n  C) HQC-128 is strictly faster in all operations due to quasi-cyclic structure\n  D) HQC-128 requires hardware acceleration to achieve practical performance\nAnswer: B\nExplanation: HQC uses quasi-cyclic codes which enable efficient polynomial multiplication, giving decapsulation performance roughly comparable to ML-KEM. However, HQC public keys (~3,002 bytes for HQC-128) and ciphertexts (~4,522 bytes) are significantly larger than ML-KEM-512 (800-byte public key, 768-byte ciphertext). For most internet protocols, ML-KEM is preferred; HQC is deployed when algorithmic diversity justifies the bandwidth overhead.\n\nQ: What is the standardized name for the FALCON signature scheme in FIPS 206?\n  A) ML-DSA\n  B) FN-DSA (FALCON)\n  C) SLH-DSA\n  D) HQC-Sign\nAnswer: B\nExplanation: FALCON was standardized as FN-DSA (FIPS 206) by NIST, published in 2024. FN-DSA stands for 'Module Lattice-Based Digital Signature Algorithm over NTRU Lattices.' It produces the most compact signatures among NIST-standardized schemes: FN-DSA-512 generates ~666-byte signatures with an 897-byte public key — roughly one-quarter the size of ML-DSA-44 signatures (2,420 bytes). This compactness makes FN-DSA attractive for IoT and bandwidth-sensitive deployments.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "algorithm-families", "questionCount": "2" },
+      "deepLink": "/learn/quiz?category=algorithm-families"
+    },
+    {
+      "id": "quiz-algorithm-families-9",
+      "source": "quiz",
+      "title": "Quiz: Algorithm Families",
+      "content": "Quiz Category: Algorithm Families\n\nQ: What is the primary implementation challenge that makes FN-DSA (FALCON) harder to deploy safely than ML-DSA?\n  A) FN-DSA requires a larger key size than ML-DSA for equivalent security\n  B) FN-DSA's Gaussian sampling during signing requires high-precision floating-point arithmetic that is vulnerable to timing side-channel attacks\n  C) FN-DSA is not standardized by NIST and lacks FIPS validation\n  D) FN-DSA signatures are not compatible with X.509 certificates\nAnswer: B\nExplanation: FN-DSA signing requires sampling from a discrete Gaussian distribution over NTRU lattices, which traditionally uses floating-point arithmetic. This creates timing side-channel vulnerabilities: if signing time leaks information about the secret key, attackers can reconstruct keys. Safe implementations require constant-time integer arithmetic (avoiding floating-point entirely) or hardware-assisted sampling. ML-DSA avoids this issue by using rejection sampling from a simpler uniform distribution. This is why ML-DSA is preferred for general-purpose signing despite FN-DSA's smaller signatures.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "algorithm-families", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=algorithm-families"
+    },
+    {
+      "id": "quiz-algorithm-families-10",
+      "source": "quiz",
+      "title": "Quiz: Algorithm Families",
+      "content": "Quiz Category: Algorithm Families\n\nQ: For a constrained IoT firmware signing use case where bandwidth is critical, what is the tradeoff between selecting FN-DSA-512 vs ML-DSA-44?\n  A) FN-DSA-512 is always the correct choice — smaller signatures always win in IoT\n  B) ML-DSA-44 is always correct — its simpler signing algorithm outweighs FN-DSA's compactness\n  C) FN-DSA-512 offers ~3.6× smaller signatures but requires careful constant-time implementation; ML-DSA-44 is easier to implement safely but produces larger firmware manifests\n  D) Both have identical signature sizes; the only difference is key generation speed\nAnswer: C\nExplanation: FN-DSA-512 signatures are ~666 bytes vs ML-DSA-44's 2,420 bytes — a 3.6× reduction that meaningfully affects OTA update bandwidth on narrowband IoT links. However, FN-DSA requires careful constant-time Gaussian sampling to prevent timing side channels; a naive implementation is dangerous. ML-DSA-44 uses simpler rejection sampling, making it easier to implement correctly with standard toolchains. For high-volume firmware updates or NB-IoT deployments, FN-DSA's compactness can justify the extra implementation care. For general enterprise PKI, ML-DSA is preferred.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "algorithm-families", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=algorithm-families"
+    },
+    {
       "id": "quiz-nist-standards-0",
       "source": "quiz",
       "title": "Quiz: nist-standards",
@@ -20068,6 +20113,42 @@
       "content": "Quiz Category: nist-standards\n\nQ: Which classical algorithms does NIST IR 8547 target for deprecation by 2030? (Select all that apply)\n  A) RSA\n  B) AES-256\n  C) ECDSA\n  D) EdDSA\nAnswer: A|C|D\nExplanation: NIST IR 8547 targets all asymmetric/public-key algorithms for deprecation by 2030: RSA, ECDSA, ECDH, EdDSA, DH, and DSA. AES-256 is a symmetric algorithm and is not targeted — it remains quantum-safe with sufficient key sizes.\n\nQ: What is the expected timeline for FIPS 206 (FN-DSA) finalization, and when was the draft submitted?\n  A) Draft August 2024, final 2025\n  B) Draft November 2024, final late 2026 or early 2027\n  C) Draft March 2025, final 2026\n  D) Draft January 2026, final 2027\nAnswer: B\nExplanation: FIPS 206 (FN-DSA, formerly Falcon) had its Initial Public Draft (IPD) released in November 2024. Finalization is expected in late 2026 or early 2027 due to intellectual property and internal clearance considerations.\n\nQ: Which FIPS standard defines SLH-DSA (formerly SPHINCS+)?\n  A) FIPS 203\n  B) FIPS 204\n  C) FIPS 205\n  D) FIPS 206\nAnswer: C\nExplanation: FIPS 205 defines SLH-DSA (Stateless Hash-Based Digital Signature Algorithm). FIPS 203 is ML-KEM, FIPS 204 is ML-DSA, and FIPS 206 (draft) is FN-DSA.\n\nQ: What does NIST Security Level 1 correspond to in terms of symmetric cipher strength?\n  A) AES-64\n  B) AES-128\n  C) AES-192\n  D) AES-256\nAnswer: B\nExplanation: NIST Security Level 1 corresponds to the difficulty of breaking AES-128. It is the minimum security level for PQC algorithms. ML-KEM-512 and SLH-DSA-SHA2-128s provide Level 1 security.",
       "category": "quiz",
       "metadata": { "quizCategory": "nist-standards", "questionCount": "4" },
+      "deepLink": "/learn/quiz?category=nist-standards"
+    },
+    {
+      "id": "quiz-nist-standards-5",
+      "source": "quiz",
+      "title": "Quiz: nist-standards",
+      "content": "Quiz Category: nist-standards\n\nQ: When did NIST announce HQC as the fourth PQC standard, and what type of cryptographic algorithm is it?\n  A) October 2022; a lattice-based KEM\n  B) March 2025; a code-based KEM (Key Encapsulation Mechanism)\n  C) November 2024; a hash-based digital signature\n  D) January 2026; an isogeny-based key exchange\nAnswer: B\nExplanation: NIST announced HQC (Hamming Quasi-Cyclic) as a fourth PQC standard in March 2025, selected as a code-based KEM to complement ML-KEM (lattice-based). The selection was motivated by algorithmic diversity: HQC's security relies on the hardness of decoding random linear codes — a different mathematical problem from ML-KEM's lattice assumptions. HQC is expected to receive a dedicated FIPS number in 2026–2027, following NIST's standard publication process.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "nist-standards", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=nist-standards"
+    },
+    {
+      "id": "quiz-nist-standards-6",
+      "source": "quiz",
+      "title": "Quiz: nist-standards",
+      "content": "Quiz Category: nist-standards\n\nQ: Why does HQC's selection as a fourth NIST standard NOT create urgency for organizations to immediately deploy it instead of ML-KEM?\n  A) HQC is not quantum-safe; it was selected for classical security only\n  B) HQC is not yet standardized as a FIPS document; it lacks the validation infrastructure (CAVP, CMVP) and has larger keys/ciphertexts — ML-KEM should be primary, with HQC as a future hedge\n  C) HQC replaces ML-KEM and must be deployed before 2027\n  D) HQC is identical to ML-KEM-768 with different parameter names\nAnswer: B\nExplanation: HQC, though announced as a fourth NIST standard, is not yet published as a FIPS document and lacks CAVP test vectors and CMVP validation modules. Organizations requiring FIPS 140-3 validated cryptography cannot yet use HQC in validated boundaries. Additionally, HQC has 4–5× larger key and ciphertext sizes than ML-KEM, making it unsuitable as a direct replacement. The correct approach: deploy ML-KEM now (FIPS 203, validated modules available), and plan crypto-agile architecture to add HQC as a parallel hedge when its FIPS is published and validated implementations are available.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "nist-standards", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=nist-standards"
+    },
+    {
+      "id": "quiz-nist-standards-7",
+      "source": "quiz",
+      "title": "Quiz: nist-standards",
+      "content": "Quiz Category: nist-standards\n\nQ: What does FIPS 140-3 Implementation Guidance (IG) require for modules claiming support for FIPS 203 (ML-KEM), FIPS 204 (ML-DSA), or FIPS 205 (SLH-DSA)?\n  A) Modules must implement all three PQC algorithms to receive FIPS 140-3 validation\n  B) Modules must include algorithm-specific Known Answer Tests (KATs) and self-tests for each PQC algorithm during power-up\n  C) PQC algorithms are exempt from FIPS 140-3 self-test requirements until 2028\n  D) Only hardware modules require PQC self-tests; software modules are exempt\nAnswer: B\nExplanation: FIPS 140-3 Implementation Guidance (updated 2025 for PQC) requires that cryptographic modules claiming FIPS 203/204/205 support implement power-up self-tests: Known Answer Tests (KATs) for each PQC algorithm variant implemented. This is the same requirement applied to AES, SHA, and ECDSA. The NIST CAVP (Cryptographic Algorithm Validation Program) provides official KAT vectors for ML-KEM, ML-DSA, and SLH-DSA. Module vendors must include these self-tests to receive FIPS 140-3 validation for PQC algorithm support.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "nist-standards", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=nist-standards"
+    },
+    {
+      "id": "quiz-nist-standards-8",
+      "source": "quiz",
+      "title": "Quiz: nist-standards",
+      "content": "Quiz Category: nist-standards\n\nQ: A vendor's HSM currently holds FIPS 140-3 Level 3 validation for RSA-4096 and AES-256. They add ML-KEM-768 support via firmware update. What must happen for the HSM to claim FIPS 140-3 validated ML-KEM-768?\n  A) The existing FIPS 140-3 certificate automatically extends to cover new algorithms added by firmware update\n  B) The vendor must submit a new FIPS 140-3 validation or a delta change request, including CAVP-validated ML-KEM KAT vectors and updated security policy documentation\n  C) The vendor only needs to pass NIST's online ACVTS tests — no formal CMVP resubmission is required\n  D) FIPS 140-3 validation for PQC is waived for Level 3 HSMs until 2026\nAnswer: B\nExplanation: Adding ML-KEM-768 to an existing FIPS 140-3 validated module requires a formal change to the validation: either a new certificate submission or a delta/modification request through the CMVP. The updated module must include CAVP-validated KAT vectors from NIST's ACVTS for ML-KEM, add ML-KEM to the Security Policy document, and pass all physical/operational testing for the new algorithm. Simply passing online ACVTS tests provides CAVP algorithm validation but does not constitute FIPS 140-3 module validation. Until resubmission is approved, the HSM cannot claim FIPS 140-3 validated ML-KEM.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "nist-standards", "questionCount": "1" },
       "deepLink": "/learn/quiz?category=nist-standards"
     },
     {
@@ -20197,6 +20278,78 @@
       "deepLink": "/learn/quiz?category=compliance"
     },
     {
+      "id": "quiz-compliance-7",
+      "source": "quiz",
+      "title": "Quiz: compliance",
+      "content": "Quiz Category: compliance\n\nQ: Which organization runs the Korean Post-Quantum Cryptography (KpqC) competition, and approximately when are the finalized Korean national PQC standards expected?\n  A) Korean ETRI; standards expected in 2025\n  B) Korean IITP / KISA; standards expected 2029 with a 2035 migration deadline\n  C) Samsung Research; standards expected 2028\n  D) Korean NIS; standards to align exactly with NIST FIPS 203/204/205\nAnswer: B\nExplanation: The KpqC competition is run by the Korean Institute of Information Security and Cryptology (KISA) under IITP. South Korea is developing independent national PQC standards — selecting HAETAE (lattice-based signatures), AIMer (MPC-in-the-head signatures), SMAUG-T (lattice-based KEM), and NTRU+ (NTRU-based KEM). Final Korean national standards are targeted for 2029, with a national migration deadline of 2035. This parallel track gives South Korea domestic cryptographic sovereignty separate from US FIPS standards.\n\nQ: Which algorithm won the KpqC signature category and what is its mathematical basis?\n  A) SMAUG-T; based on NTRU lattices\n  B) HAETAE; based on module lattices (similar to ML-DSA but with distinct design choices)\n  C) AIMer; based on MPC-in-the-head and symmetric primitives\n  D) NTRU+; based on NTRU problem variants\nAnswer: B\nExplanation: HAETAE is the KpqC signature winner, based on module lattice problems — the same mathematical family as NIST's ML-DSA, but with distinct parameter choices and security analysis. AIMer (MPC-in-the-head, hash-based) is the runner-up signature candidate. For KEMs, SMAUG-T (module lattices) and NTRU+ (NTRU lattices) were selected. The KpqC portfolio deliberately includes diverse mathematical foundations to hedge against potential algorithmic breakthroughs.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "compliance", "questionCount": "2" },
+      "deepLink": "/learn/quiz?category=compliance"
+    },
+    {
+      "id": "quiz-compliance-8",
+      "source": "quiz",
+      "title": "Quiz: compliance",
+      "content": "Quiz Category: compliance\n\nQ: What is the primary stated reason South Korea and China are developing national PQC standards independent of NIST's FIPS 203/204/205?\n  A) NIST standards have known mathematical weaknesses that only Asian researchers discovered\n  B) Domestic cryptographic sovereignty — ensuring national algorithms are not dependent on foreign standards for critical infrastructure\n  C) NIST standards are not performance-optimized for Asian hardware architectures\n  D) Both countries plan to replace NIST standards globally by 2030\nAnswer: B\nExplanation: Both South Korea (KpqC) and China (NGCC/ICCS) frame their national PQC programs primarily around cryptographic sovereignty: ensuring that algorithms protecting national critical infrastructure are designed, analyzed, and standardized domestically, without reliance on US government processes. This mirrors longstanding patterns (China's SM2/SM3/SM4 replacing RSA/SHA/AES for domestic use; South Korea's ARIA/SEED). These national standards typically coexist with FIPS standards in international contexts but are mandated for government systems.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "compliance", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=compliance"
+    },
+    {
+      "id": "quiz-compliance-9",
+      "source": "quiz",
+      "title": "Quiz: compliance",
+      "content": "Quiz Category: compliance\n\nQ: What is China's NGCC program (Next-Generation Commercial Cryptography), and which body oversees its PQC standardization?\n  A) A NIST-aligned adoption program run by China's MIIT; standards mirror FIPS 203/204/205\n  B) An independent national PQC standardization program run by OSCCA/ICCS; selecting domestic algorithms with a goal of 2030 national migration\n  C) A joint research initiative between China and the EU for hybrid PQC standards\n  D) A military-only cryptography program with no commercial implications\nAnswer: B\nExplanation: China's Next-Generation Commercial Cryptography (NGCC) program is run by the Office of the State Commercial Cryptography Administration (OSCCA) in coordination with ICCS (Institute of Commercial Cryptography Standardization). The program issued a call for PQC algorithm proposals in 2024, targeting algorithms distinct from US NIST selections. China's existing commercial cryptography ecosystem (SM2/SM3/SM4) provides a template: separate domestic standards for government and regulated industries, with international standards permitted in some contexts. The NGCC targets national migration by approximately 2030.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "compliance", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=compliance"
+    },
+    {
+      "id": "quiz-compliance-10",
+      "source": "quiz",
+      "title": "Quiz: compliance",
+      "content": "Quiz Category: compliance\n\nQ: By what date must Canadian federal government departments submit their initial PQC migration plans under CCCS guidance ITSM.40.001?\n  A) January 2025\n  B) April 2026\n  C) December 2027\n  D) October 2030\nAnswer: B\nExplanation: The Canadian Centre for Cyber Security (CCCS) published ITSM.40.001 (PQC Migration Roadmap) in June 2025, requiring federal departments to submit initial PQC migration plans by April 2026. The roadmap mandates that high-priority systems complete PQC migration by 2030 and all federal systems by 2033. This aligns with the broader Five Eyes coordination on PQC timelines, though Canada's April 2026 planning deadline is one of the most near-term compliance milestones globally.\n\nQ: True or False: Canada's TBS Security Policy Implementation Notice (SPIN) on PQC became effective in October 2025, making PQC migration planning mandatory for federal institutions.\nAnswer: A\nExplanation: True. The Treasury Board of Canada Secretariat (TBS) issued a Security Policy Implementation Notice (SPIN) on PQC that became effective October 9, 2025. This SPIN makes PQC migration planning a formal security policy requirement for all federal institutions — not merely guidance. Combined with ITSM.40.001's April 2026 planning deadline, Canadian federal agencies face both policy mandates and concrete milestones for PQC transition.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "compliance", "questionCount": "2" },
+      "deepLink": "/learn/quiz?category=compliance"
+    },
+    {
+      "id": "quiz-compliance-11",
+      "source": "quiz",
+      "title": "Quiz: compliance",
+      "content": "Quiz Category: compliance\n\nQ: Australia's ASD Information Security Manual (ISM) December 2024 update sets requirements for critical systems. Which PQC algorithms are mandated for new systems by 2030?\n  A) ML-KEM-512 and ML-DSA-44 (NIST Level 1)\n  B) ML-KEM-1024 and ML-DSA-87 (NIST Level 5)\n  C) Only SLH-DSA-SHA2-256s for signatures; ML-KEM-768 for key exchange\n  D) FrodoKEM-1344 and FN-DSA-1024 for maximum security\nAnswer: B\nExplanation: Australia's ASD ISM December 2024 update mandates that new systems protecting sensitive information must use ML-KEM-1024 (key encapsulation) and ML-DSA-87 (digital signatures) — both at NIST Security Level 5 — by 2030. This is among the most conservative algorithm selections globally, requiring the highest security tier rather than Level 3. Existing systems have until 2030 for critical infrastructure and 2033 for all government systems, consistent with Five Eyes coordination.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "compliance", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=compliance"
+    },
+    {
+      "id": "quiz-compliance-12",
+      "source": "quiz",
+      "title": "Quiz: compliance",
+      "content": "Quiz Category: compliance\n\nQ: Which Australian government body published the December 2024 ISM update mandating PQC requirements, and what is its relationship to the Five Eyes alliance?\n  A) ASIO (Australian Security Intelligence Organisation); independent from Five Eyes\n  B) ASD (Australian Signals Directorate); coordinates PQC guidance with NSA, GCHQ, NCSC-CA, and GCSB through Five Eyes\n  C) ACSC (Australian Cyber Security Centre); operates independently of intelligence agencies\n  D) AUSTRAC (financial intelligence); focused solely on financial sector PQC\nAnswer: B\nExplanation: The Australian Signals Directorate (ASD), through its Australian Cyber Security Centre (ACSC) arm, published the ISM update. ASD is Australia's national signals intelligence and cybersecurity agency and is a full member of the Five Eyes intelligence alliance (US NSA, UK GCHQ, Canadian CCCS/CSE, New Zealand GCSB, Australian ASD). Five Eyes members coordinate on PQC timelines and algorithm selections, which is why Australia's ML-KEM-1024/ML-DSA-87 mandate, Canada's ITSM.40.001, and US CNSA 2.0 are closely aligned in scope and timeline.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "compliance", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=compliance"
+    },
+    {
+      "id": "quiz-compliance-13",
+      "source": "quiz",
+      "title": "Quiz: compliance",
+      "content": "Quiz Category: compliance\n\nQ: Which of the following statements about KpqC algorithm selection are correct? (Select all that apply)\n  A) HAETAE is the primary signature algorithm — based on module lattices\n  B) AIMer uses MPC-in-the-head (symmetric-key-based) design — different hardness from lattice\n  C) SMAUG-T is the KEM winner — based on module lattices (MLWE/MLWR)\n  D) NTRU+ replaces ML-KEM in all international contexts including TLS\nAnswer: A|B|C\nExplanation: Three statements are correct: (a) HAETAE is the KpqC signature winner, based on module lattices with distinct parameter choices from ML-DSA; (b) AIMer uses MPC-in-the-head design based on symmetric primitives — a mathematically distinct approach providing diversity; (c) SMAUG-T is the primary KpqC KEM, based on module learning with errors/rounding. Statement (d) is false: NTRU+ is a KpqC alternative KEM candidate, not a global replacement for ML-KEM. KpqC algorithms are mandated for Korean domestic systems, not international protocols.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "compliance", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=compliance"
+    },
+    {
+      "id": "quiz-compliance-14",
+      "source": "quiz",
+      "title": "Quiz: compliance",
+      "content": "Quiz Category: compliance\n\nQ: An organization operates in both South Korea and the United States, handling government contracts in both countries. What PQC deployment strategy is most appropriate for 2025–2030?\n  A) Deploy only NIST FIPS 203/204/205 globally — Korean KpqC standards can be ignored since they are not yet finalized\n  B) Deploy only KpqC algorithms in Korea and FIPS 203/204/205 in the US — using separate cryptographic infrastructure\n  C) Deploy FIPS 203/204/205 as the primary PQC layer globally with crypto-agile architecture ready to add KpqC algorithms for Korean government systems when mandated in 2029\n  D) Wait until 2028 when both standards are finalized before beginning any PQC transition\nAnswer: C\nExplanation: The correct approach is crypto-agile deployment: implement FIPS 203/204/205 now (already standardized, required by US federal contracts) while building the infrastructure to layer in KpqC algorithms for Korean government systems when mandated (~2029). A crypto-agile architecture (abstract key negotiation, algorithm registries, CBOM tracking) makes this addition straightforward. Deploying entirely separate infrastructure per country is operationally costly. Waiting until 2028 violates US CNSA 2.0 requirements and misses the NIST-mandated 2030 deadline for many system types.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "compliance", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=compliance"
+    },
+    {
       "id": "quiz-protocol-integration-0",
       "source": "quiz",
       "title": "Quiz: protocol-integration",
@@ -20248,6 +20401,60 @@
       "content": "Quiz Category: protocol-integration\n\nQ: Which of the following 5G security components use quantum-vulnerable cryptography? (Select all that apply)\n  A) SUCI subscriber identity protection (ECIES P-256)\n  B) N2/N3 interface IPsec tunnels\n  C) Physical cell tower hardware\n  D) SIM/eSIM PKI authentication (RSA-2048/ECDSA P-256)\nAnswer: A|B|D\nExplanation: SUCI uses ECIES with P-256, N2/N3 interfaces use IPsec with quantum-vulnerable key exchange, and SIM/eSIM cards rely on RSA-2048/ECDSA P-256 PKI. Physical cell tower hardware itself is not a cryptographic component vulnerable to quantum attacks.\n\nQ: What does OpenSSL 3.5 (released April 2025) include for PQC?\n  A) Only ML-KEM support\n  B) Full PQC support: ML-KEM, ML-DSA, SLH-DSA, and X25519MLKEM768 hybrid\n  C) Only experimental PQC via external providers\n  D) No PQC support — PQC requires OpenSSL 4.0\nAnswer: B\nExplanation: OpenSSL 3.5 was a landmark release with full built-in PQC support: ML-KEM for key exchange, ML-DSA and SLH-DSA for signatures, and the X25519MLKEM768 hybrid key exchange as the default TLS negotiation option.\n\nQ: What is the Samsung/Thales ML-KEM embedded secure element breakthrough from January 2026?\n  A) A quantum computer chip for smartphones\n  B) The first commercial PQC implementation for IoT embedded secure elements\n  C) A new PQC algorithm proposal\n  D) A quantum key distribution system for mobile devices\nAnswer: B\nExplanation: Samsung and Thales achieved the first commercial PQC implementation using ML-KEM in an embedded secure element (January 2026). This breakthrough enables quantum-safe security for IoT devices, smart cards, and constrained environments.",
       "category": "quiz",
       "metadata": { "quizCategory": "protocol-integration", "questionCount": "3" },
+      "deepLink": "/learn/quiz?category=protocol-integration"
+    },
+    {
+      "id": "quiz-protocol-integration-6",
+      "source": "quiz",
+      "title": "Quiz: protocol-integration",
+      "content": "Quiz Category: protocol-integration\n\nQ: What does RFC 9882 standardize?\n  A) ML-KEM key encapsulation in TLS 1.3\n  B) ML-DSA signatures in the Cryptographic Message Syntax (CMS)\n  C) A new certificate format for PQC public keys\n  D) SLH-DSA signatures for code signing\nAnswer: B\nExplanation: RFC 9882 (published 2025) defines how to use ML-DSA (FIPS 204) digital signatures within CMS (Cryptographic Message Syntax, RFC 5652). CMS is the underlying structure for S/MIME email signing, document signing (PDF, XML), timestamping responses, and PKCS#7/PKCS#12 containers. RFC 9882 enables these widely-deployed applications to use NIST's standardized lattice signature scheme, complementing RFC 9629 which covers ML-KEM in CMS for key encapsulation.\n\nQ: An organization needs to send PQC-signed S/MIME emails. Which RFC combination provides the complete CMS-based PQC signing and encryption capability?\n  A) RFC 9882 (ML-DSA signing) + RFC 9629 (ML-KEM encryption) in CMS\n  B) RFC 9794 (hybrid terminology) + RFC 9802 (HSS/XMSS in X.509)\n  C) FIPS 203 alone is sufficient for both signing and encryption in S/MIME\n  D) RFC 9814 (SLH-DSA in CMS) is the only approved S/MIME PQC option\nAnswer: A\nExplanation: Full PQC S/MIME capability requires two RFCs: RFC 9882 (ML-DSA in CMS) for digital signatures and RFC 9629 (ML-KEM in CMS) for key encapsulation/encryption. RFC 9629 was published in 2024 and covers ML-KEM-512/768/1024 in CMS EnvelopedData. RFC 9882 covers ML-DSA-44/65/87 in CMS SignedData. Together they enable PQC-protected email that can be signed (integrity/authentication) and encrypted (confidentiality) using NIST-standardized algorithms within existing S/MIME infrastructure.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "protocol-integration", "questionCount": "2" },
+      "deepLink": "/learn/quiz?category=protocol-integration"
+    },
+    {
+      "id": "quiz-protocol-integration-7",
+      "source": "quiz",
+      "title": "Quiz: protocol-integration",
+      "content": "Quiz Category: protocol-integration\n\nQ: What does RFC 9794 standardize for PQC hybrid cryptography?\n  A) A new hybrid encryption algorithm combining ML-KEM and ML-DSA\n  B) Terminology and naming conventions for post-quantum/traditional (PQ/T) hybrid cryptographic schemes\n  C) A key derivation function for combining classical and PQC shared secrets\n  D) Certificate extensions for indicating hybrid algorithm support\nAnswer: B\nExplanation: RFC 9794 (published 2025) standardizes the terminology for hybrid cryptographic schemes that combine post-quantum (PQ) algorithms with traditional (T) classical algorithms. It defines terms like 'PQ/T hybrid scheme,' 'composite,' 'parallel,' and 'non-composite' combinations. This shared vocabulary is essential for interoperability: when RFCs, FIPS documents, and vendor documentation use the same terms consistently, organizations can correctly evaluate whether they have deployed the hybrid approach their security policy requires.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "protocol-integration", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=protocol-integration"
+    },
+    {
+      "id": "quiz-protocol-integration-8",
+      "source": "quiz",
+      "title": "Quiz: protocol-integration",
+      "content": "Quiz Category: protocol-integration\n\nQ: According to RFC 9794 terminology, what is the difference between a 'composite' PQ/T hybrid scheme and a 'non-composite parallel' scheme?\n  A) Composite schemes use a single algorithm object containing both PQ and classical components; non-composite parallel schemes keep them as separate independent objects\n  B) Composite schemes are slower; non-composite parallel schemes are always faster\n  C) Composite schemes are only for KEMs; non-composite parallel schemes are only for signatures\n  D) RFC 9794 does not distinguish between composite and parallel — these terms are synonymous\nAnswer: A\nExplanation: RFC 9794 defines: a 'composite' scheme is one where the PQ and classical algorithms are bundled into a single cryptographic object (one key, one ciphertext/signature) that combines both — neither component is independently meaningful for security. A 'non-composite parallel' scheme transmits both components independently (e.g., separate PQ and classical signatures in a TLS extension) but requires both to verify. X25519MLKEM768 (used in TLS 1.3 hybrid key exchange) is a non-composite parallel KEM: the classical X25519 shared secret and the ML-KEM-768 shared secret are combined via a KDF, but transmitted as separate values.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "protocol-integration", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=protocol-integration"
+    },
+    {
+      "id": "quiz-protocol-integration-9",
+      "source": "quiz",
+      "title": "Quiz: protocol-integration",
+      "content": "Quiz Category: protocol-integration\n\nQ: What does RFC 9810 standardize for PQC key transport?\n  A) ML-KEM in TLS 1.3 certificate-based key exchange\n  B) Updates to CMP (Certificate Management Protocol) to support KEM-based key transport for certificate enrollment\n  C) A new OID registry for all NIST PQC algorithms\n  D) SLH-DSA signing of OCSP responses\nAnswer: B\nExplanation: RFC 9810 (published 2025) updates the Certificate Management Protocol (CMP, RFC 4210) to support KEM-based key transport. CMP is widely used by enterprise PKI for automated certificate enrollment, renewal, and revocation (used by many CA software products). Before RFC 9810, CMP key transport assumed RSA or Diffie-Hellman; RFC 9810 adds support for ML-KEM to protect the key transport phase of certificate issuance — closing a critical gap in PQC-safe PKI automation.\n\nQ: What does RFC 9814 standardize?\n  A) ML-DSA signatures in TLS 1.3 certificate authentication\n  B) SLH-DSA (FIPS 205 / SPHINCS+) signatures in the Cryptographic Message Syntax (CMS)\n  C) HQC key encapsulation in CMS\n  D) FN-DSA (FALCON) signatures in S/MIME\nAnswer: B\nExplanation: RFC 9814 (published 2025) defines how to use SLH-DSA (Stateless Hash-Based Digital Signature Algorithm, FIPS 205) within CMS. SLH-DSA is the hash-based alternative to lattice signatures: its security relies only on hash function properties, providing a maximally conservative option where lattice assumptions are unacceptable. RFC 9814 enables SLH-DSA in document signing, timestamping, and S/MIME contexts — complementing RFC 9882 (ML-DSA in CMS) and giving implementers algorithm choice within the same CMS framework.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "protocol-integration", "questionCount": "2" },
+      "deepLink": "/learn/quiz?category=protocol-integration"
+    },
+    {
+      "id": "quiz-protocol-integration-10",
+      "source": "quiz",
+      "title": "Quiz: protocol-integration",
+      "content": "Quiz Category: protocol-integration\n\nQ: True or False: RFC 9794 hybrid terminology applies exclusively to KEMs — PQC signature schemes do not have 'composite' or 'parallel' hybrid variants.\nAnswer: B\nExplanation: False. RFC 9794 terminology applies to both KEMs and signature schemes. Hybrid signature schemes can be 'composite' (a single combined signature object verifiable only as a unit) or 'non-composite parallel' (two independent signatures — e.g., both ML-DSA and RSA — transmitted together, each independently verifiable). Composite signature OIDs are being standardized through IETF LAMPS working group drafts. Non-composite parallel signatures appear in protocols like TLS where the PQ and classical signatures are sent in separate extensions.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "protocol-integration", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=protocol-integration"
+    },
+    {
+      "id": "quiz-protocol-integration-11",
+      "source": "quiz",
+      "title": "Quiz: protocol-integration",
+      "content": "Quiz Category: protocol-integration\n\nQ: A PKI engineer must design certificate enrollment for a new enterprise CA that will be PQC-safe. Which combination of RFCs covers the complete enrollment and signing stack?\n  A) RFC 9882 (ML-DSA in CMS) + RFC 9794 (hybrid terminology)\n  B) RFC 9810 (CMP KEM transport for enrollment) + RFC 9882 (ML-DSA in CMS for signed certificates) + RFC 9802 (HSS/XMSS in X.509 for long-lived CA keys)\n  C) RFC 9629 (ML-KEM in CMS) + RFC 9814 (SLH-DSA in CMS) alone are sufficient\n  D) Only FIPS 203/204/205 are required — no IETF RFCs are needed\nAnswer: B\nExplanation: A complete PQC-safe PKI enrollment stack requires: RFC 9810 for CMP-based automated certificate enrollment using ML-KEM key transport (replacing RSA key transport); RFC 9882 for ML-DSA signatures on issued end-entity certificates and CA certificates; RFC 9802 for long-lived CA root/intermediate keys using HSS or XMSS (stateful hash-based, recommended by CNSA 2.0 for long-lived CA keys). FIPS documents define the algorithms but not the protocol integration — the RFCs are needed to specify interoperable use in PKI protocols. RFC 9794 terminology is useful for documentation but not a protocol specification.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "protocol-integration", "questionCount": "1" },
       "deepLink": "/learn/quiz?category=protocol-integration"
     },
     {
@@ -20773,6 +20980,42 @@
       "deepLink": "/learn/quiz?category=quantum-threats"
     },
     {
+      "id": "quiz-quantum-threats-4",
+      "source": "quiz",
+      "title": "Quiz: quantum-threats",
+      "content": "Quiz Category: quantum-threats\n\nQ: What is IBM's Kookaburra quantum processor, announced in 2026, and why is it significant for PQC planning?\n  A) Kookaburra is IBM's first 1,000+ qubit processor using traditional superconducting qubits with no error correction\n  B) Kookaburra is a 1,386-qubit modular processor combining quantum memory and logic qubits — IBM's first system targeting verifiable quantum advantage in specific computational domains\n  C) Kookaburra is a classical supercomputer simulator used to test quantum algorithms\n  D) Kookaburra is a noise-free topological qubit processor equivalent to a CRQC\nAnswer: B\nExplanation: IBM's Kookaburra is a 1,386-qubit modular quantum processor that combines quantum memory elements with logic qubits — part of IBM's roadmap toward fault-tolerant quantum computing. It represents a significant engineering milestone in qubit count and modular architecture (connecting multiple smaller processors). However, Kookaburra is not a CRQC: fault-tolerant quantum computing capable of running Shor's algorithm against RSA-2048 requires millions of logical qubits with error correction overhead, which current physical qubit counts — even at 1,386 — cannot yet support. Kookaburra accelerates the research timeline and underscores why PQC migration must begin now.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "quantum-threats", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=quantum-threats"
+    },
+    {
+      "id": "quiz-quantum-threats-5",
+      "source": "quiz",
+      "title": "Quiz: quantum-threats",
+      "content": "Quiz Category: quantum-threats\n\nQ: Microsoft's Majorana 1 chip, announced in 2025, uses topological qubits. Why is this architecturally different from IBM's superconducting qubits, and what is its implication for CRQC timelines?\n  A) Topological qubits use the same superconducting Josephson junction design as IBM, just marketed differently\n  B) Topological qubits encode information in non-Abelian anyons, which are theoretically more robust to decoherence — potentially enabling faster paths to fault tolerance than error-corrected superconducting qubits\n  C) Majorana 1 is already capable of running Shor's algorithm against RSA-2048\n  D) Topological qubits are slower than superconducting qubits and are not relevant to CRQC risk\nAnswer: B\nExplanation: Microsoft's Majorana 1 uses topological qubits based on Majorana fermions in semiconductor nanowires — a fundamentally different physical approach from IBM's transmon superconducting qubits. Topological qubits theoretically have intrinsic error protection from their physical encoding (information stored in global topology rather than local quantum states), potentially requiring far fewer physical qubits per logical qubit than superconducting architectures. If topological qubits mature as expected, they could provide a faster path to fault-tolerant computing. This uncertainty in which architecture succeeds first is why CRQC timeline estimates have wide error bars — and why cryptographic agility and early migration are prudent.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "quantum-threats", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=quantum-threats"
+    },
+    {
+      "id": "quiz-quantum-threats-6",
+      "source": "quiz",
+      "title": "Quiz: quantum-threats",
+      "content": "Quiz Category: quantum-threats\n\nQ: True or False: IBM's Heron R2 processor (2025) demonstrated error rates low enough to perform Shor's algorithm against production RSA-2048 keys.\nAnswer: B\nExplanation: False. IBM's Heron R2 processor (released 2025, 156 qubits) demonstrated improved error rates compared to previous IBM processors, but it is still orders of magnitude below what is needed to threaten RSA-2048. Factoring RSA-2048 with Shor's algorithm requires millions of error-corrected logical qubits, which in turn requires billions of physical qubits with current error rates. Heron R2 is a research milestone demonstrating improved hardware quality — it advances the long-term CRQC roadmap but poses no near-term threat. PQC migration is driven by the HNDL threat, not current processor capability.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "quantum-threats", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=quantum-threats"
+    },
+    {
+      "id": "quiz-quantum-threats-7",
+      "source": "quiz",
+      "title": "Quiz: quantum-threats",
+      "content": "Quiz Category: quantum-threats\n\nQ: Given IBM's Kookaburra (1,386-qubit, 2026) and Microsoft's Majorana 1 (topological, 2025) progress, how should a CISO update their CRQC risk timeline estimate?\n  A) These processors are CRQCs; RSA and ECC are already broken — emergency migration required\n  B) These processors are not CRQCs; no update to risk timelines is needed\n  C) These milestones represent accelerating hardware progress but not imminent CRQC capability — they reinforce the urgency of beginning PQC migration now rather than by 2030\n  D) CRQC risk is zero until a 1-million qubit processor is announced\nAnswer: C\nExplanation: The correct interpretation is nuanced: Kookaburra and Majorana 1 are not CRQCs — neither can break RSA or ECC today. However, they represent consistent hardware progress across multiple competing architectures (superconducting, topological), reducing uncertainty about whether quantum computing will scale. The appropriate CISO response is to treat these as reinforcing signals that PQC migration timelines must be treated seriously: organizations with 10+ year system lifespans must begin migration now, not wait for a CRQC announcement. The HNDL (Harvest Now Decrypt Later) threat means data intercepted today may be decrypted by a future CRQC — making migration urgency independent of current processor capability.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "quantum-threats", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=quantum-threats"
+    },
+    {
       "id": "quiz-hybrid-crypto-0",
       "source": "quiz",
       "title": "Quiz: hybrid-crypto",
@@ -20932,6 +21175,51 @@
       "content": "Quiz Category: Stateful Signatures\n\nQ: Which of the following are critical requirements for safely deploying stateful hash-based signatures? (Select all that apply)\n  A) Secure persistent state storage that survives reboots and crashes\n  B) Prevention of state rollback or duplication (e.g., VM snapshots)\n  C) Atomic state updates to prevent index reuse during power failures\n  D) Using each signing key for at most 10 signatures\nAnswer: A|B|C\nExplanation: Safe stateful signature deployment requires: secure persistent storage (state must survive reboots), prevention of state rollback (VM cloning/snapshots can duplicate state leading to key reuse), and atomic state updates (power failure during signing could leave state inconsistent). There is no limit of 10 signatures — the limit is determined by tree height (e.g., 2^20 for height 20).\n\nQ: What is the approximate signature size for LMS with Winternitz parameter w=8 and tree height h=25, and why does w affect signature size?\n  A) ~1KB — smaller w means smaller signatures\n  B) ~2-5KB — the Winternitz parameter w trades signature size for signing speed\n  C) ~100 bytes — similar to ECDSA\n  D) ~50KB — stateful signatures are always very large\nAnswer: B\nExplanation: LMS signature sizes range from approximately 2-5KB depending on the Winternitz parameter (w). A larger w reduces signature size but increases signing and verification time (more hash computations). A smaller w produces larger signatures but faster operations. This is a configurable trade-off specific to the deployment's requirements.",
       "category": "quiz",
       "metadata": { "quizCategory": "stateful-signatures", "questionCount": "2" },
+      "deepLink": "/learn/quiz?category=stateful-signatures"
+    },
+    {
+      "id": "quiz-stateful-signatures-4",
+      "source": "quiz",
+      "title": "Quiz: Stateful Signatures",
+      "content": "Quiz Category: Stateful Signatures\n\nQ: What does RFC 9858 (published 2025) add to the existing LMS standard?\n  A) RFC 9858 replaces LMS with a new NTRU-based signature scheme\n  B) RFC 9858 defines extended LMS parameter sets using SHA-256/192 and SHAKE256 hash functions, reducing signature sizes by 35–40%\n  C) RFC 9858 deprecates LMS in favor of ML-DSA for all use cases\n  D) RFC 9858 adds quantum-safe key encapsulation to LMS\nAnswer: B\nExplanation: RFC 9858 extends the LMS standard (originally RFC 8554) with new parameter sets that use SHA-256/192 (truncated to 192 bits) and SHAKE256/192 hash functions. By reducing the internal hash output from 256 bits to 192 bits, RFC 9858 parameter sets achieve approximately 35–40% smaller signatures while maintaining security adequate for most use cases. This is particularly valuable for firmware signing and SUIT manifests where constrained devices have bandwidth limits.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "stateful-signatures", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=stateful-signatures"
+    },
+    {
+      "id": "quiz-stateful-signatures-5",
+      "source": "quiz",
+      "title": "Quiz: Stateful Signatures",
+      "content": "Quiz Category: Stateful Signatures\n\nQ: What is the security tradeoff when using RFC 9858's SHA-256/192 LMS parameter sets instead of the original SHA-256/256 parameter sets?\n  A) No security reduction — SHA-256/192 provides identical security to SHA-256/256\n  B) Security is reduced from approximately 128-bit to approximately 96-bit — acceptable for most practical applications but not for national security systems\n  C) SHA-256/192 is actually more secure because truncation removes weak bits\n  D) RFC 9858 parameter sets are only usable for verification, not signing\nAnswer: B\nExplanation: Truncating SHA-256 from 256 bits to 192 bits reduces collision resistance from ~128-bit security to ~96-bit security. For most commercial firmware signing use cases, 96-bit security provides a comfortable margin above practical attack thresholds for decades. However, CNSA 2.0 and national security system standards require full 128-bit post-quantum security minimums — so RFC 9858 truncated parameter sets are inappropriate for NSS contexts. Organizations should select parameter sets based on their security policy's minimum security level requirements.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "stateful-signatures", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=stateful-signatures"
+    },
+    {
+      "id": "quiz-stateful-signatures-6",
+      "source": "quiz",
+      "title": "Quiz: Stateful Signatures",
+      "content": "Quiz Category: Stateful Signatures\n\nQ: What does RFC 9802 (published 2025) standardize?\n  A) A new lattice-based signature algorithm for X.509 certificates\n  B) The use of HSS (Hierarchical Signature System) and XMSS stateful hash-based signatures in X.509 PKI certificates\n  C) A replacement for RSA in TLS certificate chains using LMS\n  D) Composite certificates combining ML-DSA with classical signatures\nAnswer: B\nExplanation: RFC 9802 defines how to use HSS/LMS (Hierarchical Signature System, RFC 8554) and XMSS/XMSS^MT (RFC 8391) public keys and signatures within X.509 certificates and certification paths. This allows stateful hash-based signature schemes — already mandated by CNSA 2.0 for firmware signing — to be used in PKI infrastructure for code signing certificates, timestamping authorities, and other long-lived certificate use cases where the stateful key management requirements are operationally feasible.\n\nQ: True or False: RFC 9802 makes XMSS and HSS viable for TLS web server certificates because session counts are low enough to manage stateful key state.\nAnswer: B\nExplanation: False. XMSS and HSS have a fixed maximum signature count (e.g., XMSS with height h=20 supports 2^20 ≈ 1 million signatures). A busy TLS web server serving millions of connections per day would exhaust a high-tree XMSS key in hours, requiring complex distributed key state management to prevent reuse. RFC 9802 is primarily targeted at lower-volume use cases: code signing CAs, timestamping authorities, firmware signing pipelines, and document signing services where signature counts are manageable and key state can be reliably tracked.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "stateful-signatures", "questionCount": "2" },
+      "deepLink": "/learn/quiz?category=stateful-signatures"
+    },
+    {
+      "id": "quiz-stateful-signatures-7",
+      "source": "quiz",
+      "title": "Quiz: Stateful Signatures",
+      "content": "Quiz Category: Stateful Signatures\n\nQ: An organization uses LMS with h=15 (32,768 signatures) for firmware signing. After deploying RFC 9858 SHA-256/192 parameter sets, what operational change is required?\n  A) No operational change — SHA-256/192 parameter sets use the same key state counter as SHA-256/256\n  B) The key state counter must now be tracked separately per hash function variant to prevent cross-parameter reuse\n  C) The organization must re-key more frequently because SHA-256/192 reduces the maximum signature count\n  D) RFC 9858 parameter sets automatically reset the signature counter on upgrade\nAnswer: B\nExplanation: RFC 9858 parameter sets (SHA-256/192, SHAKE256/192) are distinct LMS algorithm variants with separate algorithm identifiers. A key generated under SHA-256/256 parameters cannot be used with SHA-256/192 parameters — they produce different public keys. When deploying RFC 9858 parameter sets, organizations must generate new key pairs and track state independently from existing SHA-256/256 keys. The signature counter (OTS index) is intrinsic to the key and does not carry over between parameter sets.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "stateful-signatures", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=stateful-signatures"
+    },
+    {
+      "id": "quiz-stateful-signatures-8",
+      "source": "quiz",
+      "title": "Quiz: Stateful Signatures",
+      "content": "Quiz Category: Stateful Signatures\n\nQ: For a secure software update system signing 10,000 firmware packages per year for embedded devices, which LMS configuration optimally balances RFC 9858 compactness with long-term key lifetime?\n  A) XMSS with h=20 — provides infinite signatures without state management\n  B) LMS with h=25 SHA-256/256 — 33 million signatures, maximum key lifetime\n  C) LMS with h=20 SHA-256/192 (RFC 9858) — 1 million signatures (~100-year lifetime at this rate) with 35% smaller signatures\n  D) LMS with h=10 SHA-256/192 — simplest configuration regardless of signature count\nAnswer: C\nExplanation: At 10,000 signatures/year, LMS h=20 provides 2^20 ≈ 1 million signatures — approximately 100 years of capacity. RFC 9858's SHA-256/192 parameter set reduces signature size by ~35% (from ~8 KB to ~5 KB for h=20, w=8), meaningfully reducing OTA firmware update payload sizes. This is appropriate for commercial firmware signing where 96-bit security is sufficient. XMSS does not provide infinite signatures — it has the same structural limit. h=25 is overkill (33 million signatures ≈ 3,300 years at this rate). h=10 (1,024 signatures ≈ 37 days) requires frequent rekeying.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "stateful-signatures", "questionCount": "1" },
       "deepLink": "/learn/quiz?category=stateful-signatures"
     },
     {
