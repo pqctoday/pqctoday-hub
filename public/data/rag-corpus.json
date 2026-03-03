@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-03-02T04:10:22.490Z",
-  "chunkCount": 2125,
+  "generatedAt": "2026-03-03T01:10:14.942Z",
+  "chunkCount": 2174,
   "chunks": [
     {
       "id": "glossary-0",
@@ -2587,22 +2587,22 @@
       "metadata": {
         "acronym": "",
         "complexity": "intermediate",
-        "relatedModule": "/learn/key-management"
+        "relatedModule": "/learn/kms-pqc"
       },
-      "deepLink": "/learn/key-management"
+      "deepLink": "/learn/kms-pqc"
     },
     {
       "id": "glossary-242",
       "source": "glossary",
       "title": "PKCS#11",
-      "content": "Term: PKCS#11\nDefinition: A standard API (also called Cryptoki) for accessing cryptographic hardware like Hardware Security Modules (HSMs), smart cards, and tokens.\nTechnical Note: Defines C-language function calls for key generation, signing, encryption, and object management. PQC algorithm support in PKCS#11 is being standardized by OASIS.\nCategory: standard | Complexity: intermediate",
+      "content": "Term: PKCS#11\nDefinition: A standard API (also called Cryptoki) for accessing cryptographic hardware like Hardware Security Modules (HSMs), smart cards, and tokens.\nTechnical Note: Defines C-language function calls for key generation, signing, encryption, and object management. PKCS#11 v3.2 adds CKM_ML_KEM_* and CKM_ML_DSA_* mechanisms for PQC.\nCategory: standard | Complexity: intermediate",
       "category": "standard",
       "metadata": {
         "acronym": "",
         "complexity": "intermediate",
-        "relatedModule": "/learn/key-management"
+        "relatedModule": "/learn/hsm-pqc"
       },
-      "deepLink": "/learn/key-management"
+      "deepLink": "/learn/hsm-pqc"
     },
     {
       "id": "glossary-243",
@@ -2610,12 +2610,8 @@
       "title": "Key Lifecycle",
       "content": "Term: Key Lifecycle\nDefinition: The complete management process for cryptographic keys from creation to destruction, typically comprising 7 stages: generation, storage, activation, rotation, deactivation, compromise response, and destruction.\nTechnical Note: Defined by NIST SP 800-57. PQC migration adds complexity — organizations must plan parallel classical and PQC key lifecycles during the transition period.\nCategory: concept | Complexity: beginner",
       "category": "concept",
-      "metadata": {
-        "acronym": "",
-        "complexity": "beginner",
-        "relatedModule": "/learn/key-management"
-      },
-      "deepLink": "/learn/key-management"
+      "metadata": { "acronym": "", "complexity": "beginner", "relatedModule": "/learn/kms-pqc" },
+      "deepLink": "/learn/kms-pqc"
     },
     {
       "id": "glossary-244",
@@ -7246,7 +7242,7 @@
       "id": "library-PKCS11-V3-OASIS",
       "source": "library",
       "title": "PKCS #11 Cryptographic Token Interface Standard Version 3.0",
-      "content": "Title: PKCS #11 Cryptographic Token Interface Standard Version 3.0\nDescription: PKCS#11 v3.0 is the HSM programming interface standard. It adds CKM_HKDF_DERIVE and CKM_HKDF_KEY_GEN mechanisms for TLS 1.3 and CKM_SP800_108_COUNTER_KDF / FEEDBACK_KDF / DOUBLE_PIPELINE_KDF for NIST SP 800-108 derivation. Essential for HSM-based QKD integration workflows where QKD secrets are imported as non-extractable keys and used to derive session keys.\nType: Protocol | Status: OASIS Standard\nAuthors: OASIS PKCS11 Technical Committee\nAlgorithm Family: Symmetric; QKD\nSecurity Levels: N/A\nMigration Urgency: High\nIndustries: HSM Vendors; Government; Finance; PKI\nRegion: Global\nPublished: 2020-06-01 | Updated: 2020-06-01\nRelated Algorithms: [FrodoKEM-640](/algorithms?highlight=frodokem-640), [FrodoKEM-976](/algorithms?highlight=frodokem-976), [FrodoKEM-1344](/algorithms?highlight=frodokem-1344)",
+      "content": "Title: PKCS #11 Cryptographic Token Interface Standard Version 3.0\nDescription: PKCS#11 v3.0 is the HSM programming interface standard. It adds CKM_HKDF_DERIVE and CKM_HKDF_KEY_GEN mechanisms for TLS 1.3 and CKM_SP800_108_COUNTER_KDF / FEEDBACK_KDF / DOUBLE_PIPELINE_KDF for NIST SP 800-108 derivation. Essential for HSM-based QKD integration workflows where QKD secrets are imported as non-extractable keys and used to derive session keys. Superseded by PKCS#11 v3.1 and v3.2.\nType: Protocol | Status: OASIS Standard\nAuthors: OASIS PKCS11 Technical Committee\nAlgorithm Family: Symmetric; QKD\nSecurity Levels: N/A\nMigration Urgency: High\nIndustries: HSM Vendors; Government; Finance; PKI\nRegion: Global\nPublished: 2020-06-01 | Updated: 2020-06-01\nRelated Algorithms: [FrodoKEM-640](/algorithms?highlight=frodokem-640), [FrodoKEM-976](/algorithms?highlight=frodokem-976), [FrodoKEM-1344](/algorithms?highlight=frodokem-1344)",
       "category": "Protocol",
       "metadata": {
         "referenceId": "PKCS11-V3-OASIS",
@@ -7254,6 +7250,32 @@
         "algorithmFamily": "Symmetric; QKD"
       },
       "deepLink": "/library?ref=PKCS11-V3-OASIS"
+    },
+    {
+      "id": "library-PKCS11-V31-OASIS",
+      "source": "library",
+      "title": "PKCS #11 Specification Version 3.1 (OASIS Standard)",
+      "content": "Title: PKCS #11 Specification Version 3.1 (OASIS Standard)\nDescription: PKCS#11 v3.1 adds LMS and HSS stateful hash-based signature mechanisms (CKM_HSS_KEY_PAIR_GEN, CKM_HSS) for quantum-resistant code signing and firmware verification. Also adds EdDSA mechanisms (CKM_EDDSA) and incremental MAC operations. First PKCS#11 version with any PQC algorithm support.\nType: Protocol | Status: OASIS Standard\nAuthors: OASIS PKCS11 Technical Committee\nAlgorithm Family: Hash-based\nSecurity Levels: L1,L3,L5\nMigration Urgency: High\nIndustries: HSM Vendors; Government; Finance; PKI\nRegion: Global\nPublished: 2023-07-23 | Updated: 2023-07-23",
+      "category": "Protocol",
+      "metadata": {
+        "referenceId": "PKCS11-V31-OASIS",
+        "url": "https://docs.oasis-open.org/pkcs11/pkcs11-spec/v3.1/os/pkcs11-spec-v3.1-os.html",
+        "algorithmFamily": "Hash-based"
+      },
+      "deepLink": "/library?ref=PKCS11-V31-OASIS"
+    },
+    {
+      "id": "library-PKCS11-V32-OASIS",
+      "source": "library",
+      "title": "PKCS #11 Specification Version 3.2 (Committee Specification Draft)",
+      "content": "Title: PKCS #11 Specification Version 3.2 (Committee Specification Draft)\nDescription: PKCS#11 v3.2 adds post-quantum cryptography mechanisms: ML-KEM (CKM_ML_KEM 0x00000017, CKM_ML_KEM_KEY_PAIR_GEN 0x0000000f), ML-DSA (CKM_ML_DSA 0x0000001d, CKM_ML_DSA_KEY_PAIR_GEN 0x0000001c, CKM_HASH_ML_DSA_*), and SLH-DSA (CKM_SLH_DSA, CKM_SLH_DSA_KEY_PAIR_GEN). Introduces C_EncapsulateKey() and C_DecapsulateKey() functions for KEM operations. New key types: CKK_ML_KEM (0x49), CKK_ML_DSA (0x4a), CKK_SLH_DSA (0x4b). New attributes: CKA_PARAMETER_SET, CKA_ENCAPSULATE, CKA_DECAPSULATE, CKA_SEED.\nType: Protocol | Status: Committee Specification Draft\nAuthors: OASIS PKCS11 Technical Committee\nAlgorithm Family: Lattice; Hash-based\nSecurity Levels: L1,L2,L3,L5\nMigration Urgency: High\nIndustries: HSM Vendors; Government; Finance; PKI; Defense\nRegion: Global\nPublished: 2025-04-16 | Updated: 2025-04-16",
+      "category": "Protocol",
+      "metadata": {
+        "referenceId": "PKCS11-V32-OASIS",
+        "url": "https://docs.oasis-open.org/pkcs11/pkcs11-spec/v3.2/csd01/pkcs11-spec-v3.2-csd01.html",
+        "algorithmFamily": "Lattice; Hash-based"
+      },
+      "deepLink": "/library?ref=PKCS11-V32-OASIS"
     },
     {
       "id": "library-BIP-32",
@@ -8827,6 +8849,32 @@
         "algorithmFamily": "Lattice-based"
       },
       "deepLink": "/library?ref=BIS-OTHP107"
+    },
+    {
+      "id": "library-RFC-9763",
+      "source": "library",
+      "title": "Related Certificates for Use in Multiple Authentications within a Protocol",
+      "content": "Title: Related Certificates for Use in Multiple Authentications within a Protocol\nDescription: Defines a CSR attribute (relatedCertRequest) and X.509 extension (RelatedCertificate) that bind two certificates to the same end entity. Enables non-composite hybrid authentication using separate traditional and PQC certificates (the catalyst approach). Published as RFC 9763.\nType: PKI/Certificate | Status: Proposed Standard\nAuthors: IETF LAMPS; Alison Becker (NSA); Rebecca Guthrie (NSA); Michael Jenkins (NSA)\nAlgorithm Family: N/A (certificate framework)\nSecurity Levels: N/A\nMigration Urgency: High\nIndustries: Gov; Regulated industries; Finance; IT\nRegion: USA; Global\nPublished: 2022-03-21 | Updated: 2025-06-13\nRelated Algorithms: [FrodoKEM-640](/algorithms?highlight=frodokem-640), [FrodoKEM-976](/algorithms?highlight=frodokem-976), [FrodoKEM-1344](/algorithms?highlight=frodokem-1344)",
+      "category": "PKI/Certificate",
+      "metadata": {
+        "referenceId": "RFC-9763",
+        "url": "https://www.rfc-editor.org/rfc/rfc9763.html",
+        "algorithmFamily": "N/A (certificate framework)"
+      },
+      "deepLink": "/library?ref=RFC-9763"
+    },
+    {
+      "id": "library-draft-bonnell-lamps-chameleon-certs-07",
+      "source": "library",
+      "title": "A Mechanism for Encoding Differences in Paired Certificates (Chameleon Certs)",
+      "content": "Title: A Mechanism for Encoding Differences in Paired Certificates (Chameleon Certs)\nDescription: Defines an X.509v3 extension encoding differences between two paired certificates. Allows a relying party to reconstruct both traditional and PQC certificates from a single cert. Alternative to composite and related-certificate (RFC 9763) hybrid approaches. Backed by DigiCert and Entrust.\nType: PKI/Certificate | Status: Active Internet-Draft\nAuthors: IETF LAMPS; Corey Bonnell (DigiCert); John Gray (Entrust); D. Hook (KeyFactor); Tomofumi Okubo (DigiCert); Mike Ounsworth (Entrust)\nAlgorithm Family: N/A (certificate framework)\nSecurity Levels: N/A\nMigration Urgency: High\nIndustries: Gov; Regulated industries; Finance; IT; Web PKI\nRegion: Global\nPublished: 2023-05-31 | Updated: 2025-10-18\nRelated Algorithms: [FrodoKEM-640](/algorithms?highlight=frodokem-640), [FrodoKEM-976](/algorithms?highlight=frodokem-976), [FrodoKEM-1344](/algorithms?highlight=frodokem-1344)",
+      "category": "PKI/Certificate",
+      "metadata": {
+        "referenceId": "draft-bonnell-lamps-chameleon-certs-07",
+        "url": "https://datatracker.ietf.org/doc/draft-bonnell-lamps-chameleon-certs/",
+        "algorithmFamily": "N/A (certificate framework)"
+      },
+      "deepLink": "/library?ref=draft-bonnell-lamps-chameleon-certs-07"
     },
     {
       "id": "algo-ml-kem-512",
@@ -15225,13 +15273,22 @@
       "deepLink": "/learn/pki-workshop"
     },
     {
-      "id": "module-key-management",
+      "id": "module-kms-pqc",
       "source": "modules",
-      "title": "Key Management & HSM",
-      "content": "Learning Module: Key Management & HSM\nDescription: Key lifecycle management, HSM operations via PKCS#11, and enterprise PQC key rotation planning.\nDuration: 60 min\nURL: /learn/key-management",
+      "title": "KMS & PQC Key Management",
+      "content": "Learning Module: KMS & PQC Key Management\nDescription: PQC key management patterns: envelope encryption with ML-KEM, hybrid key wrapping, multi-provider rotation planning.\nDuration: 90 min\nURL: /learn/kms-pqc",
       "category": "learning",
-      "metadata": { "moduleId": "key-management", "duration": "60 min" },
-      "deepLink": "/learn/key-management"
+      "metadata": { "moduleId": "kms-pqc", "duration": "90 min" },
+      "deepLink": "/learn/kms-pqc"
+    },
+    {
+      "id": "module-hsm-pqc",
+      "source": "modules",
+      "title": "HSM & PQC Operations",
+      "content": "Learning Module: HSM & PQC Operations\nDescription: Hardware Security Module operations for PQC: PKCS#11 v3.2, vendor comparison, firmware migration, and FIPS 140-3 validation.\nDuration: 90 min\nURL: /learn/hsm-pqc",
+      "category": "learning",
+      "metadata": { "moduleId": "hsm-pqc", "duration": "90 min" },
+      "deepLink": "/learn/hsm-pqc"
     },
     {
       "id": "module-stateful-signatures",
@@ -15378,6 +15435,15 @@
       "deepLink": "/learn/compliance-strategy"
     },
     {
+      "id": "module-data-asset-sensitivity",
+      "source": "modules",
+      "title": "Data & Asset Sensitivity",
+      "content": "Learning Module: Data & Asset Sensitivity\nDescription: Classify organizational data assets, map compliance obligations (GDPR, HIPAA, DORA, NIS2), apply NIST RMF/ISO 27005/FAIR risk methodologies, and generate a PQC migration priority map.\nDuration: 75 min\nURL: /learn/data-asset-sensitivity",
+      "category": "learning",
+      "metadata": { "moduleId": "data-asset-sensitivity", "duration": "75 min" },
+      "deepLink": "/learn/data-asset-sensitivity"
+    },
+    {
       "id": "module-summary-api-security-jwt",
       "source": "module-summaries",
       "title": "API Security & JWT with PQC Module",
@@ -15415,6 +15481,14 @@
       "category": "learning-module",
       "metadata": { "moduleId": "crypto-agility", "moduleName": "Crypto Agility" },
       "deepLink": "/learn/crypto-agility"
+    },
+    {
+      "id": "module-summary-dataassetsensitivity",
+      "source": "module-summaries",
+      "title": "Data & Asset Sensitivity Assessment",
+      "content": "---\nmodule_id: data-asset-sensitivity\ntitle: Data & Asset Sensitivity Assessment\ntrack: Strategy\ndifficulty: intermediate\nduration: 75 min\nworkshop_steps: 5\n---\n\n# Data & Asset Sensitivity Assessment\n\n## Topics Covered\n\n- Four-tier data sensitivity classification model (Low / Medium / High / Critical)\n- Asset type taxonomy: data stores, key material, communications, credentials, code artifacts\n- HNDL (Harvest Now, Decrypt Later) risk windows — formula: CRQC arrival − retention years\n- Global data protection regulations: GDPR, HIPAA, PCI DSS, CCPA/CPRA, NIS2, DORA, FIPS 140-3, CNSA 2.0, NIST IR 8547, ISO 27001\n- Industry-specific compliance obligation mapping across 16 sectors\n- NIST Risk Management Framework (RMF) SP 800-37 — 6-step process: Prepare → Categorize → Select → Implement → Assess → Monitor\n- ISO 27005 risk assessment — threat scenario modeling, 5×5 likelihood × consequence matrix, treatment options\n- FAIR model (Factor Analysis of Information Risk) — TEF, vulnerability, loss event frequency, annualized loss expectancy in USD\n- DORA/NIS2 operational resilience pillars — 5 ICT risk management pillars with gap scoring\n- PQC algorithm selection by sensitivity tier and asset type (ML-KEM, ML-DSA, hybrid combinations)\n- Composite risk scoring with configurable weights (sensitivity, retention, compliance, HNDL window)\n- Migration effort estimation and priority band assignment (Critical / High / Medium / Low)\n\n## Workshop\n\n1. Asset Inventory Builder — Create and classify organizational data assets with sensitivity tiers, asset types, retention periods, and HNDL risk indicators\n2. Compliance Matrix — Map compliance mandates to assets by industry, filter by region (US Federal / EU / Industry-Specific / Global), track obligation urgency and earliest deadline\n3. Risk Methodology Explorer — Apply all four methodologies (NIST RMF, ISO 27005, FAIR, DORA/NIS2) to selected assets; compare outputs in a unified summary table\n4. Sensitivity Scoring Engine — Configure composite scoring weights, view per-asset score breakdowns, sort by priority band\n5. PQC Migration Priority Map — Review prioritized migration recommendations with PQC algorithm assignments, compliance mandates, migration effort, and exportable Markdown report\n\n## Key Standards\n\n- NIST SP 800-37 (Risk Management Framework)\n- NIST SP 800-60 (Information Type Sensitivity)\n- NIST SP 800-53 (Security Controls)\n- FIPS 199 (Information Categorization)\n- FIPS 200 (Minimum Security Requirements)\n- ISO 27001 (Information Security Management)\n- ISO 27005 (Information Security Risk Management)\n- FAIR (Factor Analysis of Information Risk)\n- DORA (Digital Operational Resilience Act — EU)\n- NIS2 Directive (EU Network and Information Security)\n- GDPR (EU General Data Protection Regulation)\n- HIPAA (US Health Insurance Portability and Accountability Act)\n- PCI DSS v4.0 (Payment Card Industry Data Security Standard)\n- CCPA/CPRA (California Consumer Privacy Act)\n- CNSA 2.0 (NSA Commercial National Security Algorithm Suite)\n- NIST IR 8547 (PQC Transition Guidance)\n- FIPS 140-3 (Cryptographic Module Validation)",
+      "category": "learning-module",
+      "metadata": { "moduleId": "", "moduleName": "DataAssetSensitivity" }
     },
     {
       "id": "module-summary-digital-assets",
@@ -15462,10 +15536,18 @@
       "deepLink": "/learn/5g-security"
     },
     {
+      "id": "module-summary-hsmpqc",
+      "source": "module-summaries",
+      "title": "HSM & PQC Operations",
+      "content": "---\nmodule_id: hsm-pqc\ntitle: HSM & PQC Operations\ntrack: Infrastructure\ndifficulty: advanced\nduration: 90 min\nworkshop_steps: 4\n---\n\n# HSM & PQC Operations\n\n## Topics Covered\n\n- HSM architecture for PQC (FIPS 140-3 levels, on-prem vs cloud side-by-side)\n- PKCS#11 v3.2 PQC mechanisms (CKM*ML_KEM*_, CKM*ML_DSA*_, CKK\\_\\* key types)\n- On-prem HSM deep dive (Thales Luna v7.9.2, Entrust nShield v13.8.0, Utimaco Quantum Protect)\n- Cloud HSM deep dive (AWS CloudHSM, Azure Dedicated HSM, Google Cloud HSM)\n- Side-channel attack surfaces (NTT power analysis, EM emanation, fault injection, ML-DSA hedged signing)\n- HSM firmware migration (upgrade paths, dual-partition strategy, FIPS re-validation)\n- Stateful signature state management (LMS/HSS NVRAM persistence, CNSA 2.0)\n- FIPS 140-3 and ACVP/CAVP PQC validation tracking\n\n## Workshop\n\n1. PKCS#11 PQC Simulator — 8 operations with classical comparison and on-prem vs cloud notes\n2. Vendor Comparison — Interactive matrix with PQC Maturity Score (0-100)\n3. HSM Migration Planner — 4-phase firmware migration wizard\n4. FIPS Validation Tracker — CMVP/CAVP PQC validation status per vendor\n\n## Key Standards\n\n- FIPS 140-3 (Cryptographic Module Validation)\n- PKCS#11 v3.2 (OASIS PQC draft)\n- FIPS 203/204/205 (ML-KEM, ML-DSA, SLH-DSA)\n- NIST SP 800-208 (Stateful Hash-Based Signatures)\n- CNSA 2.0 (NSA)",
+      "category": "learning-module",
+      "metadata": { "moduleId": "", "moduleName": "HsmPqc" }
+    },
+    {
       "id": "module-summary-hybrid-crypto",
       "source": "module-summaries",
       "title": "Hybrid and Composite Cryptography",
-      "content": "# Hybrid and Composite Cryptography\n\n## Overview\n\nThe Hybrid Cryptography module teaches how to combine classical and post-quantum algorithms for defense in depth during the quantum transition period. It covers why hybrid approaches are recommended (or mandated) by agencies like ANSSI and NIST, explains three X.509 certificate format approaches (pure PQC, composite dual-algorithm, and parallel/alt-sig), details hybrid KEM construction (X25519MLKEM768), and describes composite signature structures. The module addresses the fundamental dilemma that PQC algorithms are newer and less battle-tested than classical ones, yet HNDL threats make waiting dangerous.\n\n## Key Concepts\n\n- **Hybrid cryptography** combines classical and PQC algorithms so that security holds even if one component is broken\n- **ANSSI mandate** requires hybrid mode during the PQC transition; PQC-only is not acceptable until algorithms mature (exception: hash-based signatures like SLH-DSA, LMS, XMSS may be standalone)\n- **NIST SP 800-227** recommends hybrid key exchange for TLS and other protocols during the transition\n- **Three certificate format approaches**:\n  - **Pure PQC** — standard single-algorithm X.509 using PQC signatures; ML-DSA OIDs standardized in RFC 9881, SLH-DSA/LMS in RFC 9802; ready today in OpenSSL 3.x\n  - **Composite (dual-algorithm)** — single composite OID identifies the algorithm pair; both signatures must verify; defined in draft-ietf-lamps-pq-composite-sigs-14; strongest security model\n  - **Parallel (alt-sig)** — PQC primary signature with classical key/signature in X.509 extensions (OIDs 2.5.29.73/74); maximizes backward compatibility\n- **X25519MLKEM768** — the leading hybrid KEM combining Curve25519 ECDH with ML-KEM-768; already deployed in Chrome, Cloudflare, and AWS; combined shared secret derived via KDF(X25519_ss || ML-KEM_ss)\n- **Other hybrid KEM variants**: SecP256r1MLKEM768 (P-256 + ML-KEM-768, FIPS-approved classical curve), SecP384r1MLKEM1024 (P-384 + ML-KEM-1024, NIST Level 5)\n- **Composite signatures** combine ML-DSA with ECDSA or Ed25519 in a single operation; both must verify; single OID simplifies handling; prevents downgrade attacks\n- **Size trade-offs**: composite signatures are approximately 3.4 KB versus 72 bytes for ECDSA alone\n\n## Workshop / Interactive Activities\n\nThe workshop has 3 hands-on steps:\n\n1. **Hybrid Key Generation** — generate and compare classical, pure PQC, and hybrid key pairs, observing key size differences across categories\n2. **Hybrid Encryption and Signing Demo** — perform KEM encapsulation and digital signature operations in hybrid mode, comparing classical and PQC outputs\n3. **Composite Certificate Viewer** — inspect and compare classical X.509 certificates, pure PQC certificates (RFC 9881), and composite certificate formats with ASN.1 structure visualization\n\n## Related Standards\n\n- RFC 9881 (ML-DSA OIDs in X.509)\n- RFC 9802 (SLH-DSA and LMS OIDs in X.509)\n- draft-ietf-lamps-pq-composite-sigs (Composite Signatures)\n- NIST SP 800-227 (Recommendations for Key-Encapsulation Mechanisms)\n- FIPS 203 (ML-KEM)\n- ANSSI Hybrid Cryptography Guidance",
+      "content": "# Hybrid and Composite Cryptography\n\n## Overview\n\nThe Hybrid Cryptography module teaches how to combine classical and post-quantum algorithms for defense in depth during the quantum transition period. It covers why hybrid approaches are recommended (or mandated) by agencies like ANSSI and NIST, explains three X.509 certificate format approaches (pure PQC, composite dual-algorithm, and parallel/alt-sig), details hybrid KEM construction (X25519MLKEM768), and describes composite signature structures. The module addresses the fundamental dilemma that PQC algorithms are newer and less battle-tested than classical ones, yet HNDL threats make waiting dangerous.\n\n## Key Concepts\n\n- **Hybrid cryptography** combines classical and PQC algorithms so that security holds even if one component is broken\n- **ANSSI mandate** requires hybrid mode during the PQC transition; PQC-only is not acceptable until algorithms mature (exception: hash-based signatures like SLH-DSA, LMS, XMSS may be standalone)\n- **NIST SP 800-227** recommends hybrid key exchange for TLS and other protocols during the transition\n- **Three certificate format approaches**:\n  - **Pure PQC** — standard single-algorithm X.509 using PQC signatures; ML-DSA OIDs standardized in RFC 9881, SLH-DSA/LMS in RFC 9802; ready today in OpenSSL 3.x\n  - **Composite (dual-algorithm)** — single composite OID identifies the algorithm pair; both signatures must verify; defined in draft-ietf-lamps-pq-composite-sigs-14; strongest security model\n  - **Parallel (alt-sig)** — PQC primary signature with classical key/signature in X.509 extensions (OIDs 2.5.29.73/74); maximizes backward compatibility\n- **X25519MLKEM768** — the leading hybrid KEM combining Curve25519 ECDH with ML-KEM-768; already deployed in Chrome, Cloudflare, and AWS; combined shared secret derived via KDF(X25519_ss || ML-KEM_ss)\n- **Other hybrid KEM variants**: SecP256r1MLKEM768 (P-256 + ML-KEM-768, FIPS-approved classical curve), SecP384r1MLKEM1024 (P-384 + ML-KEM-1024, NIST Level 5)\n- **Composite signatures** combine ML-DSA with ECDSA or Ed25519 in a single operation; both must verify; single OID simplifies handling; prevents downgrade attacks\n- **Size trade-offs**: composite signatures are approximately 3.4 KB versus 72 bytes for ECDSA alone\n\n## Workshop / Interactive Activities\n\nThe workshop has 5 hands-on steps:\n\n1. **Hybrid Key Generation** — generate and compare classical, pure PQC, and hybrid key pairs, observing key size differences across categories\n2. **Hybrid Encryption and Signing Demo** — perform KEM encapsulation and digital signature operations in hybrid mode, comparing classical and PQC outputs\n3. **Hybrid CA Setup** — set up a hybrid certificate authority with both classical and PQC keys\n4. **Hybrid Certificate Formats** — generate and compare four X.509 hybrid approaches: Pure PQC (ML-DSA-65), Composite (ML-DSA-65 + ECDSA), Related Certs (RFC 9763), and Chameleon Certificates\n5. **Certificate Inspector** — deep-dive into generated certificates with Tree, Raw, and Size views; also inspect real IETF Hackathon reference certificates from the pqc-certificates test vector repository\n\n## IETF Reference Certificates\n\nThe Certificate Inspector (Step 5) includes a toggle to view real DER-encoded hybrid certificates from the IETF Hackathon pqc-certificates repository (r5). Four test vectors are embedded:\n\n- **Composite (MLDSA65-ECDSA-P256-SHA512)** — OID 1.3.6.1.5.5.7.6.45, generated by Bouncy Castle; demonstrates composite OID backward incompatibility (OpenSSL shows \"UNKNOWN\")\n- **Catalyst (ECDSA-P256 + ML-DSA-44 alt-sig)** — generated by Bouncy Castle; uses alt-sig extensions 2.5.29.72 (SubjectAltPublicKeyInfo), 2.5.29.73 (AltSignatureAlgorithm), 2.5.29.74 (AltSignatureValue)\n- **Pure ML-DSA-65** — OID 2.16.840.1.101.3.4.3.18, generated by OpenSSL 3.5; reference for FIPS 204 cert format\n- **Chameleon (ECDSA-P256 outer + ML-DSA-44 delta)** — generated by Bouncy Castle; uses DeltaCertificateDescriptor extension 2.16.840.1.114027.80.6.1\n\n## Related Standards\n\n- RFC 9881 (ML-DSA OIDs in X.509)\n- RFC 9802 (SLH-DSA and LMS OIDs in X.509)\n- RFC 9763 (Related Certificates for PKI)\n- draft-ietf-lamps-pq-composite-sigs (Composite Signatures)\n- draft-ietf-lamps-cert-binding-for-multi-auth (Catalyst / alt-sig)\n- draft-bonnell-lamps-chameleon-certs (Chameleon Certificates)\n- NIST SP 800-227 (Recommendations for Key-Encapsulation Mechanisms)\n- FIPS 203 (ML-KEM)\n- FIPS 204 (ML-DSA)\n- ANSSI Hybrid Cryptography Guidance\n- [IETF Hackathon pqc-certificates](https://github.com/IETF-Hackathon/pqc-certificates)",
       "category": "learning-module",
       "metadata": { "moduleId": "hybrid-crypto", "moduleName": "Hybrid Cryptography" },
       "deepLink": "/learn/hybrid-crypto"
@@ -15480,19 +15562,18 @@
       "deepLink": "/learn/iot-ot-pqc"
     },
     {
-      "id": "module-summary-key-management",
+      "id": "module-summary-kmspqc",
       "source": "module-summaries",
-      "title": "Key Management and HSM Module",
-      "content": "# Key Management and HSM Module\n\nThe Key Management and HSM module teaches enterprise cryptographic key lifecycle management, Hardware Security Module (HSM) operations, and the challenges of migrating key infrastructure to post-quantum cryptography. Built around NIST SP 800-57 guidance, the module covers all seven key lifecycle stages, PKCS#11 HSM interfaces, PQC-specific key management challenges (larger keys, algorithm separation, dual-key management), Key Encapsulation Mechanisms (KEMs) vs classical key exchange, stateful vs stateless signature trade-offs, hybrid and composite certificates, key backup and recovery, side-channel considerations, and enterprise KMS architecture.\n\n## Key Concepts\n\n- Seven-stage key lifecycle per NIST SP 800-57: Generation, Distribution, Storage, Usage, Rotation, Archival, and Destruction\n- HSM fundamentals: FIPS 140-3 security levels (Level 1 through Level 4), tamper-resistant hardware boundaries, and the PKCS#11 API (C_GenerateKeyPair, C_Sign, C_Verify, C_WrapKey, C_UnwrapKey)\n- PQC key size explosion: ML-KEM-768 public keys at 1,184 bytes and ML-DSA-65 public keys at 1,952 bytes versus RSA-2048 at 256 bytes\n- Algorithm separation: PQC enforces strict separation between ML-KEM (key establishment only) and ML-DSA (signatures only), unlike RSA which served both purposes\n- KEMs vs key exchange: ML-KEM produces a fixed 32-byte shared secret via Encaps/Decaps (non-interactive), replacing interactive DH/ECDH key exchange; PKCS#11 maps this through C_WrapKey/C_UnwrapKey as a two-step KEK derivation\n- Dual-key management during hybrid transition: every entity needs both classical and PQC key pairs, doubling key inventory and complicating rotation\n- Composite certificates (IETF draft): single certificate with both classical and PQC keys/signatures; both must validate\n- Key backup: M-of-N splitting, HSM cloning for high availability, and quantum-safe key escrow envelopes\n- Side-channel attack surfaces: lattice-based algorithms (NTT, polynomial multiplication) require constant-time implementations; ML-DSA hedged signing mode protects against fault injection\n- HSM PQC readiness: vendor status for Thales Luna 7, Entrust nShield 5, Utimaco, Marvell, AWS CloudHSM, and Azure Dedicated HSM\n\n## Workshop Activities\n\n- **Step 1 -- Key Lifecycle Demo**: Walk through all seven stages of the key lifecycle with PQC impact analysis at each stage\n- **Step 2 -- HSM Simulator**: Step through simulated PKCS#11 operations for PQC key management, including key generation, signing, verification, and wrapping\n- **Step 3 -- Rotation Planner**: Plan a PQC key rotation strategy for a fictional enterprise with 500 certificates, balancing migration timelines and operational constraints\n\n## Related Standards\n\n- NIST SP 800-57 Part 1 Rev 5 (key management recommendations), NIST SP 800-208 (stateful hash-based signatures)\n- FIPS 140-3 (HSM security validation levels), FIPS 204 (ML-DSA), FIPS 205 (SLH-DSA)\n- PKCS#11 (Cryptoki HSM API standard), KMIP (Key Management Interoperability Protocol)\n- CNSA 2.0 (NSA PQC adoption timeline for national security systems)",
+      "title": "KMS & PQC Key Management",
+      "content": "---\nmodule_id: kms-pqc\ntitle: KMS & PQC Key Management\ntrack: Infrastructure\ndifficulty: intermediate\nduration: 90 min\nworkshop_steps: 5\n---\n\n# KMS & PQC Key Management\n\n## Topics Covered\n\n- PQC key management fundamentals (algorithm separation, key size explosion)\n- NIST SP 800-227 KEM guidance for key wrapping\n- Envelope encryption with ML-KEM vs RSA-OAEP\n- Hybrid key wrapping (X25519+ML-KEM-768, P-256+ML-KEM-768, X-Wing)\n- KMS provider PQC landscape (AWS KMS, Google Cloud KMS, Azure Key Vault, HashiCorp Vault, Thales CipherTrust, Fortanix DSM)\n- PQC key rotation strategies and compliance deadlines (CNSA 2.0, NIST IR 8547)\n- Enterprise architecture patterns for multi-cloud PQC key management\n- KMIP v2.1 protocol operations and PQC key type enumerations\n- Cross-provider key sync via KMIP orchestration\n\n## Workshop\n\n1. Key Hierarchy Designer — Interactive 3-level key tree builder\n2. Envelope Encryption Demo — ML-KEM encaps → KDF → AES-KW wrap visualization\n3. Hybrid Key Wrapping — X25519+ML-KEM-768 combiner with provider API mapping\n4. KMS Rotation Planner — Enterprise rotation planning with provider-specific strategies\n5. KMIP Protocol Explorer — KMIP vs provider API comparison, PQC key type mapping, cross-provider sync visualizer, migration readiness checklist\n\n## Key Standards\n\n- NIST SP 800-227 (KEM Recommendations)\n- NIST SP 800-57 (Key Management)\n- FIPS 203 (ML-KEM)\n- FIPS 204 (ML-DSA)\n- FIPS 205 (SLH-DSA)\n- NIST IR 8547 (PQC Transition)\n- CNSA 2.0 (NSA)\n- KMIP v2.1 (OASIS Key Management Interoperability Protocol)",
       "category": "learning-module",
-      "metadata": { "moduleId": "key-management", "moduleName": "Key Management" },
-      "deepLink": "/learn/key-management"
+      "metadata": { "moduleId": "", "moduleName": "KmsPqc" }
     },
     {
       "id": "module-summary-merkle-tree-certs",
       "source": "module-summaries",
       "title": "Merkle Tree Certificates Module",
-      "content": "# Merkle Tree Certificates Module\n\nThis module addresses the certificate bloat problem created by post-quantum digital signatures and teaches how Merkle Tree Certificates (MTCs) solve it. PQC signatures are dramatically larger than classical ones: an ECDSA P-256 signature is 64 bytes while ML-DSA-44 is 2,420 bytes, a 37x increase. A typical PQC TLS certificate chain adds 18-36 KB of overhead, breaking constrained clients and degrading connection setup times. MTCs replace individual per-certificate signatures with a batch-signing approach using Merkle trees, achieving 27–64% size reduction depending on algorithm (62–64% for ML-DSA chains).\n\n## Key Concepts\n\n- **Certificate bloat problem**: PQC signatures (ML-DSA) are 37x larger than ECDSA, causing 18-36 KB TLS chain overhead that breaks constrained clients with 10 KB limits\n- **Merkle tree batch signing**: A Merkle Tree CA (MTCA) collects thousands of certificate assertions as leaves in a binary hash tree using SHA-256 with domain-separation prefixes (0x00 for leaves, 0x01 for internal nodes); only the root hash is signed with the CA's PQC key\n- **Inclusion proofs**: Each certificate holder receives a compact chain of sibling hashes from leaf to root; proof is 736 bytes for a batch of ~4.4 million certificates (23 sibling hashes x 32 bytes)\n- **Verification via hash recomputation**: The relying party hashes the certificate, combines it with each proof sibling up the tree, and checks if the computed root matches the signed root\n- **MTC architecture**: Three roles -- MTCA (builds tree, signs root, distributes proofs), Transparency Service (publishes signed tree roots), and Subscribers (TLS servers presenting proofs)\n- **Tradeoffs**: Clients must sync signed subtrees periodically; not suitable for fully offline verification; revocation uses index-range exclusion lists; trust requires cosigner quorum\n- **IETF standardization**: Originated as draft-davidben-tls-merkle-tree-certs (draft-10, January 2026), adopted by IETF PLANTS working group; authors from Google, Cloudflare, and Geomys\n- **Connection to hash-based signatures**: SLH-DSA (FIPS 205) uses nested Merkle trees internally; LMS and XMSS use Merkle trees for one-time signing key pools; MTCs apply the same principle at the infrastructure level\n\n## Workshop Activities\n\n1. **Build Tree**: Add certificate leaves and build a Merkle tree with SHA-256 hashing interactively\n2. **Inclusion Proof**: Select a leaf and generate its authentication path through the tree\n3. **Verify Proof**: Walk through proof verification step-by-step and test tampering detection\n4. **Size Comparison**: Compare handshake sizes between traditional X.509 chains and Merkle Tree Certificates across different algorithms\n\n## Related Standards\n\n- IETF draft-ietf-plants-merkle-tree-certs (Merkle Tree Certificates)\n- FIPS 205 (SLH-DSA / SPHINCS+)\n- NIST SP 800-208 (LMS and XMSS stateful hash-based signatures)\n- RFC 6962 (Certificate Transparency)\n- Cloudflare + Chrome MTC experiment (October 2025)",
+      "content": "# Merkle Tree Certificates Module\n\nThis module addresses the certificate bloat problem created by post-quantum digital signatures and teaches how Merkle Tree Certificates (MTCs) solve it. PQC signatures are dramatically larger than classical ones: an ECDSA P-256 signature is 64 bytes while ML-DSA-44 is 2,420 bytes, a 37x increase. A typical PQC TLS certificate chain adds 18-36 KB of overhead, breaking constrained clients and degrading connection setup times. MTCs replace individual per-certificate signatures with a batch-signing approach using Merkle trees, achieving 27–64% size reduction depending on algorithm (62–64% for ML-DSA chains).\n\n## Key Concepts\n\n- **Certificate bloat problem**: PQC signatures (ML-DSA) are 37x larger than ECDSA, causing 18-36 KB TLS chain overhead that breaks constrained clients with 10 KB limits\n- **Merkle tree batch signing**: A Merkle Tree CA (MTCA) collects thousands of certificate assertions as leaves in a binary hash tree using SHA-256 with domain-separation prefixes (0x00 for leaves, 0x01 for internal nodes); only the root hash is signed with the CA's PQC key\n- **Inclusion proofs**: Each certificate holder receives a compact chain of sibling hashes from leaf to root; proof is 736 bytes for a batch of ~4.4 million certificates (23 sibling hashes x 32 bytes)\n- **Verification via hash recomputation**: The relying party hashes the certificate, combines it with each proof sibling up the tree, and checks if the computed root matches the signed root\n- **MTC architecture**: Three roles -- MTCA (builds tree, signs root, collects cosignatures, distributes proofs), Transparency Service (serves per-certificate log; signing is per-batch — one cosigner signature covers a subtree of millions of entries), and Authenticating Parties (TLS servers presenting certificate assertions + inclusion proofs)\n- **Tradeoffs**: Clients must sync signed subtrees periodically; not suitable for fully offline verification; revocation uses index-range exclusion lists; trust requires cosigner quorum\n- **IETF standardization**: Originated as draft-davidben-tls-merkle-tree-certs (draft-10, January 2026), adopted by IETF PLANTS working group; authors from Google, Cloudflare, and Geomys\n- **Connection to hash-based signatures**: SLH-DSA (FIPS 205) uses a hyper-tree of XMSS trees internally (with FORS one-time signing at the leaves); LMS and XMSS use Merkle trees for one-time signing key pools; MTCs apply the same principle at the infrastructure level\n- **Signatureless certificates**: Zero embedded signatures — relying parties pre-sync hourly landmark subtrees out-of-band; inclusion proof verified against cached landmark root. Size: ~936 bytes for ML-DSA-44 (92% reduction vs traditional 12,272 bytes)\n\n## Workshop Activities\n\n1. **Build Tree**: Add certificate leaves and build a Merkle tree with SHA-256 hashing interactively\n2. **Inclusion Proof**: Select a leaf and generate its authentication path through the tree\n3. **Verify Proof**: Walk through proof verification step-by-step and test tampering detection\n4. **Size Comparison**: Compare handshake sizes between traditional X.509 chains and Merkle Tree Certificates across different algorithms\n\n## Related Standards\n\n- IETF draft-ietf-plants-merkle-tree-certs (Merkle Tree Certificates)\n- FIPS 205 (SLH-DSA / SPHINCS+)\n- NIST SP 800-208 (LMS and XMSS stateful hash-based signatures)\n- RFC 6962 (Certificate Transparency)\n- Cloudflare + Chrome MTC experiment (October 2025)",
       "category": "learning-module",
       "metadata": { "moduleId": "merkle-tree-certs", "moduleName": "Merkle Tree Certificates" },
       "deepLink": "/learn/merkle-tree-certs"
@@ -16178,6 +16259,174 @@
       "deepLink": "/learn/crypto-agility"
     },
     {
+      "id": "mc-dataassetsensitivity-dataassetexercises-0",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — DataAssetExercises",
+      "content": "Module: DataAssetSensitivity\nComponent: DataAssetExercises\n\nWork through these real-world scenarios to apply data classification, compliance mapping, risk methodology comparison, and sensitivity scoring. Each exercise pre-configures the Workshop to the relevant step — click &quot;Load & Run&quot; to begin.\nTake the PQC quiz to check your understanding of data classification, compliance frameworks, and risk management methodologies.\n1. Healthcare HNDL Classification Challenge\nA regional hospital system stores electronic health records (ePHI) under HIPAA. The regulation requires 6-year minimum retention from last patient encounter — but records are routinely kept 30+ years in practice. Using the Asset Inventory Builder, create an asset entry for this ePHI database: Asset Type = Data Store, Sensitivity = High, Retention = 25+ years, Industry = Healthcare. Then check the HNDL Risk Year column.\nWith a 30-year retention period and High sensitivity, the HNDL risk year is 2034 − 30 = 2004. Data encrypted and collected as far back as 2004 is already in adversary archives. When you run this asset through the Sensitivity Scoring Engine (Step 4), the composite score will be ≥ 85 — placing it in the Critical urgency band. HIPAA + NIST IR 8547 compliance flags add further urgency.\n2. Multi-Jurisdiction Financial Institution",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "DataAssetExercises",
+        "filePath": "DataAssetSensitivity/components/DataAssetExercises.tsx"
+      }
+    },
+    {
+      "id": "mc-dataassetsensitivity-dataassetexercises-1",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — DataAssetExercises",
+      "content": "Module: DataAssetSensitivity\nComponent: DataAssetExercises\n\nYour bank operates across the US, EU, and Australia. In the Compliance Matrix (Step 2), select \"Finance & Banking\" as your industry. Identify which compliance frameworks apply. Your TLS server certificates (ECDSA P-256) rotate every 90 days. In the Risk Methodology Explorer (Step 3), apply the DORA/NIS2 tab to a communication channel asset. Is the ECDSA P-256 encryption compliant with \"state-of-the-art\" requirements? What does the FAIR model say about the ALE for non-migration?\nFinance & Banking maps to DORA, GDPR, PCI DSS, NIST IR 8547, ISO 27001, and FIPS 140-3. The DORA/NIS2 tab will flag ECDSA P-256 as a potential \"Protect\" gap — \"state-of-the-art\" is a living standard that increasingly implies PQC planning. Short-lived TLS certs (under-1y retention) have low HNDL risk individually, but the FAIR ALE for non-migration is dominated by DORA fine risk (up to 1% of annual global turnover), easily outweighing migration costs.\n3. Root CA Migration — Methodology Comparison\nYour organization's offline Root CA (RSA-4096, 25-year lifespan, CNSA 2.0 scope) needs PQC migration. In the Risk Methodology Explorer (Step 3), select the Root CA Signing Key asset and apply all four tabs: NIST RMF, ISO 27005, FAIR, and DORA/NIS2. Compare how each methodology assesses urgency. Which produces the highest urgency score? Then jump to Step 5 (Priority Map) to see the recommended PQC algorithm.",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "DataAssetExercises",
+        "filePath": "DataAssetSensitivity/components/DataAssetExercises.tsx"
+      }
+    },
+    {
+      "id": "mc-dataassetsensitivity-dataassetexercises-2",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — DataAssetExercises",
+      "content": "Module: DataAssetSensitivity\nComponent: DataAssetExercises\n\nNIST RMF categorizes the root CA as FIPS 199 \"High\" impact — CNSA 2.0 mandates migration by 2030 with ML-DSA-87 or SLH-DSA-256s. ISO 27005 scores it Critical risk (Likelihood 3 × Consequence 5 = 15) — treatment: Mitigate, immediate. FAIR ALE is highest for this asset because root CA compromise enables forging all certificates — catastrophic loss magnitude drives ALE into the tens of millions. DORA/NIS2 Protect pillar fails because RSA-4096 will no longer meet \"state-of-the-art.\" The Priority Map recommends SLH-DSA-256s — stateless hash-based signatures offer the strongest long-term security assurance for key material with indefinite validity periods.\n4. Build Your Own Priority Map\nAdd at least 6 assets to the Asset Inventory Builder covering all four sensitivity tiers (Low, Medium, High, Critical) and at least three different asset types. Complete the Compliance Matrix for your primary industry. Run through the Sensitivity Scoring Engine and adjust the weights to reflect your organization's priorities (e.g., increase the compliance weight if you are heavily regulated). Then review the Priority Map. Identify: (1) the single highest-urgency asset and why, (2) any assets that can safely wait, and (3) which compliance deadline is most constraining for your portfolio.",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "DataAssetExercises",
+        "filePath": "DataAssetSensitivity/components/DataAssetExercises.tsx"
+      }
+    },
+    {
+      "id": "mc-dataassetsensitivity-dataassetexercises-3",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — DataAssetExercises",
+      "content": "Module: DataAssetSensitivity\nComponent: DataAssetExercises\n\nThe highest-urgency asset will typically be a Critical-sensitivity, 25+ year retention asset under CNSA 2.0 or NIS2 scope (composite score ≥ 85). Assets scoring below 33 (Low urgency) are typically short-lived communication channels with no active compliance mandate. For US Government & Defense organizations, CNSA 2.0's 2030 deadline is most constraining; for EU financial institutions, DORA's January 2025 enforcement date drives immediate crypto risk management documentation. Export your Priority Map as Markdown to share with your security team.",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "DataAssetExercises",
+        "filePath": "DataAssetSensitivity/components/DataAssetExercises.tsx"
+      }
+    },
+    {
+      "id": "mc-dataassetsensitivity-dataassetintroduction-0",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — DataAssetIntroduction",
+      "content": "Module: DataAssetSensitivity\nComponent: DataAssetIntroduction\n\n} title=\"Why Data Classification Matters for PQC\" defaultOpen >\nThe answer depends on how sensitive the data is and how long it needs to remain confidential. You cannot prioritize your\nmigration without first knowing what data assets you hold, how sensitive they are, and what compliance frameworks govern their protection.\n“NIST SP 800-37 RMF Step 1 is ‘Prepare’ — and Step 2 is ‘Categorize’ your information systems. Data classification is not optional; it is the foundation of any risk-based approach to cryptographic migration.”\nFIPS 199 impact levels and common enterprise data governance frameworks. Each tier carries a distinct\nKey material (root CA keys, HSM-protected secrets) should always be classified\nregardless of sensitivity tier — even if the data it protects is Medium. Keys are the root of trust for everything above them.\nmodule has a CRQC Scenario Planner where you can adjust the CRQC arrival year and model your organizational risk profile in detail.\nTen major data protection laws govern how organizations must protect data — and all of them require cryptographic measures that will be affected by the transition to\n. The table below summarizes each law's PQC relevance and current mandate status.\n's GM algorithm mandate (SM2, SM3, SM4) conflicts with NIST-aligned PQC standards for cross-border data controllers. Organizations operating in both China and the EU or US should seek legal guidance on the applicable encryption standard per data flow direction.",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "DataAssetIntroduction",
+        "filePath": "DataAssetSensitivity/components/DataAssetIntroduction.tsx"
+      }
+    },
+    {
+      "id": "mc-dataassetsensitivity-dataassetintroduction-1",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — DataAssetIntroduction",
+      "content": "Module: DataAssetSensitivity\nComponent: DataAssetIntroduction\n\nFour methodologies are available to assess the risk of your data assets from a PQC perspective. Each is applied hands-on in Workshop Step 3 — this section gives you the conceptual foundation.\nMost organizations use NIST RMF if they are US federal contractors, ISO 27005 if they hold ISO 27001 certification, FAIR if they need board-level financial justification, and DORA/NIS2 if they are in scope for EU regulation. Step 3 of the Workshop applies all four to the same asset so you can compare their outputs.\nThe 5-step workshop takes you through a complete data governance workflow — from cataloging your assets to generating a prioritized PQC migration list. By the end, you'll have a structured output you can take to your security team.\nFactor Analysis of Information Risk",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "DataAssetIntroduction",
+        "filePath": "DataAssetSensitivity/components/DataAssetIntroduction.tsx"
+      }
+    },
+    {
+      "id": "mc-dataassetsensitivity-index-0",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — index",
+      "content": "Module: DataAssetSensitivity\nComponent: index\n\nClassify your data assets, map compliance obligations across GDPR, HIPAA, NIS2, and CNSA 2.0, then generate a prioritized PQC migration list using NIST RMF, ISO 27005, FAIR, and DORA methodologies.\nCatalog your data assets with type, sensitivity tier, retention period, and encryption details.\nMap your industry to applicable compliance frameworks and their PQC requirements.\nCompare NIST RMF, ISO 27005, FAIR, and DORA/NIS2 applied to the same asset.\nScore each asset across 4 weighted dimensions to produce a composite PQC urgency score.\nYour prioritized PQC migration list with recommended algorithms and compliance deadlines.",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "index",
+        "filePath": "DataAssetSensitivity/index.tsx"
+      }
+    },
+    {
+      "id": "mc-dataassetsensitivity-assetinventorybuilder-0",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — AssetInventoryBuilder",
+      "content": "Module: DataAssetSensitivity\nComponent: AssetInventoryBuilder\n\nsetCurrentEncryption(e.target.value)} placeholder=\"e.g. RSA-2048 + AES-256-GCM\" />\nsetBusinessOwner(e.target.value)} placeholder=\"e.g. Data Engineering\" />\nsetAssetType(id as AssetType)} defaultLabel=\"Select type\" noContainer />\nsetSensitivityTier(id as SensitivityTier)} defaultLabel=\"Select tier\" noContainer />\nsetRetentionPeriod(id as RetentionPeriod)} defaultLabel=\"Select period\" noContainer />\nNo assets added yet. Use the form above to add your first asset.\nt.id === asset.assetType) const retConfig = RETENTION_CONFIGS.find((r) => r.id === asset.retentionPeriod) return (\nwere collected before the HNDL threshold and may already be in adversary archives.\nKey material (root CA keys, HSM-protected secrets) should always be treated as Critical regardless of other factors\nShort-lived communication channels (TLS certs, <1 year) have lower HNDL risk but still need migration planning\nIn Step 4, the Sensitivity Scoring Engine will calculate a composite urgency score for each asset",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "AssetInventoryBuilder",
+        "filePath": "DataAssetSensitivity/workshop/AssetInventoryBuilder.tsx"
+      }
+    },
+    {
+      "id": "mc-dataassetsensitivity-compliancematrix-0",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — ComplianceMatrix",
+      "content": "Module: DataAssetSensitivity\nComponent: ComplianceMatrix\n\nCheck the frameworks that apply to your organization. Your selected frameworks will increase the compliance score in Step 4's Sensitivity Scoring Engine. Frameworks with active deadlines add extra urgency weight.",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "ComplianceMatrix",
+        "filePath": "DataAssetSensitivity/workshop/ComplianceMatrix.tsx"
+      }
+    },
+    {
+      "id": "mc-dataassetsensitivity-pqcmigrationprioritymap-0",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — PQCMigrationPriorityMap",
+      "content": "Module: DataAssetSensitivity\nComponent: PQCMigrationPriorityMap\n\nAdd assets in Step 1 to generate your PQC migration priority map.\nExpand each asset to see the recommended PQC migration path, compliance mandate, and migration effort estimate. Scores calculated from Step 4's Sensitivity Scoring Engine.\nStart with Critical-band assets — initiate PQC migration project within 6 months\nRun a full cryptographic inventory scan to discover unlisted assets (look for RSA/ECC in certificates, code signatures, and key material)",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "PQCMigrationPriorityMap",
+        "filePath": "DataAssetSensitivity/workshop/PQCMigrationPriorityMap.tsx"
+      }
+    },
+    {
+      "id": "mc-dataassetsensitivity-riskmethodologyexplorer-0",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — RiskMethodologyExplorer",
+      "content": "Module: DataAssetSensitivity\nComponent: RiskMethodologyExplorer\n\nt.id === selectedAsset.sensitivityTier) const retConfig = RETENTION_CONFIGS.find((r) => r.id === selectedAsset.retentionPeriod) return (\nAdjust the sliders below to model Loss Event Frequency (LEF) and Probable Loss Magnitude (PLM) for this asset. The Annualized Loss Expectancy (ALE) informs the business case for PQC investment.\nPQC migration for this asset is financially justified if migration cost is less than\n. Default values seeded from IBM Cost of Data Breach 2024 average ($4.88M).\n✓ Current encryption is not RSA/ECC — may satisfy \"state-of-the-art\" interim requirement\n✗ RSA/ECC detected — plan migration to satisfy NIS2 Article 21 \"state-of-the-art\" cryptography requirement\nAsset has been identified and cataloged\nNo cryptographic inventory monitoring or algorithm deprecation alert system detected\nPQC incident response plan not specified for this asset\nCrypto-agile recovery procedures not documented for this asset\nAsset: ${selectedAsset.name} | Owner: ${selectedAsset.businessOwner} | Industry: ${selectedAsset.industry}\nFIPS 199 Impact Level: ${nist.fips199Level} — based on sensitivity tier (${selectedAsset.sensitivityTier})\n${nist.controlGaps.length} SP 800-53 gap(s) identified\nCurrent encryption vs NIST IR 8547 deprecation timeline\nRisk Score: ${nist.riskScore}/25 (Likelihood ${nist.likelihood} × Impact ${nist.impact})",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "RiskMethodologyExplorer",
+        "filePath": "DataAssetSensitivity/workshop/RiskMethodologyExplorer.tsx"
+      }
+    },
+    {
+      "id": "mc-dataassetsensitivity-sensitivityscoringengine-0",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — SensitivityScoringEngine",
+      "content": "Module: DataAssetSensitivity\nComponent: SensitivityScoringEngine\n\nt.id === scored.sensitivityTier) const retConfig = RETENTION_CONFIGS.find((r) => r.id === scored.retentionPeriod) return (\nWeights auto-adjust to maintain 100% total. Drag sliders to reflect your organization's priorities.",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "SensitivityScoringEngine",
+        "filePath": "DataAssetSensitivity/workshop/SensitivityScoringEngine.tsx"
+      }
+    },
+    {
+      "id": "mc-data-dataassetsensitivity-industrycompliancedata",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — industryComplianceData (data)",
+      "content": "Module: DataAssetSensitivity\nData: industryComplianceData\n\nCommercial National Security Algorithm Suite 2.0\nML-KEM-1024 and ML-DSA-87 required. Software signing exclusive by 2030; all NSS by 2033.\nhttps://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF\nTransition to Post-Quantum Cryptography Standards\nAll US federal systems; strongly recommended for private sector\nDeprecate RSA/ECC after 2030; disallow entirely after 2035. Mandates ML-KEM (FIPS 203), ML-DSA (FIPS 204), SLH-DSA (FIPS 205).\nhttps://nvlpubs.nist.gov/nistpubs/ir/2024/NIST.IR.8547.ipd.pdf\nPersonal data of EU residents processed by any organization globally\nArticle 32 requires \"appropriate technical measures\" including encryption. As best practice evolves, PQC will become expected. No explicit PQC mandate yet.\nNetwork and Information Security Directive 2\nEssential and important entities in EU member states\nArticle 21 mandates cryptography and encryption policies. ENISA guidance explicitly covers PQC transition planning for essential services.\nhttps://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32022L2555\nFinancial entities (banks, insurers, investment firms) in EU\nArticle 9 requires ICT security policies including cryptographic controls. Enforceable January 2025. Implicit PQC obligation as regulators update guidance.\nhttps://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32022R2554\nHealth Insurance Portability and Accountability Act\nProtected Health Information (PHI/ePHI) held by covered entities and business associates\nSecurity Rule requires encryption of ePHI \"where feasible.\" HHS expected to update guidance as NIST deprecates classical algorithms.\nhttps://www.hhs.gov/hipaa/for-professionals/security/index.html\nPayment Card Industry Data Security Standard v4.0\nAny entity that stores, processes, or transmits cardholder data\nRequirement 12.3.3 mandates cryptographic inventory and algorithm review. Req 4.2.1 targets strong cryptography. PQC explicitly planned for future versions.\nFIPS 140-3 Cryptographic Module Validation Program\nCryptographic modules used in US federal systems\nPQC algorithms must be CMVP-validated before federal deployment. ACVP algorithm-level testing available now; full module-level validation required for production.\nhttps://csrc.nist.gov/projects/cryptographic-module-validation-program\nCalifornia Consumer Privacy Act / California Privacy Rights Act\nPersonal information of California residents\nReasonable security measures implied by statute. FTC guidance on \"reasonable security\" will evolve as NIST standards finalize.\nISO/IEC 27001 Information Security Management\nOrganizations voluntarily seeking ISMS certification\nAnnex A control A.8.24 \"Use of cryptography\" requires policies on algorithm lifecycle. PQC planning required as part of cryptographic risk management per ISO 27005.",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "industryComplianceData",
+        "filePath": "DataAssetSensitivity/data/industryComplianceData.ts"
+      }
+    },
+    {
+      "id": "mc-data-dataassetsensitivity-sensitivityconstants",
+      "source": "module-content",
+      "title": "DataAssetSensitivity — sensitivityConstants (data)",
+      "content": "Module: DataAssetSensitivity\nData: sensitivityConstants\n\nPublicly available or non-sensitive internal data\nInternal business data with limited exposure consequences\nSensitive personal or financial data with significant breach consequences\nState secrets, classified data, or indefinitely-sensitive cryptographic material\nRegulatory long-retention (healthcare, financial)\nDecades-long retention (government, critical infrastructure)\nNo defined expiry (root CA keys, national security data)\nDatabases, file systems, object storage containing sensitive data\nCryptographic keys, certificates, HSM-protected secrets\nTLS sessions, VPN tunnels, API connections\nPasswords, tokens, authentication secrets, session keys\nSigned software releases, firmware images, container registries\nCritical data warrants maximum security (NIST Level 5)\nLong-lived key material requires stateless hash signatures for maximum longevity assurance\nHighly sensitive channels require NIST Level 5 protection\nCritical credentials demand highest security level\nLong-lived firmware signatures benefit from hash-based stateless signatures\nHigh sensitivity data warrants NIST Level 3 protection\nRecommended baseline for high-value key material\nStandard recommendation for secure channels carrying high-sensitivity data\nIndustry standard for authentication credential protection\nEfficient signing with strong security for software integrity\nBalanced security for medium sensitivity internal data\nKey material always warrants at least Level 3 protection\nTLS 1.3 default recommendation with ML-KEM hybrid\nStandard hybrid for authentication systems\nEfficient signing for medium-criticality software\nMinimum recommended PQC for any data store — when schedule permits\nEven low-sensitivity key material benefits from Level 3 KEM\nLightweight hybrid TLS for non-sensitive channels\nLightweight signing for non-critical artifacts",
+      "category": "learning",
+      "metadata": {
+        "module": "DataAssetSensitivity",
+        "component": "sensitivityConstants",
+        "filePath": "DataAssetSensitivity/data/sensitivityConstants.ts"
+      }
+    },
+    {
       "id": "mc-digitalassets-blockchaincryptointroduction-0",
       "source": "module-content",
       "title": "Digital Assets — BlockchainCryptoIntroduction",
@@ -16711,6 +16960,32 @@
       "deepLink": "/learn/email-signing"
     },
     {
+      "id": "mc-entropy-bitflipexperiment-0",
+      "source": "module-content",
+      "title": "Entropy & Randomness — BitFlipExperiment",
+      "content": "Module: Entropy & Randomness\nComponent: BitFlipExperiment\n\n() // Mark all bits that differ from original as flipped for (let b = 0; b\nClick individual bits to toggle them. Watch how test results change in real time. Which test fails first?\nClick &quot;All Zeros&quot; — notice every test fails. The min-entropy drops to 0.\nUse &quot;Flip 10%&quot; repeatedly — which test breaks first?\nThe frequency test is most sensitive to bias; the runs test catches clumping patterns.",
+      "category": "learning",
+      "metadata": {
+        "module": "Entropy",
+        "component": "BitFlipExperiment",
+        "filePath": "Entropy/components/BitFlipExperiment.tsx"
+      },
+      "deepLink": "/learn/entropy-randomness"
+    },
+    {
+      "id": "mc-entropy-drbgsimulator-0",
+      "source": "module-content",
+      "title": "Entropy & Randomness — DRBGSimulator",
+      "content": "Module: Entropy & Randomness\nComponent: DRBGSimulator\n\nStep through the lifecycle of a CTR_DRBG: Instantiate with entropy, Generate output blocks, and Reseed when required.\nThe DRBG maintains internal state (V, Key) seeded from a validated entropy source. Each Generate call increments V and runs AES-CTR to produce output. The reseed counter ensures periodic refresh from the entropy source.\nEven with a perfect seed, an attacker who compromises the internal state could predict all future outputs. Reseeding limits the window of vulnerability — SP 800-90A specifies a maximum reseed interval (typically 2",
+      "category": "learning",
+      "metadata": {
+        "module": "Entropy",
+        "component": "DRBGSimulator",
+        "filePath": "Entropy/components/DRBGSimulator.tsx"
+      },
+      "deepLink": "/learn/entropy-randomness?tab=workshop"
+    },
+    {
       "id": "mc-entropy-entropyexercises-0",
       "source": "module-content",
       "title": "Entropy & Randomness — EntropyExercises",
@@ -16727,7 +17002,20 @@
       "id": "mc-entropy-entropyexercises-1",
       "source": "module-content",
       "title": "Entropy & Randomness — EntropyExercises",
-      "content": "Module: Entropy & Randomness\nComponent: EntropyExercises\n\nBuild a complete Random Bit Generator: generate TRNG bytes, combine with QRNG, apply HMAC conditioning, expand with HKDF, and run entropy tests on the final output.\nThe final DRBG output should have near-perfect statistical properties. Each stage of the pipeline contributes to the quality of the output.",
+      "content": "Module: Entropy & Randomness\nComponent: EntropyExercises\n\nBuild a complete Random Bit Generator: generate TRNG bytes, combine with QRNG, apply HMAC conditioning, expand with HKDF, and run entropy tests on the final output.\nThe final DRBG output should have near-perfect statistical properties. Each stage of the pipeline contributes to the quality of the output.\nLoad each bad sample (zeros, repeating, incrementing) and observe the Bit Matrix visualization. Compare what your eyes can detect vs what statistical tests catch.\nAll-zeros produces a solid block. The repeating pattern shows clear stripes in the bit matrix. The incrementing pattern shows a diagonal gradient. Random data looks like TV static. The lag plot reveals correlations invisible in the histogram.\nEnable all 4 RNG sources (Web Crypto, OpenSSL, Math.random, LCG) and generate data. Use the LCG prediction feature to prove determinism. Compare test results across all sources.\nMath.random() output looks random and may pass some tests at small sample sizes, but it is fully deterministic. The LCG prediction demo proves this by correctly predicting future output.\nSwitch to Bit Flipper mode in the testing step. Start with random data, then flip bits one at a time or in batches. Discover how many corruptions it takes before each test fails.\nA few random flips rarely trigger failures. The frequency test fails when bit balance shifts significantly (~10% bias). The runs test catches systematic flipping first. Try \"All Zeros\" to see instant total failure.",
+      "category": "learning",
+      "metadata": {
+        "module": "Entropy",
+        "component": "EntropyExercises",
+        "filePath": "Entropy/components/EntropyExercises.tsx"
+      },
+      "deepLink": "/learn/entropy-randomness"
+    },
+    {
+      "id": "mc-entropy-entropyexercises-2",
+      "source": "module-content",
+      "title": "Entropy & Randomness — EntropyExercises",
+      "content": "Module: Entropy & Randomness\nComponent: EntropyExercises\n\nSwitch to Live Monitor mode. Start streaming with Web Crypto (good source), then switch to \"All Zeros\" or \"Repeating Pattern\" mid-stream. Watch how quickly the gauges react.\nThe min-entropy and repetition count gauges respond immediately to bad data. The chi-squared test may take 1-2 samples to show the full impact. This demonstrates why continuous health monitoring is mandatory in SP 800-90B.",
       "category": "learning",
       "metadata": {
         "module": "Entropy",
@@ -16776,6 +17064,19 @@
       "deepLink": "/learn/entropy-randomness"
     },
     {
+      "id": "mc-entropy-streamingentropymonitor-0",
+      "source": "module-content",
+      "title": "Entropy & Randomness — StreamingEntropyMonitor",
+      "content": "Module: Entropy & Randomness\nComponent: StreamingEntropyMonitor\n\nr.passed).length ?? 0 const totalTests = currentResults?.length ?? 5 return (\nWatch entropy quality in real-time. Switch sources mid-stream to see tests respond.\nsetSource(id as StreamSource)} label=\"Source\" noContainer />\nStart with Web Crypto, then switch to &quot;All Zeros&quot; or &quot;Repeating 0xDEADBEEF&quot; mid-stream. Watch how quickly the gauges react — some tests (min-entropy, repetition count) detect bad data immediately, while others (chi-squared) may take a sample or two.",
+      "category": "learning",
+      "metadata": {
+        "module": "Entropy",
+        "component": "StreamingEntropyMonitor",
+        "filePath": "Entropy/components/StreamingEntropyMonitor.tsx"
+      },
+      "deepLink": "/learn/entropy-randomness"
+    },
+    {
       "id": "mc-entropy-index-0",
       "source": "module-content",
       "title": "Entropy & Randomness — index",
@@ -16814,7 +17115,7 @@
       "id": "mc-entropy-entropytestingdemo-0",
       "source": "module-content",
       "title": "Entropy & Randomness — EntropyTestingDemo",
-      "content": "Module: Entropy & Randomness\nComponent: EntropyTestingDemo\n\nr.passed).length ?? 0 const totalCount = testResults?.length ?? 0 const bins = sampleData ? binnedFrequency(sampleData, 16) : null const maxBinCount = bins ? Math.max(...bins) : 0 return (\nLoad a data sample and run simplified entropy tests to see how randomness quality is evaluated. Compare truly random data against known-bad samples.\nByte value range (hex) — uniform distribution indicates good randomness\nThese are simplified educational implementations. Production entropy validation requires the NIST SP 800-90B EntropyAssessment tool (",
+      "content": "Module: Entropy & Randomness\nComponent: EntropyTestingDemo\n\nLoad a data sample and run simplified entropy tests to see how randomness quality is evaluated. Compare truly random data against known-bad samples.\nByte value range (hex) — uniform distribution indicates good randomness\nThese are simplified educational implementations. Production entropy validation requires the NIST SP 800-90B EntropyAssessment tool (",
       "category": "learning",
       "metadata": {
         "module": "Entropy",
@@ -16840,7 +17141,7 @@
       "id": "mc-entropy-randomgenerationdemo-0",
       "source": "module-content",
       "title": "Entropy & Randomness — RandomGenerationDemo",
-      "content": "Module: Entropy & Randomness\nComponent: RandomGenerationDemo\n\nGenerate random bytes from two independent sources and compare their output side by side.\nEach bar represents the count of bytes falling within a 16-value range (0x00-0x0F, 0x10-0x1F, etc.). Uniform randomness produces roughly equal bar heights.\nBoth sources ultimately rely on the operating system's entropy pool (e.g.,\nand OpenSSL uses its internal DRBG seeded from OS entropy. The small timing differences reflect API overhead and WASM initialization, not entropy quality.",
+      "content": "Module: Entropy & Randomness\nComponent: RandomGenerationDemo\n\nCompare cryptographically secure and insecure random sources side by side. See the difference between true randomness and deterministic PRNGs.\nThe LCG's internal state is fully deterministic. Knowing the state after generation means we can predict every future output.\nGenerate again with the LCG to verify — the first 4 bytes of subsequent output from the same state will always be identical. This is why LCGs must never be used for cryptographic key generation.\nEach bar represents the count of bytes falling within a 16-value range. Uniform randomness produces roughly equal bar heights.\nPlots (byte[i], byte[i+k]) pairs. Random data fills the square uniformly; patterns create lines, clusters, or voids that reveal sequential correlations.\n(Web Crypto, OpenSSL) draw from the operating system's entropy pool (e.g.,\n(Math.random, LCG) use deterministic algorithms with predictable seeds — their output\nrandom but is fully reproducible. This is why NIST SP 800-90A requires entropy-seeded DRBGs for all cryptographic applications.\nBrowser CSPRNG backed by OS entropy\nOpenSSL DRBG seeded from OS entropy\nBrowser PRNG — NOT cryptographically secure\nLinear Congruential Generator seeded from Date.now()",
       "category": "learning",
       "metadata": {
         "module": "Entropy",
@@ -16946,6 +17247,182 @@
       "deepLink": "/learn/5g-security"
     },
     {
+      "id": "mc-hsmpqc-hsmpqcexercises-0",
+      "source": "module-content",
+      "title": "HsmPqc — HsmPqcExercises",
+      "content": "Module: HsmPqc\nComponent: HsmPqcExercises\n\nWork through these scenarios to understand PKCS#11 PQC operations, HSM vendor selection, firmware migration planning, and FIPS validation. Each exercise pre-configures the Workshop — click &quot;Load & Run&quot; to begin.\nTake the PQC quiz to test what you've learned about HSM operations and PQC integration.\n1. PKCS#11 Key Generation — Generate ML-KEM-768 keypair and compare buffer sizes\nIn the PKCS#11 Simulator workshop, step through the key generation operation. Observe the C_GenerateKeyPair call with CKM_ML_KEM_KEY_PAIR_GEN mechanism. Compare the 1,184-byte ML-KEM-768 public key against the 256-byte RSA-2048 public key in the classical comparison section.\nThe ML-KEM-768 public key (1,184 bytes) is 4.6x larger than RSA-2048 (256 bytes). Applications using fixed-size buffers will need updating. The private key never leaves the HSM boundary — CKA_SENSITIVE=TRUE and CKA_EXTRACTABLE=FALSE are enforced.\n2. ML-DSA Signing in HSM — Sign and verify with ML-DSA-65\nContinue through the PKCS#11 Simulator to the signing operations (Steps 5-6). Observe the C_Sign and C_Verify calls using CKM_ML_DSA. Note the hedged signing output and the 3,309-byte signature size. Expand the on-prem vs cloud notes to see vendor support status.\nML-DSA-65 signatures are 3,309 bytes (vs 64 bytes for ECDSA P-256 — a 51x increase). Hedged signing mode (rnd != 0) is enabled by default in all production HSMs for side-channel protection per FIPS 204 section 3.5.2.",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "HsmPqcExercises",
+        "filePath": "HsmPqc/components/HsmPqcExercises.tsx"
+      }
+    },
+    {
+      "id": "mc-hsmpqc-hsmpqcexercises-1",
+      "source": "module-content",
+      "title": "HsmPqc — HsmPqcExercises",
+      "content": "Module: HsmPqc\nComponent: HsmPqcExercises\n\n3. Vendor Selection — Given requirements, identify the best vendor\nOpen the Vendor Comparison workshop. Filter vendors by \"production\" status and sort by maturity score. For a regulated financial institution requiring FIPS 140-3 Level 3 and ML-KEM + ML-DSA support, identify which vendor scores highest. Expand the vendor row to check hybrid support and side-channel countermeasures.\nThales Luna 7 (maturity score 95) leads for production ML-KEM + ML-DSA with FIPS 140-3 Level 3. However, Entrust nShield 5 (score 90) offers the broadest algorithm portfolio including SLH-DSA and XMSS — critical if CNSA 2.0 stateful signatures are required.\n4. On-Prem vs Cloud HSM — Compare deployment for a regulated institution\nIn the Vendor Comparison workshop, filter to show all vendors and compare on-prem vs cloud types. Examine which cloud HSMs support native PKCS#11 PQC mechanisms versus SDK-only access. Consider a scenario where the institution needs ML-KEM encapsulation for TLS key exchange.\nNo cloud HSM currently supports native PKCS#11 ML-KEM encapsulation in firmware. AWS CloudHSM offers ML-DSA preview via SDK only. For ML-KEM key exchange, an on-prem HSM (Thales, Entrust, or Utimaco) is required today. Cloud HSMs lag on-prem by 12-18 months.\n5. Firmware Migration Planning — Plan upgrade for 10 HSMs with zero downtime",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "HsmPqcExercises",
+        "filePath": "HsmPqc/components/HsmPqcExercises.tsx"
+      }
+    },
+    {
+      "id": "mc-hsmpqc-hsmpqcexercises-2",
+      "source": "module-content",
+      "title": "HsmPqc — HsmPqcExercises",
+      "content": "Module: HsmPqc\nComponent: HsmPqcExercises\n\nOpen the Migration Planner workshop. Select Thales Luna 7 as your vendor. Walk through all 4 phases: Assessment, Firmware Planning, Key Migration, and Validation. For a fleet of 10 HSMs, calculate total migration time using the dual-partition strategy where classical and PQC partitions run in parallel.\nWith Thales Luna 7 (low complexity, 30-60 min/HSM), a rolling upgrade of 10 HSMs takes approximately 5-10 hours. The dual-partition strategy allows classical operations to continue during migration. No FIPS recertification is needed since existing FIPS 140-3 covers PQC firmware.\n6. FIPS 140-3 Readiness Check — Walk through CMVP validation checklist\nOpen the FIPS Validation Tracker workshop. Filter by \"Active\" status to see which vendors have achieved PQC validation. Compare ACVP algorithm-level certifications vs FIPS 140-3 module-level certifications. Check which algorithms have the most validations across vendors.\nLMS has the most ACVP validations across vendors (Thales, Entrust, Utimaco, AWS). Full FIPS 140-3 module-level PQC validation is still limited to Thales Luna 7. Entrust nShield 5 has submitted for FIPS 140-3 but is pending. Algorithm-level ACVP validation is a prerequisite for module-level FIPS 140-3.",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "HsmPqcExercises",
+        "filePath": "HsmPqc/components/HsmPqcExercises.tsx"
+      }
+    },
+    {
+      "id": "mc-hsmpqc-hsmpqcintroduction-0",
+      "source": "module-content",
+      "title": "HsmPqc — HsmPqcIntroduction",
+      "content": "Module: HsmPqc\nComponent: HsmPqcIntroduction\n\nm.type === 'classical') const pqcMechanisms = PKCS11_MECHANISMS.filter((m) => m.type === 'pqc') return (\nis a tamper-resistant physical device that performs cryptographic operations and protects keys within a certified security boundary. The\n&bull; Azure Dedicated HSM (Thales backend, upgrade pending)\n(OASIS) introduces new mechanism types for post-quantum cryptography. These define how applications interact with PQC keys inside HSMs via the standard Cryptoki API.\nKey type for ML-KEM (FIPS 203) key encapsulation mechanism. Public keys are 1,184 bytes (ML-KEM-768), requiring applications to accommodate larger buffer sizes.\nKey type for ML-DSA (FIPS 204) digital signatures. Signatures are 3,309 bytes (ML-DSA-65) — existing buffers sized for 64-byte ECDSA will overflow.\nOn-premises HSMs from the three major vendors now offer production-ready PQC firmware. Each takes a different approach to integrating post-quantum algorithms.\nIn-place firmware upgrade from v7.8.x. Existing keys preserved. Luna Client must be upgraded to 10.9.2+.\nPQC integrated into core firmware (no external modules). CBOM (Cryptographic Bill of Materials) REST API. USB G7 extension supports PQC.\nFirmware + PQSDK v1.2.1+ installation. 1–2 hours per HSM. FIPS 140-3 re-submission in progress.\nBroadest algorithm support (includes SLH-DSA and XMSS). Hardware-accelerated PQC. CodeSafe secure execution environment. Available via PKCS#11, CNG, and JCE interfaces.",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "HsmPqcIntroduction",
+        "filePath": "HsmPqc/components/HsmPqcIntroduction.tsx"
+      }
+    },
+    {
+      "id": "mc-hsmpqc-hsmpqcintroduction-1",
+      "source": "module-content",
+      "title": "HsmPqc — HsmPqcIntroduction",
+      "content": "Module: HsmPqc\nComponent: HsmPqcIntroduction\n\nQ-safe is a firmware extension (not a full replacement). 1–3 hours per HSM. Existing keys preserved.\nHighest physical security (FIPS Level 4). Free PQC simulator mirrors hardware APIs. SLH-DSA on roadmap. PCIe form factor optimized for data center density.\nCloud HSMs provide managed hardware security but currently lag behind on-prem vendors for PQC support. PQC in cloud HSMs is primarily delivered through SDK updates rather than firmware changes.\nCloud HSMs lag on-prem by approximately 12–18 months for PQC firmware. This is because cloud providers must validate PQC support across their entire fleet before enabling it for customers.\nPQC delivered via AWS-LC SDK, not HSM firmware change. Zero downtime for SDK update. AWS-LC is the first open-source FIPS 140-3 validated module with ML-KEM.\nNative PKCS#11 PQC mechanisms not yet in firmware. ML-KEM encapsulation/decapsulation not supported.\nPowered by Thales Luna 7 hardware. PQC available when customers request firmware upgrade to v7.9+. Azure Managed HSM (Marvell LS2 backend) has a separate PQC roadmap.\nCustomer must request firmware upgrade through Azure support. Azure does not auto-upgrade dedicated HSMs.\nHardware HSM backing for Cloud KMS keys. PQC algorithms currently available in Cloud KMS software mode only. HSM-backed PQC keys expected as algorithms mature.\nGoogle already uses PQC internally for infrastructure protection (ALTS). Titan chip provides physical security.",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "HsmPqcIntroduction",
+        "filePath": "HsmPqc/components/HsmPqcIntroduction.tsx"
+      }
+    },
+    {
+      "id": "mc-hsmpqc-hsmpqcintroduction-2",
+      "source": "module-content",
+      "title": "HsmPqc — HsmPqcIntroduction",
+      "content": "Module: HsmPqc\nComponent: HsmPqcIntroduction\n\nPQC algorithms introduce new side-channel attack surfaces. HSMs must implement specific countermeasures for lattice-based and hash-based operations that differ from classical protections.\nparameter is set to a random value rather than zero. This makes signing non-deterministic, which prevents fault injection attacks from producing exploitable faulty signatures. All production HSMs implement hedged signing by default. This is critical for HSM environments where physical access may be possible.\nUpgrading HSM firmware to support PQC algorithms requires careful planning. Each vendor has a different upgrade path, complexity, and recertification timeline.\nRecertification timelines for FIPS 140-3 typically range from 12–24 months. During this period, the HSM firmware operates with PQC algorithms but the formal CMVP certificate has not yet been re-issued.\nhash-based signature schemes — each leaf in the Merkle tree can only be used to sign\nAfter every signing operation, the HSM must atomically write the updated state counter to NVRAM. A power failure during this write can result in state loss, causing the same leaf to be used twice. This is why\n— they provide atomic NVRAM writes, write-ahead logging, and pre-reservation of signature indices.\n&bull; Write-ahead logging prevents partial state corruption\n&bull; Pre-reservation of signature indices (batch allocation)\n&bull; HSS (multi-tree) extends to practically unlimited signatures",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "HsmPqcIntroduction",
+        "filePath": "HsmPqc/components/HsmPqcIntroduction.tsx"
+      }
+    },
+    {
+      "id": "mc-hsmpqc-hsmpqcintroduction-3",
+      "source": "module-content",
+      "title": "HsmPqc — HsmPqcIntroduction",
+      "content": "Module: HsmPqc\nComponent: HsmPqcIntroduction\n\nIf an HSM detects incomplete state during boot, it must refuse to sign with the affected key until the state is manually verified. Thales Luna, Entrust nShield, and Utimaco all implement this safety mechanism in their LMS/HSS firmware.\nStep through PKCS#11 PQC operations, compare vendors, and plan firmware migrations in the interactive workshop.",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "HsmPqcIntroduction",
+        "filePath": "HsmPqc/components/HsmPqcIntroduction.tsx"
+      }
+    },
+    {
+      "id": "mc-hsmpqc-index-0",
+      "source": "module-content",
+      "title": "HsmPqc — index",
+      "content": "Module: HsmPqc\nComponent: index\n\nDeep dive into Hardware Security Modules: PKCS#11 v3.2 PQC mechanisms, vendor comparison, firmware migration, and FIPS 140-3 validation.\nStep through 8 PKCS#11 PQC operations with on-prem vs cloud comparison.\nCompare 8 HSM vendors by PQC maturity, algorithms, and FIPS validation.\nPlan HSM firmware migration from classical to PQC with dual-partition strategy.\nTrack CMVP/CAVP PQC validation status across HSM vendors.",
+      "category": "learning",
+      "metadata": { "module": "HsmPqc", "component": "index", "filePath": "HsmPqc/index.tsx" }
+    },
+    {
+      "id": "mc-hsmpqc-fipsvalidationtracker-0",
+      "source": "module-content",
+      "title": "HsmPqc — FipsValidationTracker",
+      "content": "Module: HsmPqc\nComponent: FipsValidationTracker\n\nv.status === 'Active').length const pending = filteredValidations.filter((v) => v.status === 'Pending').length const planned = filteredValidations.filter((v) => v.status === 'Planned').length // Algorithm validation counts const algCounts: Record\nnew Date(a.date).getTime() - new Date(b.date).getTime() ) }, [filteredValidations]) return (\nTrack CMVP/CAVP/ACVP PQC validation status across HSM vendors. Filter by certification type, status, or algorithm to see which vendors have achieved PQC validation.\nNo validations match the current filters. Try adjusting your filter criteria.\n— Cryptographic Module Validation Program (csrc.nist.gov/projects/cryptographic-module-validation-program)\n— Cryptographic Algorithm Validation Program (csrc.nist.gov/projects/cryptographic-algorithm-validation-program)\n— Automated Cryptographic Validation Protocol (csrc.nist.gov/projects/acvp)\nValidation data is based on publicly available NIST records and vendor announcements as of early 2026. Check the official databases for the most current status.",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "FipsValidationTracker",
+        "filePath": "HsmPqc/workshop/FipsValidationTracker.tsx"
+      }
+    },
+    {
+      "id": "mc-hsmpqc-hsmmigrationplanner-0",
+      "source": "module-content",
+      "title": "HsmPqc — HsmMigrationPlanner",
+      "content": "Module: HsmPqc\nComponent: HsmMigrationPlanner\n\nitem.required) const requiredComplete = requiredChecked.every((item) => checkedItems.has(item.id)) return (\nPlan your HSM firmware migration from classical to PQC in 4 phases. Select your vendor and fleet size to see upgrade paths, timelines, and validation requirements.\nUsing rolling upgrade strategy (one HSM at a time, classical operations continue on remaining HSMs during each upgrade window).\nDuring migration, each HSM runs two logical partitions in parallel. The classical partition handles existing operations while the PQC partition is being configured and tested.\nAlways take a full backup of each HSM before starting firmware upgrade. Verify backup integrity by restoring to a test HSM if available.\nComplete the FIPS 140-3 re-validation checklist. Required items must be verified before the migration is considered complete.\nEach PQC algorithm must pass CAVP (Cryptographic Algorithm Validation Program) testing before the FIPS 140-3 module certificate can be updated.\nMigration timelines and backup estimates are approximate and based on vendor documentation. Actual times depend on HSM utilization, key count, network bandwidth, and organizational change management processes. Always consult your HSM vendor's official migration guide before proceeding.\nSelect your current vendor and firmware, and assess current capabilities.\nReview upgrade path, estimated downtime, and complexity for your vendor.\nPlan backup, dual-partition strategy, and migration duration.",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "HsmMigrationPlanner",
+        "filePath": "HsmPqc/workshop/HsmMigrationPlanner.tsx"
+      }
+    },
+    {
+      "id": "mc-hsmpqc-hsmmigrationplanner-1",
+      "source": "module-content",
+      "title": "HsmPqc — HsmMigrationPlanner",
+      "content": "Module: HsmPqc\nComponent: HsmMigrationPlanner\n\nFIPS 140-3 re-validation checklist and CAVP algorithm testing status.\nVerify FIPS 140-3 certificate scope covers PQC algorithms\nConfirm CAVP validation for ML-KEM (FIPS 203)\nConfirm CAVP validation for ML-DSA (FIPS 204)\nConfirm CAVP validation for SLH-DSA (FIPS 205) if needed\nConfirm CAVP validation for LMS/HSS (SP 800-208) if stateful sigs needed\nVerify DRBG entropy source meets SP 800-90A/B/C\nSide-channel resistance testing completed (power, EM, fault)\nKey zeroization on tamper detection verified\nPKCS#11 v3.0+ PQC mechanism compliance tested\nBackup/restore procedure validated with PQC keys\nHybrid key pair interoperability tested (if applicable)\nPerformance benchmark: PQC operations within SLA requirements",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "HsmMigrationPlanner",
+        "filePath": "HsmPqc/workshop/HsmMigrationPlanner.tsx"
+      }
+    },
+    {
+      "id": "mc-hsmpqc-pkcs11simulator-0",
+      "source": "module-content",
+      "title": "HsmPqc — Pkcs11Simulator",
+      "content": "Module: HsmPqc\nComponent: Pkcs11Simulator\n\nStep through 8 PKCS#11 operations demonstrating PQC key generation, encapsulation, signing, and stateful signature management. Each step shows the API call, expected output, and vendor support comparison.\nThis simulator demonstrates the PKCS#11 API call sequence and expected outputs for PQC HSM operations. In a production environment, these operations execute within the HSM's FIPS 140-3 validated security boundary. All outputs shown are representative of actual API responses. This is for educational purposes only.",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "Pkcs11Simulator",
+        "filePath": "HsmPqc/workshop/Pkcs11Simulator.tsx"
+      }
+    },
+    {
+      "id": "mc-hsmpqc-vendorcomparison-0",
+      "source": "module-content",
+      "title": "HsmPqc — VendorComparison",
+      "content": "Module: HsmPqc\nComponent: VendorComparison\n\n= 80) return 'text-success' if (score >= 50) return 'text-warning' return 'text-destructive' } return (\nCompare 8 HSM vendors by PQC maturity, algorithm support, and FIPS validation status. Click a row to expand vendor details.\nNo vendors match the current filters. Try adjusting type or status filters.\nMaturity scores are based on publicly available information including algorithm support, FIPS validation status, firmware availability, and hybrid key support. Scores are approximate and intended for educational comparison only. Always verify vendor capabilities directly for procurement decisions.",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "VendorComparison",
+        "filePath": "HsmPqc/workshop/VendorComparison.tsx"
+      }
+    },
+    {
+      "id": "mc-data-hsmpqc-hsmconstants",
+      "source": "module-content",
+      "title": "HsmPqc — hsmConstants (data)",
+      "content": "Module: HsmPqc\nData: hsmConstants\n\nGenerate RSA key pair (2048/3072/4096 bits)\nRSA OAEP encryption/decryption for key wrapping\nML-KEM encapsulate/decapsulate via C_EncapsulateKey/C_DecapsulateKey\nPure ML-DSA sign/verify via C_Sign/C_Verify\nPre-hash ML-DSA sign/verify (HashML-DSA with context)\nGenerate HSS/LMS stateful hash-based key pair (NIST SP 800-208)\nHSS/LMS stateful sign/verify via C_Sign/C_Verify\nSimple/Differential Power Analysis (SPA/DPA)\nNumber Theoretic Transform (NTT) operations in lattice-based algorithms show data-dependent power consumption patterns. An attacker with physical access can measure power traces to recover secret coefficients.\nConstant-time NTT implementation, power noise injection, algorithmic masking. All production HSMs (Thales, Entrust, Utimaco) implement constant-time NTT.\nPolynomial multiplication in lattice operations generates electromagnetic emanations that correlate with secret data. Near-field EM probes can extract information even through shielding.\nEM shielding in HSM enclosure, randomized operation scheduling, hardware masking. FIPS 140-3 Level 3+ requires physical tamper evidence and environmental protection.\nHash-based signature schemes rely heavily on hash function calls. Variable-time hash implementations can leak information about the message or key through timing measurements.\nConstant-time hash implementations (SHA-256, SHAKE). HSMs typically use hardware-accelerated constant-time hash units.\nTable lookups in NTT or hash operations can be observed through CPU cache timing. Flush+Reload or Prime+Probe attacks can recover secret values in shared-hardware environments.\nHSMs use dedicated crypto processors (no shared cache). On-prem HSMs are immune to cache-timing attacks. Cloud HSMs use dedicated hardware per customer (AWS Nitro, Azure confidential computing).\nInducing faults during ML-DSA signing (e.g., voltage glitching, laser fault injection) can cause the signer to produce a faulty signature that leaks the secret key. This is why ML-DSA uses hedged signing.\nML-DSA hedged signing mode (FIPS 204 §3.5.2): rnd parameter is random, not zero. This makes the signing output non-deterministic, preventing fault attacks from producing exploitable faulty signatures. FIPS 140-3 Level 3+ HSMs also have tamper-responsive enclosures.\nIf an HSM loses track of which one-time signature leaves have been used (e.g., power failure during NVRAM write), the same leaf may be used twice. Two signatures from the same leaf completely compromise the key.\nAtomic NVRAM state updates, write-ahead logging, pre-reservation of signature indices. HSMs are the only safe platform for stateful signatures because they provide atomic state persistence.\nN/A — existing FIPS 140-3 covers PQC firmware\nPQC integrated into core firmware, not an external module. Luna Client must also be upgraded to 10.9.2+. Existing keys are preserved during upgrade. CBOM REST API available after upgrade.\nFIPS 140-3 Level 3 resubmitted — estimated 12-18 months\nPQSDK v1.2.1+ must be installed alon\n...(truncated)",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "hsmConstants",
+        "filePath": "HsmPqc/data/hsmConstants.ts"
+      }
+    },
+    {
+      "id": "mc-data-hsmpqc-hsmvendordata",
+      "source": "module-content",
+      "title": "HsmPqc — hsmVendorData (data)",
+      "content": "Module: HsmPqc\nData: hsmVendorData\n\nFull PQC support in firmware v7.9.2+. ML-KEM and ML-DSA integrated into core firmware (no external modules needed). CBOM via REST API. USB G7 extension supports PQC. Luna Client 10.9.2+ required for PKCS#11 PQC mechanisms.\nFirmware v13.8.0 adds native ML-DSA, ML-KEM, SLH-DSA support. CAVP validated. Available via PKCS#11, CNG, and JCE interfaces. PQSDK v1.2.1+ with pre-built libraries and templates. Hardware-accelerated PQC operations.\nSecurityServer Se Gen2 (Quantum Protect)\nQ-safe firmware extension enables PQC on existing hardware — no HSM replacement needed. Highest physical security (Level 4). Free PQC simulator mirrors hardware APIs for pre-procurement testing. SLH-DSA support on roadmap. CAVP validated for ML-KEM, ML-DSA, LMS.\nHigh-throughput PCIe HSM with hardware PQC acceleration. PQC algorithms in beta firmware. Powers Azure Managed HSM backend. Designed for cloud infrastructure and high-volume financial transaction processing.\nEnterprise HSM with PQC firmware development in progress. Strong presence in payment processing (PCI HSM certified). PQC support targeting production readiness.\nDedicated managed HSM. ML-DSA key pair generation and signing in preview. Built on AWS-LC — first open-source FIPS 140-3 validated module with ML-KEM. Native PKCS#11 PQC mechanisms not yet in firmware. Multi-AZ redundancy.\nPowered by Thales Luna 7 hardware. PQC available when customers request firmware upgrade to v7.9+. Azure Managed HSM (powered by Marvell LS2) also on PQC roadmap. Microsoft targets CNSA 2.0 compliance by 2029.\nHardware HSM backing for Cloud KMS keys. PQC support planned — currently PQC algorithms available in Cloud KMS software mode. HSM-backed PQC keys expected as algorithms mature. Google already uses PQC internally for infrastructure.\nC_GenerateKeyPair( hSession, &mechanism, // CKM_ML_KEM_KEY_PAIR_GEN publicTemplate, // CKA_TOKEN, CKA_ENCRYPT, CKA_WRAP privateTemplate, // CKA_PRIVATE, CKA_SENSITIVE, CKA_DECRYPT &hPublicKey, &hPrivateKey )\nGenerate an ML-KEM-768 key pair inside the HSM boundary.\nThe private key never leaves the HSM. CKA_SENSITIVE=TRUE ensures the private key cannot be exported in plaintext. CKA_EXTRACTABLE=FALSE prevents any form of export. The HSM uses its internal DRBG seeded with hardware entropy. PKCS#11 v3.2 defines CKK_ML_KEM as the key type.\nCKR_OK Public Key Handle: 0x00000042 Private Key Handle: 0x00000043 Algorithm: ML-KEM-768 Public Key Size: 1,184 bytes Token Object: YES (persistent)\nCKM_RSA_PKCS_KEY_PAIR_GEN → RSA-2048 (256-byte public key)\nThales Luna v7.9.2+, Entrust nShield v13.8.0+, Utimaco Q-safe: native firmware support\nAWS CloudHSM: via SDK only. Azure/GCP: not yet available in hardware\nC_GetAttributeValue( hSession, hPublicKey, // Handle from step 1 publicKeyTemplate, // CKA_VALUE 1 // Attribute count )\nExtract the ML-KEM-768 public key for distribution.\nPublic keys can always be exported (CKA_SENSITIVE does not apply). The 1,184-byte public key is used by peers to encapsulate shared secrets. In T\n...(truncated)",
+      "category": "learning",
+      "metadata": {
+        "module": "HsmPqc",
+        "component": "hsmVendorData",
+        "filePath": "HsmPqc/data/hsmVendorData.ts"
+      }
+    },
+    {
       "id": "mc-hybridcrypto-hybridcryptoexercises-0",
       "source": "module-content",
       "title": "Hybrid Cryptography — HybridCryptoExercises",
@@ -17001,7 +17478,7 @@
       "id": "mc-hybridcrypto-index-0",
       "source": "module-content",
       "title": "Hybrid Cryptography — index",
-      "content": "Module: Hybrid Cryptography\nComponent: index\n\nCombine classical and PQC algorithms for defense in depth during the quantum transition.\nCompare classical, PQC, and hybrid key generation.\nKEM encapsulation and digital signatures with hybrid algorithms.\nCompare classical, pure PQC (RFC 9881), and composite certificate formats.",
+      "content": "Module: Hybrid Cryptography\nComponent: index\n\nCombine classical and PQC algorithms for defense in depth during the quantum transition.\nCompare classical, PQC, and hybrid key generation.\nKEM encapsulation and digital signatures with hybrid algorithms.\nGenerate classical and PQC root CAs for the certificate sandbox.\nGenerate and compare all four hybrid X.509 certificate approaches.\nDeep-dive into certificate structures with IETF reference artifacts.",
       "category": "learning",
       "metadata": {
         "module": "HybridCrypto",
@@ -17020,6 +17497,58 @@
         "module": "HybridCrypto",
         "component": "CompositeCertificateViewer",
         "filePath": "HybridCrypto/workshop/CompositeCertificateViewer.tsx"
+      },
+      "deepLink": "/learn/hybrid-crypto?tab=workshop"
+    },
+    {
+      "id": "mc-hybridcrypto-hybridcasetup-0",
+      "source": "module-content",
+      "title": "Hybrid Cryptography — HybridCASetup",
+      "content": "Module: Hybrid Cryptography\nComponent: HybridCASetup\n\nGenerate a classical (ECDSA P-256) and a PQC (ML-DSA-65) root CA. These CAs will be used in the next steps to demonstrate the four hybrid certificate formats.\nYou now have the key material needed to explore all four hybrid certificate approaches in the next step. The classical CA represents your existing PKI; the PQC CA represents a quantum-resistant root of trust.",
+      "category": "learning",
+      "metadata": {
+        "module": "HybridCrypto",
+        "component": "HybridCASetup",
+        "filePath": "HybridCrypto/workshop/HybridCASetup.tsx"
+      },
+      "deepLink": "/learn/hybrid-crypto?tab=workshop"
+    },
+    {
+      "id": "mc-hybridcrypto-hybridcertformats-0",
+      "source": "module-content",
+      "title": "Hybrid Cryptography — HybridCertFormats",
+      "content": "Module: Hybrid Cryptography\nComponent: HybridCertFormats\n\nGenerate and compare the four X.509 hybrid certificate approaches. Each format combines classical and PQC algorithms differently, with distinct trade-offs for backward compatibility, standardization, and security properties.\nComponent 1: ECDSA P-256 (Classical)\nCertificate A: ECDSA P-256 (Classical)\nPrimary Certificate: ML-DSA-65 (transmitted)\nReconstructed Certificate: ECDSA P-256 (from delta)",
+      "category": "learning",
+      "metadata": {
+        "module": "HybridCrypto",
+        "component": "HybridCertFormats",
+        "filePath": "HybridCrypto/workshop/HybridCertFormats.tsx"
+      },
+      "deepLink": "/learn/hybrid-crypto?tab=workshop"
+    },
+    {
+      "id": "mc-hybridcrypto-hybridcertinspector-0",
+      "source": "module-content",
+      "title": "Hybrid Cryptography — HybridCertInspector",
+      "content": "Module: Hybrid Cryptography\nComponent: HybridCertInspector\n\nv.id === ietfSelectedId) ?? IETF_CERT_VECTORS[0] const selectedIETFResult = ietfParsed[ietfSelectedId] ?? null const isIETFLoading = ietfLoading === ietfSelectedId // Parse the selected IETF cert's DER synchronously for size view (certInfo only) const selectedIETFCertInfo = selectedIETFResult?.certInfo ?? parseCertificateInfo(decodeDer(selectedIETFVector.derBase64)) const selectedIETFTree = selectedIETFResult ? parseCertText(selectedIETFResult.openSSLText) : [] // --------------------------------------------------------------------------- // Render // --------------------------------------------------------------------------- return (\nInspect generated X.509 certificates side-by-side with real hybrid certificates from the IETF Hackathon pqc-certificates test vector repository.\ns + c.pem.length, 0) const maxSize = Math.max( ...certs.map((g) => g.certs.reduce((s, c) => s + c.pem.length, 0)) ) return (\nThese certificates are self-signed and generated for educational purposes only. Do not use them in production environments. The exported PEM files can be inspected with\nrepository (r5). Generated by Bouncy Castle and OpenSSL 3.5 for interoperability testing.\n(MLDSA65-ECDSA-P256-SHA512) is not in OpenSSL's OID database — it shows as\nin the parse output above. This is exactly the backward compatibility challenge: legacy validators reject certificates with unrecognised signature algorithm OIDs. Composite PKI requires both signer and verifier to be updated.",
+      "category": "learning",
+      "metadata": {
+        "module": "HybridCrypto",
+        "component": "HybridCertInspector",
+        "filePath": "HybridCrypto/workshop/HybridCertInspector.tsx"
+      },
+      "deepLink": "/learn/hybrid-crypto?tab=workshop"
+    },
+    {
+      "id": "mc-hybridcrypto-hybridcertinspector-1",
+      "source": "module-content",
+      "title": "Hybrid Cryptography — HybridCertInspector",
+      "content": "Module: Hybrid Cryptography\nComponent: HybridCertInspector\n\nAlt-Sig Extensions (catalyst / draft-ietf-lamps-cert-binding-for-multi-auth)\nClick any row to inspect that certificate. These certs are interoperability test vectors verified by multiple implementations at IETF hackathons.\nOverhead (headers, extensions, ASN.1)\nOverhead (ASN.1, extensions, metadata)",
+      "category": "learning",
+      "metadata": {
+        "module": "HybridCrypto",
+        "component": "HybridCertInspector",
+        "filePath": "HybridCrypto/workshop/HybridCertInspector.tsx"
       },
       "deepLink": "/learn/hybrid-crypto?tab=workshop"
     },
@@ -17053,12 +17582,25 @@
       "id": "mc-data-hybridcrypto-constants",
       "source": "module-content",
       "title": "Hybrid Cryptography — constants (data)",
-      "content": "Module: Hybrid Cryptography\nData: constants\n\nFIPS 203 lattice-based KEM. Recommended general-purpose.\nX25519 + ML-KEM-768 hybrid. Simulated via separate operations + HKDF.\nFIPS 204 lattice-based signature. Recommended general-purpose.",
+      "content": "Module: Hybrid Cryptography\nData: constants\n\nFIPS 203 lattice-based KEM. Recommended general-purpose.\nX25519 + ML-KEM-768 hybrid. Simulated via separate operations + HKDF.\nFIPS 204 lattice-based signature. Recommended general-purpose.\nhttps://datatracker.ietf.org/doc/rfc9881/\nStandard X.509 certificate using ML-DSA-65 as the sole algorithm.\nsignatureAlgorithm ML-DSA-65 (2.16.840.1.101.3.4.3.18),\nPure PQC certificates are the simplest approach — a direct replacement of classical algorithms. However, they break backward compatibility since legacy validators cannot process ML-DSA-65. ANSSI recommends hybrid approaches until PQC algorithms have matured through extended cryptanalysis.\nhttps://datatracker.ietf.org/doc/rfc9909/\nX.509 using SLH-DSA-128s — hash-based signature safe against both quantum and mathematical breakthroughs.\nsignatureAlgorithm SLH-DSA-SHA2-128s (2.16.840.1.101.3.4.3.20),\nSLH-DSA (SPHINCS+) uses hash-based constructions with no lattice assumptions. ANSSI allows standalone use of hash-based signatures (SLH-DSA, LMS, XMSS) even without hybrid mode, since their security relies only on hash function properties.\nhttps://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/\nBoth classical and PQC keys/signatures under a single composite OID. Both must verify.\nsubjectPublicKeyInfo CompositePublicKey {\nsignatureAlgorithm MLDSA65-ECDSA-P256 (1.3.6.1.5.5.7.6.45),\nComposite certificates bind both algorithms under a single OID — the strongest security model since both signatures MUST verify. However, legacy validators cannot process composite OIDs. OpenSSL 3.6.0 does not yet support composite OIDs natively; this demo generates component certs separately to illustrate the structure.\nhttps://datatracker.ietf.org/doc/rfc9763/\nTwo independent certificates bound by a RelatedCertificate extension containing a hash of the partner certificate.\nCertificate A (Classical) ::= SEQUENCE {\nThe \"catalyst\" approach (RFC 9763, developed by NSA) — each certificate is independently valid. Legacy systems validate the classical cert; PQC-aware systems verify both and check the binding hash. This provides backward compatibility without modifying existing PKI infrastructure.\nhttps://datatracker.ietf.org/doc/draft-bonnell-lamps-chameleon-certs/\nA single certificate with a DeltaCertificateDescriptor extension that encodes the differences needed to reconstruct a classical partner certificate.\nCertificate (Primary — PQC) ::= SEQUENCE {\nextensions: DeltaCertificateDescriptor {\n// Differences from the paired classical cert:\nChameleon certificates (backed by DigiCert and Entrust) are more space-efficient than related certs — only one certificate is transmitted. PQC-aware clients use the primary ML-DSA cert directly. Legacy clients extract the DeltaCertificateDescriptor extension and reconstruct the classical ECDSA cert from it.",
       "category": "learning",
       "metadata": {
         "module": "HybridCrypto",
         "component": "constants",
         "filePath": "HybridCrypto/constants.ts"
+      },
+      "deepLink": "/learn/hybrid-crypto"
+    },
+    {
+      "id": "mc-data-hybridcrypto-ietftestvectors",
+      "source": "module-content",
+      "title": "Hybrid Cryptography — ietfTestVectors (data)",
+      "content": "Module: Hybrid Cryptography\nData: ietfTestVectors\n\nhttps://github.com/IETF-Hackathon/pqc-certificates/tree/master/providers/bc\nid-MLDSA65-ECDSA-P256-SHA512 (draft-ietf-lamps-pq-composite-sigs)\nMIIWEDCCCMegAwIBAgIUWSkThsMVe7p4TCUiCgjac93XkOQwCgYIKwYBBQUHBi0wLzEtMCsGA1UEAwwkQkMgTUxEU0E2NS1FQ0RTQS1QMjU2LVNIQTUxMiBUZXN0IFRBMB4XDTI2MDEyNDE0MTI0N1oXDTI3MDEyNDE0MTM0N1owLzEtMCsGA1UEAwwkQkMgTUxEU0E2NS1FQ0RTQS1QMjU2LVNIQTUxMiBUZXN0IFRBMIIH8jAKBggrBgEFBQcGLQOCB+IAlDIsgZFJNQkFTwlAY8qVhHBNaMUDY4DngO+E9rdmgP1geE+V8Cm++Nf28MRqS0hw7yoEJlVx0nBR9eKPexBwy+YmSjpEKYk1Z6h2Rq8+U1c78HytGRrj5m31msHTheZe9xXzsBfTTpeDmn1k0UyaAuFkxcV2vWNn6dMf2PtiocLaXY/xTyrZ8mPjWJ+pfQn9YWJKEqFwOHYoNkwXQBOEFY8kNgy24cqfviSMLnE21tnSenVQkHXWPTm8s7Ss+QqHp3ISvRfoNG5FZyc6JCyDVp2jj6AveumPDO6ZfuCt5znizOI9GulYKDkNQKwkZ5WTnrAZRSn4UnYLe2MW0fumSwnuyTFWV5By4u0sAzeC1ODpzhb9HGiZBm6g61uEuhdHRtv8WNpd92jmubvVPTeBzcDyfNIUnK96jObdXAjdi/BloZqVoYI5nT+n6gzSmsZ+LzHawidjC5UoC4AH4k5ozNP58OcaFoXj0DB1tz824OzmT7OPQLJ2l2MQ82L0DQiYpJgBHpONShhzcD5k3VExc/1LZFR2vdxVg8J5uGBiZcQrhMni1up27i939YstEqT923tL8dS/kgl1jgOOtLSKZhNt+jwPe23ZEtfHwdj0RJDgAPW3fOCNeJY9zcep2jO03GsxxCxugIygwJ1l8/x5WbB7SWHJVsIynUjR8UbmNaE/QYCBy0ori3AJoLLKjKFLW6e8P5NXOj8e7sKjepl3TMB/QGYbade7LLeKH4bjLq8PxhqiKnH0mZzWUc3MuxVrOVuChSjQojqfFEwZaG9n4rN9ynyS4AqTZPJwGQB1d01RgLsr5fS3BrKr/HJU7LZu1CW4SqQi5v5/csueSfl2xFLLmlW0SO/JDJrVuQmY3R8SQi5rduTM5S5Y/EQWycCJK/s15gH/1/jcm/8COQkNg5Tp6FK+6XiE++Q6LKckIQxfZuhl80+ZfbfiI/eE9/YNuV8iZDF7pNLI070tRmFdXyJhhEJFrSz60Lf4V5rMT/188I1/DTWJ+ZVx2LDx6MbDtfj85FJj43VTntztbK7I8XhorvnVsFgQeZwryj/Yz/K7p7dW2AYc2/KKIa1I3ekmnumZEjZmlNLLCQA4lp6DjsBQu8aNax8gniD9R2WjPQrkffbrpmp505vbe653aCpoRYcAHdqaxFIMYJ+7g3cyj7AwdIFpnkl4zYd5MPsUnYpGbcD+DyCUZsDm/KHWJAxOlCd2wwU3hsnOq0qzn7CWw8p9y3ghumb/bCVb3UkWL0g7SihIIAajpF8V50rlUuKkwIsTjUmPSC9B0mqopVEuM14Ik7wRL7qREN9es9qVCYs/5SS67vMLtegqYlk4KPi9vo9vpwyTxKmPqMoGdLJMCb10WIgcoDmNQ41BcjbkOekSOmkJPIx639tL/TCrBX4uEZa+xsb0W0xmcVlF7/uDKfwvUQPyAjTNAG67cweW8QlyE+GKBuOBcBOjoS4C97+dpuvXmlVPOGQsYw/tyPrT32zpozw50tBzeJ97mDpvs6XWC4ckWriiYXhjdBxHzJc5Ai/VoLQ+n3jP1yKoke0XovMuorU+f9TewEqCSOuchVjIEkM1fkR9OlGL3LA2VQUPGs+16wKGKCqRe35NQxpgeovfpAIXCG9veBx+QRb45iE2xnNEYeZt6s8sGgyF634OX1Yg/9ivkDmwDkZXs24fId3bAtKPC3NLSx3wtHErbFqx6dRsA/Qtw4DglXLrNFNQK86+7w2mvOU3MBv5q89nt5LQiajBiKSvyDCP4P+0Eegij9w27ieISJfUjATUADcz9n2m69CcCfOim69ul81zNz4ae860uwToclVhAlWgPKV1cw2PRCHMVakx8DkWhkVtyUUnBLPANU+d43ojp+rpJWKle1mU//tSF0Fm0fZhmf6nDpt+muqFTENPHV3X8bU8PtRundlxR6uiSt+iOQcbtZ3NBj/gJIsi173MG72Sb3xnPjnbzaKmDNMs50nrGoMPtkj5VYEp5Tj65qLNdvZ5S1Vb1QwAAjl04xXyvoe49n3cmcTV4S+ugBa9MFc/r+SU2CGKN0TPkW3AFD5+CA9bbfl+BxehWWGSR4Wy96uu0jR5c+gkqVe4ZmywO/12FmGE03g7K1Ilk1r1pZGwpDqAzFgbWcIzr4tyQZEHEupDwM+FZ9BhA0DpeW9r7GaZyT3uWyjCl8TuoBebJ8H3tN/2iZVzL9/bMZLp1MPixYP4bRsV12MDYAsT2Y98FARcqSGXeIBnkecaK84C2CKTf41SV+6zEAZ0GUvr+FRfAZFrL/bsiw6qXPiLFdEivITIfgp3cZnCq9ofjvr2x/WnA+8Zb8y7XgbQ9QAk6D5aqPAIgmuvU8VKcD88FszIsFuPj/HUkR9rwKrbt2UsSDpAcc2T3l7JoDChqOkA2gHND83Px326GMrk25mzzWO/1KALh/11IpLT16ljyEvj0c38sG1JzdvnT/pveJK5+4o8LPf6yozwRCURwMx31OyQ6NeeNaRmoUR5xitktqglgOS258Q0eGaQOjASepcAE1j/zzqvh3MrecsHTMxJwqVA4forwwOzMDRJGfpDg26d55O4gMbG0IHiPTkkTjUrEN\n...(truncated)",
+      "category": "learning",
+      "metadata": {
+        "module": "HybridCrypto",
+        "component": "ietfTestVectors",
+        "filePath": "HybridCrypto/data/ietfTestVectors.ts"
       },
       "deepLink": "/learn/hybrid-crypto"
     },
@@ -17224,173 +17766,156 @@
       "deepLink": "/learn/iot-ot-pqc"
     },
     {
-      "id": "mc-keymanagement-keymanagementexercises-0",
+      "id": "mc-kmspqc-kmspqcexercises-0",
       "source": "module-content",
-      "title": "Key Management — KeyManagementExercises",
-      "content": "Module: Key Management\nComponent: KeyManagementExercises\n\nWork through these scenarios to understand key lifecycle management, HSM operations, and PQC migration planning. Each exercise pre-configures the Workshop — click &quot;Load & Run&quot; to begin.\nTake the PQC quiz to test what you've learned about key management and HSMs.\nWalk through the Generation stage of the key lifecycle. Compare RSA-2048 key generation (256-byte public key) with ML-KEM-768 (1,184-byte public key) and ML-DSA-65 (1,952-byte public key). Observe how the HSM handles larger key material.\nML-KEM-768 public keys are 4.6x larger than RSA-2048. This directly impacts certificate sizes, TLS handshakes, and HSM storage capacity. The key generation process itself is comparable in speed.\nStep through the first three PKCS#11 operations: generate an ML-KEM-768 key pair inside the HSM, export the public key, and use encapsulation to wrap an AES-256 session key.\nThe private key never leaves the HSM boundary (CKA_SENSITIVE=TRUE). ML-KEM encapsulation replaces RSA-OAEP for key wrapping, producing 1,088-byte ciphertexts instead of 256 bytes.\nComplete the HSM operation flow: sign data with ML-DSA-65 and verify the signature. Compare the 3,309-byte ML-DSA signature with a 64-byte ECDSA P-256 signature.\nML-DSA-65 signatures are 51x larger than ECDSA P-256. This has major implications for certificate chains, CRLs, OCSP responses, and any protocol that transmits signatures.",
+      "title": "KmsPqc — KmsPqcExercises",
+      "content": "Module: KmsPqc\nComponent: KmsPqcExercises\n\nWork through these scenarios to master PQC key management patterns, envelope encryption, hybrid wrapping, and compliance-driven rotation planning. Each exercise pre-configures the Workshop — click &quot;Load & Run&quot; to begin.\nTake the PQC quiz to test what you've learned about KMS and PQC key management.\nDesign a 3-level PQC key hierarchy for a multi-cloud enterprise. Select algorithm modes (Classical, Hybrid, or PQC-only) for each level — Root KEK, Zone KEK, and DEK — and observe how key material sizes and storage requirements change.\nSwitching from Classical to PQC-only at the Root KEK level increases the public key from 256 bytes (RSA-4096) to 1,568 bytes (ML-KEM-1024). The tree visualization shows how mode choices cascade through the hierarchy.\n2. Envelope Encryption Walkthrough\nStep through the 5-step ML-KEM envelope encryption flow side-by-side with classical RSA-OAEP. Observe the extra KDF step that PQC requires and compare artifact sizes at each stage.\nRSA-OAEP wraps the DEK in one step (256 bytes). ML-KEM requires encapsulate → KDF → AES-KW wrap, producing 1,128 bytes total — a 4.4x increase. The extra complexity is inherent to the KEM paradigm.\n3. Hybrid vs PQC-Only Wrapping\nCompare four hybrid combiner modes: X25519+ML-KEM-768, P-256+ML-KEM-768, X25519+ML-KEM-1024, and X-Wing. Examine the combiner formula, wire overhead, and recommended use case for each.",
       "category": "learning",
       "metadata": {
-        "module": "KeyManagement",
-        "component": "KeyManagementExercises",
-        "filePath": "KeyManagement/components/KeyManagementExercises.tsx"
-      },
-      "deepLink": "/learn/key-management"
+        "module": "KmsPqc",
+        "component": "KmsPqcExercises",
+        "filePath": "KmsPqc/components/KmsPqcExercises.tsx"
+      }
     },
     {
-      "id": "mc-keymanagement-keymanagementexercises-1",
+      "id": "mc-kmspqc-kmspqcexercises-1",
       "source": "module-content",
-      "title": "Key Management — KeyManagementExercises",
-      "content": "Module: Key Management\nComponent: KeyManagementExercises\n\nExamine the key inventory for Quantum Financial Services Corp: 500 certificates across 5 categories, 10 HSMs. Identify which keys are quantum-vulnerable and calculate the storage impact of PQC migration.\nOf 500 certificates, 400 use quantum-vulnerable algorithms (RSA, ECDSA). Only the 100 AES-256 data encryption keys are already quantum-safe. Total public key storage increases by approximately 7x after migration.\n5. Compliance-Driven Rotation Schedule\nPlan a rotation schedule aligned with CNSA 2.0 (2025–2033 phased timeline), NIST IR 8547 (draft: deprecate by 2030, disallow by 2035), PCI DSS v4.0, and DORA. Calculate the bandwidth impact of rotating 500 certificates to PQC algorithms.\nThe compliance deadlines create a clear migration timeline: PCI DSS crypto inventory required by 2025 (Req. 12.3.3), DORA ICT risk framework effective January 2025, CNSA 2.0 phased from 2025 (prefer PQC) to 2033 (exclusively PQC for all NSS), and NIST IR 8547 proposing classical deprecation by 2030. Rotation schedules must account for larger certificates and signatures.",
+      "title": "KmsPqc — KmsPqcExercises",
+      "content": "Module: KmsPqc\nComponent: KmsPqcExercises\n\nX-Wing (used by Google Cloud KMS) has the same wire overhead as X25519+ML-KEM-768 (1,120 bytes) but provides a standardized single-construction hybrid KEM. FIPS-compliant environments should prefer P-256+ML-KEM-768.\nMap the same PQC key wrapping operation across three cloud KMS providers (AWS KMS, Google Cloud KMS, Azure Key Vault). See how each provider exposes PQC capabilities through their API and CLI.\nAWS KMS is the only provider with GA PQC signing (ML-DSA). Google Cloud KMS has the broadest algorithm preview (ML-KEM, X-Wing, ML-DSA, SLH-DSA). Azure Key Vault lacks native PQC key types but SymCrypt supports ML-KEM/ML-DSA internally.\nPlan a key rotation schedule for 500 certificates aligned with CNSA 2.0 (2027-2033), NIST IR 8547 (2030/2035), and provider-specific rotation capabilities. Calculate storage and bandwidth impact across three migration phases.\nCNSA 2.0 requires all new NSS acquisitions to be PQC-compliant by 2027 and exclusively PQC by 2033. The storage impact multiplier ranges from 1.0x (AES-256 DEKs) to 30.0x (ECDSA → ML-DSA-65 code signing keys).",
       "category": "learning",
       "metadata": {
-        "module": "KeyManagement",
-        "component": "KeyManagementExercises",
-        "filePath": "KeyManagement/components/KeyManagementExercises.tsx"
-      },
-      "deepLink": "/learn/key-management"
+        "module": "KmsPqc",
+        "component": "KmsPqcExercises",
+        "filePath": "KmsPqc/components/KmsPqcExercises.tsx"
+      }
     },
     {
-      "id": "mc-keymanagement-keymanagementintroduction-0",
+      "id": "mc-kmspqc-kmspqcintroduction-0",
       "source": "module-content",
-      "title": "Key Management — KeyManagementIntroduction",
-      "content": "Module: Key Management\nComponent: KeyManagementIntroduction\n\nEvery cryptographic key follows a defined lifecycle from creation to destruction.\ndefines seven stages that ensure keys are properly managed throughout their operational life. Understanding this lifecycle is essential for planning a PQC migration.\n“Proper key management is fundamental to the effective use of cryptography for security. Keys are analogous to the combination of a safe. If a safe combination is compromised, the strongest safe provides no security.”\nis a dedicated cryptographic processor that generates, stores, and manages keys within a tamper-resistant boundary. HSMs are the gold standard for key protection in enterprise environments.\n&bull; Standard API for HSM operations (C_GenerateKeyPair, C_Sign, C_Verify)\n&bull; Mechanism codes define algorithm selection (CKM_RSA_PKCS, CKM_ML_KEM)\n&bull; Attribute templates control key properties (extractable, sensitive)\nMigrating to PQC introduces significant key management challenges. Larger keys, stricter algorithm separation, and the need for dual-key management during the hybrid transition period all impact existing infrastructure.\nPQC public keys are 4-8x larger than classical equivalents. This impacts certificates, TLS handshakes, HSM storage, and network bandwidth.\nfor signatures only. Organizations need separate key pairs where one RSA key previously sufficed.",
+      "title": "KmsPqc — KmsPqcIntroduction",
+      "content": "Module: KmsPqc\nComponent: KmsPqcIntroduction\n\nPost-quantum cryptography fundamentally changes how organizations manage keys.\nis for signatures only — it cannot encapsulate. This strict algorithm separation replaces the dual-use nature of\n“A KEM can only establish a shared secret, not directly encrypt arbitrary data. Applications that relied on RSA PKCS#1 v1.5 or RSA-OAEP for direct encryption must adopt an envelope encryption pattern when migrating to ML-KEM.”\n— NIST SP 800-227, Recommendations for Key-Encapsulation Mechanisms\nPQC public keys are 4–8x larger than classical equivalents, impacting HSM storage, certificate sizes, and network bandwidth during key distribution.\nrequires an extra KDF step compared to RSA-OAEP. RSA directly wraps the DEK in one step; ML-KEM encapsulates &rarr; derives a wrapping key via HKDF &rarr; wraps the DEK with AES-KW.\nHKDF-SHA-256(shared_secret, info=&quot;envelope-kek&quot;) &rarr; 256-bit wrapping key\nStore: KEM ciphertext + wrapped DEK (1,128 bytes total vs 256 bytes RSA)\nrecommends hybrid combiners that derive a single key from both a classical and PQC shared secret:\n. This ensures that if either algorithm is broken, the derived key remains secure.\nproviders and on-premises key management solutions are at different stages of PQC adoption. Understanding each provider's capabilities is critical for multi-cloud strategies.\nKey rotation with PQC algorithms introduces significant bandwidth and storage overhead. Enterprises must plan phased rotation aligned with compliance deadlines from",
       "category": "learning",
       "metadata": {
-        "module": "KeyManagement",
-        "component": "KeyManagementIntroduction",
-        "filePath": "KeyManagement/components/KeyManagementIntroduction.tsx"
-      },
-      "deepLink": "/learn/key-management"
+        "module": "KmsPqc",
+        "component": "KmsPqcIntroduction",
+        "filePath": "KmsPqc/components/KmsPqcIntroduction.tsx"
+      }
     },
     {
-      "id": "mc-keymanagement-keymanagementintroduction-1",
+      "id": "mc-kmspqc-kmspqcintroduction-1",
       "source": "module-content",
-      "title": "Key Management — KeyManagementIntroduction",
-      "content": "Module: Key Management\nComponent: KeyManagementIntroduction\n\nDuring hybrid transition, every entity needs both classical and PQC key pairs. This doubles the key inventory, complicates rotation schedules, and increases HSM storage requirements.\n. Understanding this distinction is essential for migration planning and HSM operations.\n&bull; Same mathematical structure as signing (e.g. elliptic curves)\n&bull; Sender encapsulates: (ciphertext, shared_secret) = Encaps(pk)\n&bull; Receiver decapsulates: shared_secret = Decaps(sk, ciphertext)\n&bull; Non-interactive: sender only needs receiver's public key\n&bull; Separate from signing — ML-KEM cannot sign, ML-DSA cannot encapsulate\nBecause KEMs produce a fixed 32-byte shared secret (not a directly wrapped key), the\nmapping uses C_WrapKey/C_UnwrapKey as a two-step abstraction: encapsulate to derive a KEK, then wrap the session key with the KEK. This differs from RSA-OAEP which directly wraps the key in one step.\nNIST has standardized two families of hash-based signatures with very different key management requirements. Choosing the wrong one — or mismanaging state — can be catastrophic.\n&bull; Each signature uses a one-time key from a finite pool\n&bull; Small signatures (~2-5 KB), but limited total signatures per key\n&bull; Best for firmware signing, code signing (low volume, HSM-managed)\n: large signatures (7-30 KB) but conservative security assumptions",
+      "title": "KmsPqc — KmsPqcIntroduction",
+      "content": "Module: KmsPqc\nComponent: KmsPqcIntroduction\n\nRotating 300 TLS certificates from RSA-2048 (256 B pub key) to hybrid ML-DSA-65 + ECDSA (2,017 B) increases per-rotation bandwidth by approximately 528 KB for public keys alone. Certificate chains with larger signatures add more overhead.\nMulti-cloud PQC key management requires a unified architecture that abstracts provider-specific APIs while maintaining centralized policy control.\n(Key Management Interoperability Protocol) provides a vendor-neutral interface for cross-provider key operations.\nKMIP 2.1+ supports PQC key types. Use KMIP as the abstraction layer for cross-provider key operations: create, wrap, unwrap, rotate, destroy. Thales CipherTrust and HashiCorp Vault both support KMIP server mode.\nPQC key backup requires quantum-safe wrapping for the backup envelope. Use ML-KEM to wrap backup keys, with M-of-N key splitting for disaster recovery. Ensure backup HSMs support PQC firmware.\nDesign the KMS abstraction layer to support algorithm swaps without application changes. Tag keys with algorithm metadata, version them, and use feature flags to route traffic between classical and PQC paths.\nPKCS#11 v3.2 mechanisms, firmware migration, and FIPS validation\nDesign patterns for algorithm-agnostic cryptographic infrastructure\nDesign key hierarchies, visualize envelope encryption, and plan PQC rotation strategies.\nCatalog all cryptographic assets, identify quantum-vulnerable keys, establish baseline metrics. Required by PCI DSS v4.0.1 Req. 12.3.3.",
       "category": "learning",
       "metadata": {
-        "module": "KeyManagement",
-        "component": "KeyManagementIntroduction",
-        "filePath": "KeyManagement/components/KeyManagementIntroduction.tsx"
-      },
-      "deepLink": "/learn/key-management"
+        "module": "KmsPqc",
+        "component": "KmsPqcIntroduction",
+        "filePath": "KmsPqc/components/KmsPqcIntroduction.tsx"
+      }
     },
     {
-      "id": "mc-keymanagement-keymanagementintroduction-2",
+      "id": "mc-kmspqc-kmspqcintroduction-2",
       "source": "module-content",
-      "title": "Key Management — KeyManagementIntroduction",
-      "content": "Module: Key Management\nComponent: KeyManagementIntroduction\n\n, the HSM must persist signature state to non-volatile storage after every signing operation. A power failure or crash between signing and state update can cause key reuse. CNSA 2.0 includes LMS/HSS for firmware signing specifically because HSMs can enforce this state management.\nDuring the PQC transition, organizations need certificates that work with both classical and post-quantum algorithms. Two main approaches exist:\n&bull; Single certificate contains both classical + PQC keys and signatures\n&bull; Both algorithms must validate for the certificate to be trusted\n&bull; One OID represents the combined algorithm (e.g. ML-DSA-65 + ECDSA P-256)\n&bull; Largest certificate size but strongest security guarantee\n&bull; Separate classical and PQC certificates for the same entity\n&bull; Server presents both; client uses whichever it supports\n&bull; Requires managing two certificate lifecycles per entity\nrequire HSMs that support composite key generation (generating both key pairs atomically). Rotation must update both algorithm components simultaneously. HSM vendors like Thales and Entrust already support composite key generation in PQC-capable firmware.\nEnterprise disaster recovery depends on secure key backup. PQC migration introduces new challenges for backup, escrow, and recovery operations.",
+      "title": "KmsPqc — KmsPqcIntroduction",
+      "content": "Module: KmsPqc\nComponent: KmsPqcIntroduction\n\nIssue hybrid certificates (classical + PQC) for TLS, upgrade HSM firmware, configure dual-key rotation policies in KMS.\nDeprecate classical-only keys per NIST IR 8547. Migrate all remaining certificates to PQC-only or composite. CNSA 2.0 exclusively PQC by 2033.",
       "category": "learning",
       "metadata": {
-        "module": "KeyManagement",
-        "component": "KeyManagementIntroduction",
-        "filePath": "KeyManagement/components/KeyManagementIntroduction.tsx"
-      },
-      "deepLink": "/learn/key-management"
+        "module": "KmsPqc",
+        "component": "KmsPqcIntroduction",
+        "filePath": "KmsPqc/components/KmsPqcIntroduction.tsx"
+      }
     },
     {
-      "id": "mc-keymanagement-keymanagementintroduction-3",
+      "id": "mc-kmspqc-index-0",
       "source": "module-content",
-      "title": "Key Management — KeyManagementIntroduction",
-      "content": "Module: Key Management\nComponent: KeyManagementIntroduction\n\nHSM master keys are split into N shares, requiring M shares to reconstruct (e.g. 3 of 5). With PQC, larger keys produce larger shares, and the wrapping keys protecting shares must also be quantum-safe.\nReplicating keys across HSM clusters for HA. PQC key wrapping during clone operations uses more bandwidth (larger wrapped keys). Ensure the wrapping mechanism is itself quantum-safe.\nRegulatory escrow (e.g. for encrypted data recovery) must use PQC-protected escrow envelopes. Escrowed classical keys remain useful only if the escrow container resists quantum attack.\nsurfaces that differ from classical cryptography. HSM implementations must address these to maintain their security guarantees.\nPolynomial multiplication and NTT operations can leak secret key information through power analysis and electromagnetic emanations. Constant-time implementations and masking countermeasures are essential.\nRely heavily on hash function calls. While simpler to protect than lattice operations, the large number of hash invocations per signature increases the window for timing and cache attacks.\nML-DSA supports a “hedged” signing mode where internal randomness supplements the message, providing protection against fault injection attacks. In HSM contexts, hedged mode is recommended over deterministic signing because the HSM has access to a hardware entropy source.",
+      "title": "KmsPqc — index",
+      "content": "Module: KmsPqc\nComponent: index\n\nMaster PQC key management patterns: envelope encryption with ML-KEM, hybrid key wrapping, and cross-provider KMS strategies.\nDesign a 3-level PQC key hierarchy with Root KEK, Zone KEK, and DEK.\nCompare ML-KEM envelope encryption vs classical RSA-OAEP key wrapping.\nExplore X25519+ML-KEM-768 hybrid combiners with per-provider API mapping.\nPlan PQC key rotation with provider-specific strategies and compliance deadlines.\nExplore KMIP v2.1 operations, PQC key type mappings, and cross-provider key sync.",
       "category": "learning",
-      "metadata": {
-        "module": "KeyManagement",
-        "component": "KeyManagementIntroduction",
-        "filePath": "KeyManagement/components/KeyManagementIntroduction.tsx"
-      },
-      "deepLink": "/learn/key-management"
+      "metadata": { "module": "KmsPqc", "component": "index", "filePath": "KmsPqc/index.tsx" }
     },
     {
-      "id": "mc-keymanagement-keymanagementintroduction-4",
+      "id": "mc-kmspqc-envelopeencryptiondemo-0",
       "source": "module-content",
-      "title": "Key Management — KeyManagementIntroduction",
-      "content": "Module: Key Management\nComponent: KeyManagementIntroduction\n\nSingle pane of glass for all key operations. HSM-backed key generation. Policy enforcement, audit logging, and automated rotation. Examples: Thales CipherTrust, Venafi, KeyFactor.\nManaged key services from cloud providers. AWS KMS, Azure Key Vault, GCP Cloud KMS. HSM-backed (FIPS 140-2 Level 3). API-driven with IAM integration. PQC support varies by provider.\nKey management distributed across microservices with local HSMs or vTPMs. Vault (HashiCorp) provides secrets management with auto-rotation. Requires strong policy orchestration.\nMajor HSM vendors are actively adding PQC algorithm support.\nvalidation for PQC operations is in progress, with several vendors already offering production-ready PQC firmware.\nNIST's FIPS 140-3 validation for PQC algorithms is ongoing. Organizations should verify their HSM vendor's PQC roadmap and plan firmware upgrades accordingly. Hybrid deployments (classical + PQC) provide a safe transition path.\nExplore the key lifecycle, simulate HSM operations, and plan a PQC key rotation.",
+      "title": "KmsPqc — EnvelopeEncryptionDemo",
+      "content": "Module: KmsPqc\nComponent: EnvelopeEncryptionDemo\n\nStep through the complete envelope encryption flow. Compare how RSA-OAEP directly wraps a DEK in one step versus the 3-step ML-KEM process: encapsulate &rarr; KDF &rarr; AES-KW wrap.\nThe 4.4x increase in wrapped key storage is the cost of quantum-safe envelope encryption. For most applications, this overhead is manageable. The larger concern is the operational complexity of the 3-step KEM flow.\n1. Generate ML-KEM-768 key pair\n2. Encaps → ct + shared secret\n4. AES-KW wrap DEK → 1,128 B total\n5. Decaps → HKDF → unwrap → DEK",
       "category": "learning",
       "metadata": {
-        "module": "KeyManagement",
-        "component": "KeyManagementIntroduction",
-        "filePath": "KeyManagement/components/KeyManagementIntroduction.tsx"
-      },
-      "deepLink": "/learn/key-management"
+        "module": "KmsPqc",
+        "component": "EnvelopeEncryptionDemo",
+        "filePath": "KmsPqc/workshop/EnvelopeEncryptionDemo.tsx"
+      }
     },
     {
-      "id": "mc-keymanagement-index-0",
+      "id": "mc-kmspqc-hybridkeywrapping-0",
       "source": "module-content",
-      "title": "Key Management — index",
-      "content": "Module: Key Management\nComponent: index\n\nMaster key lifecycle management, HSM operations, and PQC migration planning for enterprise cryptographic infrastructure.\nWalk through all 7 stages of the key lifecycle with PQC impact analysis.\nStep through simulated PKCS#11 operations for PQC key management.\nPlan PQC key rotation for a fictional enterprise with 500 certificates.",
+      "title": "KmsPqc — HybridKeyWrapping",
+      "content": "Module: KmsPqc\nComponent: HybridKeyWrapping\n\n('aws-kms') const activeHybrid = HYBRID_COMBINER_MODES.find((m) => m.id === selectedMode) const activeProvider = CLOUD_PROVIDERS.find((p) => p.id === selectedProvider) const providerStatus = activeProvider ? KMS_STATUS_LABELS[activeProvider.pqcStatus] : null return (\nExplore hybrid combiner modes that derive a single wrapping key from both a classical and PQC shared secret. Toggle between Classical-only, PQC-only, and Hybrid to compare wire overhead and provider API calls.\nTraditional RSA-OAEP or ECDH key wrapping. No quantum protection.\nRSA-OAEP directly encrypts the DEK with the recipient's public key. Shor's algorithm on a quantum computer can factor the RSA modulus and recover the private key, compromising all wrapped DEKs.\nML-KEM envelope encryption. Quantum-safe but no classical fallback.\nPQC-only wrapping relies entirely on ML-KEM security assumptions (Module-LWE hardness). During the transition period, some organizations may prefer hybrid mode for defense-in-depth until PQC algorithms have more years of cryptanalysis.\nSelect a hybrid mode to see its components, combiner formula, and wire overhead.",
       "category": "learning",
       "metadata": {
-        "module": "KeyManagement",
-        "component": "index",
-        "filePath": "KeyManagement/index.tsx"
-      },
-      "deepLink": "/learn/key-management"
+        "module": "KmsPqc",
+        "component": "HybridKeyWrapping",
+        "filePath": "KmsPqc/workshop/HybridKeyWrapping.tsx"
+      }
     },
     {
-      "id": "mc-keymanagement-hsmsimulator-0",
+      "id": "mc-kmspqc-keyhierarchydesigner-0",
       "source": "module-content",
-      "title": "Key Management — HSMSimulator",
-      "content": "Module: Key Management\nComponent: HSMSimulator\n\nStep through simulated PKCS#11 operations on a post-quantum HSM. Each step shows the actual API call, what happens inside the HSM, and the expected output.\nNote: PQC mechanism codes (CKM_ML_KEM_*, CKM_ML_DSA_*, CKM_SLH_DSA_*) are from the OASIS PKCS#11 3.2 draft and may change before final standardization.",
+      "title": "KmsPqc — KeyHierarchyDesigner",
+      "content": "Module: KmsPqc\nComponent: KeyHierarchyDesigner\n\nDesign a 3-level PQC key hierarchy. Select the algorithm mode for each level and observe how key material sizes, storage requirements, and rotation bandwidth change.\nBandwidth estimate assumes all public keys are re-distributed during rotation. Actual bandwidth is higher when including certificate chain signatures.",
       "category": "learning",
       "metadata": {
-        "module": "KeyManagement",
-        "component": "HSMSimulator",
-        "filePath": "KeyManagement/workshop/HSMSimulator.tsx"
-      },
-      "deepLink": "/learn/key-management?tab=workshop"
+        "module": "KmsPqc",
+        "component": "KeyHierarchyDesigner",
+        "filePath": "KmsPqc/workshop/KeyHierarchyDesigner.tsx"
+      }
     },
     {
-      "id": "mc-keymanagement-keylifecycledemo-0",
+      "id": "mc-kmspqc-kmipprotocolexplorer-0",
       "source": "module-content",
-      "title": "Key Management — KeyLifecycleDemo",
-      "content": "Module: Key Management\nComponent: KeyLifecycleDemo\n\nk.type === 'classical') const pqcKeys = KEY_SIZE_COMPARISONS.filter((k) => k.type === 'pqc') return (\nWalk through each stage of the cryptographic key lifecycle. At each stage, see what changes when migrating from RSA to ML-KEM/ML-DSA — key sizes, storage requirements, and operational considerations.\nSig / CT = Signature size (for signing algorithms) or Ciphertext size (for KEMs). All sizes in bytes. PQC algorithms produce significantly larger artifacts.",
+      "title": "KmsPqc — KmipProtocolExplorer",
+      "content": "Module: KmsPqc\nComponent: KmipProtocolExplorer\n\nCompare the same key operation expressed as KMIP v2.1 XML vs. provider-specific API calls. KMIP provides a single vendor-neutral interface — each provider translates it into their native API.\n(API format, authentication, HSM backing). This is why KMIP orchestrators like CipherTrust or Vault can centralize policy across heterogeneous backends.\nenumeration with PQC key types. This table shows how each algorithm maps to KMIP enums and which providers support them.\nML-KEM-1024 secret keys (3,168 B) are 99x larger than ECDH P-256 (32 B). KMIP message buffers, TLS record sizes, and database columns must be pre-configured for PQC payloads before migration.\nWalk through a real-world scenario: a KMIP orchestrator managing an ML-KEM-768 key lifecycle across an on-prem HSM, AWS KMS, and Google Cloud KMS simultaneously.\nUse this checklist to evaluate your organization's readiness for KMIP-based PQC key management. Critical items must be resolved before deployment.\nAll readiness checks complete! Your environment is ready for KMIP-based PQC key management.",
       "category": "learning",
       "metadata": {
-        "module": "KeyManagement",
-        "component": "KeyLifecycleDemo",
-        "filePath": "KeyManagement/workshop/KeyLifecycleDemo.tsx"
-      },
-      "deepLink": "/learn/key-management?tab=workshop"
+        "module": "KmsPqc",
+        "component": "KmipProtocolExplorer",
+        "filePath": "KmsPqc/workshop/KmipProtocolExplorer.tsx"
+      }
     },
     {
-      "id": "mc-keymanagement-keyrotationplanner-0",
+      "id": "mc-kmspqc-kmsrotationplanner-0",
       "source": "module-content",
-      "title": "Key Management — KeyRotationPlanner",
-      "content": "Module: Key Management\nComponent: KeyRotationPlanner\n\nsum + cat.count * cat.keySize, 0 ) // Calculate target storage using counts from currentAlgorithms const targetKeys = Object.keys(scenario.targetAlgorithms) as Array\nBandwidth increase calculated from public key size deltas during certificate distribution. Actual TLS handshake overhead is higher due to signature sizes in certificate chains.\nPhase 1: Inventory & Assessment\nCatalog all 500 certificates and 10 HSMs. Identify quantum-vulnerable keys and establish baseline storage/bandwidth metrics.\nDeploy hybrid (classical + PQC) certificates for TLS, upgrade HSM firmware, begin dual-key management.\nRemove classical algorithm dependencies. All certificates use PQC or hybrid algorithms. HSMs operate exclusively with post-quantum mechanisms.",
+      "title": "KmsPqc — KmsRotationPlanner",
+      "content": "Module: KmsPqc\nComponent: KmsRotationPlanner\n\nsum + cat.count * cat.keySize, 0 ) const targetKeys = Object.keys(scenario.targetAlgorithms) as Array\nBandwidth increase calculated from public key size deltas during certificate distribution. Actual TLS handshake overhead is higher due to signature sizes in certificate chains.\np.id === provider.id) const status = fullProvider ? KMS_STATUS_LABELS[fullProvider.pqcStatus] : null return (\nFor enterprises using multiple KMS providers, KMIP (Key Management Interoperability Protocol) enables centralized rotation scheduling. Thales CipherTrust and HashiCorp Vault both support KMIP server mode, allowing a single rotation policy to propagate across AWS, GCP, and Azure through a unified control plane.\nPhase 1: Inventory & Assessment\nCatalog all 500 certificates and 10 HSMs. Identify quantum-vulnerable keys and establish baseline storage/bandwidth metrics. Map KMS provider capabilities.\nDeploy hybrid (classical + PQC) certificates for TLS, upgrade HSM firmware, configure multi-cloud KMS for dual-key management.\nRemove classical algorithm dependencies. All certificates use PQC or hybrid algorithms. KMS providers operate with PQC key types natively.",
       "category": "learning",
       "metadata": {
-        "module": "KeyManagement",
-        "component": "KeyRotationPlanner",
-        "filePath": "KeyManagement/workshop/KeyRotationPlanner.tsx"
-      },
-      "deepLink": "/learn/key-management?tab=workshop"
+        "module": "KmsPqc",
+        "component": "KmsRotationPlanner",
+        "filePath": "KmsPqc/workshop/KmsRotationPlanner.tsx"
+      }
     },
     {
-      "id": "mc-data-keymanagement-hsmvendordata",
+      "id": "mc-data-kmspqc-kmsconstants",
       "source": "module-content",
-      "title": "Key Management — hsmVendorData (data)",
-      "content": "Module: Key Management\nData: hsmVendorData\n\nFull PQC support in firmware 7.9.2+. Supports hybrid key generation and composite certificates. Luna Client 10.9.2+ required for PKCS#11 PQC mechanisms.\nPQC support via CodeSafe SDK and nShield 5 firmware. Supports PQC-ready certificate enrollment. Integration with Entrust PKI for hybrid certificate issuance.\nPQC support via Q-safe firmware extension. Highest physical security (Level 4). Supports custom PQC algorithm loading through CryptoServer SDK. Available in network and PCIe form factors.\nHigh-throughput PCIe HSM with hardware PQC acceleration. PQC algorithms in beta firmware. Used in cloud infrastructure and financial transaction processing.\nPQC support through AWS Crypto Tools SDK integration. Native PKCS#11 PQC mechanisms not yet available. AWS KMS provides PQC TLS endpoints. Managed service with multi-AZ redundancy.\nBased on Thales Luna hardware. PQC roadmap aligned with Thales firmware updates. Azure Key Vault Managed HSM provides a higher-level abstraction. PQC preview expected 2026.\nC_GenerateKeyPair( hSession, &mechanism, // CKM_ML_KEM_KEY_PAIR_GEN publicTemplate, // CKA_TOKEN, CKA_ENCRYPT, CKA_WRAP privateTemplate, // CKA_PRIVATE, CKA_SENSITIVE, CKA_DECRYPT &hPublicKey, &hPrivateKey )\nGenerate an ML-KEM-768 key pair inside the HSM boundary.\nThe private key never leaves the HSM. CKA_SENSITIVE=TRUE ensures the private key cannot be exported in plaintext. CKA_EXTRACTABLE=FALSE prevents any form of export. The HSM uses its internal DRBG seeded with hardware entropy.\nCKR_OK Public Key Handle: 0x00000042 Private Key Handle: 0x00000043 Algorithm: ML-KEM-768 Public Key Size: 1,184 bytes Token Object: YES (persistent)\nC_GetAttributeValue( hSession, hPublicKey, // Handle from step 1 publicKeyTemplate, // CKA_VALUE 1 // Attribute count )\nExtract the ML-KEM-768 public key for distribution.\nPublic keys can always be exported (CKA_SENSITIVE does not apply). The 1,184-byte public key is used by peers to encapsulate shared secrets. In a TLS 1.3 handshake, this would be sent in the key_share extension of the ServerHello message.\nCKR_OK Attribute: CKA_VALUE Length: 1,184 bytes Key Type: CKK_ML_KEM Exportable: YES (public key)\nC_WrapKey( hSession, &mechanism, // CKM_ML_KEM_ENCAPSULATE hPublicKey, // Wrapping key (ML-KEM public) hSessionKey, // Key to wrap (AES-256 session key) wrappedKey, // Output: ciphertext (1,088 bytes) &wrappedKeyLen )\nUse ML-KEM encapsulation to wrap an AES-256 session key.\nUnlike RSA-OAEP which directly wraps the key, ML-KEM is a two-step process: encapsulation produces a ciphertext and a 32-byte shared secret, then the shared secret is used as a KEK to wrap the session key. The PKCS#11 C_WrapKey call abstracts both steps. The 1,088-byte ciphertext is sent to the private key holder. PKCS#11 3.2 PQC mechanism mappings are still being finalized by OASIS.\nCKR_OK Wrapped Key Length: 1,088 bytes Mechanism: CKM_ML_KEM_ENCAPSULATE KEM Ciphertext: 1,088 bytes Shared Secret: 32 bytes (internal)\nC_UnwrapKey( hSession, &mechanism, // CKM_\n...(truncated)",
+      "title": "KmsPqc — kmsConstants (data)",
+      "content": "Module: KmsPqc\nData: kmsConstants\n\nTop-level master key stored in HSM. Wraps zone KEKs. Rotated infrequently (5-15 years). Must be the most secure key in the hierarchy.\nRegional or departmental KEK derived from Root KEK. Wraps data encryption keys for a specific zone (region, business unit, or application tier). Enables key isolation.\nSymmetric key that encrypts actual data (files, database records, messages). Generated per-operation or per-session. Wrapped by zone KEK for storage.\nAES-256-GCM (unchanged — symmetric keys are quantum-safe at 256-bit)\nGenerate RSA-2048 key pair. Public key is used by clients to wrap DEKs.\nGenerate ML-KEM-768 key pair. Public encapsulation key is distributed to clients.\nClient uses RSA-OAEP to directly encrypt the 32-byte DEK with the KEK public key. One step.\nClient runs ML-KEM.Encaps(ek) → produces ciphertext (ct) and shared secret (ss). Two outputs from one operation.\nML-KEM Ciphertext + 32-byte Shared Secret\nNot needed — RSA-OAEP directly encrypts the DEK. The decrypted output IS the DEK.\nRun HKDF-SHA-256(shared_secret, info=\"envelope-kek\") → 256-bit wrapping key. This extra KDF step is required because KEMs produce a random shared secret, not a direct encryption.\n(DEK is already wrapped in step 2 via RSA-OAEP)\nUse AES-256-KW (RFC 3394) to wrap the 32-byte DEK with the derived wrapping key. Store the KEM ciphertext alongside the wrapped DEK.\nServer uses RSA-OAEP private key to decrypt the ciphertext → recovers the 32-byte DEK directly.\nServer runs ML-KEM.Decaps(dk, ct) → shared secret → HKDF → wrapping key → AES-KW unwrap → DEK. Multi-step but all happens server-side.\nHKDF-SHA-256(x25519_ss || mlkem_ss, info=\"hybrid-kek\")\nTLS 1.3, general purpose — recommended by NIST SP 800-227\nHKDF-SHA-256(ecdh_ss || mlkem_ss, info=\"hybrid-kek\")\nFIPS-compliant environments (P-256 is FIPS-approved curve)\nHigh-security environments — NIST Level 5\nSHA-256(xwing_label || ss_mlkem || ss_x25519 || ct_mlkem || pk_x25519)\nGoogle Cloud KMS — single standardized hybrid KEM construction\nServer certificates for web services and APIs. Short-lived to limit compromise impact.\n90 days (recommended); max 398 days until March 2026, then 200 days per CA/B Forum SC-081v3, reducing to 47 days by 2029\nKeys used to sign software releases, firmware updates, and container images.\nCA keys used to issue end-entity certificates. Long-lived with strict HSM protection.\nTrust anchors. Longest-lived keys with highest security requirements.\nSymmetric keys used for encrypting data at rest or in transit.\nKeys used to wrap/unwrap other keys. Critical for key hierarchy security.\nAll new National Security Systems acquisitions must be CNSA 2.0 compliant by January 1, 2027. ML-KEM-1024 and ML-DSA-87 required.\nDeprecate 112-bit classical crypto (RSA-2048, etc.) after 2030. Disallow all classical public-key crypto (RSA, ECDSA, EdDSA, DH, ECDH) after 2035.\nEuropean agencies strongly recommend Hybrid implementations (Classical + PQC) during the transition. ANSSI requires PQC for sensitive data by 2030.\nC\n...(truncated)",
       "category": "learning",
       "metadata": {
-        "module": "KeyManagement",
-        "component": "hsmVendorData",
-        "filePath": "KeyManagement/data/hsmVendorData.ts"
-      },
-      "deepLink": "/learn/key-management"
+        "module": "KmsPqc",
+        "component": "kmsConstants",
+        "filePath": "KmsPqc/data/kmsConstants.ts"
+      }
     },
     {
-      "id": "mc-data-keymanagement-keymanagementconstants",
+      "id": "mc-data-kmspqc-kmsproviderdata",
       "source": "module-content",
-      "title": "Key Management — keyManagementConstants (data)",
-      "content": "Module: Key Management\nData: keyManagementConstants\n\nCryptographic keys are created using approved random number generators (DRBG) within a secure environment, typically an HSM. Key generation must use sufficient entropy and comply with algorithm-specific parameter requirements.\nRSA: Generate two large primes (p, q), compute n = p*q, derive public/private exponents. ECDSA: Select random scalar k on chosen curve. Fast generation, small keys.\nML-KEM: Generate matrix A from seed, sample secret vectors. ML-DSA: Generate matrix A, secret vectors s1/s2. Generation is fast but produces significantly larger keys (1,184 bytes for ML-KEM-768 public key vs 256 bytes for RSA-2048).\nPublic keys are distributed to communicating parties via certificates, key servers, or direct exchange. Private keys may be distributed to authorized backup systems. Secure channels and authentication are required.\nX.509 certificates carry RSA/ECDSA public keys. Certificate sizes are small (1-2 KB). Distribution via CAs, LDAP, or key servers is well-established.\nPQC certificates are significantly larger: an ML-DSA-65 certificate contains a 1,952-byte public key plus a 3,309-byte signature, totaling ~5.5 KB vs ~1.5 KB for ECDSA. This impacts bandwidth, handshake sizes (TLS), and storage in certificate chains. Hybrid certificates (classical + PQC) are even larger.\nKeys must be stored securely with appropriate access controls. Private keys should be protected by HSMs or encrypted key stores. Key metadata (algorithm, expiration, usage constraints) must be maintained.\nRSA-2048 private key: 1,192 bytes. ECDSA P-256 private key: 32 bytes. Easily fits in HSM key slots, PKCS#12 files, and key management databases.\nML-KEM-768 private key: 2,400 bytes. ML-DSA-65 private key: 4,032 bytes. HSM storage capacity may need expansion. Key databases and backup systems must handle 3-10x larger keys. PKCS#12 files grow substantially with hybrid key pairs.\nKeys are used for their designated cryptographic operations: encryption, signing, key agreement, or authentication. Usage must comply with key type restrictions and algorithm specifications.\nRSA keys can encrypt, sign, and wrap. ECDSA signs only. ECDH performs key agreement. Operations are fast and well-understood. One key type often serves multiple purposes.\nPQC enforces stricter separation: ML-KEM is KEM-only (no direct encryption), ML-DSA is signature-only. No single PQC algorithm replaces all RSA capabilities. Organizations need separate key pairs for key establishment vs. signing.\nKeys are periodically replaced to limit exposure from potential compromise. Rotation involves generating new keys, re-encrypting or re-signing with new keys, and securely transitioning from old to new keys.\nAutomated rotation every 1-3 years for most use cases. Certificate renewal via ACME or manual CSR. Re-encryption of stored data is fast with small keys.\nPQC rotation requires more bandwidth (larger keys and certificates), more HSM operations, and longer re-encryption windows. Hybrid deployments require rotating both c\n...(truncated)",
+      "title": "KmsPqc — kmsProviderData (data)",
+      "content": "Module: KmsPqc\nData: kmsProviderData\n\nGenerateDataKey → plaintext DEK + encrypted DEK. ML-KEM hybrid TLS protects API transit. DEK wrapped with customer CMK using AES-256.\n// AWS KMS — ML-DSA signing aws kms create-key \\\\ --key-spec ML_DSA_65 \\\\ --key-usage SIGN_VERIFY aws kms sign \\\\ --key-id alias/my-pqc-key \\\\ --signing-algorithm ML_DSA_65 \\\\ --message fileb://data.bin \\\\ --message-type RAW\nIndustry-leading PQC KMS: ML-DSA signing GA across all regions. ML-KEM hybrid TLS protects data in transit to KMS, ACM, and Secrets Manager. Built on AWS-LC (first FIPS 140-3 validated module with ML-KEM). No PQC BYOK yet.\nEncrypt/Decrypt with HSM-backed keys. ML-KEM key types available for KEM operations. Powered by BoringCrypto and Tink.\nFIPS 140-2 Level 1 (software) / Level 3 (HSM-backed)\n// Google Cloud KMS — ML-KEM key creation gcloud kms keys create my-pqc-key \\\\ --keyring=my-ring \\\\ --location=global \\\\ --purpose=asymmetric-encrypt \\\\ --default-algorithm=ML_KEM_768 // X-Wing hybrid KEM gcloud kms keys create my-xwing-key \\\\ --default-algorithm=X_WING\nBroadest PQC algorithm coverage among cloud KMS providers. X-Wing hybrid KEM is unique to GCP. Powered by BoringCrypto (Google fork of BoringSSL) and Tink library. ML-KEM and X-Wing in GA; ML-DSA and SLH-DSA in preview.\nIntegration via SymCrypt — not yet as Key Vault key type\nPlanned — SymCrypt supports it, Key Vault API pending\nWrapKey/UnwrapKey with RSA or AES. Managed HSM tier for FIPS 140-3 Level 3. PQC key types not yet available in Key Vault API.\nFIPS 140-2 Level 1 (Standard) / FIPS 140-3 Level 3 (Managed HSM)\n// Azure Key Vault — current (RSA, planned PQC) az keyvault key create \\\\ --vault-name my-vault \\\\ --name my-key \\\\ --kty RSA \\\\ --size 3072 // PQC: Not yet available in CLI // Microsoft targets CNSA 2.0 compliance by 2029 // SymCrypt library supports ML-KEM/ML-DSA internally\nPQC APIs available on Windows Server 2025, Windows 11, and .NET 10 via SymCrypt. Key Vault native PQC key types not yet exposed. Microsoft targets full CNSA 2.0 compliance by 2029. OCT-HSM 256-bit AES keys are quantum-resistant for symmetric operations.\nTransit secrets engine: encrypt/decrypt/sign/verify/rewrap. PQC signing experimental. Classical AES-256-GCM for encryption (quantum-safe).\n# HashiCorp Vault — ML-DSA signing (experimental) vault write transit/keys/my-pqc-key \\\\ type=\"ml-dsa-65\" vault write transit/sign/my-pqc-key \\\\ input=$(base64 <<< \"data to sign\") # Hybrid signing vault write transit/sign/my-pqc-key \\\\ input=$(base64 <<< \"data\") \\\\ hybrid_algorithm=\"ecdsa-p256\"\nML-DSA and SLH-DSA in experimental status — not recommended for production. Supports all 12 SLH-DSA parameter sets (SHA2/SHAKE variants). Hybrid signatures combine PQC + classical. KMIP server mode enables interoperability with HSMs and other KMS.\nBYOK/HYOK across AWS/Azure/GCP. Centralized key lifecycle management with Luna HSM as root of trust. ML-KEM TLS for Google Workspace CSE (GA v2.22.0+).\n# Thales CipherTrust — multi-cloud key management # Key creation with Luna HSM backing \n...(truncated)",
       "category": "learning",
       "metadata": {
-        "module": "KeyManagement",
-        "component": "keyManagementConstants",
-        "filePath": "KeyManagement/data/keyManagementConstants.ts"
-      },
-      "deepLink": "/learn/key-management"
+        "module": "KmsPqc",
+        "component": "kmsProviderData",
+        "filePath": "KmsPqc/data/kmsProviderData.ts"
+      }
     },
     {
       "id": "mc-merkletreecerts-mtcexercises-0",
@@ -17409,7 +17934,7 @@
       "id": "mc-merkletreecerts-mtcexercises-1",
       "source": "module-content",
       "title": "Merkle Tree Certificates — MTCExercises",
-      "content": "Module: Merkle Tree Certificates\nComponent: MTCExercises\n\nFirst verify a valid proof to see the step-by-step hash recomputation succeed. Then verify the tampered proof to see how a single flipped bit causes complete verification failure.\nThe tampered proof flips just one hex character in the first sibling hash. Despite this tiny change, the computed root hash is entirely different from the expected root — demonstrating that Merkle proofs are computationally infeasible to forge without knowing the correct sibling hashes.\n4. Compare Handshake Sizes Across Algorithm Families\nToggle between ECDSA, ML-DSA-44, ML-DSA-65, ML-DSA-87, and SLH-DSA-128s in the size comparison dashboard. Analyze how the MTC size advantage scales with signature size.\nThe inclusion proof size (~100 bytes for this demo, ~736 bytes for production batches of 4.4M certs) is constant regardless of the signature algorithm. This means MTC savings grow proportionally: from ~27% for ECDSA to ~64% for SLH-DSA-128s. For ML-DSA-44 (the most likely PQC deployment), the reduction is ~62%.",
+      "content": "Module: Merkle Tree Certificates\nComponent: MTCExercises\n\nFirst verify a valid proof to see the step-by-step hash recomputation succeed. Then verify the tampered proof to see how a single flipped bit causes complete verification failure.\nThe tampered proof flips just one hex character in the first sibling hash. Despite this tiny change, the computed root hash is entirely different from the expected root — demonstrating that Merkle proofs are computationally infeasible to forge without knowing the correct sibling hashes.\n4. Compare Handshake Sizes Across Algorithm Families\nToggle between ECDSA, ML-DSA-44, ML-DSA-65, ML-DSA-87, and SLH-DSA-128s in the size comparison dashboard. Analyze how the MTC size advantage scales with signature size.\nThe inclusion proof size (~96 bytes for this demo, ~736 bytes for production batches of 4.4M certs) is constant regardless of the signature algorithm. This means MTC savings grow proportionally: from ~27% for ECDSA to ~64% for SLH-DSA-128s. For ML-DSA-44 (the most likely PQC deployment), the reduction is ~62%.",
       "category": "learning",
       "metadata": {
         "module": "MerkleTreeCerts",
@@ -17422,7 +17947,7 @@
       "id": "mc-merkletreecerts-mtcintroduction-0",
       "source": "module-content",
       "title": "Merkle Tree Certificates — MTCIntroduction",
-      "content": "Module: Merkle Tree Certificates\nComponent: MTCIntroduction\n\nPost-quantum digital signatures are dramatically larger than their classical counterparts. While an\nincrease. A typical TLS certificate chain contains three signatures (Root CA, Intermediate CA, and end-entity), three public keys, and multiple Certificate Transparency\nThis “certificate bloat” breaks constrained clients that reject chains larger than 10 KB, degrades connection setup times (especially on mobile networks), and increases bandwidth costs for high-traffic servers handling millions of TLS handshakes per second.\nsolve certificate bloat by replacing individual per-certificate signatures with a batch-signing approach using\nThe Merkle Tree CA (MTCA) collects thousands of certificate assertions and places them as leaves in a binary hash tree. Each leaf is\n. The domain-separation prefixes (0x00 / 0x01) prevent leaf hashes from ever being confused with internal node hashes.\nOnly the tree's root hash is signed with the CA's private key. One single PQ signature covers the entire batch — potentially millions of certificates.\n: the chain of sibling hashes from their leaf up to the root. This proof is 736 bytes for a batch of ~4.4 million certificates (23 sibling hashes &times; 32 bytes).\nThe relying party hashes the certificate, then combines it with each proof sibling up the tree. If the computed root matches the signed root, the certificate is authenticated — no per-certificate signature verification needed.\nCert 1&nbsp;&nbsp;Cert 2&nbsp;&nbsp;&nbsp;&nbsp;Cert 3&nbsp;&nbsp;Cert 4",
+      "content": "Module: Merkle Tree Certificates\nComponent: MTCIntroduction\n\nPost-quantum digital signatures are dramatically larger than their classical counterparts. While an\nincrease. A typical TLS certificate chain contains three signatures (Root CA, Intermediate CA, and end-entity), three public keys, and multiple Certificate Transparency\nThis “certificate bloat” breaks constrained clients that reject chains larger than 10 KB, degrades connection setup times (especially on mobile networks), and increases bandwidth costs for high-traffic servers handling millions of TLS handshakes per second.\nsolve certificate bloat by replacing individual per-certificate signatures with a batch-signing approach using\nThe Merkle Tree CA (MTCA) collects thousands of certificate assertions and places them as leaves in a binary hash tree. Each leaf is\n. The domain-separation prefixes (0x00 / 0x01) prevent leaf hashes from ever being confused with internal node hashes.\nOne CA signing operation covers the entire batch — potentially millions of certificates. Depending on the relying party's cosigner policy, additional external witnesses may also co-sign the subtree to guarantee public transparency. For\n, no embedded signatures are needed at all (relying parties use predistributed trusted subtrees instead).\n: the chain of sibling hashes from their leaf up to the root. This proof is 736 bytes for a batch of ~4.4 million certificates (23 sibling hashes &times; 32 bytes).",
       "category": "learning",
       "metadata": {
         "module": "MerkleTreeCerts",
@@ -17435,7 +17960,7 @@
       "id": "mc-merkletreecerts-mtcintroduction-1",
       "source": "module-content",
       "title": "Merkle Tree Certificates — MTCIntroduction",
-      "content": "Module: Merkle Tree Certificates\nComponent: MTCIntroduction\n\nTo prove Cert 3 belongs to the batch, provide: H(Cert 4) + H(0,1) &rarr; recompute up to root\nThe MTC ecosystem defines three key roles, similar to existing Certificate Transparency (CT) infrastructure but redesigned for batch efficiency:\n— Collects certificate assertions, builds the Merkle tree, signs the root hash, and distributes inclusion proofs to subscribers.\nPublishes signed tree roots so clients can periodically sync. Analogous to CT logs but with batch-level granularity rather than individual certificate entries.\nTLS servers that receive their certificate assertion + inclusion proof from the MTCA and present them during the TLS handshake for client verification.\nMTCs offer significant size savings, but they introduce new requirements:\n&bull; Single CA signing operation covers millions of certificates\n&bull; Inclusion proof is pure hash computation — fast to verify\n&bull; Inherent certificate transparency (batch = public log)\n&bull; Clients must sync signed subtrees periodically (background, out-of-band)\n&bull; Not suitable for fully offline verification scenarios\n: relying parties maintain index-range exclusion lists checked at verification time\n— relying parties accept a subtree only after a configured set of external witnesses co-sign it, preventing a compromised CA from silently misissu&shy;ing\n(reaching draft-10, January 2026) and have since been adopted by the IETF PLANTS working group as\n. The draft has five co-equal authors across Google, Cloudflare, and Geomys.",
+      "content": "Module: Merkle Tree Certificates\nComponent: MTCIntroduction\n\nThe relying party hashes the certificate, then combines it with each proof sibling up the tree. If the computed root matches the signed root, the certificate is authenticated — no per-certificate signature verification needed.\nCert 1&nbsp;&nbsp;Cert 2&nbsp;&nbsp;&nbsp;&nbsp;Cert 3&nbsp;&nbsp;Cert 4\nTo prove Cert 3 belongs to the batch, provide: H(Cert 4) + H(0,1) &rarr; recompute up to root\nThe MTC ecosystem defines three key roles, similar to existing Certificate Transparency (CT) infrastructure but redesigned for batch efficiency:\nOperates the issuance log, builds the Merkle tree, signs subtrees, requests cosignatures from external witnesses, and assembles certificates with inclusion proofs.\nServes the per-certificate log to monitors and relying parties. Analogous to CT logs — each certificate is an individual log entry — but signing is per-batch: one cosigner signature covers a subtree of millions of entries.\nTLS servers that receive their certificate assertion + inclusion proof from the CA and present them during the TLS handshake for client verification.\nMTCs offer significant size savings, but they introduce new requirements:\n&bull; Single CA signing operation covers millions of certificates\n&bull; Inclusion proof is pure hash computation — fast to verify\n&bull; Inherent certificate transparency (batch = public log)\n&bull; Clients must sync signed subtrees periodically (background, out-of-band)\n&bull; Not suitable for fully offline verification scenarios",
       "category": "learning",
       "metadata": {
         "module": "MerkleTreeCerts",
@@ -17448,7 +17973,20 @@
       "id": "mc-merkletreecerts-mtcintroduction-2",
       "source": "module-content",
       "title": "Merkle Tree Certificates — MTCIntroduction",
-      "content": "Module: Merkle Tree Certificates\nComponent: MTCIntroduction\n\n&bull; October 2025: Cloudflare + Chrome experiment announced\n&bull; January 2026: draft-10 published; IETF PLANTS WG adoption\n&bull; Radboud University (independent implementation analysis, 2025)\nMerkle trees are fundamental to post-quantum cryptography beyond MTCs.\n(SPHINCS+, FIPS 205) uses nested Merkle trees internally (a hyper-tree of FORS trees) for quantum-resistant signatures. Stateful hash-based schemes like\nuse Merkle trees to organize pools of one-time signing keys.\nlevel — organizing certificates rather than signing keys — to solve the size problem that these PQ signature schemes create.\nHead to the Workshop to build a Merkle tree, generate inclusion proofs, and verify certificates hands-on.",
+      "content": "Module: Merkle Tree Certificates\nComponent: MTCIntroduction\n\n: relying parties maintain index-range exclusion lists checked at verification time\n— relying parties accept a subtree only after a configured set of external witnesses co-sign it, preventing a compromised CA from silently misissu&shy;ing\nThe spec defines a more aggressive optimization beyond standard MTC:\nembedded signatures. Instead of embedding a CA cosignature in every certificate, relying parties pre-sync large hourly “landmark” subtrees out-of-band, then verify inclusion proofs against their cached landmark root — no signature transmitted in the TLS handshake at all.\nThe MTCA mints large batches on a regular schedule (e.g., every hour), covering millions of certificates. The resulting Merkle subtree root is the\nBrowsers and OS clients periodically download and cache signed landmark subtrees from the Transparency Service — similar to certificate revocation syncs today. No online step required during the TLS handshake.\nThe TLS server presents only the certificate assertion + 23-hash inclusion proof (736 B). The client verifies against its cached landmark root. Total per-handshake overhead for ML-DSA-44:\nTraditional: 3 sigs (7,260 B) + 3 keys (3,936 B) + 4 SCTs (476 B) + metadata (600 B). Full MTC: 1 sig (2,420 B) + 1 key (1,312 B) + 736 B proof + 200 B metadata. Signatureless: 736 B proof + 200 B metadata only — client has landmark cached.",
+      "category": "learning",
+      "metadata": {
+        "module": "MerkleTreeCerts",
+        "component": "MTCIntroduction",
+        "filePath": "MerkleTreeCerts/components/MTCIntroduction.tsx"
+      },
+      "deepLink": "/learn/merkle-tree-certs"
+    },
+    {
+      "id": "mc-merkletreecerts-mtcintroduction-3",
+      "source": "module-content",
+      "title": "Merkle Tree Certificates — MTCIntroduction",
+      "content": "Module: Merkle Tree Certificates\nComponent: MTCIntroduction\n\nSignatureless certificates require relying parties to pre-sync landmark subtrees regularly (e.g., every few hours). Clients that miss a sync window cannot verify newer certificates without an update — acceptable for always-online clients (browsers, mobile) but unsuitable for air-gapped or intermittently-connected devices.\n(reaching draft-10, January 2026) and have since been adopted by the IETF PLANTS working group as\n. The draft has five co-equal authors across Google, Cloudflare, and Geomys.\n&bull; October 2025: Cloudflare + Chrome experiment announced\n&bull; Radboud University (independent implementation analysis, 2025)\nMerkle trees are fundamental to post-quantum cryptography beyond MTCs.\n(SPHINCS+, FIPS 205) uses nested Merkle trees internally (a hyper-tree of XMSS trees, with FORS one-time signing at the leaves) for quantum-resistant signatures. Stateful hash-based schemes like\nuse Merkle trees to organize pools of one-time signing keys.\nlevel — organizing certificates rather than signing keys — to solve the size problem that these PQ signature schemes create.\nHead to the Workshop to build a Merkle tree, generate inclusion proofs, and verify certificates hands-on.",
       "category": "learning",
       "metadata": {
         "module": "MerkleTreeCerts",
@@ -17474,7 +18012,7 @@
       "id": "mc-merkletreecerts-inclusionproofgenerator-0",
       "source": "module-content",
       "title": "Merkle Tree Certificates — InclusionProofGenerator",
-      "content": "Module: Merkle Tree Certificates\nComponent: InclusionProofGenerator\n\n() // Add the selected leaf hashes.add(levels[0][proof.leafIndex].hash) // Add sibling nodes in the proof let idx = proof.leafIndex for (let lvl = 0; lvl\nBuild a tree with 8 sample certificates, then click any leaf to generate its inclusion proof. The authentication path (sibling hashes needed for verification) highlights in the tree.\nbelow to generate its inclusion proof. The authentication path will highlight in the tree.",
+      "content": "Module: Merkle Tree Certificates\nComponent: InclusionProofGenerator\n\n() // Add the selected leaf hashes.add(levels[0][proof.leafIndex].hash) // Add sibling nodes in the proof let idx = proof.leafIndex for (let lvl = 0; lvl\nsetCopied(false), 2000) }, [proof]) const circledNumbers = ['\\u2460', '\\u2461', '\\u2462', '\\u2463', '\\u2464', '\\u2465'] return (\nBuild a tree with 8 sample certificates, then click any leaf to generate its inclusion proof. The authentication path highlights in the tree with numbered verification steps.\nbelow to generate its inclusion proof. The authentication path will highlight in the tree with numbered verification steps.",
       "category": "learning",
       "metadata": {
         "module": "MerkleTreeCerts",
@@ -17484,10 +18022,23 @@
       "deepLink": "/learn/merkle-tree-certs?tab=workshop"
     },
     {
+      "id": "mc-merkletreecerts-merkletreebuilder-0",
+      "source": "module-content",
+      "title": "Merkle Tree Certificates — MerkleTreeBuilder",
+      "content": "Module: Merkle Tree Certificates\nComponent: MerkleTreeBuilder\n\nAdd certificate leaves, then build the tree to see SHA-256 hashes computed at each level. Hover over any node to see its full hash.\nThis inclusion proof replaces 3 PQ signatures in the TLS handshake —",
+      "category": "learning",
+      "metadata": {
+        "module": "MerkleTreeCerts",
+        "component": "MerkleTreeBuilder",
+        "filePath": "MerkleTreeCerts/workshop/MerkleTreeBuilder.tsx"
+      },
+      "deepLink": "/learn/merkle-tree-certs?tab=workshop"
+    },
+    {
       "id": "mc-merkletreecerts-proofverifier-0",
       "source": "module-content",
       "title": "Merkle Tree Certificates — ProofVerifier",
-      "content": "Module: Merkle Tree Certificates\nComponent: ProofVerifier\n\nWatch how an inclusion proof is verified by recomputing hashes from the leaf to the root. Then try tampering with the proof to see how verification detects the modification.\nThe last hex character of the first sibling hash was flipped. Original:\n. This single-bit change causes all subsequent hashes to differ, making the computed root completely different from the expected root. This is the",
+      "content": "Module: Merkle Tree Certificates\nComponent: ProofVerifier\n\nWatch how an inclusion proof is verified by recomputing hashes from the leaf to the root. Click any hex character in the sibling hashes to tamper with it, then verify to see how the avalanche effect causes complete verification failure.",
       "category": "learning",
       "metadata": {
         "module": "MerkleTreeCerts",
@@ -17500,7 +18051,7 @@
       "id": "mc-merkletreecerts-sizecomparison-0",
       "source": "module-content",
       "title": "Merkle Tree Certificates — SizeComparison",
-      "content": "Module: Merkle Tree Certificates\nComponent: SizeComparison\n\nCompare the total authentication data transmitted during a TLS handshake using traditional X.509 certificate chains versus Merkle Tree Certificates. Select different algorithms to see how PQ signature sizes impact both approaches.\nregardless of the signature algorithm — it depends only on the tree depth (number of certificates in the batch). This means the savings grow proportionally with signature size: MTCs provide a modest 27% reduction for ECDSA but a dramatic 64% reduction for SLH-DSA-128s and ML-DSA.",
+      "content": "Module: Merkle Tree Certificates\nComponent: SizeComparison\n\nCompare the total authentication data transmitted during a TLS handshake using traditional X.509 certificate chains versus Merkle Tree Certificates. Adjust the batch size to see how proof size scales logarithmically.",
       "category": "learning",
       "metadata": {
         "module": "MerkleTreeCerts",
@@ -18007,7 +18558,7 @@
       "id": "mc-pqcriskmanagement-riskheatmapgenerator-0",
       "source": "module-content",
       "title": "PQC Risk Management — RiskHeatmapGenerator",
-      "content": "Module: PQC Risk Management\nComponent: RiskHeatmapGenerator\n\nonReorder: (order: string[]) => void priorityReasons: Record\n= priorityOrder.length - 1) return const next = [...priorityOrder] ;[next[idx], next[idx + 1]] = [next[idx + 1], next[idx]] onReorder(next) }, [priorityOrder, onReorder] ) return (\nNo risk entries to display. Go to Step 2 (Risk Register Builder) to add risk entries, then return here to work through the treatment workshop.\nClick any cell to view details and assign treatment strategies.\nReorder to set your migration sequence. Consider compliance deadlines, implementation complexity, and business impact — not just risk score. A priority reason field appears when you move an entry out of score order.\nIncludes treatment decisions, residual risk analysis, and priority order.\nTop-right zone. Immediate action required. Assets using RSA/ECC with near-term CRQC exposure and catastrophic breach consequences. Migrate first.\nEither likelihood is high or impact is severe. Plan migration within 12 months. Often includes key exchange protocols vulnerable to HNDL attacks.\nCenter zone. Real but manageable risks within normal planning cycles. Schedule for migration as part of broader PQC transition.\nBottom-left zone. Threat is unlikely or impact is contained. May include quantum-safe algorithms (AES-256) that need monitoring only.\nScan from top-right (urgent) to bottom-left (safe). Multiple entries in one cell indicate a systemic risk — an algorithm or threat vector affecting many assets simultaneously.",
+      "content": "Module: PQC Risk Management\nComponent: RiskHeatmapGenerator\n\nonReorder: (order: string[]) => void priorityReasons: Record\n= priorityOrder.length - 1) return const next = [...priorityOrder] ;[next[idx], next[idx + 1]] = [next[idx + 1], next[idx]] onReorder(next) }, [priorityOrder, onReorder] ) return (\nNo risk entries to display. Go to Step 2 (Risk Register Builder) to add risk entries, then return here to work through the treatment workshop.\nReorder to set your migration sequence. Consider compliance deadlines, implementation complexity, and business impact — not just risk score. A priority reason field appears when you move an entry out of score order.\nIncludes treatment decisions, residual risk analysis, and priority order.\nTop-right zone. Immediate action required. Assets using RSA/ECC with near-term CRQC exposure and catastrophic breach consequences. Migrate first.\nEither likelihood is high or impact is severe. Plan migration within 12 months. Often includes key exchange protocols vulnerable to HNDL attacks.\nCenter zone. Real but manageable risks within normal planning cycles. Schedule for migration as part of broader PQC transition.\nBottom-left zone. Threat is unlikely or impact is contained. May include quantum-safe algorithms (AES-256) that need monitoring only.\nScan from top-right (urgent) to bottom-left (safe). Multiple entries in one cell indicate a systemic risk — an algorithm or threat vector affecting many assets simultaneously.",
       "category": "learning",
       "metadata": {
         "module": "PQCRiskManagement",
@@ -18111,7 +18662,7 @@
       "id": "mc-qkd-qkdintroduction-3",
       "source": "module-content",
       "title": "Quantum Key Distribution — QKDIntroduction",
-      "content": "Module: Quantum Key Distribution\nComponent: QKDIntroduction\n\nLearn more about HSM operations and PKCS#11 workflows in the\nQKD is being adopted primarily by governments and telecom operators who need the highest levels of communication security. China leads with the world's largest QKD infrastructure, while Europe is building a pan-continental network through the\nExplore the full interactive deployment database in the Workshop tab.\nLearn how classical + PQC hybrid KEMs work with hands-on HKDF key derivation.\nDeep dive into HSM PKCS#11 operations and enterprise key lifecycle management.\nExplore 3GPP security architecture — QKD could secure future telecom backbones.\nUnderstand the quantum threats that motivate both PQC and QKD adoption.",
+      "content": "Module: Quantum Key Distribution\nComponent: QKDIntroduction\n\nLearn more about HSM operations and PKCS#11 workflows in the\nQKD is being adopted primarily by governments and telecom operators who need the highest levels of communication security. China leads with the world's largest QKD infrastructure, while Europe is building a pan-continental network through the\nExplore the full interactive deployment database in the Workshop tab.\nLearn how classical + PQC hybrid KEMs work with hands-on HKDF key derivation.\nDeep dive into HSM PKCS#11 v3.2 operations and PQC firmware migration.\nExplore 3GPP security architecture — QKD could secure future telecom backbones.\nUnderstand the quantum threats that motivate both PQC and QKD adoption.",
       "category": "learning",
       "metadata": {
         "module": "QKD",
@@ -21734,40 +22285,49 @@
       "deepLink": "/learn/quiz?category=email-signing"
     },
     {
-      "id": "quiz-key-management-0",
+      "id": "quiz-kms-pqc-0",
       "source": "quiz",
-      "title": "Quiz: Key Management",
-      "content": "Quiz Category: Key Management\n\nQ: What does NIST SP 800-57 provide guidance on?\n  A) Post-quantum algorithm selection\n  B) Key management best practices including key lifecycle and key types\n  C) TLS protocol implementation\n  D) Quantum computer hardware requirements\nAnswer: B\nExplanation: NIST SP 800-57 (Recommendation for Key Management) is the foundational standard for cryptographic key management. It covers key types, key lifecycle phases (generation, distribution, storage, use, rotation, destruction), key lengths, and organizational key management policies.\n\nQ: What are the main phases of the cryptographic key lifecycle?\n  A) Generate and Destroy only\n  B) Generation, Distribution, Storage, Use, Rotation, and Destruction\n  C) Encrypt and Decrypt\n  D) Create and Archive\nAnswer: B\nExplanation: The cryptographic key lifecycle includes: Generation (creating keys with sufficient randomness), Distribution (securely delivering keys to authorized parties), Storage (protecting keys at rest), Use (employing keys for their intended purpose), Rotation (periodically replacing keys), and Destruction (securely erasing keys when no longer needed).\n\nQ: What is the primary purpose of a Hardware Security Module (HSM)?\n  A) Accelerating network traffic processing\n  B) Generating, storing, and using cryptographic keys in tamper-resistant hardware\n  C) Compressing encrypted data for storage\n  D) Managing user authentication passwords\nAnswer: B\nExplanation: An HSM is a dedicated hardware device that generates, stores, and manages cryptographic keys in a tamper-resistant environment. HSMs ensure keys never leave the secure boundary in plaintext, providing the highest level of key protection for critical operations like CA signing, payment processing, and code signing.",
+      "title": "Quiz: kms-pqc",
+      "content": "Quiz Category: kms-pqc\n\nQ: What does NIST SP 800-57 provide guidance on?\n  A) Post-quantum algorithm selection\n  B) Key management best practices including key lifecycle and key types\n  C) TLS protocol implementation\n  D) Quantum computer hardware requirements\nAnswer: B\nExplanation: NIST SP 800-57 (Recommendation for Key Management) is the foundational standard for cryptographic key management. It covers key types, key lifecycle phases (generation, distribution, storage, use, rotation, destruction), key lengths, and organizational key management policies.\n\nQ: What are the main phases of the cryptographic key lifecycle?\n  A) Generate and Destroy only\n  B) Generation, Distribution, Storage, Use, Rotation, and Destruction\n  C) Encrypt and Decrypt\n  D) Create and Archive\nAnswer: B\nExplanation: The cryptographic key lifecycle includes: Generation (creating keys with sufficient randomness), Distribution (securely delivering keys to authorized parties), Storage (protecting keys at rest), Use (employing keys for their intended purpose), Rotation (periodically replacing keys), and Destruction (securely erasing keys when no longer needed).\n\nQ: Why is key rotation particularly important during the PQC transition?\n  A) To reduce storage costs\n  B) To limit the exposure window if a key is compromised and to progressively transition from classical to PQC keys\n  C) To improve encryption speed\n  D) To comply with password rotation policies\nAnswer: B\nExplanation: Key rotation during PQC transition serves two purposes: (1) it limits the exposure window for any single key (reducing HNDL risk), and (2) it provides natural migration points where classical keys can be replaced with hybrid or PQC keys without disrupting operations.",
       "category": "quiz",
-      "metadata": { "quizCategory": "key-management", "questionCount": "3" },
-      "deepLink": "/learn/quiz?category=key-management"
+      "metadata": { "quizCategory": "kms-pqc", "questionCount": "3" },
+      "deepLink": "/learn/quiz?category=kms-pqc"
     },
     {
-      "id": "quiz-key-management-1",
+      "id": "quiz-kms-pqc-1",
       "source": "quiz",
-      "title": "Quiz: Key Management",
-      "content": "Quiz Category: Key Management\n\nQ: True or False: FIPS 140-3 is the standard used to validate and certify Hardware Security Modules (HSMs) for government use.\nAnswer: TRUE\nExplanation: True. FIPS 140-3 (Security Requirements for Cryptographic Modules) defines security requirements for cryptographic modules including HSMs. Modules are validated at four levels (Level 1-4), with Level 3 being the most common for production HSMs. The Cryptographic Module Validation Program (CMVP) administers the certification process.\n\nQ: What is PKCS#11 and why is it relevant to PQC key management?\n  A) A certificate format standard\n  B) A cryptographic token interface standard (API) that HSMs implement for key operations\n  C) A PQC algorithm specification\n  D) A network protocol for distributing encryption keys\nAnswer: B\nExplanation: PKCS#11 (also known as Cryptoki) is the standard API for interacting with cryptographic tokens such as HSMs and smart cards. It defines operations for key generation, signing, encryption, and key management. For PQC migration, PKCS#11 must be extended to support new PQC key types (ML-KEM, ML-DSA) and their larger key sizes.\n\nQ: Why is key rotation particularly important during the PQC transition?\n  A) To reduce storage costs\n  B) To limit the exposure window if a key is compromised and to progressively transition from classical to PQC keys\n  C) To improve encryption speed\n  D) To comply with password rotation policies\nAnswer: B\nExplanation: Key rotation during PQC transition serves two purposes: (1) it limits the exposure window for any single key (reducing HNDL risk), and (2) it provides natural migration points where classical keys can be replaced with hybrid or PQC keys without disrupting operations.",
+      "title": "Quiz: kms-pqc",
+      "content": "Quiz Category: kms-pqc\n\nQ: According to NIST SP 800-57, what is the recommended maximum cryptoperiod for asymmetric key agreement keys?\n  A) 1 year\n  B) 1-2 years\n  C) Up to 5 years\n  D) Indefinite — they never expire\nAnswer: B\nExplanation: NIST SP 800-57 recommends cryptoperiods of 1-2 years for asymmetric key agreement keys (used in key exchange). Shorter cryptoperiods limit exposure from potential key compromise. During PQC transition, key rotation events provide natural points to upgrade from classical to hybrid or PQC key pairs.",
       "category": "quiz",
-      "metadata": { "quizCategory": "key-management", "questionCount": "3" },
-      "deepLink": "/learn/quiz?category=key-management"
+      "metadata": { "quizCategory": "kms-pqc", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=kms-pqc"
     },
     {
-      "id": "quiz-key-management-2",
+      "id": "quiz-hsm-pqc-0",
       "source": "quiz",
-      "title": "Quiz: Key Management",
-      "content": "Quiz Category: Key Management\n\nQ: How do PQC key sizes compare to classical key sizes for HSM storage?\n  A) PQC keys are approximately the same size as classical keys\n  B) PQC keys are significantly larger — ML-KEM-768 public keys are ~1.2KB vs 32 bytes for X25519\n  C) PQC keys are smaller than classical keys\n  D) PQC keys cannot be stored in HSMs\nAnswer: B\nExplanation: PQC keys are substantially larger than classical keys. ML-KEM-768 public keys are ~1,184 bytes (vs 32 for X25519), ML-DSA-65 public keys are ~1,952 bytes (vs 64 for ECDSA P-256). This impacts HSM storage capacity, PKCS#11 buffer sizes, and key distribution bandwidth. HSM capacity planning must account for these larger key sizes.\n\nQ: What FIPS 140-3 validation level is most commonly required for production HSMs in enterprise environments?\n  A) Level 1\n  B) Level 2\n  C) Level 3\n  D) Level 4\nAnswer: C\nExplanation: FIPS 140-3 Level 3 is the most commonly required for enterprise HSMs. It adds physical tamper evidence and resistance, role-based authentication, and identity-based operator access on top of Level 2 requirements. Level 4 adds environmental failure protection but is rare and typically reserved for military applications.",
+      "title": "Quiz: hsm-pqc",
+      "content": "Quiz Category: hsm-pqc\n\nQ: What is the primary purpose of a Hardware Security Module (HSM)?\n  A) Accelerating network traffic processing\n  B) Generating, storing, and using cryptographic keys in tamper-resistant hardware\n  C) Compressing encrypted data for storage\n  D) Managing user authentication passwords\nAnswer: B\nExplanation: An HSM is a dedicated hardware device that generates, stores, and manages cryptographic keys in a tamper-resistant environment. HSMs ensure keys never leave the secure boundary in plaintext, providing the highest level of key protection for critical operations like CA signing, payment processing, and code signing.\n\nQ: True or False: FIPS 140-3 is the standard used to validate and certify Hardware Security Modules (HSMs) for government use.\nAnswer: TRUE\nExplanation: True. FIPS 140-3 (Security Requirements for Cryptographic Modules) defines security requirements for cryptographic modules including HSMs. Modules are validated at four levels (Level 1-4), with Level 3 being the most common for production HSMs. The Cryptographic Module Validation Program (CMVP) administers the certification process.\n\nQ: What is PKCS#11 and why is it relevant to PQC key management?\n  A) A certificate format standard\n  B) A cryptographic token interface standard (API) that HSMs implement for key operations\n  C) A PQC algorithm specification\n  D) A network protocol for distributing encryption keys\nAnswer: B\nExplanation: PKCS#11 (also known as Cryptoki) is the standard API for interacting with cryptographic tokens such as HSMs and smart cards. It defines operations for key generation, signing, encryption, and key management. For PQC migration, PKCS#11 must be extended to support new PQC key types (ML-KEM, ML-DSA) and their larger key sizes.",
       "category": "quiz",
-      "metadata": { "quizCategory": "key-management", "questionCount": "2" },
-      "deepLink": "/learn/quiz?category=key-management"
+      "metadata": { "quizCategory": "hsm-pqc", "questionCount": "3" },
+      "deepLink": "/learn/quiz?category=hsm-pqc"
     },
     {
-      "id": "quiz-key-management-3",
+      "id": "quiz-hsm-pqc-1",
       "source": "quiz",
-      "title": "Quiz: Key Management",
-      "content": "Quiz Category: Key Management\n\nQ: Which of the following are key challenges for PQC key management in HSMs? (Select all that apply)\n  A) HSM firmware must be upgraded and re-certified (FIPS 140-3) to support PQC algorithms\n  B) PKCS#11 interfaces need extensions for PQC key types and larger key buffers\n  C) Key backup and recovery procedures must handle larger PQC key material\n  D) PQC keys do not require secure random number generation\nAnswer: A|B|C\nExplanation: PQC HSM key management challenges include: firmware upgrades requiring re-certification through the multi-year CMVP process, PKCS#11 API extensions for new PQC key types and operations, and updated backup/recovery procedures for larger key material. PQC keys absolutely require high-quality random number generation — ML-KEM key generation depends on a strong random seed.\n\nQ: According to NIST SP 800-57, what is the recommended maximum cryptoperiod for asymmetric key agreement keys?\n  A) 1 year\n  B) 1-2 years\n  C) Up to 5 years\n  D) Indefinite — they never expire\nAnswer: B\nExplanation: NIST SP 800-57 recommends cryptoperiods of 1-2 years for asymmetric key agreement keys (used in key exchange). Shorter cryptoperiods limit exposure from potential key compromise. During PQC transition, key rotation events provide natural points to upgrade from classical to hybrid or PQC key pairs.",
+      "title": "Quiz: hsm-pqc",
+      "content": "Quiz Category: hsm-pqc\n\nQ: How do PQC key sizes compare to classical key sizes for HSM storage?\n  A) PQC keys are approximately the same size as classical keys\n  B) PQC keys are significantly larger — ML-KEM-768 public keys are ~1.2KB vs 32 bytes for X25519\n  C) PQC keys are smaller than classical keys\n  D) PQC keys cannot be stored in HSMs\nAnswer: B\nExplanation: PQC keys are substantially larger than classical keys. ML-KEM-768 public keys are ~1,184 bytes (vs 32 for X25519), ML-DSA-65 public keys are ~1,952 bytes (vs 64 for ECDSA P-256). This impacts HSM storage capacity, PKCS#11 buffer sizes, and key distribution bandwidth. HSM capacity planning must account for these larger key sizes.\n\nQ: What FIPS 140-3 validation level is most commonly required for production HSMs in enterprise environments?\n  A) Level 1\n  B) Level 2\n  C) Level 3\n  D) Level 4\nAnswer: C\nExplanation: FIPS 140-3 Level 3 is the most commonly required for enterprise HSMs. It adds physical tamper evidence and resistance, role-based authentication, and identity-based operator access on top of Level 2 requirements. Level 4 adds environmental failure protection but is rare and typically reserved for military applications.",
       "category": "quiz",
-      "metadata": { "quizCategory": "key-management", "questionCount": "2" },
-      "deepLink": "/learn/quiz?category=key-management"
+      "metadata": { "quizCategory": "hsm-pqc", "questionCount": "2" },
+      "deepLink": "/learn/quiz?category=hsm-pqc"
+    },
+    {
+      "id": "quiz-hsm-pqc-2",
+      "source": "quiz",
+      "title": "Quiz: hsm-pqc",
+      "content": "Quiz Category: hsm-pqc\n\nQ: Which of the following are key challenges for PQC key management in HSMs? (Select all that apply)\n  A) HSM firmware must be upgraded and re-certified (FIPS 140-3) to support PQC algorithms\n  B) PKCS#11 interfaces need extensions for PQC key types and larger key buffers\n  C) Key backup and recovery procedures must handle larger PQC key material\n  D) PQC keys do not require secure random number generation\nAnswer: A|B|C\nExplanation: PQC HSM key management challenges include: firmware upgrades requiring re-certification through the multi-year CMVP process, PKCS#11 API extensions for new PQC key types and operations, and updated backup/recovery procedures for larger key material. PQC keys absolutely require high-quality random number generation — ML-KEM key generation depends on a strong random seed.",
+      "category": "quiz",
+      "metadata": { "quizCategory": "hsm-pqc", "questionCount": "1" },
+      "deepLink": "/learn/quiz?category=hsm-pqc"
     },
     {
       "id": "quiz-entropy-randomness-0",
