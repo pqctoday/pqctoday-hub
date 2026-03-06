@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-03-06T05:52:40.191Z",
-  "chunkCount": 2834,
+  "generatedAt": "2026-03-06T12:36:50.252Z",
+  "chunkCount": 2837,
   "chunks": [
     {
       "id": "glossary-0",
@@ -9712,6 +9712,19 @@
         "algorithmFamily": "N/A"
       },
       "deepLink": "/library?ref=RFC%209420"
+    },
+    {
+      "id": "library-Europol-FS-ISAC-PQC-Financial-2026",
+      "source": "library",
+      "title": "Prioritising Post-Quantum Cryptography Migration Activities in Financial Services",
+      "content": "Reference: Europol-FS-ISAC-PQC-Financial-2026\nTitle: Prioritising Post-Quantum Cryptography Migration Activities in Financial Services\nDescription: Europol, FS-ISAC, and QSFF joint guidance for financial institutions on prioritising PQC migration. Introduces a Quantum Risk Score framework covering shelf life of data, exposure, and severity. Provides migration complexity assessment and cryptographic antipattern identification for financial sector risk management.\nType: Industry Report | Status: Published\nAuthors: Europol; FS-ISAC; Quantum Safe Financial Forum\nAlgorithm Family: Lattice-based; Hash-based\nSecurity Levels: N/A\nMigration Urgency: High\nIndustries: Finance & Banking; Government & Defense\nRegion: European Union\nPublished: 2026-01-01 | Updated: 2026-01-01\n\nMain Topic: Joint guidance from Europol, FS-ISAC, and QSFF providing a Quantum Risk Score framework to prioritize post-quantum cryptography migration activities in financial services based on data shelf life, exposure, and severity.\nQuantum Threats: Harvest Now Decrypt Later (implied by Shelf Life of Protected Data parameter referencing Mosca's Theorem)\nInfrastructure Layers: Points of Sale (PoS) terminals; Hardware-intensive use cases; Public key cryptography inventory.\nStandardization Bodies: EMVCo; FS-ISAC.\nMigration Timeline: Solution availability scales ranging from available now or less than 1 year to uncertain or greater than 3 years; Migration Time Score factors include execution cost and external dependencies with 1 to 3-year roadmaps.\nRegions / Bodies: Bodies: Europol, FS-ISAC, QSFF, Publications Office of the European Union; Organizations: Dutch Banking Associations (NVB), National Bank of Canada, Banco Santander, Bank of Ireland, BMO, TD Bank, Citi, University of Waterloo, Banco de España, Allianz, EIB, CertFin Italy, Euroclear, KBC Belgium, LGT, Mizuho, PostFinance.\nLeaders: Oscar Covers (Dutch Banking Associations); Dr. Thibaud Ecarot (National Bank of Canada); Rebecca Gibergues (FS-ISAC); Jaime Gómez García (Banco Santander); Francis Gorman (Bank of Ireland); Imran Khan (BMO); Ivan Makarov (TD Bank); Sarah McCarthy (Citi); Michele Mosca (University of Waterloo); Iván Soto (Banco de España); Leila Taghizadeh (Allianz); Jelena Zelenovic (EIB).\nRelated Algorithms: [FrodoKEM-640](/algorithms?highlight=frodokem-640), [FrodoKEM-976](/algorithms?highlight=frodokem-976), [FrodoKEM-1344](/algorithms?highlight=frodokem-1344)",
+      "category": "Industry Report",
+      "metadata": {
+        "referenceId": "Europol-FS-ISAC-PQC-Financial-2026",
+        "url": "https://doi.org/10.2813/9782176",
+        "algorithmFamily": "Lattice-based; Hash-based"
+      },
+      "deepLink": "/library?ref=Europol-FS-ISAC-PQC-Financial-2026"
     },
     {
       "id": "algo-ml-kem-512",
@@ -28530,6 +28543,15 @@
       "deepLink": "/library?ref=RFC%209420"
     },
     {
+      "id": "doc-enrichment-Europol-FS-ISAC-PQC-Financial-2026",
+      "source": "document-enrichment",
+      "title": "Prioritising Post-Quantum Cryptography Migration Activities in Financial Services — Document Analysis",
+      "content": "Title: Prioritising Post-Quantum Cryptography Migration Activities in Financial Services\nAuthors: Europol; FS-ISAC; Quantum Safe Financial Forum\nPublication Date: 2026-01-01\nLast Updated: 2026-01-01\nDocument Status: Published\nMain Topic: Joint guidance from Europol, FS-ISAC, and QSFF providing a Quantum Risk Score framework to prioritize post-quantum cryptography migration activities in financial services based on data shelf life, exposure, and severity.\nQuantum Threats Addressed: Harvest Now Decrypt Later (implied by Shelf Life of Protected Data parameter referencing Mosca's Theorem)\nMigration Timeline Info: Solution availability scales ranging from available now or less than 1 year to uncertain or greater than 3 years; Migration Time Score factors include execution cost and external dependencies with 1 to 3-year roadmaps.\nApplicable Regions / Bodies: Bodies: Europol, FS-ISAC, QSFF, Publications Office of the European Union; Organizations: Dutch Banking Associations (NVB), National Bank of Canada, Banco Santander, Bank of Ireland, BMO, TD Bank, Citi, University of Waterloo, Banco de España, Allianz, EIB, CertFin Italy, Euroclear, KBC Belgium, LGT, Mizuho, PostFinance.\nLeaders Contributions Mentioned: Oscar Covers (Dutch Banking Associations); Dr. Thibaud Ecarot (National Bank of Canada); Rebecca Gibergues (FS-ISAC); Jaime Gómez García (Banco Santander); Francis Gorman (Bank of Ireland); Imran Khan (BMO); Ivan Makarov (TD Bank); Sarah McCarthy (Citi); Michele Mosca (University of Waterloo); Iván Soto (Banco de España); Leila Taghizadeh (Allianz); Jelena Zelenovic (EIB).\nInfrastructure Layers: Points of Sale (PoS) terminals; Hardware-intensive use cases; Public key cryptography inventory.\nStandardization Bodies: EMVCo; FS-ISAC.",
+      "category": "document-enrichment",
+      "metadata": { "refId": "Europol-FS-ISAC-PQC-Financial-2026", "collection": "library" },
+      "deepLink": "/library?ref=Europol-FS-ISAC-PQC-Financial-2026"
+    },
+    {
       "id": "doc-enrichment-European Union:EU Horizon — QARC Project Execution",
       "source": "document-enrichment",
       "title": "QARC Project Execution — Document Analysis",
@@ -30898,6 +30920,15 @@
       "category": "app-guide",
       "metadata": { "fileName": "15-community.md", "slug": "community" },
       "deepLink": "/about"
+    },
+    {
+      "id": "changelog-2.25.2",
+      "source": "changelog",
+      "title": "PQC Today v2.25.2 — Release Notes (2026-03-06)",
+      "content": "Version 2.25.2 released 2026-03-06.\n\n### Fixed\n\n- **Standards Bodies module — persona path visibility**: `standards-bodies` was missing from all 5 persona `recommendedPath` and `pathItems` arrays, causing the module to be hidden whenever any persona filter was active. Added to Executive (after `compliance-strategy`, in Governance & Compliance checkpoint), Architect (after `data-asset-sensitivity`, in Architecture Strategy checkpoint), Researcher (after `data-asset-sensitivity`, in Strategy checkpoint), and IT Ops/DevOps (after `hsm-pqc`, in Key Infrastructure checkpoint). `quizCategories` updated for Executive, Architect, and IT Ops personas; Researcher uses empty array (all categories). Updated `estimatedMinutes` for IT Ops from 705 → 765 to reflect the added 60-min module.",
+      "category": "changelog",
+      "metadata": { "version": "2.25.2", "date": "2026-03-06" },
+      "deepLink": "/changelog"
     },
     {
       "id": "changelog-2.25.1",
