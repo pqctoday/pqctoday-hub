@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-03-06T05:06:45.965Z",
-  "chunkCount": 2831,
+  "generatedAt": "2026-03-06T05:26:25.702Z",
+  "chunkCount": 2833,
   "chunks": [
     {
       "id": "glossary-0",
@@ -20349,7 +20349,7 @@
       "id": "mc-knowledgegraph-exploreview-0",
       "source": "module-content",
       "title": "KnowledgeGraph — ExploreView",
-      "content": "Module: KnowledgeGraph\nComponent: ExploreView\n\ngraph.nodes.get(id)) .filter((n): n is GraphNode => n !== undefined) // Center node at origin, others in a ring const nonCenterNodes = nodeArray.filter((n) => n.id !== centerId) const radius = Math.max(250, nonCenterNodes.length * 30) const flowNodes: Node\n(null) const [nodes, setNodes, onNodesChange] = useNodesState\n>([]) const [edges, setEdges, onEdgesChange] = useEdgesState\nSearch for any standard, algorithm, compliance framework, or learning module to see how it connects to the rest of the PQC ecosystem.\nbutton]:!bg-muted [&>button]:!text-foreground [&>button]:!border-border\" />",
+      "content": "Module: KnowledgeGraph\nComponent: ExploreView\n\ngraph.nodes.get(id)) .filter((n): n is GraphNode => n !== undefined) // Center node at origin, others in a ring const nonCenterNodes = nodeArray.filter((n) => n.id !== centerId) const radius = Math.max(250, nonCenterNodes.length * 30) const flowNodes: Node\n>(new Set()) const [nodes, setNodes, onNodesChange] = useNodesState\n>([]) const [edges, setEdges, onEdgesChange] = useEdgesState\nSearch for any standard, algorithm, compliance framework, or learning module to see how it connects to the rest of the PQC ecosystem.\nbutton]:!bg-muted [&>button]:!text-foreground [&>button]:!border-border\" />",
       "category": "learning",
       "metadata": {
         "module": "KnowledgeGraph",
@@ -30898,6 +30898,24 @@
       "category": "app-guide",
       "metadata": { "fileName": "15-community.md", "slug": "community" },
       "deepLink": "/about"
+    },
+    {
+      "id": "changelog-2.25.0",
+      "source": "changelog",
+      "title": "PQC Today v2.25.0 — Release Notes (2026-03-05)",
+      "content": "Version 2.25.0 released 2026-03-05.\n\n### Added\n\n- **Standards Bodies module** (`modules/StandardsBodies/`): New 5-step learn module (60 min, intermediate, Strategy track) covering who creates PQC standards, who certifies products, and who mandates compliance. Covers 12 organisations: NIST, ISO/IEC, ETSI, IETF, BSI, ANSSI, ENISA, CC/CCRA, CMVP, NCSC, NSA, and KISA. Five interactive workshops: BodyClassifier, OrganizationExplorer, StandardsCertChain, CoverageGrid, and ScenarioChallenge.\n\n- **Mechanism Discovery — live PKCS#11 browser**: Adds `hsm_getMechanismList()`, `hsm_getMechanismInfo()`, and `hsm_getAllMechanisms()` which call `C_GetMechanismList` and `C_GetMechanismInfo` for all mechanisms on the active slot. Results are resolved against a 100+ entry MECH_TABLE covering RSA, ML-KEM (FIPS 203), ML-DSA (FIPS 204), SLH-DSA (FIPS 205), SHA-1/2/3, AES (ECB/CBC/CTR/GCM/CMAC/KeyWrap), EC/ECDSA/ECDSA-SHA3/EdDSA, ECDH, PBKDF2, HKDF, and SP 800-108 KBKDFs. CKF\\_ flags are decoded to human-readable names (SIGN, VERIFY, ENCAPSULATE, DECAPSULATE, KEY\\_PAIR\\_GEN, etc.). Results sorted by family (PQC first, then asymmetric, symmetric, hash, kdf). New `HsmMechanismPanel` component renders the full mechanism list as a searchable, family-grouped table in the SoftHSM tab.\n\n- **Data Asset Sensitivity — workshop redesign** (`modules/DataAssetSensitivity/workshop/`): Replaced ComplianceMatrix and RiskMethodologyExplorer with two new exercises. ClassificationChallenge presents 10 real-world data scenarios (EHR records, JWT tokens, biometric templates, CA private keys, signed firmware, etc.) asking learners to assign the correct sensitivity tier — each scenario includes HNDL window calculation, applicable frameworks, and a common-mistake callout. SensitivityConflictResolver presents multi-framework classification conflicts (GDPR vs HIPAA vs CNSA 2.0 vs FIPS 140-3) and guides learners through the four resolution rules to determine the governing classification.\n\n### Changed\n\n- **Compliance data model**: `ComplianceFramework…",
+      "category": "changelog",
+      "metadata": { "version": "2.25.0", "date": "2026-03-05" },
+      "deepLink": "/changelog"
+    },
+    {
+      "id": "changelog-2.24.0",
+      "source": "changelog",
+      "title": "PQC Today v2.24.0 — Release Notes (2026-03-05)",
+      "content": "Version 2.24.0 released 2026-03-05.\n\n### Added\n\n- **Knowledge Graph panel** (right-panel drawer): New \"Graph\" tab alongside Assistant and Journey in the right-panel drawer. Three sub-tabs — **Explore** (search-driven radial graph with NodeDetailPanel overlay for algorithm, standard, organisation, and product nodes), **Coverage** (entity type cards + cluster relationship map showing 13 relationship types across 13 data sources), and **Pathways** (track-filtered learning pathway with per-module progress indicators). Algorithm nodes built synchronously via `libraryData.algorithmFamily` mapping 11 canonical PQC families (ML-KEM, ML-DSA, SLH-DSA, Lattice-based, Hash-based, Code-based, etc.).\n\n### Fixed\n\n- **PKCS#11 Inspect — classical operation decoders**: Improved decode accuracy for RSA, ECDSA, and EdDSA sign/verify operations; corrected constant mappings for edge cases in return-value decoding.\n\n- **Standards Bodies data**: Corrected CNSA 2.0 algorithm list (removed XMSS, aligned with NSA CNSA 2.0 advisory mandatory algorithms); updated NIST IR 8547 status to reflect the published draft timeline; added FIPS 206 (FN-DSA / Falcon) entry.\n\n- **Standards Bodies TypeScript errors**: Resolved pre-existing strict-mode TypeScript errors (unterminated string literals, missing type annotations) that blocked the `tsc` build step.\n\n### Data\n\n- **Migrate catalog**: Deduplication pass removing 6 duplicate product rows; corrected FIPS validation status for 12 entries (downgraded unverified `Validated` claims to `Partial`); updated version strings for 8 entries (OpenSSL, Bouncy Castle, wolfSSL, mbedTLS, AWS-LC) to current releases.",
+      "category": "changelog",
+      "metadata": { "version": "2.24.0", "date": "2026-03-05" },
+      "deepLink": "/changelog"
     },
     {
       "id": "changelog-2.23.0",
