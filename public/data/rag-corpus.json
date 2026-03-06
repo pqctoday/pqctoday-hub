@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-03-05T06:30:03.360Z",
-  "chunkCount": 2777,
+  "generatedAt": "2026-03-06T02:07:17.018Z",
+  "chunkCount": 2800,
   "chunks": [
     {
       "id": "glossary-0",
@@ -17322,6 +17322,51 @@
       "deepLink": "/leaders?leader=Prof.%20Tanja%20Lange"
     },
     {
+      "id": "leader-104",
+      "source": "leaders",
+      "title": "Zak Pantelli",
+      "content": "Name: Zak Pantelli\nCountry: UK\nRole: Distinguished Architect for Data Security & Cryptography\nOrganizations: GSK\nType: Private | Category: Industry Adopter\nContribution: Distinguished Architect for Data Security & Cryptography at GSK; leads the organisation's PQC migration strategy and cryptographic architecture aligned with NIST post-quantum standards. Career spans cryptography roles at Barclays, Lloyds Banking Group, Santander UK, and the UK Ministry of Defence.",
+      "category": "Industry Adopter",
+      "metadata": { "country": "UK", "type": "Private" },
+      "deepLink": "/leaders?leader=Zak%20Pantelli"
+    },
+    {
+      "id": "leader-105",
+      "source": "leaders",
+      "title": "Paul van Brouwershaven",
+      "content": "Name: Paul van Brouwershaven\nCountry: Netherlands\nRole: Chair; Founder & CEO\nOrganizations: PKI Consortium;Digitorus\nType: Private | Category: Standards\nContribution: Chairs the PKI Consortium's Post-Quantum Cryptography Working Group and co-organises the annual PQC Conference series. Authored the PQC Maturity Model (PQCMM), a practical framework adopted by governments and enterprises to assess quantum-readiness and plan migration strategies. Founder and CEO of Digitorus with 25+ years in PKI and digital trust.",
+      "category": "Standards",
+      "metadata": { "country": "Netherlands", "type": "Private" },
+      "deepLink": "/leaders?leader=Paul%20van%20Brouwershaven"
+    },
+    {
+      "id": "leader-106",
+      "source": "leaders",
+      "title": "Albert de Ruiter",
+      "content": "Name: Albert de Ruiter\nCountry: Netherlands\nRole: Vice Chair; Policy Authority for PKI (PKIoverheid)\nOrganizations: PKI Consortium;Logius\nType: Public | Category: Government\nContribution: Vice Chair of the PKI Consortium and Policy Authority for PKI at Logius (Dutch Ministry of Internal Affairs); co-founded the PKI Consortium's annual PQC Conference series, a major international forum for PQC standardisation and adoption. Active member of the Dutch government's quantum-safe cryptography working group; teaches quantum-safe digital infrastructure governance at TU Delft.",
+      "category": "Government",
+      "metadata": { "country": "Netherlands", "type": "Public" },
+      "deepLink": "/leaders?leader=Albert%20de%20Ruiter"
+    },
+    {
+      "id": "leader-107",
+      "source": "leaders",
+      "title": "Sven Rajala",
+      "content": "Name: Sven Rajala\nCountry: USA\nRole: Senior PKI & PQC Strategy Consultant\nOrganizations: Keyfactor\nType: Private | Category: Industry Vendor\nContribution: Senior cybersecurity consultant at Keyfactor specialising in PKI automation and PQC readiness; leads quantum-safe migration strategy for enterprise clients. Hosts the KEYMASTER educational video series covering practical PQC implementation including hybrid certificates, ML-DSA/SLH-DSA signatures, and NIST SP 800-227 KEM guidance. Active presenter at PKI Consortium PQC Conferences.",
+      "category": "Industry Vendor",
+      "metadata": { "country": "USA", "type": "Private" },
+      "deepLink": "/leaders?leader=Sven%20Rajala"
+    },
+    {
+      "id": "leader-108",
+      "source": "leaders",
+      "title": "Chris Bailey",
+      "content": "Name: Chris Bailey\nCountry: USA\nRole: Board Chair\nOrganizations: PKI Consortium;AppViewX\nType: Private | Category: Standards\nContribution: Board Chair of the PKI Consortium and founding member of both the CA/Browser Forum and PKI Consortium; a 25+ year digital trust and PKI veteran driving industry-wide quantum-safe readiness. Former SVP at Entrust; advocates urgently for rapid collective migration to post-quantum encryption, stating \"We have no choice but to transition quickly and collectively.\"",
+      "category": "Standards",
+      "metadata": { "country": "USA", "type": "Private" },
+      "deepLink": "/leaders?leader=Chris%20Bailey"
+    },
+    {
       "id": "module-pqc-101",
       "source": "modules",
       "title": "PQC 101",
@@ -21108,6 +21153,102 @@
         "filePath": "QuantumThreats/data/quantumConstants.ts"
       },
       "deepLink": "/learn/quantum-threats"
+    },
+    {
+      "id": "mc-standardsbodies-bodyclassifier-0",
+      "source": "module-content",
+      "title": "StandardsBodies — BodyClassifier",
+      "content": "Module: StandardsBodies\nComponent: BodyClassifier\n\n(effectiveResults) const updateResult = (cardId: string, patch: Partial\nc.id === r.cardId) if (!card || !r.submitted) return false return ( r.selectedType === card.correctType && r.selectedScope === card.correctScope && r.selectedAuthority === card.correctAuthority ) }).length const submittedCount = localResults.filter((r) => r.submitted).length return (\nClassify each organization by its type, scope, and authority, then click\nr.cardId === card.id)! const isSubmitted = result.submitted const typeCorrect = result.selectedType === card.correctType const scopeCorrect = result.selectedScope === card.correctScope const authorityCorrect = result.selectedAuthority === card.correctAuthority const allCorrect = typeCorrect && scopeCorrect && authorityCorrect return (\nExcellent! You understand how the three organization types differ. Proceed to Step 2 to explore each organization in depth.\nReview the highlighted corrections, then try the remaining cards. Remember: standards bodies create the rules; certification bodies verify implementations; regulatory agencies issue mandates.",
+      "category": "learning",
+      "metadata": {
+        "module": "StandardsBodies",
+        "component": "BodyClassifier",
+        "filePath": "StandardsBodies/components/BodyClassifier.tsx"
+      }
+    },
+    {
+      "id": "mc-standardsbodies-introduction-0",
+      "source": "module-content",
+      "title": "StandardsBodies — Introduction",
+      "content": "Module: StandardsBodies\nComponent: Introduction\n\nThe PQC transition involves three fundamentally different types of organizations, each playing a distinct role. Confusing them is a common source of compliance mistakes.\nare the inspectors who verify that a specific building meets those codes, and\nare the zoning laws that say &quot;in this jurisdiction, meeting code is mandatory for these buildings.&quot; All three are necessary; none is redundant.\nCreate technical standards: algorithm specifications, security levels, protocol integration. Their output is a published document, not a certificate.\nCertify that products/systems correctly implement standards. Their output is a certificate (or certificate number) tied to a specific product version.\nRegulations and mandates that reference standards and require certifications. Their output is a legal/regulatory obligation, not a technical specification.\nThe three roles form a chain: a standards body publishes an algorithm specification → a certification body validates that a product correctly implements it → a compliance framework mandates that regulated entities use certified products.\nWhether an organization is governmental or non-governmental determines whether its outputs can be legally mandatory or only advisory. This distinction matters enormously for compliance.\nGovernment agencies with regulatory authority. Their technical guidelines and mandates can be legally binding. Authority derives from government statute, not membership consensus.",
+      "category": "learning",
+      "metadata": {
+        "module": "StandardsBodies",
+        "component": "Introduction",
+        "filePath": "StandardsBodies/components/Introduction.tsx"
+      }
+    },
+    {
+      "id": "mc-standardsbodies-introduction-1",
+      "source": "module-content",
+      "title": "StandardsBodies — Introduction",
+      "content": "Module: StandardsBodies\nComponent: Introduction\n\nIndustry consortia and open membership bodies. Their standards gain authority through broad adoption, not government mandate. Anyone can contribute; consensus drives output.\nGovernments can mandate nationally-specific algorithms that differ from NIST standards. This creates interoperability challenges for multinational organizations.\nChina's Office of State Commercial Cryptography Administration (OSCCA) mandates SM2 (asymmetric), SM3 (hash), and SM4 (symmetric) algorithms for regulated sectors. These are\ninteroperable with NIST FIPS 203/204/205. Organizations operating in China may need a separate cryptographic stack.\nKorea's KpqC competition (2022–2025) selected HAETAE and AIMer (signatures), SMAUG-T and NTRU+ (KEMs) as Korean national algorithms — distinct from NIST's selections. Target standardization by 2029. Korean telecom operators may require support for KpqC algorithms alongside FIPS 203/204/205.\nCrypto-agile architectures (abstraction layers, pluggable algorithm providers) are essential for organizations operating across jurisdictions with divergent algorithm mandates. Design your key management and protocol stacks to support algorithm negotiation, not hard-coded algorithm choices.\nGlobal bodies gain authority through broad adoption and multi-country consensus, not government mandate. Their standards are recognized worldwide but not legally binding in themselves.",
+      "category": "learning",
+      "metadata": {
+        "module": "StandardsBodies",
+        "component": "Introduction",
+        "filePath": "StandardsBodies/components/Introduction.tsx"
+      }
+    },
+    {
+      "id": "mc-standardsbodies-introduction-2",
+      "source": "module-content",
+      "title": "StandardsBodies — Introduction",
+      "content": "Module: StandardsBodies\nComponent: Introduction\n\n(EU interoperability), then layer national guidance (BSI TR-02102 for Germany, ANSSI hybrid for France). Check CMVP for US federal sales and EUCC for EU government sales.\ntracks 48+ PQC compliance frameworks. Each framework maps directly to a body covered in this module.\nshows PQC readiness for products across 7 infrastructure layers. Each product's FIPS validation badge maps to a specific certification body and program.\nThe product has a current CMVP certificate (FIPS 140-3 or 140-2 approved). CMVP is the certification body; NIST/CSE administers it. Vendor is on the official NIST CMVP database.\nCovers FedRAMP authorization, WebTrust audit, or FIPS-mode operation — partial certification evidence but not a full CMVP certificate.\nNo CMVP certificate found. The product may claim PQC support but has not undergone formal certification.\nCC certification badges (Common Criteria CCRA / EUCC) and ACVP algorithm validation (algorithm-level, below module-level). These link back to ENISA (EUCC) and NIST CAVP (ACVP) respectively.\nHere is how NIST IR 8547, CMVP, and CNSA 2.0 work together in a single procurement scenario:\nFIPS 140-3 validation takes 18–36 months. PQC-first certificates only began appearing in late 2024. Plan procurement timelines accounting for this certification lag.",
+      "category": "learning",
+      "metadata": {
+        "module": "StandardsBodies",
+        "component": "Introduction",
+        "filePath": "StandardsBodies/components/Introduction.tsx"
+      }
+    },
+    {
+      "id": "mc-standardsbodies-introduction-3",
+      "source": "module-content",
+      "title": "StandardsBodies — Introduction",
+      "content": "Module: StandardsBodies\nComponent: Introduction\n\nintegrates NIST PQC algorithms into Internet protocols. Unlike NIST (which defines the algorithm), IETF defines how the algorithm is used in specific protocols. Both are standards bodies, but with different domains of authority.\nClassify bodies, explore organizations, trace compliance chains, and tackle real scenarios.\nAgency procurement requires CMVP certificate",
+      "category": "learning",
+      "metadata": {
+        "module": "StandardsBodies",
+        "component": "Introduction",
+        "filePath": "StandardsBodies/components/Introduction.tsx"
+      }
+    },
+    {
+      "id": "mc-standardsbodies-organizationexplorer-0",
+      "source": "module-content",
+      "title": "StandardsBodies — OrganizationExplorer",
+      "content": "Module: StandardsBodies\nComponent: OrganizationExplorer\n\no.id === selectedOrgId) ?? null // Default: select first org if none selected const effectiveOrg = selectedOrg ?? ORGANIZATIONS[0] return (\nSelect an organization to explore its mission, decision-making process, and key PQC outputs.",
+      "category": "learning",
+      "metadata": {
+        "module": "StandardsBodies",
+        "component": "OrganizationExplorer",
+        "filePath": "StandardsBodies/components/OrganizationExplorer.tsx"
+      }
+    },
+    {
+      "id": "mc-standardsbodies-scenariochallenge-0",
+      "source": "module-content",
+      "title": "StandardsBodies — ScenarioChallenge",
+      "content": "Module: StandardsBodies\nComponent: ScenarioChallenge\n\nWork through each scenario. Choose the correct body type, organization, and standard.\no.id === scenario.correctBodyType) ?.label ?? scenario.correctBodyType}\no.id === scenario.correctStandard) ?.label ?? scenario.correctStandard}\nExcellent! You can reliably identify which bodies create standards, which certify products, and which mandate compliance across regions.\nReview the explanations for the scenarios you missed. Focus on the difference between who",
+      "category": "learning",
+      "metadata": {
+        "module": "StandardsBodies",
+        "component": "ScenarioChallenge",
+        "filePath": "StandardsBodies/components/ScenarioChallenge.tsx"
+      }
+    },
+    {
+      "id": "mc-standardsbodies-index-0",
+      "source": "module-content",
+      "title": "StandardsBodies — index",
+      "content": "Module: StandardsBodies\nComponent: index\n\nApply what you learned in the workshop to these real-world scenarios. Use the Workshop tab tools to model your answers.\nReference the Workshop steps listed in the prompt. Use the Organization Explorer (Step 2) as your primary reference for organization details.\nUnderstand who creates PQC standards, who certifies products, and who mandates compliance — worldwide and by region.\nClassify 12 organizations by type, scope, and authority. Get color-coded feedback for each.\nDeep-dive into 12 key standards and certification bodies — founding, decision-making, and PQC outputs.\nStep 3: Standards → Certification → Compliance Chain\nTrace the chain from algorithm standard to certification program to compliance mandate in 4 real scenarios.\nStep 4: Regional Coverage Grid\nInteractive 5-region × 4-type matrix. Click any cell to see which bodies operate there.\n5 scored workplace scenarios. Select the right body type, organization, and standard. Detailed explanations included.\nScenario: Multinational Vendor PQC Certification Strategy\nScenario: IETF vs NIST — Protocol Integration Decision\nScenario: Compliance Framework Authorship Audit",
+      "category": "learning",
+      "metadata": {
+        "module": "StandardsBodies",
+        "component": "index",
+        "filePath": "StandardsBodies/index.tsx"
+      }
     },
     {
       "id": "mc-statefulsignatures-statefulsigsexercises-0",
@@ -25096,49 +25237,58 @@
       "deepLink": "/assess?step=7"
     },
     {
+      "id": "assess-guide-credential-lifetime",
+      "source": "assessment",
+      "title": "Assessment: Credential Lifetime",
+      "content": "PQC Assessment Wizard — Step 9: Credential Lifetime\n\nThe Credential Lifetime step assesses how long cryptographic credentials (certificates, keys, tokens) must remain valid in your organization. Long-lived credentials (5+ years) face elevated HNDL/HNFL risk — a certificate valid through 2030 may need to remain trustworthy even after a CRQC arrives. This step drives urgency for PKI migration, code signing transitions, and certificate authority upgrades.",
+      "category": "assessment-guide",
+      "metadata": { "step": "8", "stepName": "credential-lifetime" },
+      "deepLink": "/assess?step=8"
+    },
+    {
       "id": "assess-guide-scale",
       "source": "assessment",
       "title": "Assessment: Organization Scale",
-      "content": "PQC Assessment Wizard — Step 9: Organization Scale\n\nOrganization Scale affects migration complexity and timeline. Large enterprises with thousands of endpoints, multiple data centers, and complex supply chains require longer migration timelines and more comprehensive crypto-agility frameworks than smaller organizations.",
+      "content": "PQC Assessment Wizard — Step 10: Organization Scale\n\nOrganization Scale affects migration complexity and timeline. Large enterprises with thousands of endpoints, multiple data centers, and complex supply chains require longer migration timelines and more comprehensive crypto-agility frameworks than smaller organizations.",
       "category": "assessment-guide",
-      "metadata": { "step": "8", "stepName": "scale" },
-      "deepLink": "/assess?step=8"
+      "metadata": { "step": "9", "stepName": "scale" },
+      "deepLink": "/assess?step=9"
     },
     {
       "id": "assess-guide-agility",
       "source": "assessment",
       "title": "Assessment: Crypto Agility",
-      "content": "PQC Assessment Wizard — Step 10: Crypto Agility\n\nCrypto Agility measures your organization's ability to quickly swap cryptographic algorithms. Organizations with centralized key management, automated certificate rotation, and modular crypto libraries can migrate faster. Low agility increases migration risk and timeline.",
+      "content": "PQC Assessment Wizard — Step 11: Crypto Agility\n\nCrypto Agility measures your organization's ability to quickly swap cryptographic algorithms. Organizations with centralized key management, automated certificate rotation, and modular crypto libraries can migrate faster. Low agility increases migration risk and timeline.",
       "category": "assessment-guide",
-      "metadata": { "step": "9", "stepName": "agility" },
-      "deepLink": "/assess?step=9"
+      "metadata": { "step": "10", "stepName": "agility" },
+      "deepLink": "/assess?step=10"
     },
     {
       "id": "assess-guide-infrastructure",
       "source": "assessment",
       "title": "Assessment: Infrastructure Assessment",
-      "content": "PQC Assessment Wizard — Step 11: Infrastructure Assessment\n\nThe Infrastructure step evaluates which systems need PQC upgrades: HSMs, load balancers, firewalls, certificate authorities, databases, cloud services, IoT devices. Hardware-bound systems (HSMs, embedded devices) require longer migration timelines due to firmware/hardware replacement cycles.",
+      "content": "PQC Assessment Wizard — Step 12: Infrastructure Assessment\n\nThe Infrastructure step evaluates which systems need PQC upgrades: HSMs, load balancers, firewalls, certificate authorities, databases, cloud services, IoT devices. Hardware-bound systems (HSMs, embedded devices) require longer migration timelines due to firmware/hardware replacement cycles.",
       "category": "assessment-guide",
-      "metadata": { "step": "10", "stepName": "infrastructure" },
-      "deepLink": "/assess?step=10"
+      "metadata": { "step": "11", "stepName": "infrastructure" },
+      "deepLink": "/assess?step=11"
     },
     {
       "id": "assess-guide-vendors",
       "source": "assessment",
       "title": "Assessment: Vendor Dependencies",
-      "content": "PQC Assessment Wizard — Step 12: Vendor Dependencies\n\nVendor Dependencies identifies third-party products and services in your cryptographic supply chain. Organizations dependent on vendor timelines for PQC support face additional risk. The Migrate Catalog can help identify PQC-ready alternatives.",
+      "content": "PQC Assessment Wizard — Step 13: Vendor Dependencies\n\nVendor Dependencies identifies third-party products and services in your cryptographic supply chain. Organizations dependent on vendor timelines for PQC support face additional risk. The Migrate Catalog can help identify PQC-ready alternatives.",
       "category": "assessment-guide",
-      "metadata": { "step": "11", "stepName": "vendors" },
-      "deepLink": "/assess?step=11"
+      "metadata": { "step": "12", "stepName": "vendors" },
+      "deepLink": "/assess?step=12"
     },
     {
       "id": "assess-guide-timeline",
       "source": "assessment",
       "title": "Assessment: Target Timeline",
-      "content": "PQC Assessment Wizard — Step 13: Target Timeline\n\nThe Target Timeline step sets your organization's PQC migration deadline based on regulatory requirements, risk tolerance, and industry benchmarks. Country-aligned options show relevant national deadlines (e.g., CNSA 2.0 2030/2033 milestones, ANSSI 2025 hybrid requirement).",
+      "content": "PQC Assessment Wizard — Step 14: Target Timeline\n\nThe Target Timeline step sets your organization's PQC migration deadline based on regulatory requirements, risk tolerance, and industry benchmarks. Country-aligned options show relevant national deadlines (e.g., CNSA 2.0 2030/2033 milestones, ANSSI 2025 hybrid requirement).",
       "category": "assessment-guide",
-      "metadata": { "step": "12", "stepName": "timeline" },
-      "deepLink": "/assess?step=12"
+      "metadata": { "step": "13", "stepName": "timeline" },
+      "deepLink": "/assess?step=13"
     },
     {
       "id": "getting-started-developers",
@@ -25202,6 +25352,15 @@
       "category": "playground",
       "metadata": { "feature": "signatures" },
       "deepLink": "/playground?algo=ML-DSA"
+    },
+    {
+      "id": "playground-softhsm",
+      "source": "documentation",
+      "title": "Playground — SoftHSM (PKCS#11 v3.2 Emulation)",
+      "content": "SoftHSM Tab in the PQC Playground\n\nThe SoftHSM tab emulates a PKCS#11 v3.2 hardware security module in the browser using softhsmv3 (a fork of SoftHSM2 compiled to WebAssembly). It demonstrates real HSM-style key operations with PQC algorithms — all running client-side with no real hardware required.\n\nML-DSA Operations: Generate ML-DSA-44/65/87 keypairs in a PKCS#11 token slot, sign messages, and verify signatures. Pre-hash signing is supported via a dropdown with 10 hash variants (SHA-256, SHA-384, SHA-512, SHA3-256, SHA3-384, SHA3-512, SHAKE-128, SHAKE-256) plus Pure (no pre-hash).\n\nSLH-DSA Operations: Generate SLH-DSA keypairs with all 12 FIPS 205 parameter sets (CKP_SLH_DSA_SHA2_128S, CKP_SLH_DSA_SHA2_192S, CKP_SLH_DSA_SHA2_256S, CKP_SLH_DSA_SHAKE_128S, CKP_SLH_DSA_SHAKE_192S, CKP_SLH_DSA_SHAKE_256S, and their -F fast variants). Pre-hash dropdown shared with ML-DSA.\n\nAdditional tabs: Key Agreement (ECDH, ML-KEM), KDF (HKDF, PBKDF2/BIP39), Classical (AES, RSA, ECDSA). All operations use the PKCS#11 C_Sign, C_Verify, C_GenerateKeyPair, C_EncapsulateKey, C_DecapsulateKey interfaces — mirroring what a real PKCS#11 application would do against a hardware HSM.",
+      "category": "playground",
+      "metadata": { "feature": "softhsm" },
+      "deepLink": "/playground"
     },
     {
       "id": "openssl-studio-overview",
@@ -28693,7 +28852,7 @@
       "id": "doc-enrichment-United Kingdom:NCSC — PQC White Paper Updated",
       "source": "document-enrichment",
       "title": "PQC White Paper Updated — Document Analysis",
-      "content": "Title: PQC White Paper Updated\nAuthors: National Cyber Security Centre\nPublication Date: 2024-08-01\nDocument Status: Validated",
+      "content": "Title: PQC White Paper Updated\nAuthors: National Cyber Security Centre\nPublication Date: 2024-08-01\nDocument Status: Validated\nMain Topic: NCSC updates its PQC White Paper to endorse NIST quantum-safe algorithms, becoming the first major jurisdiction to reflect these standards.\nApplicable Regions / Bodies: NCSC\nStandardization Bodies: NIST",
       "category": "document-enrichment",
       "metadata": {
         "refId": "United Kingdom:NCSC — PQC White Paper Updated",
@@ -29350,6 +29509,102 @@
       "deepLink": "/timeline?country=Jordan"
     },
     {
+      "id": "doc-enrichment-Canada:ISED — PQC Best Practices Published",
+      "source": "document-enrichment",
+      "title": "PQC Best Practices Published — Document Analysis",
+      "content": "Title: PQC Best Practices Published\nAuthors: Innovation, Science and Economic Development Canada\nPublication Date: 2023-06-12\nDocument Status: Validated\nMain Topic: Canadian National Quantum-Readiness Best Practices and Guidelines providing a framework for organizations to assess quantum risks and prioritize PQC migration.\nQuantum Threats Addressed: Breakdown of public-key cryptography by fault-tolerant quantum computers; weakening of symmetric key cryptography; risks to personal information, financial systems, utility grids, infrastructure, and national security.\nMigration Timeline Info: NIST on-track to publish first set of PQC standards in 2024; transition expected over many years; planning required now as changes are still years away.\nApplicable Regions / Bodies: Regions: Canada; Bodies: Innovation, Science and Economic Development Canada (ISED), Canadian Forum for Digital Infrastructure Resilience (CFDIR), Quantum-Readiness Working Group (QRWG), Bank of Canada, U.S. National Institute of Standards and Technology (NIST).\nLeaders Contributions Mentioned: Hisham El-Bihbety (CISO – Bank of Canada) introduced the document; Michele Mosca cited regarding cybersecurity in an era with quantum computers.\nProtocols Covered: Secure Socket Layer (SSL), Transport Layer Security (TLS), Kerberos, sFTP.\nInfrastructure Layers: PKI/CAs, Key Management (key transport, key-wrapping, initialization vectors), Authentication processes, Digital signatures.\nStandardization Bodies: U.S. National Institute of Standards and Technology (NIST).",
+      "category": "document-enrichment",
+      "metadata": {
+        "refId": "Canada:ISED — PQC Best Practices Published",
+        "collection": "timeline"
+      },
+      "deepLink": "/timeline?country=Canada"
+    },
+    {
+      "id": "doc-enrichment-Global:Ethereum Foundation — Vitalik Buterin Publishes PQ Defense Roadmap",
+      "source": "document-enrichment",
+      "title": "Vitalik Buterin Publishes PQ Defense Roadmap — Document Analysis",
+      "content": "Title: Vitalik Buterin Publishes PQ Defense Roadmap\nAuthors: Ethereum Foundation\nPublication Date: 2026-02-26\nDocument Status: New\nMain Topic: Vitalik Buterin outlines a roadmap to protect Ethereum from quantum computing threats by addressing vulnerabilities in consensus, data availability, accounts, and zero-knowledge proofs.\nPQC Algorithms Covered: hash-based signatures, Winternitz, STARK aggregation\nQuantum Threats Addressed: long-term risks posed by quantum computers; breaking digital signatures and cryptographic systems\nMigration Timeline Info: Targets Hegota upgrade H2 2026\nLeaders Contributions Mentioned: Vitalik Buterin outlined a roadmap to protect the blockchain from quantum threats; Margaux Nijkerk reported on the roadmap; Nikhilesh De edited the article; Davide Crapis sees the network acting as a coordination and verification layer in an AI-mediated world\nProtocols Covered: EIP-8141, BLS, KZG commitments\nInfrastructure Layers: validator signatures, data availability system, wallet signatures, zero-knowledge proofs, validation frames\nStandardization Bodies: Ethereum Foundation",
+      "category": "document-enrichment",
+      "metadata": {
+        "refId": "Global:Ethereum Foundation — Vitalik Buterin Publishes PQ Defense Roadmap",
+        "collection": "timeline"
+      },
+      "deepLink": "/timeline"
+    },
+    {
+      "id": "doc-enrichment-United States:Google — Google Cloud ML-KEM Default and Chrome MTC Program",
+      "source": "document-enrichment",
+      "title": "Google Cloud ML-KEM Default and Chrome MTC Program — Document Analysis",
+      "content": "Title: Google Cloud ML-KEM Default and Chrome MTC Program\nAuthors: Google LLC\nPublication Date: 2026-02-06\nDocument Status: New\nMain Topic: Google announces default ML-KEM deployment in Cloud and a Chrome Merkle Tree Certificates program with Cloudflare to replace X.509 chains, alongside policy recommendations for the quantum era.\nPQC Algorithms Covered: ML-KEM\nQuantum Threats Addressed: Cryptographically Relevant Quantum Computer (CRQC); store now, decrypt later attacks; breaking public-key cryptosystems\nMigration Timeline Info: Chrome Quantum-resistant Root Store (CQRS) planned Q3 2027; Google preparing for post-quantum world since 2016; NIST standards announced in 2024\nApplicable Regions / Bodies: Bodies: National Institute Standards & Technology (NIST); Google; Cloudflare\nLeaders Contributions Mentioned: Kent Walker, President of Global Affairs, Google & Alphabet; Hartmut Neven, Founder and Lead, Google Quantum AI\nProtocols Covered: X.509; HTTPS\nInfrastructure Layers: Certificate authorities; Cloud network encryption; global networks\nStandardization Bodies: National Institute Standards & Technology (NIST)",
+      "category": "document-enrichment",
+      "metadata": {
+        "refId": "United States:Google — Google Cloud ML-KEM Default and Chrome MTC Program",
+        "collection": "timeline"
+      },
+      "deepLink": "/timeline?country=United%20States"
+    },
+    {
+      "id": "doc-enrichment-Germany:BSI — Hybrid TLS Required for Classified Communications",
+      "source": "document-enrichment",
+      "title": "Hybrid TLS Required for Classified Communications — Document Analysis",
+      "content": "Title: Hybrid TLS Required for Classified Communications\nAuthors: Bundesamt für Sicherheit in der Informationstechnik\nPublication Date: 2025-01-31\nDocument Status: New\nMain Topic: BSI TR-02102-2 mandates hybrid TLS combining classical and PQC algorithms for classified communications by 2025.\nPQC Algorithms Covered: ML-KEM\nMigration Timeline Info: Classified communications require hybrid TLS by 2025; non-classified systems should adopt as soon as practical.\nProtocols Covered: TLS\nStandardization Bodies: BSI\nCompliance Frameworks Referenced: BSI TR-02102-2",
+      "category": "document-enrichment",
+      "metadata": {
+        "refId": "Germany:BSI — Hybrid TLS Required for Classified Communications",
+        "collection": "timeline"
+      },
+      "deepLink": "/timeline?country=Germany"
+    },
+    {
+      "id": "doc-enrichment-Germany:BSI — Hybrid IPsec and SSH Required",
+      "source": "document-enrichment",
+      "title": "Hybrid IPsec and SSH Required — Document Analysis",
+      "content": "Title: Hybrid IPsec and SSH Required\nAuthors: Bundesamt für Sicherheit in der Informationstechnik\nPublication Date: 2025-01-31\nDocument Status: New\nMain Topic: BSI TR-02102-3 and TR-02102-4 mandate hybrid IPsec and SSH with ML-KEM for sensitive communications by 2026.\nPQC Algorithms Covered: ML-KEM\nMigration Timeline Info: By 2026: hybrid IPsec and hybrid SSH required for sensitive communications\nProtocols Covered: IPsec, IKEv2, SSH\nStandardization Bodies: IETF\nCompliance Frameworks Referenced: BSI TR-02102-3, BSI TR-02102-4",
+      "category": "document-enrichment",
+      "metadata": {
+        "refId": "Germany:BSI — Hybrid IPsec and SSH Required",
+        "collection": "timeline"
+      },
+      "deepLink": "/timeline?country=Germany"
+    },
+    {
+      "id": "doc-enrichment-Germany:BSI — Full PQC Transition — Standalone Algorithms Requir",
+      "source": "document-enrichment",
+      "title": "Full PQC Transition — Standalone Algorithms Requir — Document Analysis",
+      "content": "Title: Full PQC Transition — Standalone Algorithms Requir\nAuthors: See document",
+      "category": "document-enrichment",
+      "metadata": {
+        "refId": "Germany:BSI — Full PQC Transition — Standalone Algorithms Requir",
+        "collection": "timeline"
+      },
+      "deepLink": "/timeline?country=Germany"
+    },
+    {
+      "id": "doc-enrichment-European Union:EC — Cryptographic Inventory Mandate",
+      "source": "document-enrichment",
+      "title": "Cryptographic Inventory Mandate — Document Analysis",
+      "content": "Title: Cryptographic Inventory Mandate\nAuthors: European Commission\nPublication Date: 2024-04-11\nDocument Status: New\nMain Topic: EU PQC Recommendation mandates a comprehensive cryptographic asset inventory by end of 2025 for EU public sector entities and operators of essential services.\nMigration Timeline Info: End of 2025: Complete comprehensive cryptographic asset inventory as first phase of coordinated PQC transition roadmap\nApplicable Regions / Bodies: Regions: EU; Bodies: European Commission, Directorate-General for Communications Networks, Content and Technology\nCompliance Frameworks Referenced: EU PQC Recommendation (April 2024)",
+      "category": "document-enrichment",
+      "metadata": {
+        "refId": "European Union:EC — Cryptographic Inventory Mandate",
+        "collection": "timeline"
+      },
+      "deepLink": "/timeline?country=European%20Union"
+    },
+    {
+      "id": "doc-enrichment-United States:NIST — NIST SP 800-208 Published (LMS/XMSS)",
+      "source": "document-enrichment",
+      "title": "NIST SP 800-208 Published (LMS/XMSS) — Document Analysis",
+      "content": "Title: NIST SP 800-208 Published (LMS/XMSS)\nAuthors: National Institute of Standards and Technology\nPublication Date: 2020-10-29\nDocument Status: Validated\nMain Topic: NIST SP 800-208 recommends stateful hash-based signature schemes LMS and XMSS along with their multi-tree variants HSS and XMSS MT.\nPQC Algorithms Covered: LMS, XMSS, HSS, XMSS MT\nApplicable Regions / Bodies: Regions: United States; Bodies: NIST, NSA\nLeaders Contributions Mentioned: David Cooper (NIST), Daniel Apon (NIST), Quynh Dang (NIST), Michael Davidson (NIST), Morris Dworkin (NIST), Carl Miller (NIST)\nInfrastructure Layers: Key Management\nStandardization Bodies: NIST\nCompliance Frameworks Referenced: CNSA 2.0",
+      "category": "document-enrichment",
+      "metadata": {
+        "refId": "United States:NIST — NIST SP 800-208 Published (LMS/XMSS)",
+        "collection": "timeline"
+      },
+      "deepLink": "/timeline?country=United%20States"
+    },
+    {
       "id": "doc-enrichment-AERO-001",
       "source": "document-enrichment",
       "title": "Aerospace / Aviation — Document Analysis",
@@ -29947,7 +30202,7 @@
       "id": "page-guide-landing",
       "source": "documentation",
       "title": "Landing Page — Platform Overview & Persona Selection",
-      "content": "PQC Today Landing Page\n\nThe landing page introduces the PQC adoption lifecycle through a 7-step journey: Learn → Assess → Explore → Test → Deploy → Ramp Up → Stay Agile. Users select a persona (Executive, Developer, Architect, Researcher, or IT Ops/DevOps) to personalize their experience — each persona sees \"For you\" badges on recommended journey steps and receives tailored recommendations throughout the platform.\n\nKey statistics displayed: 27 interactive learning modules, 530 quiz questions, 40+ algorithms catalogued, 230+ PQC-ready tools tracked, 14-step quantum risk assessment wizard, and compliance deadlines spanning 2024–2036.\n\nThe ScoreCard tracks learning progress using a judo belt grading system (White through Black belt) based on module completions and quiz performance. Three paths are always visible regardless of persona: Learn, Timeline, and Threats.\n\nPQC Today is open source (GPL-3.0) and runs entirely in the browser — all cryptographic operations use WebAssembly (OpenSSL v3.6.0 + liboqs-js v0.15.1), with no backend or data collection.",
+      "content": "PQC Today Landing Page\n\nThe landing page introduces the PQC adoption lifecycle through a 7-step journey: Learn → Assess → Explore → Test → Deploy → Ramp Up → Stay Agile. Users select a persona (Executive, Developer, Architect, Researcher, or IT Ops/DevOps) to personalize their experience — each persona sees \"For you\" badges on recommended journey steps and receives tailored recommendations throughout the platform.\n\nKey statistics displayed: 27 interactive learning modules (covering PQC 101, Quantum Threats, Hybrid Crypto, TLS, VPN/SSH, PKI, KMS & PQC Key Management, HSM & PQC Operations, Data & Asset Sensitivity, Stateful Signatures, QKD, Digital Assets, 5G Security, Code Signing, API Security, IoT/OT, and more), 530 quiz questions, 40+ algorithms catalogued, 230+ PQC-ready tools tracked, 14-step quantum risk assessment wizard, and compliance deadlines spanning 2024–2036.\n\nThe ScoreCard tracks learning progress using a judo belt grading system (White through Black belt) based on module completions and quiz performance. Three paths are always visible regardless of persona: Learn, Timeline, and Threats.\n\nPQC Today is open source (GPL-3.0) and runs entirely in the browser — all cryptographic operations use WebAssembly (OpenSSL v3.6.0 + liboqs-js v0.15.1), with no backend or data collection.",
       "category": "page-guide",
       "metadata": { "page": "landing" },
       "deepLink": "/"
@@ -29983,7 +30238,7 @@
       "id": "page-guide-threats",
       "source": "documentation",
       "title": "Threats Page — Industry-Specific Quantum Risk Dashboard",
-      "content": "Threats Page Overview\n\nThe Threats dashboard shows 50+ industry-specific quantum threat scenarios across 15+ industries: Aerospace, Automotive, Cloud Computing, Cryptocurrency/Blockchain, Cross-Industry, Energy/Critical Infrastructure, Financial Services, Government/Defense, Healthcare, Insurance, IoT, Telecommunications, and more.\n\nThreat severity levels: Critical (immediate action required), High (1–3 year timeline), Medium-High, Medium, and Low.\n\nKey concepts:\n- HNDL (Harvest Now, Decrypt Later): Adversaries intercept and store encrypted data today to decrypt when quantum computers arrive. Primary near-term threat.\n- HNFL (Harvest Now, Forge Later): Adversaries plan to forge digital signatures (code signing, certificates, legal documents) once quantum computers break ECDSA/RSA.\n- CRQC (Cryptographically Relevant Quantum Computer): Global Risk Institute 2024 estimates 19–34% probability within 10 years.\n\nEach threat entry includes: threat ID, industry, detailed description, criticality level, crypto at risk, PQC replacement recommendation, regulation/source, confidence percentage, and related learning modules.\n\nFilter by industry using ?industry= (e.g., /threats?industry=finance) or open specific threats with ?id= (e.g., /threats?id=FIN-001).",
+      "content": "Threats Page Overview\n\nThe Threats dashboard shows 80+ quantum threat scenarios across 20 industries: Aerospace, Automotive, Cloud Computing, Cryptocurrency/Blockchain, Cross-Industry, Energy/Critical Infrastructure, Financial Services, Government/Defense, Healthcare, Insurance, IoT, IT/Software, Legal/eSignature, Media/DRM, Payment Card, Rail/Transit, Retail, Supply Chain, Telecommunications, and Water/Wastewater.\n\nThreat severity levels: Critical (immediate action required), High (1–3 year timeline), Medium-High, Medium, and Low.\n\nKey concepts:\n- HNDL (Harvest Now, Decrypt Later): Adversaries intercept and store encrypted data today to decrypt when quantum computers arrive. Primary near-term threat.\n- HNFL (Harvest Now, Forge Later): Adversaries plan to forge digital signatures (code signing, certificates, legal documents) once quantum computers break ECDSA/RSA.\n- CRQC (Cryptographically Relevant Quantum Computer): Global Risk Institute 2024 estimates 19–34% probability within 10 years.\n\nEach threat entry includes: threat ID, industry, detailed description, criticality level, crypto at risk, PQC replacement recommendation, regulation/source, confidence percentage, and related learning modules.\n\nFilter by industry using ?industry= (e.g., /threats?industry=finance) or open specific threats with ?id= (e.g., /threats?id=FIN-001).",
       "category": "page-guide",
       "metadata": { "page": "threats" },
       "deepLink": "/threats"
@@ -30019,7 +30274,7 @@
       "id": "page-guide-leaders",
       "source": "documentation",
       "title": "Leaders Page — Global PQC Visionaries & Organizations",
-      "content": "Leaders Page Overview\n\nThe Leaders page profiles 50+ global PQC visionaries and organizations driving post-quantum cryptography adoption and standardization.\n\nLeader categories:\n- Government Leaders: NIST (Dustin Moody, Lily Chen), NCSC UK (Ollie Whitehouse), ANSSI France (Vincent Strubel), BSI Germany (Claudia Plattner), ENISA, CISA\n- Algorithm Inventors: Vadim Lyubashevsky (ML-KEM/ML-DSA at IBM), Léo Ducas (Kyber/Dilithium at CWI/Leiden)\n- Industry Vendors: SandboxAQ (Jack Hidary), PQShield, CryptoNext, QuSecure; HSM vendors (Thales, Entrust, Utimaco); PKI vendors (DigiCert, ISARA)\n- Standards Bodies: IETF (PQUIP, LAMPS), ETSI QSC, PQC Alliance\n- Industry Adopters: Google, AWS (Panos Kampanakis), Cloudflare (Bas Westerbaan — 38%+ HTTPS PQC-protected), Signal, Vodafone, IBM, JPMorgan Chase\n- Academic Researchers: Universities conducting PQC cryptanalysis and lattice cryptography research\n\nFilter by: country (15+ countries), sector (Public/Private/Academic), and text search across name, organization, and bio. Use ?leader= to highlight a specific person, ?country= for country filter, ?sector= for sector filter.",
+      "content": "Leaders Page Overview\n\nThe Leaders page profiles 100+ global PQC leaders — visionaries, algorithm inventors, government officials, and organizations driving post-quantum cryptography adoption and standardization.\n\nLeader categories:\n- Government Leaders: NIST (Dustin Moody, Lily Chen), NCSC UK (Ollie Whitehouse), ANSSI France (Vincent Strubel), BSI Germany (Claudia Plattner), ENISA, CISA\n- Algorithm Inventors: Vadim Lyubashevsky (ML-KEM/ML-DSA at IBM), Léo Ducas (Kyber/Dilithium at CWI/Leiden)\n- Industry Vendors: SandboxAQ (Jack Hidary), PQShield, CryptoNext, QuSecure; HSM vendors (Thales, Entrust, Utimaco); PKI vendors (DigiCert, ISARA)\n- Standards Bodies: IETF (PQUIP, LAMPS), ETSI QSC, PQC Alliance\n- Industry Adopters: Google, AWS (Panos Kampanakis), Cloudflare (Bas Westerbaan — 38%+ HTTPS PQC-protected), Signal, Vodafone, IBM, JPMorgan Chase\n- Academic Researchers: Universities conducting PQC cryptanalysis and lattice cryptography research\n\nFilter by: country (15+ countries), sector (Public/Private/Academic), and text search across name, organization, and bio. Use ?leader= to highlight a specific person, ?country= for country filter, ?sector= for sector filter.",
       "category": "page-guide",
       "metadata": { "page": "leaders" },
       "deepLink": "/leaders"
@@ -30028,7 +30283,7 @@
       "id": "page-guide-about",
       "source": "documentation",
       "title": "About Page — Platform Details, SBOM, Privacy & Licensing",
-      "content": "About Page Overview\n\nThe About page provides comprehensive platform information:\n\nSoftware Bill of Materials (SBOM): React v19, Tailwind CSS v4, Framer Motion (animations), Lucide React (icons), React Router v7. Crypto stack: OpenSSL WASM v3.6.0 (primary), @oqs/liboqs-js v0.15.1 (PQC algorithms), @noble/curves and @scure/* (blockchain crypto), Web Crypto API (X25519, P-256). State management: Zustand with localStorage persistence. Data: PapaParse (CSV), Recharts (visualization). Testing: Vitest + Playwright + axe-playwright (accessibility). Build: Vite + TypeScript strict mode.\n\nSecurity Audit: 0 production vulnerabilities. Dev-only findings are ESLint toolchain ReDoS (minimatch, ajv) — don't affect deployed app.\n\nData Privacy: Static site with no backend or database. No data collection, no cookies, no tracking, no third-party services. All persistence is localStorage only. All cryptography runs client-side via WASM.\n\nPQC Assistant: RAG (Retrieval-Augmented Generation) with ~2,500 corpus chunks from 25 data sources, powered by Gemini 2.5 Flash. Requires user-provided Google API key (BYOK). Three capabilities: Grounded Answers, Deep Linking, PQC Domain Expertise.\n\nLicense: GPL-3.0 (GNU General Public License v3.0).\n\nCreator & Maintainer: Eric Amador. Eric Amador is the sole developer and maintainer of PQC Today (pqctoday.com). LinkedIn profile: https://www.linkedin.com/in/eric-amador-971850a/. To connect with Eric or learn more about his background, visit the About page (/about) or his LinkedIn profile. AI tools acknowledged: Google Antigravity, ChatGPT, Claude AI, Perplexity, Gemini Pro.",
+      "content": "About Page Overview\n\nThe About page provides comprehensive platform information:\n\nSoftware Bill of Materials (SBOM): React v19, Tailwind CSS v4, Framer Motion (animations), Lucide React (icons), React Router v7. Crypto stack: OpenSSL WASM v3.6.0 (primary), @oqs/liboqs-js v0.15.1 (PQC algorithms), @noble/curves and @scure/* (blockchain crypto), Web Crypto API (X25519, P-256). State management: Zustand with localStorage persistence. Data: PapaParse (CSV), Recharts (visualization). Testing: Vitest + Playwright + axe-playwright (accessibility). Build: Vite + TypeScript strict mode.\n\nSecurity Audit: 0 production vulnerabilities. Dev-only findings are ESLint toolchain ReDoS (minimatch, ajv) — don't affect deployed app.\n\nData Privacy: Static site with no backend or database. No data collection, no cookies, no tracking, no third-party services. All persistence is localStorage only. All cryptography runs client-side via WASM.\n\nPQC Assistant: RAG (Retrieval-Augmented Generation) with 2,800+ corpus chunks from 22 data sources, powered by Gemini 2.5 Flash. Requires user-provided Google API key (BYOK). Three capabilities: Grounded Answers, Deep Linking, PQC Domain Expertise.\n\nLicense: GPL-3.0 (GNU General Public License v3.0).\n\nCreator & Maintainer: Eric Amador. Eric Amador is the sole developer and maintainer of PQC Today (pqctoday.com). LinkedIn profile: https://www.linkedin.com/in/eric-amador-971850a/. To connect with Eric or learn more about his background, visit the About page (/about) or his LinkedIn profile. AI tools acknowledged: Google Antigravity, ChatGPT, Claude AI, Perplexity, Gemini Pro.",
       "category": "page-guide",
       "metadata": { "page": "about" },
       "deepLink": "/about"
