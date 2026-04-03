@@ -28,12 +28,9 @@ self.onmessage = async (e) => {
 
   if (type === 'INIT') {
     try {
-      // Safely load the Emscripten WASM wrapper via classical Worker scripts, bypassing Vite modules & CSP evals completely!
-      importScripts('/wasm/strongswan.js')
-
-      const createModule = globalThis.Module || globalThis.strongswan
-
-      strongSwanModule = await createModule({
+      // For classic non-modularized Emscripten builds, the configuration object must be mapped
+      // to self.Module prior to evaluating the script payload.
+      self.Module = {
         locateFile: (path) => `/wasm/${path}`,
         print: (text) => {
           self.postMessage({ type: 'LOG', payload: { level: 'info', text } })
@@ -43,7 +40,7 @@ self.onmessage = async (e) => {
         },
         // We shim the custom dlopen / dlsym that we patched into pkcs11_library.c
         wasm_dlopen: (filenamePtr, _flags) => {
-          const file = strongSwanModule.UTF8ToString(filenamePtr)
+          const file = self.Module.UTF8ToString(filenamePtr)
           self.postMessage({
             type: 'LOG',
             payload: { level: 'info', text: `[WASM DLOPEN] Intercepted load request for: ${file}` },
@@ -58,7 +55,7 @@ self.onmessage = async (e) => {
           return 0 // success
         },
         wasm_dlsym: (_handle, symbolPtr) => {
-          const sym = strongSwanModule.UTF8ToString(symbolPtr)
+          const sym = self.Module.UTF8ToString(symbolPtr)
           if (sym === 'C_GetFunctionList') {
             self.postMessage({
               type: 'LOG',
@@ -74,15 +71,19 @@ self.onmessage = async (e) => {
               // Mock implementation
               return 0 // CKR_OK
             }
-            cachedGetFunctionListPtr = strongSwanModule.addFunction(cGetFunctionList, 'ii')
+            cachedGetFunctionListPtr = self.Module.addFunction(cGetFunctionList, 'ii')
             return cachedGetFunctionListPtr
           }
           return 0
         },
         onRuntimeInitialized: () => {
+          strongSwanModule = self.Module
           self.postMessage({ type: 'READY' })
         },
-      })
+      }
+
+      // Safely load the Emscripten WASM wrapper natively
+      importScripts('/wasm/strongswan.js')
     } catch (err) {
       self.postMessage({ type: 'ERROR', payload: `Init error: ${err.message}` })
     }
