@@ -6,19 +6,31 @@ let cachedGetFunctionListPtr = null
 const createConfigFiles = (configs) => {
   if (!strongSwanModule) return
 
-  try {
-    strongSwanModule.FS.mkdir('/etc')
-    strongSwanModule.FS.mkdir('/etc/strongswan.d')
-  } catch (e) {
-    if (e.code !== 'EEXIST') console.error('FS.mkdir error', e)
+  // charon is compiled with --prefix=/usr/local so it reads from /usr/local/etc/
+  const dirs = ['/usr', '/usr/local', '/usr/local/etc', '/usr/local/etc/strongswan.d']
+  for (const dir of dirs) {
+    try {
+      strongSwanModule.FS.mkdir(dir)
+    } catch (_) {
+      // Ignore EEXIST — Emscripten errno objects don't have a .code string
+    }
   }
 
   for (const [filename, content] of Object.entries(configs)) {
+    const path = filename.startsWith('/') ? filename : `/usr/local/etc/${filename}`
     try {
-      const path = filename.startsWith('/') ? filename : `/etc/${filename}`
       strongSwanModule.FS.writeFile(path, content)
+      // Verify the write landed
+      const written = strongSwanModule.FS.readFile(path, { encoding: 'utf8' })
+      self.postMessage({
+        type: 'LOG',
+        payload: { level: 'info', text: `[WASM FS] wrote ${path} (${written.length} chars)` },
+      })
     } catch (e) {
-      console.error(`Failed to write config: ${filename}`, e)
+      self.postMessage({
+        type: 'LOG',
+        payload: { level: 'error', text: `[WASM FS] failed to write ${path}: ${e}` },
+      })
     }
   }
 }
@@ -31,7 +43,11 @@ self.onmessage = async (e) => {
       // For classic non-modularized Emscripten builds, the configuration object must be mapped
       // to self.Module prior to evaluating the script payload.
       self.Module = {
-        locateFile: (path) => `/wasm/${path}`,
+        // The Emscripten build names the binary 'charon.wasm' (the IKEv2 daemon);
+        // we store it as 'strongswan.wasm' — remap so the fetch resolves correctly.
+        locateFile: (path) => `/wasm/${path === 'charon.wasm' ? 'strongswan.wasm' : path}`,
+        noInitialRun: true, // Prevent invoking main() automatically on load!
+        noExitRuntime: true, // Prevent wiping the linear memory when main() exits
         print: (text) => {
           self.postMessage({ type: 'LOG', payload: { level: 'info', text } })
         },
