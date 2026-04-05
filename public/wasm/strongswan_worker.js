@@ -234,8 +234,10 @@ self.onmessage = (e) => {
               }
             }
             self._wasmMemory = wasmMemory
-            successCallback(instance, wasmMod)
+            // Set SAB BEFORE successCallback — socket_wasm's EM_JS reads Module._wasm_net_sab
+            // during onRuntimeInitialized which fires inside successCallback
             if (netInboxSab) self.Module._wasm_net_sab = netInboxSab
+            successCallback(instance, wasmMod)
           })
           .catch((err) => self.postMessage({ type: 'ERROR', payload: `WASM setup failed: ${err}` }))
         return {}
