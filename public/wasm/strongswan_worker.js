@@ -189,6 +189,43 @@ self.onmessage = (e) => {
               payload: { level: 'info', text: `[WASM ENV] Set WASM_PSK (${initPsk.length} chars)` },
             })
           }
+          // Inject strongswan.conf via ENV — library.c reads STRONGSWAN_CONF_DATA
+          // from getenv() and uses load_string() to parse config in WASM mode.
+          if (initConfigs['strongswan.conf']) {
+            let confData = initConfigs['strongswan.conf']
+            if (confData.includes('load_modular = yes')) {
+              confData = confData.replace(
+                /load_modular\s*=\s*yes/g,
+                'load_modular = no\n  load = openssl random nonce aes sha1 sha2 hmac pkcs11'
+              )
+            }
+            // Try multiple ways to access Emscripten's ENV object
+            const envObj =
+              typeof ENV !== 'undefined'
+                ? ENV
+                : typeof Module !== 'undefined' && Module.ENV
+                  ? Module.ENV
+                  : null
+            if (envObj) {
+              envObj['STRONGSWAN_CONF_DATA'] = confData
+              envObj['WASM_PSK'] = initPsk || ''
+              self.postMessage({
+                type: 'LOG',
+                payload: {
+                  level: 'info',
+                  text: `[WASM ENV] Set STRONGSWAN_CONF_DATA (${confData.length} chars) + WASM_PSK`,
+                },
+              })
+            } else {
+              self.postMessage({
+                type: 'LOG',
+                payload: {
+                  level: 'error',
+                  text: '[WASM ENV] ENV object not available in preRun — config will not be loaded!',
+                },
+              })
+            }
+          }
         },
       ],
 

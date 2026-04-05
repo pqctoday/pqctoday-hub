@@ -5876,6 +5876,56 @@ function _clock_time_get(clk_id, ignored_precision, ptime) {
   return 0
 }
 
+var readEmAsmArgsArray = []
+var readEmAsmArgs = (sigPtr, buf) => {
+  // Nobody should have mutated _readEmAsmArgsArray underneath us to be something else than an array.
+  assert(Array.isArray(readEmAsmArgsArray))
+  // The input buffer is allocated on the stack, so it must be stack-aligned.
+  assert(buf % 16 == 0)
+  readEmAsmArgsArray.length = 0
+  var ch
+  // Most arguments are i32s, so shift the buffer pointer so it is a plain
+  // index into HEAP32.
+  while ((ch = HEAPU8[sigPtr++])) {
+    var chr = String.fromCharCode(ch)
+    var validChars = ['d', 'f', 'i', 'p']
+    // In WASM_BIGINT mode we support passing i64 values as bigint.
+    validChars.push('j')
+    assert(
+      validChars.includes(chr),
+      `Invalid character ${ch}("${chr}") in readEmAsmArgs! Use only [${validChars}], and do not specify "v" for void return argument.`
+    )
+    // Floats are always passed as doubles, so all types except for 'i'
+    // are 8 bytes and require alignment.
+    var wide = ch != 105
+    wide &= ch != 112
+    buf += wide && buf % 8 ? 4 : 0
+    readEmAsmArgsArray.push(
+      // Special case for pointers under wasm64 or CAN_ADDRESS_2GB mode.
+      ch == 112
+        ? HEAPU32[buf >> 2]
+        : ch == 106
+          ? HEAP64[buf >> 3]
+          : ch == 105
+            ? HEAP32[buf >> 2]
+            : HEAPF64[buf >> 3]
+    )
+    buf += wide ? 8 : 4
+  }
+  return readEmAsmArgsArray
+}
+var runEmAsmFunction = (code, sigPtr, argbuf) => {
+  var args = readEmAsmArgs(sigPtr, argbuf)
+  assert(
+    ASM_CONSTS.hasOwnProperty(code),
+    `No EM_ASM constant found at address ${code}.  The loaded WebAssembly file is likely out of sync with the generated JavaScript.`
+  )
+  return ASM_CONSTS[code](...args)
+}
+var _emscripten_asm_const_int = (code, sigPtr, argbuf) => {
+  return runEmAsmFunction(code, sigPtr, argbuf)
+}
+
 var _emscripten_err = (str) => err(UTF8ToString(str))
 
 var getHeapMax = () =>
@@ -6836,7 +6886,7 @@ var missingLibrarySymbols = [
   'setTempRet0',
   'createNamedFunction',
   'withStackSave',
-  'readEmAsmArgs',
+  'runMainThreadEmAsm',
   'jstoi_q',
   'autoResumeAudioContext',
   'dynCallLegacy',
@@ -7004,6 +7054,8 @@ var unexportedSymbols = [
   'timers',
   'warnOnce',
   'readEmAsmArgsArray',
+  'readEmAsmArgs',
+  'runEmAsmFunction',
   'getExecutableName',
   'handleException',
   'keepRuntimeAlive',
@@ -7232,6 +7284,12 @@ function checkIncomingModuleAPI() {
   ignoredModuleProp('logReadFiles')
   ignoredModuleProp('loadSplitModule')
 }
+var ASM_CONSTS = {
+  11322021: ($0) => {
+    var msg = UTF8ToString($0)
+    postMessage({ type: 'LOG', payload: { level: 'info', text: msg } })
+  },
+}
 function wasm_net_receive(buf, maxlen, srcIp, srcPort, destIp, destPort) {
   var sab = Module._wasm_net_sab
   if (!sab) return -1
@@ -7315,9 +7373,9 @@ var dynCall_viiiiiii = makeInvalidEarlyAccess('dynCall_viiiiiii')
 var dynCall_viidi = makeInvalidEarlyAccess('dynCall_viidi')
 var dynCall_diidi = makeInvalidEarlyAccess('dynCall_diidi')
 var dynCall_iijii = makeInvalidEarlyAccess('dynCall_iijii')
+var dynCall_iiiiiiiii = makeInvalidEarlyAccess('dynCall_iiiiiiiii')
 var dynCall_viiiiiiii = makeInvalidEarlyAccess('dynCall_viiiiiiii')
 var dynCall_viiiiiiiii = makeInvalidEarlyAccess('dynCall_viiiiiiiii')
-var dynCall_iiiiiiiii = makeInvalidEarlyAccess('dynCall_iiiiiiiii')
 var dynCall_iiiiiiiiii = makeInvalidEarlyAccess('dynCall_iiiiiiiiii')
 var dynCall_jii = makeInvalidEarlyAccess('dynCall_jii')
 var dynCall_vijj = makeInvalidEarlyAccess('dynCall_vijj')
@@ -7432,16 +7490,16 @@ function assignWasmExports(wasmExports) {
   assert(typeof wasmExports['dynCall_diidi'] != 'undefined', 'missing Wasm export: dynCall_diidi')
   assert(typeof wasmExports['dynCall_iijii'] != 'undefined', 'missing Wasm export: dynCall_iijii')
   assert(
+    typeof wasmExports['dynCall_iiiiiiiii'] != 'undefined',
+    'missing Wasm export: dynCall_iiiiiiiii'
+  )
+  assert(
     typeof wasmExports['dynCall_viiiiiiii'] != 'undefined',
     'missing Wasm export: dynCall_viiiiiiii'
   )
   assert(
     typeof wasmExports['dynCall_viiiiiiiii'] != 'undefined',
     'missing Wasm export: dynCall_viiiiiiiii'
-  )
-  assert(
-    typeof wasmExports['dynCall_iiiiiiiii'] != 'undefined',
-    'missing Wasm export: dynCall_iiiiiiiii'
   )
   assert(
     typeof wasmExports['dynCall_iiiiiiiiii'] != 'undefined',
@@ -7522,9 +7580,9 @@ function assignWasmExports(wasmExports) {
   dynCall_viidi = createExportWrapper('dynCall_viidi', 5)
   dynCall_diidi = createExportWrapper('dynCall_diidi', 5)
   dynCall_iijii = createExportWrapper('dynCall_iijii', 5)
+  dynCall_iiiiiiiii = createExportWrapper('dynCall_iiiiiiiii', 9)
   dynCall_viiiiiiii = createExportWrapper('dynCall_viiiiiiii', 9)
   dynCall_viiiiiiiii = createExportWrapper('dynCall_viiiiiiiii', 10)
-  dynCall_iiiiiiiii = createExportWrapper('dynCall_iiiiiiiii', 9)
   dynCall_iiiiiiiiii = createExportWrapper('dynCall_iiiiiiiiii', 10)
   dynCall_jii = createExportWrapper('dynCall_jii', 3)
   dynCall_vijj = createExportWrapper('dynCall_vijj', 4)
@@ -7613,6 +7671,8 @@ var wasmImports = {
   _tzset_js: __tzset_js,
   /** @export */
   clock_time_get: _clock_time_get,
+  /** @export */
+  emscripten_asm_const_int: _emscripten_asm_const_int,
   /** @export */
   emscripten_date_now: _emscripten_date_now,
   /** @export */
