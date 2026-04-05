@@ -75,15 +75,24 @@ self.onmessage = (e) => {
     return
   }
 
-  // Handle GEN_KEYS: call wasm_hsm_init
+  // Handle GEN_KEYS: call wasm_hsm_init with user-selected algorithm
   if (type === 'GEN_KEYS' && self.Module && self.Module._wasm_hsm_init) {
+    const { algType, slot0Size, slot1Size } = payload || {
+      algType: 1,
+      slot0Size: 3072,
+      slot1Size: 3072,
+    }
+    const algName = algType === 1 ? 'RSA' : 'ML-DSA'
     self.postMessage({
       type: 'LOG',
-      payload: { level: 'info', text: `[WORKER] Generating keys: RSA-3072 / RSA-3072` },
+      payload: {
+        level: 'info',
+        text: `[WORKER] Generating keys: ${algName}-${slot0Size} / ${algName}-${slot1Size}`,
+      },
     })
-    const rc = self.Module._wasm_hsm_init(1, 3072, 3072) // 1=RSA, 3072 bits
+    const rc = self.Module._wasm_hsm_init(algType, slot0Size, slot1Size)
     if (rc === 0) {
-      self.postMessage({ type: 'KEYS_READY' })
+      self.postMessage({ type: 'KEYS_READY', payload: { slot0Size, slot1Size } })
     } else {
       self.postMessage({
         type: 'LOG',
@@ -96,6 +105,7 @@ self.onmessage = (e) => {
   if (type !== 'INIT') return
 
   const initConfigs = payload.configs || {}
+  const initPsk = payload.psk || ''
   workerRole = payload.role || 'responder'
   netInboxSab = payload.netSab || payload.netInboxSab
   if (netInboxSab) {
@@ -170,6 +180,14 @@ self.onmessage = (e) => {
                 payload: { level: 'error', text: `[WASM FS] failed to write ${path}: ${err}` },
               })
             }
+          }
+          // Inject PSK into Emscripten ENV so C getenv("WASM_PSK") picks it up
+          if (initPsk && typeof ENV !== 'undefined') {
+            ENV['WASM_PSK'] = initPsk
+            self.postMessage({
+              type: 'LOG',
+              payload: { level: 'info', text: `[WASM ENV] Set WASM_PSK (${initPsk.length} chars)` },
+            })
           }
         },
       ],
