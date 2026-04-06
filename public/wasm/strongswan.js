@@ -7285,7 +7285,7 @@ function checkIncomingModuleAPI() {
   ignoredModuleProp('loadSplitModule')
 }
 var ASM_CONSTS = {
-  11323189: ($0) => {
+  11328391: ($0) => {
     var msg = UTF8ToString($0)
     postMessage({ type: 'LOG', payload: { level: 'info', text: msg } })
   },
@@ -7327,8 +7327,42 @@ function wasm_net_send(buf, len, srcIp, srcPort, destIp, destPort) {
   )
   return len
 }
+function pkcs11_rpc_call(cmdId) {
+  var sab = Module._wasm_pkcs11_sab
+  if (!sab) return 0x50
+  var flags = new Int32Array(sab, 0, 3)
+  Atomics.store(flags, 0, cmdId)
+  Atomics.store(flags, 1, 1)
+  postMessage({ type: 'PKCS11_RPC' })
+  Atomics.wait(flags, 1, 1)
+  var rv = Atomics.load(flags, 2)
+  Atomics.store(flags, 1, 0)
+  return rv
+}
+function pkcs11_sab_wi32(pos, val) {
+  var sab = Module._wasm_pkcs11_sab
+  if (!sab) return
+  Atomics.store(new Int32Array(sab, 48), pos, val)
+}
+function pkcs11_sab_ri32(pos) {
+  var sab = Module._wasm_pkcs11_sab
+  if (!sab) return 0
+  return Atomics.load(new Int32Array(sab, 48), pos)
+}
+function pkcs11_sab_write(src, byteOff, len) {
+  var sab = Module._wasm_pkcs11_sab
+  if (!sab || len <= 0) return
+  new Uint8Array(sab, 48 + byteOff, len).set(HEAPU8.subarray(src, src + len))
+}
+function pkcs11_sab_read(dst, byteOff, len) {
+  var sab = Module._wasm_pkcs11_sab
+  if (!sab || len <= 0) return
+  HEAPU8.set(new Uint8Array(sab, 48 + byteOff, len), dst)
+}
 
 // Imports from the Wasm binary.
+var _wasm_set_proposal_mode = (Module['_wasm_set_proposal_mode'] =
+  makeInvalidEarlyAccess('_wasm_set_proposal_mode'))
 var _main = (Module['_main'] = makeInvalidEarlyAccess('_main'))
 var _openssl_plugin_create = (Module['_openssl_plugin_create'] =
   makeInvalidEarlyAccess('_openssl_plugin_create'))
@@ -7342,6 +7376,8 @@ var _wasm_hsm_init = (Module['_wasm_hsm_init'] = makeInvalidEarlyAccess('_wasm_h
 var _strerror = makeInvalidEarlyAccess('_strerror')
 var _C_GetFunctionList = (Module['_C_GetFunctionList'] =
   makeInvalidEarlyAccess('_C_GetFunctionList'))
+var _pkcs11_set_rpc_mode = (Module['_pkcs11_set_rpc_mode'] =
+  makeInvalidEarlyAccess('_pkcs11_set_rpc_mode'))
 var _emscripten_stack_get_end = makeInvalidEarlyAccess('_emscripten_stack_get_end')
 var _emscripten_stack_get_base = makeInvalidEarlyAccess('_emscripten_stack_get_base')
 var _emscripten_builtin_memalign = makeInvalidEarlyAccess('_emscripten_builtin_memalign')
@@ -7398,6 +7434,10 @@ var wasmTable = makeInvalidEarlyAccess('wasmTable')
 
 function assignWasmExports(wasmExports) {
   assert(
+    typeof wasmExports['wasm_set_proposal_mode'] != 'undefined',
+    'missing Wasm export: wasm_set_proposal_mode'
+  )
+  assert(
     typeof wasmExports['__main_argc_argv'] != 'undefined',
     'missing Wasm export: __main_argc_argv'
   )
@@ -7419,6 +7459,10 @@ function assignWasmExports(wasmExports) {
   assert(
     typeof wasmExports['C_GetFunctionList'] != 'undefined',
     'missing Wasm export: C_GetFunctionList'
+  )
+  assert(
+    typeof wasmExports['pkcs11_set_rpc_mode'] != 'undefined',
+    'missing Wasm export: pkcs11_set_rpc_mode'
   )
   assert(
     typeof wasmExports['emscripten_stack_get_end'] != 'undefined',
@@ -7536,6 +7580,10 @@ function assignWasmExports(wasmExports) {
     typeof wasmExports['__indirect_function_table'] != 'undefined',
     'missing Wasm export: __indirect_function_table'
   )
+  _wasm_set_proposal_mode = Module['_wasm_set_proposal_mode'] = createExportWrapper(
+    'wasm_set_proposal_mode',
+    1
+  )
   _main = Module['_main'] = createExportWrapper('__main_argc_argv', 2)
   _openssl_plugin_create = Module['_openssl_plugin_create'] = createExportWrapper(
     'openssl_plugin_create',
@@ -7550,6 +7598,10 @@ function assignWasmExports(wasmExports) {
   _wasm_hsm_init = Module['_wasm_hsm_init'] = createExportWrapper('wasm_hsm_init', 3)
   _strerror = createExportWrapper('strerror', 1)
   _C_GetFunctionList = Module['_C_GetFunctionList'] = createExportWrapper('C_GetFunctionList', 1)
+  _pkcs11_set_rpc_mode = Module['_pkcs11_set_rpc_mode'] = createExportWrapper(
+    'pkcs11_set_rpc_mode',
+    1
+  )
   _emscripten_stack_get_end = wasmExports['emscripten_stack_get_end']
   _emscripten_stack_get_base = wasmExports['emscripten_stack_get_base']
   _emscripten_builtin_memalign = createExportWrapper('emscripten_builtin_memalign', 2)
@@ -7705,6 +7757,16 @@ var wasmImports = {
   getprotobynumber: _getprotobynumber,
   /** @export */
   initgroups: _initgroups,
+  /** @export */
+  pkcs11_rpc_call,
+  /** @export */
+  pkcs11_sab_read,
+  /** @export */
+  pkcs11_sab_ri32,
+  /** @export */
+  pkcs11_sab_wi32,
+  /** @export */
+  pkcs11_sab_write,
   /** @export */
   proc_exit: _proc_exit,
   /** @export */

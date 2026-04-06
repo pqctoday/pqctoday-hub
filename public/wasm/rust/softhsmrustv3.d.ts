@@ -191,7 +191,7 @@ export function _C_GetOperationState(
   _pul_operation_state_len: number
 ): number
 
-export function _C_GetSessionInfo(_h_session: number, p_info: number): number
+export function _C_GetSessionInfo(h_session: number, p_info: number): number
 
 /**
  * C_GetSlotInfo: returns basic slot info for slot 0.
@@ -200,32 +200,32 @@ export function _C_GetSessionInfo(_h_session: number, p_info: number): number
 export function _C_GetSlotInfo(_slot_id: number, p_info: number): number
 
 export function _C_GetSlotList(
-  _token_present: number,
+  token_present: number,
   p_slot_list: number,
   pul_count: number
 ): number
 
 export function _C_GetTokenInfo(_slot_id: number, p_info: number): number
 
-export function _C_InitPIN(_h_session: number, _p_pin: number, _ul_pin_len: number): number
+export function _C_InitPIN(h_session: number, p_pin: number, ul_pin_len: number): number
 
 export function _C_InitToken(
-  _slot_id: number,
-  _p_pin: number,
-  _ul_pin_len: number,
-  _p_label: number
+  slot_id: number,
+  p_pin: number,
+  ul_pin_len: number,
+  p_label: number
 ): number
 
 export function _C_Initialize(p_init_args: number): number
 
 export function _C_Login(
-  _h_session: number,
-  _user_type: number,
-  _p_pin: number,
-  _ul_pin_len: number
+  h_session: number,
+  user_type: number,
+  p_pin: number,
+  ul_pin_len: number
 ): number
 
-export function _C_Logout(_h_session: number): number
+export function _C_Logout(h_session: number): number
 
 export function _C_MessageSignFinal(
   h_session: number,
@@ -242,8 +242,8 @@ export function _C_MessageVerifyFinal(h_session: number): number
 export function _C_MessageVerifyInit(h_session: number, p_mechanism: number, h_key: number): number
 
 export function _C_OpenSession(
-  _slot_id: number,
-  _flags: number,
+  slot_id: number,
+  flags: number,
   _p_application: number,
   _notify: number,
   ph_session: number
@@ -378,6 +378,8 @@ export function _free(ptr: number, _js_size: number): void
 
 export function _malloc(size: number): number
 
+export function _set_kat_seed(seed_ptr: number, seed_len: number): void
+
 export function wasm_start(): void
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module
@@ -452,6 +454,7 @@ export interface InitOutput {
   readonly _C_InitPIN: (a: number, b: number, c: number) => number
   readonly _C_InitToken: (a: number, b: number, c: number, d: number) => number
   readonly _C_Initialize: (a: number) => number
+  readonly _C_Login: (a: number, b: number, c: number, d: number) => number
   readonly _C_Logout: (a: number) => number
   readonly _C_MessageSignFinal: (a: number, b: number, c: number, d: number, e: number) => number
   readonly _C_MessageSignInit: (a: number, b: number, c: number) => number
@@ -515,6 +518,7 @@ export interface InitOutput {
     h: number
   ) => number
   readonly __wbg_softhsmrust_free: (a: number, b: number) => void
+  readonly _set_kat_seed: (a: number, b: number) => void
   readonly softhsmrust_aes_ctr_decrypt: (
     a: number,
     b: number,
@@ -541,7 +545,6 @@ export interface InitOutput {
     f: number
   ) => number
   readonly softhsmrust_new: () => number
-  readonly _C_Login: (a: number, b: number, c: number, d: number) => number
   readonly _C_DecryptUpdate: (a: number, b: number, c: number, d: number, e: number) => number
   readonly _C_EncryptUpdate: (a: number, b: number, c: number, d: number, e: number) => number
   readonly _C_SetOperationState: (a: number, b: number, c: number, d: number, e: number) => number
@@ -554,10 +557,10 @@ export interface InitOutput {
   readonly _C_SignUpdate: (a: number, b: number, c: number) => number
   readonly _C_VerifyFinal: (a: number, b: number, c: number) => number
   readonly _C_VerifyUpdate: (a: number, b: number, c: number) => number
-  readonly wasm_start: () => void
-  readonly _C_GetMechanismList: (a: number, b: number, c: number) => number
   readonly _free: (a: number, b: number) => void
   readonly _malloc: (a: number) => number
+  readonly wasm_start: () => void
+  readonly _C_GetMechanismList: (a: number, b: number, c: number) => number
   readonly __wbindgen_exn_store: (a: number) => void
   readonly __externref_table_alloc: () => number
   readonly __wbindgen_externrefs: WebAssembly.Table

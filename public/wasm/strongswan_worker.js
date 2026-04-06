@@ -14,6 +14,11 @@ let boundIp = 0
 let boundPort = 0
 let workerRole = 'responder'
 
+// ── PKCS#11 SAB + RPC mode ───────────────────────────────────────────────────
+let pkcs11Sab = null
+let rpcMode = false
+let proposalMode = 0
+
 const originalConsoleError = console.error
 console.error = (...args) => {
   const text = args
@@ -65,9 +70,23 @@ self.onmessage = (e) => {
     const dv = new DataView(self._wasmMemory.buffer)
     for (let i = 0; i < ptrs.length; i++) dv.setUint32(argvPtr + i * 4, ptrs[i], true)
 
+    // Set RPC mode before charon starts — pkcs11_library.c reads g_pkcs11_rpc_mode
+    // during plugin init which happens inside _main().
+    if (self.Module._pkcs11_set_rpc_mode) {
+      self.Module._pkcs11_set_rpc_mode(rpcMode ? 1 : 0)
+    }
+    // Set proposal mode before charon starts — wasm_setup_config reads wasm_proposal_mode
+    // during backend init which happens inside _main().
+    if (self.Module._wasm_set_proposal_mode) {
+      self.Module._wasm_set_proposal_mode(proposalMode)
+    }
+
     self.postMessage({
       type: 'LOG',
-      payload: { level: 'info', text: `[WASM] Starting charon daemon (role=${workerRole})...` },
+      payload: {
+        level: 'info',
+        text: `[WASM] Starting charon daemon (role=${workerRole}, rpcMode=${rpcMode})...`,
+      },
     })
     self.Module._main(ptrs.length, argvPtr)
 
@@ -107,6 +126,9 @@ self.onmessage = (e) => {
   const initConfigs = payload.configs || {}
   const initPsk = payload.psk || ''
   workerRole = payload.role || 'responder'
+  pkcs11Sab = payload.sab || null
+  rpcMode = payload.rpcMode || false
+  proposalMode = payload.proposalMode ?? 0
   netInboxSab = payload.netSab || payload.netInboxSab
   if (netInboxSab) {
     netInboxI32 = new Int32Array(netInboxSab, 0, 4)
@@ -141,6 +163,10 @@ self.onmessage = (e) => {
             '/var/lib/softhsmv3',
             '/var/lib/softhsmv3/tokens',
             '/etc',
+            '/etc/ipsec.d',
+            '/etc/ipsec.d/certs',
+            '/etc/ipsec.d/private',
+            '/etc/ipsec.d/cacerts',
             '/usr/local/etc',
             '/usr/local/etc/strongswan.d',
           ]) {
@@ -289,9 +315,10 @@ self.onmessage = (e) => {
               }
             }
             self._wasmMemory = wasmMemory
-            // Set SAB BEFORE successCallback — socket_wasm's EM_JS reads Module._wasm_net_sab
+            // Set SABs BEFORE successCallback — EM_JS functions read these from Module
             // during onRuntimeInitialized which fires inside successCallback
             if (netInboxSab) self.Module._wasm_net_sab = netInboxSab
+            if (pkcs11Sab) self.Module._wasm_pkcs11_sab = pkcs11Sab
             successCallback(instance, wasmMod)
           })
           .catch((err) => self.postMessage({ type: 'ERROR', payload: `WASM setup failed: ${err}` }))
