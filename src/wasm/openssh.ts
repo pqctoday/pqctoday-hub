@@ -26,6 +26,7 @@ export interface SshHandshakeEvent {
 
 export interface SshHandshakeResult {
   connection_ok: boolean
+  quantum_safe: boolean
   host_key_algorithm: string
   client_auth_algorithm: string
   kex_algorithm: string
@@ -119,7 +120,11 @@ export class SshEngine {
       serverWorker.onmessage = (e) => {
         if (epoch !== this._epoch) return
         const { type, payload } = e.data as { type: string; payload: unknown }
-        if (type === 'READY') { serverReady = true; tryStart(); return }
+        if (type === 'READY') {
+          serverReady = true
+          tryStart()
+          return
+        }
         if (type === 'EVENT') {
           const ev = payload as SshHandshakeEvent
           this.emitEvent(ev)
@@ -140,7 +145,10 @@ export class SshEngine {
       clientWorker.onmessage = (e) => {
         if (epoch !== this._epoch) return
         const { type } = e.data as { type: string }
-        if (type === 'READY') { clientReady = true; tryStart() }
+        if (type === 'READY') {
+          clientReady = true
+          tryStart()
+        }
       }
 
       serverWorker.onerror = (err) => {
@@ -171,9 +179,13 @@ export class SshEngine {
       const parsed = JSON.parse(payload) as Partial<SshHandshakeResult>
       return {
         connection_ok: parsed.connection_ok ?? false,
-        host_key_algorithm: parsed.host_key_algorithm ?? (mode === 'pqc' ? 'ssh-mldsa-65' : 'ssh-ed25519'),
-        client_auth_algorithm: parsed.client_auth_algorithm ?? (mode === 'pqc' ? 'ssh-mldsa-65' : 'ssh-ed25519'),
-        kex_algorithm: parsed.kex_algorithm ?? (mode === 'pqc' ? 'mlkem768x25519-sha256' : 'curve25519-sha256'),
+        quantum_safe: parsed.quantum_safe ?? mode === 'pqc',
+        host_key_algorithm:
+          parsed.host_key_algorithm ?? (mode === 'pqc' ? 'ssh-mldsa-65' : 'ssh-ed25519'),
+        client_auth_algorithm:
+          parsed.client_auth_algorithm ?? (mode === 'pqc' ? 'ssh-mldsa-65' : 'ssh-ed25519'),
+        kex_algorithm:
+          parsed.kex_algorithm ?? (mode === 'pqc' ? 'mlkem768x25519-sha256' : 'curve25519-sha256'),
         host_pubkey_bytes: parsed.host_pubkey_bytes ?? (mode === 'pqc' ? 1952 : 32),
         client_pubkey_bytes: parsed.client_pubkey_bytes ?? (mode === 'pqc' ? 1952 : 32),
         host_sig_bytes: parsed.host_sig_bytes ?? (mode === 'pqc' ? 3309 : 64),
@@ -188,6 +200,7 @@ export class SshEngine {
     } catch {
       return {
         connection_ok: false,
+        quantum_safe: mode === 'pqc',
         host_key_algorithm: '',
         client_auth_algorithm: '',
         kex_algorithm: '',

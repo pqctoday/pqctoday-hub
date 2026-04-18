@@ -10,7 +10,7 @@ import { FilterDropdown } from '@/components/common/FilterDropdown'
 export interface ArtifactField {
   id: string
   label: string
-  type: 'text' | 'textarea' | 'select' | 'checklist'
+  type: 'text' | 'textarea' | 'select' | 'checklist' | 'date'
   placeholder?: string
   options?: { value: string; label: string }[]
   defaultValue?: string | string[]
@@ -33,7 +33,7 @@ interface ArtifactBuilderProps {
   /** Export formats offered on the preview action bar. Defaults to `['markdown']`.
    *  Artifacts with rich narrative structure (e.g., Board Pitch) can opt-in to
    *  `'pptx'` for a slide deck, or `'json'` for raw structured data. */
-  exportFormats?: ('markdown' | 'json' | 'csv' | 'pptx')[]
+  exportFormats?: ('markdown' | 'json' | 'csv' | 'pptx' | 'docx' | 'pdf')[]
 }
 
 export const ArtifactBuilder: React.FC<ArtifactBuilderProps> = ({
@@ -167,6 +167,14 @@ export const ArtifactBuilder: React.FC<ArtifactBuilderProps> = ({
                     </label>
                     {field.type === 'text' && (
                       <Input
+                        placeholder={field.placeholder}
+                        value={(formData[section.id]?.[field.id] as string) || ''}
+                        onChange={(e) => updateField(section.id, field.id, e.target.value)}
+                      />
+                    )}
+                    {field.type === 'date' && (
+                      <Input
+                        type="date"
                         placeholder={field.placeholder}
                         value={(formData[section.id]?.[field.id] as string) || ''}
                         onChange={(e) => updateField(section.id, field.id, e.target.value)}

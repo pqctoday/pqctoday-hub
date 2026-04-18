@@ -386,7 +386,8 @@ const MODULE_DIR_TO_ID: Record<string, string> = {
 
 async function processGlossary(): Promise<RAGChunk[]> {
   // Dynamic import via tsx — avoids fragile regex parsing of multi-line TS values
-  const { glossaryTerms } = await import('../src/data/glossaryData')
+  const { loadGlossary } = await import('../src/data/glossary')
+  const glossaryTerms = await loadGlossary()
 
   return glossaryTerms.map(
     (

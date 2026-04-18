@@ -7,7 +7,7 @@ import { threatsData } from '@/data/threatsData'
 import { softwareData } from '@/data/migrateData'
 import { certificationXrefs } from '@/data/certificationXrefData'
 import { leadersData } from '@/data/leadersData'
-import { glossaryTerms } from '@/data/glossaryData'
+import { loadGlossary } from '@/data/glossary'
 import { quizQuestions } from '@/data/quizDataLoader'
 import { authoritativeSources } from '@/data/authoritativeSourcesData'
 import { MODULE_CATALOG, MODULE_TRACKS, MODULE_TO_TRACK } from '@/components/PKILearning/moduleData'
@@ -134,7 +134,8 @@ const QUIZ_CATEGORY_TO_MODULE: Record<string, string> = {
   'key-management': 'kms-pqc',
 }
 
-export function buildKnowledgeGraph(): KnowledgeGraph {
+export async function buildKnowledgeGraph(): Promise<KnowledgeGraph> {
+  const glossaryTerms = await loadGlossary()
   const nodes = new Map<string, GraphNode>()
   const edges: GraphEdge[] = []
   const edgeSet = new Set<string>()

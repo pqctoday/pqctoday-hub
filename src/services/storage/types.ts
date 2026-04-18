@@ -123,4 +123,9 @@ export interface LearningProgress {
   quizMastery?: {
     correctQuestionIds: string[]
   }
+
+  // Risk score history for Command Center KPI trending (cap 30 snapshots)
+  kpiHistory?: {
+    riskScore: { ts: number; score: number }[]
+  }
 }

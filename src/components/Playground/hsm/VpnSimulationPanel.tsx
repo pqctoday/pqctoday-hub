@@ -338,20 +338,32 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
   React.useEffect(() => {
     hsmKeysRef.current = hsmKeys
   }, [hsmKeys])
-  const [selectedMode, setSelectedMode] = useState<IKEv2Mode>(initialMode ?? 'classical')
+  const [selectedMode, setSelectedMode] = useState<IKEv2Mode>(() => {
+    const p = new URLSearchParams(window.location.search).get('vpnMode')
+    if (p === 'classical' || p === 'hybrid' || p === 'pure-pqc') return p
+    return initialMode ?? 'classical'
+  })
   const [currentStep, setCurrentStep] = useState(0)
   const [mtu, setMtu] = useState<number>(1500)
   const [allowFragmentation, setAllowFragmentation] = useState<boolean>(true)
   const [ssState, setSsState] = useState<StrongSwanState>('UNINITIALIZED')
   const [charonFailed, setCharonFailed] = useState(false)
   const [sabError, setSabError] = useState<string | null>(null)
-  const [rpcMode, setRpcMode] = useState(true)
+  const [rpcMode, setRpcMode] = useState(() => {
+    const p = new URLSearchParams(window.location.search).get('vpnRpc')
+    return p !== '0' // default true unless explicitly disabled
+  })
   const [showQkdNote, setShowQkdNote] = useState(false)
   const [ssLogs, setSsLogs] = useState<StrongSwanLog[]>([])
   const [kemSecrets, setKemSecrets] = useState<{
     responder?: { hex: string; kcv: string }
     initiator?: { hex: string; kcv: string }
   }>({})
+
+  // URL-driven autostart for e2e: ?vpnAutostart=1
+  const autostartRef = React.useRef(
+    new URLSearchParams(window.location.search).get('vpnAutostart') === '1'
+  )
 
   const serverSessionRef = React.useRef(0)
   const vpnSlotsRef = React.useRef<{ init: number; resp: number }>({ init: 0, resp: 1 })
@@ -374,7 +386,10 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
   })
 
   // Auth mode: PSK works now, pubkey is future
-  const [authMode, setAuthMode] = useState<'psk' | 'dual'>('psk')
+  const [authMode, setAuthMode] = useState<'psk' | 'dual'>(() => {
+    const p = new URLSearchParams(window.location.search).get('vpnAuth')
+    return p === 'dual' ? 'dual' : 'psk'
+  })
   const [clientPsk, setClientPsk] = useState('pqc-wasm-demo-key-2026')
   const [serverPsk, setServerPsk] = useState('pqc-wasm-demo-key-2026')
   const pskMismatch = clientPsk !== serverPsk
@@ -455,8 +470,12 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
       const peerCert = role === 'initiator' ? 'responder' : 'initiator'
       const myIsMldsa = (role === 'initiator' ? clientAlg : serverAlg) === 'ML-DSA'
       const peerIsMldsa = (role === 'initiator' ? serverAlg : clientAlg) === 'ML-DSA'
-      const leftAuthStr = myIsMldsa ? `  leftsigkey=%smartcard${role === 'initiator' ? '1' : '2'}` : `  leftcert=/etc/ipsec.d/certs/${myCert}.crt`
-      const rightAuthStr = peerIsMldsa ? `  rightsigkey=%smartcard${role === 'initiator' ? '2' : '1'}` : `  rightcert=/etc/ipsec.d/certs/${peerCert}.crt`
+      const leftAuthStr = myIsMldsa
+        ? `  leftsigkey=%smartcard${role === 'initiator' ? '1' : '2'}`
+        : `  leftcert=/etc/ipsec.d/certs/${myCert}.crt`
+      const rightAuthStr = peerIsMldsa
+        ? `  rightsigkey=%smartcard${role === 'initiator' ? '2' : '1'}`
+        : `  rightcert=/etc/ipsec.d/certs/${peerCert}.crt`
 
       const authLines =
         auth === 'psk'
@@ -480,7 +499,7 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
   React.useEffect(() => {
     setActiveInitIpsec(buildIpsecConf('initiator', selectedMode, authMode, allowFragmentation))
     setActiveRespIpsec(buildIpsecConf('responder', selectedMode, authMode, allowFragmentation))
-    
+
     const updatedCharon = buildCharonConf(authMode, mtu)
     setActiveInitConfig(updatedCharon)
     setActiveRespConfig(updatedCharon)
@@ -1301,6 +1320,40 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
               M._free(mechPtr91)
               M._free(tplPtr91)
               M._free(newKeyPtr91)
+
+              // Extract raw ECDH shared secret bytes for UI display (same pattern as ML-KEM cases 92/93)
+              if (rv === 0) {
+                const CKA_VALUE = 0x00000011
+                const valLenPtr91 = M._malloc(12)
+                M.setValue(valLenPtr91 + 0, CKA_VALUE, 'i32')
+                M.setValue(valLenPtr91 + 4, 0, 'i32')
+                M.setValue(valLenPtr91 + 8, 0, 'i32')
+                M._C_GetAttributeValue(hSess91, p[0], valLenPtr91, 1)
+                const secretLen91 = M.getValue(valLenPtr91 + 8, 'i32') >>> 0
+                let secretHex91 = ''
+                if (secretLen91 > 0 && secretLen91 < 10000) {
+                  const valBuf91 = M._malloc(secretLen91)
+                  M.setValue(valLenPtr91 + 4, valBuf91, 'i32')
+                  M._C_GetAttributeValue(hSess91, p[0], valLenPtr91, 1)
+                  secretHex91 = Array.from(M.HEAPU8.subarray(valBuf91, valBuf91 + secretLen91))
+                    .map((b) => b.toString(16).padStart(2, '0'))
+                    .join('')
+                  M._free(valBuf91)
+                }
+                M._free(valLenPtr91)
+                const fp91 = secretHex91.slice(0, 6)
+                const ecdhRole = workerRole === 'initiator' ? 'initiator' : 'responder'
+                if (secretHex91) {
+                  setKemSecrets((prev) => ({
+                    ...prev,
+                    [ecdhRole]: { hex: secretHex91, kcv: fp91 },
+                  }))
+                }
+                strongSwanEngine.dispatchLog({
+                  level: 'info',
+                  text: `[RPC] ECDH shared secret (${secretLen91}B): 0x${secretHex91 || '(read failed)'}${fp91 ? ` | FP: 0x${fp91}` : ''}`,
+                })
+              }
             } else {
               rv = 0x50 // CKR_FUNCTION_NOT_SUPPORTED — unsupported mech param type
             }
@@ -1795,75 +1848,89 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
       const hSessResp = serverSessionRef.current
       const { init: realInitSlot, resp: realRespSlot } = vpnSlotsRef.current
       const ts = new Date().toISOString()
-      const initKeys = hsm_generateRSAKeyPair(M, hSessInit, 3072, false, 'vpn-initiator', true)
-      const respKeys = hsm_generateRSAKeyPair(M, hSessResp, 3072, false, 'vpn-responder', true)
+      const initKeys =
+        clientAlg === 'ML-DSA'
+          ? null
+          : hsm_generateRSAKeyPair(M, hSessInit, 3072, false, 'vpn-initiator', true)
+      const respKeys =
+        serverAlg === 'ML-DSA'
+          ? null
+          : hsm_generateRSAKeyPair(M, hSessResp, 3072, false, 'vpn-responder', true)
 
       // Tag with logical slot IDs (0 = initiator, 1 = responder) — the Key Inspector
       // filters by these values. Physical slot IDs (realInitSlot, realRespSlot) may be
       // higher when the module is shared with other HSM panels that already claimed 0/1.
-      addHsmKey({
-        handle: initKeys.pubHandle,
-        family: 'rsa',
-        role: 'public',
-        label: 'RSA-3072 Public Key',
-        variant: 'RSA-3072',
-        engine: 'rust',
-        generatedAt: ts,
-        slotId: 0,
-      })
-      addHsmKey({
-        handle: initKeys.privHandle,
-        family: 'rsa',
-        role: 'private',
-        label: 'RSA-3072 Private Key',
-        variant: 'RSA-3072',
-        engine: 'rust',
-        generatedAt: ts,
-        slotId: 0,
-      })
-      addHsmKey({
-        handle: respKeys.pubHandle,
-        family: 'rsa',
-        role: 'public',
-        label: 'RSA-3072 Public Key',
-        variant: 'RSA-3072',
-        engine: 'rust',
-        generatedAt: ts,
-        slotId: 1,
-      })
-      addHsmKey({
-        handle: respKeys.privHandle,
-        family: 'rsa',
-        role: 'private',
-        label: 'RSA-3072 Private Key',
-        variant: 'RSA-3072',
-        engine: 'rust',
-        generatedAt: ts,
-        slotId: 1,
-      })
+      if (initKeys) {
+        addHsmKey({
+          handle: initKeys.pubHandle,
+          family: 'rsa',
+          role: 'public',
+          label: 'RSA-3072 Public Key',
+          variant: 'RSA-3072',
+          engine: 'rust',
+          generatedAt: ts,
+          slotId: 0,
+        })
+        addHsmKey({
+          handle: initKeys.privHandle,
+          family: 'rsa',
+          role: 'private',
+          label: 'RSA-3072 Private Key',
+          variant: 'RSA-3072',
+          engine: 'rust',
+          generatedAt: ts,
+          slotId: 0,
+        })
+      }
+      if (respKeys) {
+        addHsmKey({
+          handle: respKeys.pubHandle,
+          family: 'rsa',
+          role: 'public',
+          label: 'RSA-3072 Public Key',
+          variant: 'RSA-3072',
+          engine: 'rust',
+          generatedAt: ts,
+          slotId: 1,
+        })
+        addHsmKey({
+          handle: respKeys.privHandle,
+          family: 'rsa',
+          role: 'private',
+          label: 'RSA-3072 Private Key',
+          variant: 'RSA-3072',
+          engine: 'rust',
+          generatedAt: ts,
+          slotId: 1,
+        })
+      }
 
       strongSwanEngine.dispatchLog({
         level: 'info',
-        text: `[CERT] RSA-3072 key pairs provisioned to softhsmv3 — initSlot=${realInitSlot} respSlot=${realRespSlot}`,
+        text: `[CERT] Provisioning evaluated for softhsmv3 — initSlot=${realInitSlot} respSlot=${realRespSlot}`,
       })
 
       // ── 3. Build self-signed X.509 certs — private keys never leave softhsmv3 ─────
-      const initCert = buildHsmSelfSignedCert(
-        M,
-        hSessInit,
-        initKeys.pubHandle,
-        initKeys.privHandle,
-        'vpn-initiator',
-        'PQC-Simulation'
-      )
-      const respCert = buildHsmSelfSignedCert(
-        M,
-        hSessResp,
-        respKeys.pubHandle,
-        respKeys.privHandle,
-        'vpn-responder',
-        'PQC-Simulation'
-      )
+      const initCert = initKeys
+        ? buildHsmSelfSignedCert(
+            M,
+            hSessInit,
+            initKeys.pubHandle,
+            initKeys.privHandle,
+            'vpn-initiator',
+            'PQC-Simulation'
+          )
+        : ''
+      const respCert = respKeys
+        ? buildHsmSelfSignedCert(
+            M,
+            hSessResp,
+            respKeys.pubHandle,
+            respKeys.privHandle,
+            'vpn-responder',
+            'PQC-Simulation'
+          )
+        : ''
 
       setCertData({ initCert, respCert })
       strongSwanEngine.dispatchLog({
@@ -1912,6 +1979,17 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
     },
     [vpnRpcInitRef, vpnSlotsRef]
   )
+
+  // E2E autostart: click Start Daemon automatically when ?vpnAutostart=1
+  React.useEffect(() => {
+    if (!autostartRef.current) return
+    autostartRef.current = false // one-shot
+    const timer = setTimeout(() => {
+      const btn = document.querySelector<HTMLButtonElement>('[data-testid="vpn-start-daemon"]')
+      if (btn && !btn.disabled) btn.click()
+    }, 2000) // wait for panel to fully render
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <div className="space-y-6">
@@ -2117,21 +2195,25 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
                       </div>
                       <div className="space-y-1.5 relative">
                         {(() => {
-                          const totalSize = step.message.payloads.reduce((a, p) => a + p.sizeBytes, 0);
+                          const totalSize = step.message.payloads.reduce(
+                            (a, p) => a + p.sizeBytes,
+                            0
+                          )
                           if (totalSize > mtu && allowFragmentation) {
-                            const numFragments = Math.ceil(totalSize / mtu);
+                            const numFragments = Math.ceil(totalSize / mtu)
                             return Array.from({ length: numFragments }).map((_, fIdx) => (
                               <PayloadCard
                                 key={`${step.label}-frag-${fIdx}`}
                                 payload={{
                                   abbreviation: `SKF (${fIdx + 1}/${numFragments})`,
-                                  sizeBytes: fIdx === numFragments - 1 ? totalSize % mtu || mtu : mtu,
-                                  description: `Encrypted Fragment Payload (RFC 7383) portion.`
+                                  sizeBytes:
+                                    fIdx === numFragments - 1 ? totalSize % mtu || mtu : mtu,
+                                  description: `Encrypted Fragment Payload (RFC 7383) portion.`,
                                 }}
                                 index={fIdx}
                                 highlighted={idx === currentStep}
                               />
-                            ));
+                            ))
                           }
                           return step.message.payloads.map((payload, pIdx) => (
                             <PayloadCard
@@ -2141,7 +2223,7 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
                               highlighted={idx === currentStep}
                               isFragmented={hasCrashed && idx === currentStep}
                             />
-                          ));
+                          ))
                         })()}
                       </div>
                     </div>
@@ -2207,21 +2289,25 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
                       </div>
                       <div className="space-y-1.5">
                         {(() => {
-                          const totalSize = step.message.payloads.reduce((a, p) => a + p.sizeBytes, 0);
+                          const totalSize = step.message.payloads.reduce(
+                            (a, p) => a + p.sizeBytes,
+                            0
+                          )
                           if (totalSize > mtu && allowFragmentation) {
-                            const numFragments = Math.ceil(totalSize / mtu);
+                            const numFragments = Math.ceil(totalSize / mtu)
                             return Array.from({ length: numFragments }).map((_, fIdx) => (
                               <PayloadCard
                                 key={`${step.label}-frag-${fIdx}`}
                                 payload={{
                                   abbreviation: `SKF (${fIdx + 1}/${numFragments})`,
-                                  sizeBytes: fIdx === numFragments - 1 ? totalSize % mtu || mtu : mtu,
-                                  description: `Encrypted Fragment Payload (RFC 7383) portion.`
+                                  sizeBytes:
+                                    fIdx === numFragments - 1 ? totalSize % mtu || mtu : mtu,
+                                  description: `Encrypted Fragment Payload (RFC 7383) portion.`,
                                 }}
                                 index={fIdx}
                                 highlighted={idx === currentStep}
                               />
-                            ));
+                            ))
                           }
                           return step.message.payloads.map((payload, pIdx) => (
                             <PayloadCard
@@ -2231,7 +2317,7 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
                               highlighted={idx === currentStep}
                               isFragmented={hasCrashed && idx === currentStep}
                             />
-                          ));
+                          ))
                         })()}
                       </div>
                     </div>
@@ -2327,22 +2413,26 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
                   </Button>
                   {certData && (
                     <>
-                      <Button
-                        variant="ghost"
-                        onClick={() => inspectCert('initiator')}
-                        className="px-3 py-2 border border-border rounded text-xs font-medium hover:bg-muted transition-colors"
-                        title="Inspect initiator certificate"
-                      >
-                        Inspect Initiator
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        onClick={() => inspectCert('responder')}
-                        className="px-3 py-2 border border-border rounded text-xs font-medium hover:bg-muted transition-colors"
-                        title="Inspect responder certificate"
-                      >
-                        Inspect Responder
-                      </Button>
+                      {certData.initCert && (
+                        <Button
+                          variant="ghost"
+                          onClick={() => inspectCert('initiator')}
+                          className="px-3 py-2 border border-border rounded text-xs font-medium hover:bg-muted transition-colors"
+                          title="Inspect initiator certificate"
+                        >
+                          Inspect Initiator
+                        </Button>
+                      )}
+                      {certData.respCert && (
+                        <Button
+                          variant="ghost"
+                          onClick={() => inspectCert('responder')}
+                          className="px-3 py-2 border border-border rounded text-xs font-medium hover:bg-muted transition-colors"
+                          title="Inspect responder certificate"
+                        >
+                          Inspect Responder
+                        </Button>
+                      )}
                     </>
                   )}
                 </>
@@ -2362,8 +2452,14 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
                     // Pass user's key algorithm selection to the worker
                     // algType: 1=RSA, 2=ML-DSA. size: RSA bits or ML-DSA level.
                     const algType = clientAlg === 'ML-DSA' ? 2 : 1
-                    const slot0Size = algType === 2 ? parseInt(clientSize) || 65 : parseInt(clientClassAlg.split('-')[1] || '3072') || 3072
-                    const slot1Size = algType === 2 ? parseInt(serverSize) || 65 : parseInt(serverClassAlg.split('-')[1] || '3072') || 3072
+                    const slot0Size =
+                      algType === 2
+                        ? parseInt(clientSize) || 65
+                        : parseInt(clientClassAlg.split('-')[1] || '3072') || 3072
+                    const slot1Size =
+                      algType === 2
+                        ? parseInt(serverSize) || 65
+                        : parseInt(serverClassAlg.split('-')[1] || '3072') || 3072
                     strongSwanEngine.setKeySpec(algType, slot0Size, slot1Size)
 
                     // In RPC mode, ensure the main-thread softhsmv3 is initialized and
@@ -2464,7 +2560,7 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
                     const proposalMode =
                       selectedMode === 'pure-pqc' ? 1 : selectedMode === 'hybrid' ? 2 : 0
 
-                    if (authMode === 'dual' && certData && clientAlg !== 'ML-DSA' && serverAlg !== 'ML-DSA') {
+                    if (authMode === 'dual' && certData) {
                       // Use pre-provisioned certs generated before daemon start (C8 flow).
                       // ipsec.secrets: PSK only — charon's pkcs11 plugin discovers the private
                       // key via PKCS#11 RPC (C_FindObjects matching the cert's public key modulus).
@@ -2511,6 +2607,7 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
                 disabled={authMode === 'dual' && !certData}
                 className="px-4 py-2 font-bold rounded shadow-sm text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 title={authMode === 'dual' && !certData ? 'Generate certificates first' : undefined}
+                data-testid="vpn-start-daemon"
               >
                 Start Daemon
               </Button>
@@ -2936,27 +3033,37 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
                           <option value="RSA">RSA (Classical)</option>
                         </select>
                         {clientAlg === 'ML-DSA' ? (
-                          <select value={clientSize} onChange={(e) => setClientSize(e.target.value)}
-                            className="text-xs px-2 py-1 rounded border border-border bg-background">
+                          <select
+                            value={clientSize}
+                            onChange={(e) => setClientSize(e.target.value)}
+                            className="text-xs px-2 py-1 rounded border border-border bg-background"
+                          >
                             <option value="44">ML-DSA-44</option>
                             <option value="65">ML-DSA-65</option>
                             <option value="87">ML-DSA-87</option>
                           </select>
                         ) : (
-                          <select value={clientClassAlg} onChange={(e) => setClientClassAlg(e.target.value)}
-                            className="text-xs px-2 py-1 rounded border border-border bg-background">
+                          <select
+                            value={clientClassAlg}
+                            onChange={(e) => setClientClassAlg(e.target.value)}
+                            className="text-xs px-2 py-1 rounded border border-border bg-background"
+                          >
                             <option value="RSA-2048">RSA-2048</option>
                             <option value="RSA-3072">RSA-3072</option>
                             <option value="RSA-4096">RSA-4096</option>
                           </select>
                         )}
-                        <span className="text-[10px] text-muted-foreground mr-4">Keys generated in worker HSM</span>
+                        <span className="text-[10px] text-muted-foreground mr-4">
+                          Keys generated in worker HSM
+                        </span>
                       </div>
                       {clientAlg === 'ML-DSA' && (
                         <div className="mt-2 p-2 bg-warning/10 border border-warning/30 rounded flex items-start gap-2 max-w-[500px]">
                           <FlaskConical className="text-warning shrink-0 mt-0.5" size={14} />
                           <div className="text-[10px] text-warning font-medium leading-tight">
-                            ML-DSA requires an IANA AUTH assignment not yet standardized. This simulation relies on preliminary draft constructs matching <em>draft-ietf-ipsecme-ikev2-auth-pqc</em>.
+                            ML-DSA requires an IANA AUTH assignment not yet standardized. This
+                            simulation relies on preliminary draft constructs matching{' '}
+                            <em>draft-ietf-ipsecme-ikev2-auth-pqc</em>.
                           </div>
                         </div>
                       )}
@@ -3030,27 +3137,37 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
                           <option value="RSA">RSA (Classical)</option>
                         </select>
                         {serverAlg === 'ML-DSA' ? (
-                          <select value={serverSize} onChange={(e) => setServerSize(e.target.value)}
-                            className="text-xs px-2 py-1 rounded border border-border bg-background">
+                          <select
+                            value={serverSize}
+                            onChange={(e) => setServerSize(e.target.value)}
+                            className="text-xs px-2 py-1 rounded border border-border bg-background"
+                          >
                             <option value="44">ML-DSA-44</option>
                             <option value="65">ML-DSA-65</option>
                             <option value="87">ML-DSA-87</option>
                           </select>
                         ) : (
-                          <select value={serverClassAlg} onChange={(e) => setServerClassAlg(e.target.value)}
-                            className="text-xs px-2 py-1 rounded border border-border bg-background">
+                          <select
+                            value={serverClassAlg}
+                            onChange={(e) => setServerClassAlg(e.target.value)}
+                            className="text-xs px-2 py-1 rounded border border-border bg-background"
+                          >
                             <option value="RSA-2048">RSA-2048</option>
                             <option value="RSA-3072">RSA-3072</option>
                             <option value="RSA-4096">RSA-4096</option>
                           </select>
                         )}
-                        <span className="text-[10px] text-muted-foreground mr-4">Keys generated in worker HSM</span>
+                        <span className="text-[10px] text-muted-foreground mr-4">
+                          Keys generated in worker HSM
+                        </span>
                       </div>
                       {serverAlg === 'ML-DSA' && (
                         <div className="mt-2 p-2 bg-warning/10 border border-warning/30 rounded flex items-start gap-2 max-w-[500px]">
                           <FlaskConical className="text-warning shrink-0 mt-0.5" size={14} />
                           <div className="text-[10px] text-warning font-medium leading-tight">
-                            ML-DSA requires an IANA AUTH assignment not yet standardized. This simulation relies on preliminary draft constructs matching <em>draft-ietf-ipsecme-ikev2-auth-pqc</em>.
+                            ML-DSA requires an IANA AUTH assignment not yet standardized. This
+                            simulation relies on preliminary draft constructs matching{' '}
+                            <em>draft-ietf-ipsecme-ikev2-auth-pqc</em>.
                           </div>
                         </div>
                       )}
