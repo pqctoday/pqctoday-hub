@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { FileJson, Play, CheckCircle, XCircle } from 'lucide-react'
 import clsx from 'clsx'
 import { Button } from '../ui/button'
@@ -104,6 +104,25 @@ export const ACVPTesting = ({ keyStore, setKeyStore }: ACVPTestingProps) => {
       addLog('ACVP keys already imported.')
     }
   }
+
+  const latestRun = React.useRef({ importKeys, runTests })
+  React.useEffect(() => {
+    latestRun.current = { importKeys, runTests }
+  })
+
+  // E2E boundary for ACVP programmatic execution
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handleTrigger = () => {
+        latestRun.current.importKeys()
+        setTimeout(() => {
+          latestRun.current.runTests().catch(console.error)
+        }, 100) // allow state to settle
+      }
+      window.addEventListener('e2e:trigger_acvp', handleTrigger)
+      return () => window.removeEventListener('e2e:trigger_acvp', handleTrigger)
+    }
+  }, [])
 
   const runTests = async () => {
     setLoading(true)

@@ -5,6 +5,7 @@ import { useSearchParams, Link } from 'react-router-dom'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 import { ComplianceTable, type SortColumn, type SortDirection } from './ComplianceTable'
 import { ComplianceLandscape, type FrameworkSortOption } from './ComplianceLandscape'
+import { CrossTabSearchHint, type LandscapeTab } from './CrossTabSearchHint'
 import { useComplianceRefresh } from './services'
 import {
   ShieldCheck,
@@ -178,6 +179,21 @@ function MobileViewToggle({
     []
   )
 
+  const landscapeTabFrameworks = useMemo(
+    () => ({
+      standards: standardsFrameworks,
+      technical: technicalStandards,
+      certification: certificationFrameworks,
+      compliance: complianceOnlyFrameworks,
+    }),
+    [standardsFrameworks, technicalStandards, certificationFrameworks, complianceOnlyFrameworks]
+  )
+
+  const switchLandscapeTab = useCallback(
+    (tab: LandscapeTab) => setSection(tab as MobileSection),
+    [setSection]
+  )
+
   const btnClass = (active: boolean) =>
     `flex-none px-3 py-2 min-h-[44px] rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
       active ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
@@ -222,6 +238,14 @@ function MobileViewToggle({
           Records
         </Button>
       </div>
+      {section !== 'records' && (
+        <CrossTabSearchHint
+          searchText={landscapeProps.searchText}
+          currentTab={section as LandscapeTab}
+          tabFrameworks={landscapeTabFrameworks}
+          onSwitchTab={switchLandscapeTab}
+        />
+      )}
       {section === 'standards' && (
         <ComplianceLandscape
           frameworks={standardsFrameworks}
@@ -317,6 +341,16 @@ export const ComplianceView = () => {
   const complianceOnlyFrameworks = useMemo(
     () => complianceFrameworks.filter((f) => f.bodyType === 'compliance_framework'),
     []
+  )
+
+  const landscapeTabFrameworksDesktop = useMemo(
+    () => ({
+      standards: standardsFrameworks,
+      technical: technicalStandards,
+      certification: certificationFrameworks,
+      compliance: complianceOnlyFrameworks,
+    }),
+    [standardsFrameworks, technicalStandards, certificationFrameworks, complianceOnlyFrameworks]
   )
 
   const handleExportCsv = useCallback(() => {
@@ -855,6 +889,12 @@ export const ComplianceView = () => {
               learnLabel="Explore in Learn module"
               learnTo="/learn/standards-bodies?step=2"
             />
+            <CrossTabSearchHint
+              searchText={lsSearch}
+              currentTab="standards"
+              tabFrameworks={landscapeTabFrameworksDesktop}
+              onSwitchTab={(t) => handleTabChange(t)}
+            />
             <ComplianceLandscape
               frameworks={standardsFrameworks}
               showDeadlineTimeline={false}
@@ -880,6 +920,12 @@ export const ComplianceView = () => {
               description={`${technicalStandards.length} published specifications, guidelines, and technical standards — the documents that define cryptographic requirements organizations must implement.`}
               learnLabel="Explore in Learn module"
               learnTo="/learn/standards-bodies?step=2"
+            />
+            <CrossTabSearchHint
+              searchText={lsSearch}
+              currentTab="technical"
+              tabFrameworks={landscapeTabFrameworksDesktop}
+              onSwitchTab={(t) => handleTabChange(t)}
             />
             <ComplianceLandscape
               frameworks={technicalStandards}
@@ -907,6 +953,12 @@ export const ComplianceView = () => {
               learnLabel="Understand the cert chain"
               learnTo="/learn/standards-bodies?step=2"
             />
+            <CrossTabSearchHint
+              searchText={lsSearch}
+              currentTab="certification"
+              tabFrameworks={landscapeTabFrameworksDesktop}
+              onSwitchTab={(t) => handleTabChange(t)}
+            />
             <ComplianceLandscape
               frameworks={certificationFrameworks}
               showDeadlineTimeline={false}
@@ -932,6 +984,12 @@ export const ComplianceView = () => {
               description={`${complianceOnlyFrameworks.length} regulations, directives, and mandates — the legal and contractual obligations that require organizations to adopt PQC across specific industries and geographies.`}
               learnLabel="Build your strategy"
               learnTo="/learn/compliance-strategy"
+            />
+            <CrossTabSearchHint
+              searchText={lsSearch}
+              currentTab="compliance"
+              tabFrameworks={landscapeTabFrameworksDesktop}
+              onSwitchTab={(t) => handleTabChange(t)}
             />
             <ComplianceLandscape
               frameworks={complianceOnlyFrameworks}

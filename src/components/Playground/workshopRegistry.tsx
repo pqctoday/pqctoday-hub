@@ -18,6 +18,7 @@ import {
   Container,
   Network,
   Globe,
+  BarChart2,
 } from 'lucide-react'
 import { lazyWithRetry } from '@/utils/lazyWithRetry'
 import type { PersonaId } from '@/data/learningPersonas'
@@ -47,6 +48,8 @@ export interface WorkshopTool {
   recommendedPersonas: PersonaId[]
   /** Tool is under active development — show WIP badge on card */
   wip?: boolean
+  /** Open-source project powering this tool */
+  opensourceTool?: { name: string; url: string }
 }
 
 export const WORKSHOP_TOOLS: WorkshopTool[] = [
@@ -368,6 +371,22 @@ export const WORKSHOP_TOOLS: WorkshopTool[] = [
     recommendedPersonas: ['developer', 'researcher', 'curious'],
   },
 
+  {
+    id: 'cert-capacity',
+    pt_id: 'PT-025',
+    version: '1.0.0',
+    name: 'Cert Capacity Calculator',
+    description:
+      'Model storage, bandwidth, and CPU impact of migrating your PKI to ML-DSA — adjust cert counts and renewal cadence.',
+    category: 'Certificates & Proofs',
+    algorithms: ['RSA-2048', 'ECDSA P-256', 'ML-DSA-44', 'ML-DSA-65', 'ML-DSA-87'],
+    icon: BarChart2,
+    moduleLink: '/learn/pki-workshop',
+    keywords: ['certificate', 'capacity', 'storage', 'bandwidth', 'cpu', 'ml-dsa', 'pki', 'migration', 'sizing'],
+    difficulty: 'beginner',
+    recommendedPersonas: ['architect', 'ops', 'executive'],
+  },
+
   // ── Protocol Simulations ──────────────────────────────────────────────────
   {
     id: 'suci-flow',
@@ -564,6 +583,8 @@ const SANDBOX_TOOLS: WorkshopTool[] = SANDBOX_SCENARIOS.map((s, idx) => ({
   ),
   difficulty: s.difficulty,
   recommendedPersonas: ['developer', 'architect', 'ops'],
+  wip: true,
+  opensourceTool: { name: s.tool.name, url: s.tool.url },
 }))
 
 WORKSHOP_TOOLS.push(...SANDBOX_TOOLS)
@@ -674,6 +695,11 @@ export const TOOL_COMPONENTS: Record<string, LazyComp> = {
     import('@/components/PKILearning/modules/MerkleTreeCerts/workshop/MerkleWorkshopSteps').then(
       (m) => ({ default: m.MerkleWorkshopSteps })
     )
+  ),
+  'cert-capacity': lazyWithRetry(() =>
+    import('@/components/PKILearning/modules/PKIWorkshop/CertCapacityCalculator').then((m) => ({
+      default: m.CertCapacityCalculator,
+    }))
   ),
   'pki-workshop': lazyWithRetry(() =>
     import('@/components/PKILearning/modules/PKIWorkshop').then((m) => {

@@ -1,59 +1,89 @@
 {
   "version": "3.3.8",
-  "generatedAt": "2026-04-17T15:06:58.112Z",
+  "generatedAt": "2026-04-18T17:40:22.061Z",
   "resources": {
     "routePresets": [
       {
         "id": "learn",
-        "paths": ["/learn", "/learn/*"]
+        "paths": [
+          "/learn",
+          "/learn/*"
+        ]
       },
       {
         "id": "assess",
-        "paths": ["/assess", "/report"]
+        "paths": [
+          "/assess",
+          "/report"
+        ]
       },
       {
         "id": "timeline",
-        "paths": ["/timeline"]
+        "paths": [
+          "/timeline"
+        ]
       },
       {
         "id": "algorithms",
-        "paths": ["/algorithms"]
+        "paths": [
+          "/algorithms"
+        ]
       },
       {
         "id": "library",
-        "paths": ["/library"]
+        "paths": [
+          "/library"
+        ]
       },
       {
         "id": "threats",
-        "paths": ["/threats"]
+        "paths": [
+          "/threats"
+        ]
       },
       {
         "id": "leaders",
-        "paths": ["/leaders"]
+        "paths": [
+          "/leaders"
+        ]
       },
       {
         "id": "compliance",
-        "paths": ["/compliance"]
+        "paths": [
+          "/compliance"
+        ]
       },
       {
         "id": "migrate",
-        "paths": ["/migrate"]
+        "paths": [
+          "/migrate"
+        ]
       },
       {
         "id": "playground",
-        "paths": ["/playground", "/playground/*"]
+        "paths": [
+          "/playground",
+          "/playground/*"
+        ]
       },
       {
         "id": "business",
-        "paths": ["/business", "/business/*"]
+        "paths": [
+          "/business",
+          "/business/*"
+        ]
       },
       {
         "id": "faq",
-        "paths": ["/faq"]
+        "paths": [
+          "/faq"
+        ]
       },
       {
         "id": "all",
-        "paths": ["/*"]
+        "paths": [
+          "/*"
+        ]
       }
     ],
     "modules": [
@@ -468,6 +498,12 @@
         "difficulty": "intermediate"
       },
       {
+        "id": "cert-capacity",
+        "name": "Cert Capacity Calculator",
+        "category": "Certificates & Proofs",
+        "difficulty": "intermediate"
+      },
+      {
         "id": "suci-flow",
         "name": "5G SUCI Construction",
         "category": "Protocol Simulations",
@@ -582,10 +618,24 @@
         "category": "Migration Planning"
       }
     ],
-    "personas": ["executive", "developer", "architect", "researcher", "ops", "curious"]
+    "personas": [
+      "executive",
+      "developer",
+      "architect",
+      "researcher",
+      "ops",
+      "curious"
+    ]
   },
   "policy": {
-    "regions": ["global", "us", "eu", "apac", "latam", "mena"],
+    "regions": [
+      "global",
+      "us",
+      "eu",
+      "apac",
+      "latam",
+      "mena"
+    ],
     "industries": [
       "finance",
       "healthcare",
@@ -596,8 +646,20 @@
       "technology",
       "education"
     ],
-    "roles": ["curious", "basics", "expert"],
-    "persistModes": ["api", "postMessage", "none"],
-    "difficulties": ["beginner", "intermediate", "advanced"]
+    "roles": [
+      "curious",
+      "basics",
+      "expert"
+    ],
+    "persistModes": [
+      "api",
+      "postMessage",
+      "none"
+    ],
+    "difficulties": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ]
   }
 }
