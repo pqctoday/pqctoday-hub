@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useEmbed } from './EmbedProvider'
 import { isIframeEmbed } from './platform'
 
-const HOST_CHECK_TIMEOUT_MS = 2000
+const HOST_CHECK_TIMEOUT_MS = 8000
 
 /**
  * Enforces that the embedding parent page is an authorised host.
@@ -38,9 +38,15 @@ export function useHostCheck(): boolean | null {
       return
     }
 
+    // localhost and 127.0.0.1 are the same host; normalise so certs that list
+    // http://localhost:N also accept challenges from http://127.0.0.1:N and vice versa.
+    const normalize = (o: string) => o.replace('127.0.0.1', 'localhost')
+    const isAllowed = (origin: string) =>
+      allowedOrigins.includes(origin) || allowedOrigins.includes(normalize(origin))
+
     const handleMessage = (event: MessageEvent) => {
       if (event.data?.type !== 'pqc:challenge') return
-      if (allowedOrigins.includes(event.origin)) {
+      if (isAllowed(event.origin)) {
         setHostAuthorized(true)
       }
       // Wrong origin — ignore, keep waiting for the timer
@@ -48,12 +54,16 @@ export function useHostCheck(): boolean | null {
 
     window.addEventListener('message', handleMessage)
 
-    // Broadcast pqc:ready to every allowed origin so certs with multiple
-    // origins (e.g. localhost:3098 AND localhost:3099) all work. pqc:ready
-    // carries no sensitive data; security is enforced by the strict
-    // allowedOrigins.includes(event.origin) check on pqc:challenge above.
+    // Broadcast pqc:ready to every allowed origin (and its 127.0.0.1 variant) so
+    // certs with http://localhost:N also deliver when the parent is at 127.0.0.1:N.
+    // pqc:ready carries no sensitive data; security is enforced by isAllowed() above.
+    const targets = new Set<string>()
     for (const origin of allowedOrigins) {
-      window.parent.postMessage({ type: 'pqc:ready' }, origin)
+      targets.add(origin)
+      targets.add(origin.replace('localhost', '127.0.0.1'))
+    }
+    for (const target of targets) {
+      window.parent.postMessage({ type: 'pqc:ready' }, target)
     }
 
     const timer = setTimeout(() => {
