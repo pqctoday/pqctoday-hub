@@ -41,7 +41,7 @@ export const PERSONA_NAV_PATHS: Record<PersonaId, string[] | null> = {
     '/playground',
     '/openssl',
   ],
-  curious: ['/compliance', '/assess', '/report', '/library', '/leaders'],
+  curious: ['/explore', '/compliance', '/assess', '/report', '/library', '/leaders'],
 }
 
 /**
@@ -406,7 +406,14 @@ export function getReportSectionConfig(
  * different parts of the dashboard based on the job they actually do.
  * ────────────────────────────────────────────────────────────────────────────── */
 
-export type BCPillarId = 'risk' | 'compliance' | 'governance' | 'vendor' | 'learning' | 'actions'
+export type BCPillarId =
+  | 'risk'
+  | 'compliance'
+  | 'governance'
+  | 'vendor'
+  | 'learning'
+  | 'actions'
+  | 'insurance'
 
 export const BC_PILLAR_DEFAULT_ORDER: readonly BCPillarId[] = [
   'risk',
@@ -423,8 +430,8 @@ export const BC_PILLAR_DEFAULT_ORDER: readonly BCPillarId[] = [
  * changes later.
  */
 export const BC_PILLAR_ORDER_BY_PERSONA: Record<PersonaId, readonly BCPillarId[]> = {
-  // Executive: risk + financial framing first, actions before governance/vendor detail.
-  executive: ['risk', 'actions', 'compliance', 'learning', 'governance', 'vendor'],
+  // Executive: risk + financial framing first; insurance lens second for board/CFO context.
+  executive: ['risk', 'insurance', 'actions', 'compliance', 'learning', 'governance', 'vendor'],
   // Architect: governance + vendor front-and-center (RACI, policy, vendor scorecards).
   architect: ['governance', 'vendor', 'compliance', 'risk', 'actions', 'learning'],
   // Ops: migration/vendor tooling first (roadmap lives in vendor pillar), then compliance deadlines.

@@ -2626,6 +2626,7 @@ function processDocumentEnrichments(): RAGChunk[] {
 
   const chunks: RAGChunk[] = []
   const collections = ['library', 'timeline', 'threats', 'catalog'] as const
+  const seenIds = new Set<string>()
 
   for (const collection of collections) {
     const enrichLookup = loadEnrichmentFields(collection)
@@ -2693,8 +2694,12 @@ function processDocumentEnrichments(): RAGChunk[] {
             )
           : undefined
 
+      const baseId = `doc-enrichment-${sanitize(refId)}`
+      const chunkId = seenIds.has(baseId) ? `${baseId}-${collection}` : baseId
+      seenIds.add(chunkId)
+
       chunks.push({
-        id: `doc-enrichment-${sanitize(refId)}`,
+        id: chunkId,
         source: 'document-enrichment',
         title: `${title} — Document Analysis`,
         content: contentParts.join('\n'),

@@ -1,6 +1,6 @@
 {
   "version": "3.3.8",
-  "generatedAt": "2026-04-17T23:06:42.378Z",
+  "generatedAt": "2026-04-18T17:30:15.184Z",
   "postMessageProtocol": {
     "appToParent": [
       {
@@ -73,7 +73,10 @@
           "type": "pqc:save",
           "userId": "usr_a7f3c9d2",
           "snapshot": {
-            "completedModules": ["pqc-101", "hybrid-crypto"],
+            "completedModules": [
+              "pqc-101",
+              "hybrid-crypto"
+            ],
             "quizScores": {
               "pqc-101": 90
             },
@@ -218,7 +221,9 @@
         "example": {
           "type": "pqc:loadResponse",
           "snapshot": {
-            "completedModules": ["pqc-101"],
+            "completedModules": [
+              "pqc-101"
+            ],
             "quizScores": {
               "pqc-101": 90
             },
@@ -671,7 +676,15 @@
         "type": "string[]",
         "required": true,
         "description": "Geographic regions the vendor's users may select. Scopes compliance content and migration guidance.",
-        "values": ["global", "us", "eu", "apac", "latam", "mena", "americas"],
+        "values": [
+          "global",
+          "us",
+          "eu",
+          "apac",
+          "latam",
+          "mena",
+          "americas"
+        ],
         "example": "[\"eu\", \"global\"]"
       },
       {
@@ -696,7 +709,11 @@
         "type": "string[]",
         "required": true,
         "description": "Learning persona roles available. Single role → auto-applied (no picker shown).",
-        "values": ["curious", "basics", "expert"],
+        "values": [
+          "curious",
+          "basics",
+          "expert"
+        ],
         "example": "[\"basics\", \"expert\"]"
       },
       {
@@ -725,7 +742,11 @@
         "type": "string[]",
         "required": true,
         "description": "Persistence modes the vendor is authorized to use. The URL persist= parameter must be a member of this list.",
-        "values": ["api", "postMessage", "none"],
+        "values": [
+          "api",
+          "postMessage",
+          "none"
+        ],
         "example": "[\"postMessage\", \"none\"]"
       }
     ],

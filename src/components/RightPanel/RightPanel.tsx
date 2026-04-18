@@ -17,7 +17,7 @@ const BookmarksPanel = React.lazy(() =>
 )
 
 export const RightPanel: React.FC = () => {
-  const { isOpen, activeTab, setTab, close, minimize } = useRightPanelStore()
+  const { isOpen, activeTab, setTab, close, minimize, toggle } = useRightPanelStore()
   // Close on Escape
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -26,6 +26,14 @@ export const RightPanel: React.FC = () => {
     if (isOpen) window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
   }, [isOpen, close])
+  
+  // E2E UI Bypass
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // @ts-expect-error
+      window.__e2e_toggle_panel = toggle;
+    }
+  }, [toggle])
 
   const panelLabel =
     activeTab === 'chat'

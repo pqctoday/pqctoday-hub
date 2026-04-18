@@ -25,6 +25,7 @@ import { ComplianceRegulatorySection } from './sections/ComplianceRegulatorySect
 import { GovernancePolicySection } from './sections/GovernancePolicySection'
 import { VendorSupplyChainSection } from './sections/VendorSupplyChainSection'
 import { ActionItemsSection } from './sections/ActionItemsSection'
+import { CyberInsuranceLensSection } from './sections/CyberInsuranceLensSection'
 import { CompactLearningBar } from './CompactLearningBar'
 import { ArtifactDrawer, type DrawerMode } from './ArtifactDrawer'
 import type { ExecutiveDocument, ExecutiveDocumentType } from '@/services/storage/types'
@@ -254,6 +255,8 @@ export function BusinessCenterView() {
                 return <CompactLearningBar key="learning" modules={metrics.execModuleProgress} />
               case 'actions':
                 return <ActionItemsSection key="actions" metrics={metrics} />
+              case 'insurance':
+                return <CyberInsuranceLensSection key="insurance" />
               default:
                 return null
             }
