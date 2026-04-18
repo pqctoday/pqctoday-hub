@@ -8,6 +8,37 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- **Command Center — ROI Calculator overhaul** (`src/utils/roiMath.ts`,
+  `ROICalculatorSection`, `ROICalculator`): new shared pure-math module (43 unit tests) with
+  NPV + WACC discount rate (new KPI card), capex/opex split (benefit net-of-opex for
+  payback/NPV), decomposed quantum multiplier (HNDL / post-CRQC uplift / detection uplift)
+  replacing the opaque 2.5× default, tornado sensitivity chart ranking drivers at ±30%, a
+  Cost of Inaction KPI for counterfactual exposure, PDF/DOCX exports alongside markdown,
+  board-ready executive framing banner, and an `asOf` + `PenaltyType` schema on
+  `roiBaselines`. Applicable-frameworks default now tightens to the assessment's mandated
+  subset first, user selections second, industry list last.
+- **Command Center — KPI plan completion (E4 / D9 / E2 / E1)**
+  (`~/.claude/plans/review-command-center-kpi-federated-seahorse.md`): closes the remaining
+  persona-fit gaps. **E4 Board-Ready NIST CSF Composite** — single 0–100 exec score derived
+  from assessment `categoryScores`, mapped to CSF 2.0 Govern / Identify / Protect / Respond
+  (row CTAs deep-link to `/assess`). **D9 Per-Layer Vendor Readiness** — new
+  `vendorReadinessByLayer` map on `useExecutiveModuleData`; meta-KPI expands to one row per
+  infrastructure layer for architects; architect persona removed from global
+  vendor-readiness to avoid double-counting. **E2 Regulatory Exposure Index** — new
+  `frameworkFines.ts` lookup (25+ frameworks, USD millions) with log-scaled auto-score
+  (`100 − 50·log10`). **E1 Crown-Jewel Coverage** — manual-input KPI with CSF / ISO /
+  SOC 2 mappings and TODO anchor for future assessment integration. 18 new vitest cases
+  across four files; full suite 1,769/1,769 pass.
+- **VPN Simulator — visual SKF payload fragmentation slicing**
+  (`VpnSimulationPanel.tsx`): payload rendering now visually slices KE payloads into SKF
+  fragments per the configured fragment-size budget so learners can see IKE_INTERMEDIATE
+  fragmentation in action (rather than just an aggregate total).
+- **VPN Simulator — ML-DSA authentication via draft standards** (`VpnSimulationPanel.tsx`):
+  restores ML-DSA-65 authentication in the IKEv2 handshake, guarded by an explicit UI
+  warning (`FlaskConical` icon) that calls out the
+  [draft-ietf-ipsecme-ikev2-auth-ml-dsa] status so users understand the mode is not yet
+  standards-track.
+
 - **5G SUCI Playground — UX overhaul**: three new sub-components — `ConfigureCard` (collapsible
   first-visit vs returning-user settings panel), `ScenarioIntroStrip` (operator ↔ IMSI-catcher
   perspective toggle), and `AttackerSidecar` (per-step "what the eavesdropper captures" sidebar).
@@ -49,6 +80,17 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- **VPN Simulator — true MTU + fragmentation config logic**
+  (`VpnSimulationPanel.tsx`, `useAssessmentFormStore.ts`,
+  `Assess/smartDefaults.ts`, `Step5Compliance.tsx`, `LandingView.tsx`,
+  `workshopRegistry.tsx`, `src/wasm/openssh.ts`): assessment-driven MTU + fragment-size
+  smart defaults now flow through to the IKEv2 simulator so learners see realistic
+  IKE_INTERMEDIATE fragmentation behaviour (previously the UI accepted inputs but the
+  simulator ignored them).
+- **VPN Simulator — FlaskConical icon for ML-DSA draft warning** (`VpnSimulationPanel.tsx`):
+  replaces the generic warning icon on the ML-DSA draft-standards banner with `FlaskConical`
+  to better signal experimental status.
+
 - **Dev server network-accessible** (`vite.config.ts`): `host: true` added so the dev server
   binds to all interfaces, enabling the pqctoday-sandbox iframe embed to reach the hub from
   localhost on port 4000.
@@ -73,6 +115,14 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- **VPN Simulator — ML-DSA raw pubkey configuration respected**
+  (`VpnSimulationPanel.tsx`): ML-DSA signature generation was ignoring the raw-pubkey
+  setting, causing a config/behaviour mismatch with `CKA_EC_PARAMS`-driven ML-DSA draft
+  flows. Fixed to honour the configured key format end-to-end.
+- **VPN Simulator — WASM OOM + thread pool exhaustion in IKE simulator**
+  (`VpnSimulationPanel.tsx`): long IKE runs were saturating the WASM thread pool and
+  tripping out-of-memory errors when users re-ran scenarios without a full reset. Tightened
+  lifecycle + pool reuse so the simulator stays stable across repeated runs.
 - **What's New modal — View Changelog deep link** (`src/components/ui/WhatsNewModal.tsx`): the
   "View Changelog" action used the first unseen changelog section's version, which resolved to
   `Unreleased` and produced an invalid `/changelog#vUnreleased` anchor. Now uses
