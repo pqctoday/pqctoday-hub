@@ -207,6 +207,36 @@ export const WORKSHOP_TOOLS: WorkshopTool[] = [
     difficulty: 'advanced',
     recommendedPersonas: ['developer', 'architect', 'ops', 'researcher'],
   },
+  {
+    id: 'pqc-ssh-sim',
+    pt_id: 'PT-SSH-PQC',
+    version: '0.1.0',
+    name: 'PQC SSH Simulator',
+    description:
+      'Full OpenSSH 10.x handshake in WASM: mlkem768x25519-sha256 KEX + ssh-mldsa-65 host auth + publickey userauth backed by softhsmv3 PKCS#11. Compare classical vs PQC byte sizes and latency.',
+    category: 'HSM / PKCS#11',
+    algorithms: ['ML-KEM-768', 'X25519', 'ML-DSA-65', 'ssh-mldsa-65', 'PKCS#11'],
+    icon: Terminal,
+    moduleLink: '/learn/network-security-pqc',
+    keywords: [
+      'ssh',
+      'openssh',
+      'ml-kem',
+      'ml-dsa',
+      'hybrid',
+      'kex',
+      'pkcs11',
+      'softhsm',
+      'wasm',
+      'pqc',
+      'x25519',
+      'mldsa65',
+      'userauth',
+    ],
+    difficulty: 'advanced',
+    recommendedPersonas: ['developer', 'architect', 'researcher'],
+    wip: true,
+  },
 
   // ── Entropy & Random ──────────────────────────────────────────────────────
   {
@@ -659,6 +689,11 @@ export const TOOL_COMPONENTS: Record<string, LazyComp> = {
   'vpn-sim': lazyWithRetry(() =>
     import('@/components/Playground/hsm/VpnSimulationPanel').then((m) => ({
       default: m.VpnSimulationPanel,
+    }))
+  ),
+  'pqc-ssh-sim': lazyWithRetry(() =>
+    import('@/components/Playground/hsm/SshSimulationPanel').then((m) => ({
+      default: m.SshSimulationPanel,
     }))
   ),
   'rng-demo': lazyWithRetry(() =>

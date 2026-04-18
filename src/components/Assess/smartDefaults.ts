@@ -222,7 +222,8 @@ export function computeSmartDefaults(
   industry: string,
   country: string,
   persona: string | null,
-  experienceLevel: ExperienceLevel | null = null
+  experienceLevel: ExperienceLevel | null = null,
+  skipExpertTrim = false
 ): SmartDefaults {
   const base: SmartDefaults = {
     currentCryptoCategories: getCryptoDefaults(industry),
@@ -241,7 +242,7 @@ export function computeSmartDefaults(
     timelinePressure: getTimelineDefaults(country),
   }
   const withPersona = applyPersonaOverrides(base, persona, industry)
-  return applyExperienceLevelAdjustments(withPersona, experienceLevel)
+  return skipExpertTrim ? withPersona : applyExperienceLevelAdjustments(withPersona, experienceLevel)
 }
 
 // Experts don't want conservative pre-selection — they know what they use.

@@ -391,10 +391,17 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
 
   // Single PKCS#11 module — softhsmv3 is statically linked.
   // Both slots (0=initiator keys, 1=responder keys) are accessible via one C_Initialize.
-  const charonConfig = `charon {
+  // Build strongswan.conf dynamically to inject MTU (fragment_size)
+  const buildCharonConf = useCallback((authMode: 'psk' | 'dual', fragMtu: number) => {
+    const pluginList =
+      authMode === 'dual'
+        ? 'pkcs11 nonce aes sha1 sha2 hmac kdf openssl'
+        : 'pkcs11 nonce aes sha1 sha2 hmac kdf'
+    return `charon {
+  fragment_size = ${fragMtu}
   integrity_test = no
   load_modular = no
-  load = pkcs11 nonce aes sha1 sha2 hmac kdf
+  load = ${pluginList}
   plugins {
     pkcs11 {
       use_hasher = no
@@ -421,10 +428,11 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
     }
   }
 }`
+  }, [])
 
-  // Build ipsec.conf from role + KE mode + auth mode.
+  // Build ipsec.conf from role + KE mode + auth mode + fragmentation flag.
   const buildIpsecConf = useCallback(
-    (role: 'initiator' | 'responder', mode: IKEv2Mode, auth: 'psk' | 'dual') => {
+    (role: 'initiator' | 'responder', mode: IKEv2Mode, auth: 'psk' | 'dual', frag: boolean) => {
       let modeIke = 'aes256-mlkem768-sha384!'
       if (mode === 'classical') modeIke = 'aes256-sha256-modp3072!'
       if (mode === 'hybrid') modeIke = 'aes256-mlkem768-x25519-sha384!'
@@ -437,33 +445,29 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
         auth === 'psk'
           ? `  leftauth=psk\n  right=${right}\n  rightauth=psk`
           : `  leftauth=psk\n  leftauth2=pubkey\n  leftcert=/etc/ipsec.d/certs/${myCert}.crt\n  right=${right}\n  rightauth=psk\n  rightauth2=pubkey\n  rightcert=/etc/ipsec.d/certs/${peerCert}.crt`
-      return `config setup\n  strictcrlpolicy=no\nconn %default\n  ikelifetime=60m\n  keylife=20m\n  rekeymargin=3m\n  keyingtries=1\nconn host-host\n  left=${left}\n${authLines}\n  ike=${modeIke}\n  esp=aes256gcm16!\n  auto=${auto}`
+      return `config setup\n  strictcrlpolicy=no\nconn %default\n  ikelifetime=60m\n  keylife=20m\n  rekeymargin=3m\n  keyingtries=1\nconn host-host\n  left=${left}\n${authLines}\n  ike=${modeIke}\n  esp=aes256gcm16!\n  auto=${auto}\n  fragmentation=${frag ? 'yes' : 'no'}`
     },
     []
   )
 
-  const [activeInitConfig, setActiveInitConfig] = useState(charonConfig)
-  const [activeRespConfig, setActiveRespConfig] = useState(charonConfig)
+  const [activeInitConfig, setActiveInitConfig] = useState(() => buildCharonConf('psk', 1500))
+  const [activeRespConfig, setActiveRespConfig] = useState(() => buildCharonConf('psk', 1500))
   const [activeInitIpsec, setActiveInitIpsec] = useState(() =>
-    buildIpsecConf('initiator', selectedMode, 'psk')
+    buildIpsecConf('initiator', selectedMode, 'psk', true)
   )
   const [activeRespIpsec, setActiveRespIpsec] = useState(() =>
-    buildIpsecConf('responder', selectedMode, 'psk')
+    buildIpsecConf('responder', selectedMode, 'psk', true)
   )
 
-  // Rebuild ipsec.conf and strongswan.conf whenever KE mode or auth mode changes.
+  // Rebuild ipsec.conf and strongswan.conf whenever KE mode, auth mode, MTU, or fragmentation changes.
   React.useEffect(() => {
-    setActiveInitIpsec(buildIpsecConf('initiator', selectedMode, authMode))
-    setActiveRespIpsec(buildIpsecConf('responder', selectedMode, authMode))
-    // Dual auth requires the openssl plugin for certificate parsing/verification.
-    const pluginList =
-      authMode === 'dual'
-        ? 'pkcs11 nonce aes sha1 sha2 hmac kdf openssl'
-        : 'pkcs11 nonce aes sha1 sha2 hmac kdf'
-    const updatedCharon = charonConfig.replace('pkcs11 nonce aes sha1 sha2 hmac kdf', pluginList)
+    setActiveInitIpsec(buildIpsecConf('initiator', selectedMode, authMode, allowFragmentation))
+    setActiveRespIpsec(buildIpsecConf('responder', selectedMode, authMode, allowFragmentation))
+    
+    const updatedCharon = buildCharonConf(authMode, mtu)
     setActiveInitConfig(updatedCharon)
     setActiveRespConfig(updatedCharon)
-  }, [selectedMode, authMode, buildIpsecConf, charonConfig])
+  }, [selectedMode, authMode, mtu, allowFragmentation, buildIpsecConf, buildCharonConf])
 
   React.useEffect(() => {
     const handleLog = (log: StrongSwanLog) => {

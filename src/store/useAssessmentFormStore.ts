@@ -230,7 +230,7 @@ export const useAssessmentFormStore = create<AssessmentFormState>()(
           lastWizardUpdate: new Date().toISOString(),
         }
         if (hasAnyUnknown(state)) {
-          const defaults = computeSmartDefaults(industry, state.country, persona, experienceLevel)
+          const defaults = computeSmartDefaults(industry, state.country, persona, experienceLevel, true)
           applyDefaultsToUnknownSteps(state, defaults, updates)
         }
         set(updates)
@@ -246,7 +246,7 @@ export const useAssessmentFormStore = create<AssessmentFormState>()(
           lastWizardUpdate: new Date().toISOString(),
         }
         if (hasAnyUnknown(state)) {
-          const defaults = computeSmartDefaults(state.industry, country, persona, experienceLevel)
+          const defaults = computeSmartDefaults(state.industry, country, persona, experienceLevel, true)
           applyDefaultsToUnknownSteps(state, defaults, updates)
         }
         set(updates)
@@ -274,7 +274,7 @@ export const useAssessmentFormStore = create<AssessmentFormState>()(
         if (val) {
           const { industry, country } = get()
           const { selectedPersona: persona, experienceLevel } = usePersonaStore.getState()
-          const defaults = computeSmartDefaults(industry, country, persona, experienceLevel)
+          const defaults = computeSmartDefaults(industry, country, persona, experienceLevel, true)
           set({
             cryptoUnknown: true,
             currentCrypto: defaults.currentCrypto,
@@ -393,7 +393,7 @@ export const useAssessmentFormStore = create<AssessmentFormState>()(
         if (val) {
           const { industry, country } = get()
           const { selectedPersona: persona, experienceLevel } = usePersonaStore.getState()
-          const defaults = computeSmartDefaults(industry, country, persona, experienceLevel)
+          const defaults = computeSmartDefaults(industry, country, persona, experienceLevel, true)
           set({
             useCasesUnknown: true,
             cryptoUseCases: defaults.cryptoUseCases,
@@ -541,7 +541,7 @@ export const useAssessmentFormStore = create<AssessmentFormState>()(
         if (val) {
           const { industry, country } = get()
           const { selectedPersona: persona, experienceLevel } = usePersonaStore.getState()
-          const defaults = computeSmartDefaults(industry, country, persona, experienceLevel)
+          const defaults = computeSmartDefaults(industry, country, persona, experienceLevel, true)
           set({
             infrastructureUnknown: true,
             infrastructure: defaults.infrastructure,
