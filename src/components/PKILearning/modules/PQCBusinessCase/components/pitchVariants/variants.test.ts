@@ -13,6 +13,7 @@ function makeData(overrides: Partial<ExecutiveModuleData> = {}): ExecutiveModule
     fipsValidatedCount: 1,
     pqcReadyCount: 2,
     vendorReadinessWeighted: 0.1,
+    vendorReadinessByLayer: new Map(),
     totalProducts: 15,
     frameworks: [],
     frameworksByIndustry: [],

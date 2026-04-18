@@ -18,6 +18,7 @@ import type { PersonaId } from './learningPersonas'
 import type { ExecutiveModuleData } from '@/hooks/useExecutiveModuleData'
 import type { ScorecardDimension } from '@/components/PKILearning/common/executive'
 import { getKpiTarget } from './kpiTargets'
+import { getFrameworkMaxFine } from './frameworkFines'
 
 // ── Persona scope ────────────────────────────────────────────────────────
 // Only personas who can reach the Business Center get a KPI variant.
@@ -78,6 +79,8 @@ export interface KpiDefinition {
   }
   /** Optional "on-track" target hint surfaced as a tick on the slider. */
   defaultTarget?: number
+  /** Optional CTA to resolve a disabled state (e.g. link to /assess). */
+  disabledAction?: { href: string; label: string }
 }
 
 // ── PQC readiness tiers (for weighted vendor readiness) ──────────────────
@@ -176,6 +179,41 @@ const riskPostureAuto: KpiAutoScoreFn = (data) => {
   return clamp(100 - data.riskScore)
 }
 
+// Regulatory exposure index (E2) — higher KPI = lower exposure. Sums the max
+// regulatory fines (USD millions) for the user's selected PQC-requiring
+// frameworks, then maps to 0–100 via a log-scaled curve (no exposure = 100,
+// $50M cumulative = 50, $200M+ = 0). The KPI drops to null when no frameworks
+// have been selected — auto-scoring cannot judge exposure without a scope.
+const regulatoryExposureAuto: KpiAutoScoreFn = (data) => {
+  if (!data.complianceSelections || data.complianceSelections.length === 0) return null
+  const selected = data.frameworks.filter(
+    (f) => data.complianceSelections.includes(f.id) && f.requiresPQC
+  )
+  if (selected.length === 0) return null
+  let totalFine = 0
+  for (const f of selected) totalFine += getFrameworkMaxFine(f.id)
+  if (totalFine === 0) return null
+  // Curve: score = 100 − 50 × log10(1 + totalFine/5), clamped to [0,100].
+  // Hits 50 around $50M, ~25 around $200M, ~0 beyond $1B cumulative.
+  const score = 100 - 50 * Math.log10(1 + totalFine / 5)
+  return clamp(Math.round(score))
+}
+
+// Board-ready NIST CSF 2.0 composite — single executive number mapped to CSF
+// functions. Reuses assessment categoryScores (higher score = more exposure /
+// concern), inverted so the KPI tracks preparedness (100 = fully board-ready).
+const boardReadyCompositeAuto: KpiAutoScoreFn = (data) => {
+  const cs = data.categoryScores
+  if (!cs) return null
+  const avg =
+    (cs.quantumExposure +
+      cs.migrationComplexity +
+      cs.regulatoryPressure +
+      cs.organizationalReadiness) /
+    4
+  return clamp(Math.round(100 - avg))
+}
+
 // Hybrid deployment coverage — % of catalog products reporting hybrid PQC.
 const hybridCoverageAuto: KpiAutoScoreFn = (data) => {
   if (data.totalProducts === 0) return null
@@ -260,10 +298,28 @@ export const KPI_CATALOG: readonly KpiDefinition[] = [
       'Tiered PQC-ready share of the product catalog (Full=1.0, Hybrid=0.7, Pilot=0.4, Roadmap=0.2, None=0).',
     category: 'vendor',
     surfaces: ['governance', 'migration'],
-    weights: { executive: 0.1, architect: 0.2, ops: 0.2, researcher: 0.05 },
+    // Architect gets per-layer rows instead (see vendor-readiness-by-layer).
+    weights: { executive: 0.1, ops: 0.2, researcher: 0.05 },
     autoScore: vendorReadinessAuto,
     userOverride: true,
     mappings: { csf2: 'ID.SC-1', iso27001: 'A.5.19', soc2: 'CC9.2' },
+    defaultTarget: 60,
+  },
+  {
+    // Meta-KPI: expands in `buildDimensions` into one row per infrastructure
+    // layer for the architect view (D9). Gives architects accountability at
+    // the layer they actually own (Network, Identity, Data-at-Rest, …) rather
+    // than a single organisation-wide number.
+    id: 'vendor-readiness-by-layer',
+    label: 'Vendor Readiness by Layer',
+    description:
+      'Tiered PQC-ready share per infrastructure layer. Each layer scored independently using the same tier map.',
+    category: 'vendor',
+    surfaces: ['governance', 'migration'],
+    weights: { architect: 0.2 },
+    userOverride: false,
+    disabledReason: 'Product catalog empty or no layer tagging.',
+    mappings: { csf2: 'ID.SC-1', iso27001: 'A.5.19' },
     defaultTarget: 60,
   },
   {
@@ -295,6 +351,21 @@ export const KPI_CATALOG: readonly KpiDefinition[] = [
     defaultTarget: 75,
   },
   {
+    id: 'regulatory-exposure-index',
+    label: 'Regulatory Exposure Index',
+    description:
+      'Higher score = lower exposure. Aggregates maximum-fine exposure across your selected PQC-requiring frameworks (GDPR, NIS2, CNSA 2.0, HIPAA, CMMC, DORA, etc.) on a log scale.',
+    category: 'compliance',
+    surfaces: ['governance'],
+    weights: { executive: 0.1 },
+    autoScore: regulatoryExposureAuto,
+    userOverride: true,
+    disabledReason:
+      'Select compliance frameworks in the assessment to compute regulatory exposure.',
+    mappings: { csf2: 'GV.OC-3', iso27001: 'A.5.36', soc2: 'CC2.3' },
+    defaultTarget: 60,
+  },
+  {
     id: 'pace-to-deadline',
     label: 'Pace-to-Deadline',
     description:
@@ -311,6 +382,22 @@ export const KPI_CATALOG: readonly KpiDefinition[] = [
   },
 
   // ── Risk / Threat ─────────────────────────────────────────────────────
+  {
+    // E1 — Crown-jewel coverage. Manual-input today; scheduled to be
+    // populated automatically from a future assessment step (tracked via a
+    // crownJewelFlowsCovered field on the assessment store — see plan file
+    // review-command-center-kpi-federated-seahorse.md §E1).
+    id: 'crown-jewel-coverage',
+    label: 'Crown-Jewel Coverage',
+    description:
+      'Percentage of classified / highest-sensitivity data flows already behind PQC (hybrid or full). Set manually today — will auto-populate once the assessment wizard captures a crown-jewel scope.',
+    category: 'coverage',
+    surfaces: ['governance'],
+    weights: { executive: 0.1 },
+    userOverride: true,
+    mappings: { csf2: 'ID.AM-5', iso27001: 'A.5.12', soc2: 'CC6.1' },
+    defaultTarget: 80,
+  },
   {
     id: 'threat-exposure',
     label: 'Threat Exposure',
@@ -336,6 +423,21 @@ export const KPI_CATALOG: readonly KpiDefinition[] = [
     disabledReason: 'Complete the risk assessment to compute HNDL horizon.',
     mappings: { csf2: 'ID.RA-5' },
     defaultTarget: 50,
+  },
+  {
+    id: 'board-ready-composite',
+    label: 'Board-Ready NIST CSF Composite',
+    description:
+      'Single 0–100 score mapping your assessment to NIST CSF 2.0 functions (Govern / Identify / Protect / Respond). Derived from quantum exposure, migration complexity, regulatory pressure, and organisational readiness. Higher = more board-ready.',
+    category: 'risk',
+    surfaces: ['governance'],
+    weights: { executive: 0.15 },
+    autoScore: boardReadyCompositeAuto,
+    userOverride: false,
+    disabledReason: 'Complete the risk assessment at /assess to compute the board composite.',
+    disabledAction: { href: '/assess', label: 'Complete assessment →' },
+    mappings: { csf2: 'GV.OC / ID.RA / PR.IP', iso27001: 'A.5.1', soc2: 'CC1.1' },
+    defaultTarget: 70,
   },
   {
     id: 'risk-posture',
@@ -465,13 +567,57 @@ export function buildDimensions(
   // when per-persona catalog weights were tuned for clarity over perfect
   // normalisation. Relative importance between KPIs is preserved.
   const rawSum = getWeightSum(kpis, persona) || 1
-  return kpis.map((k) => {
+
+  const rows: ScorecardDimension[] = []
+  for (const k of kpis) {
     const rawWeight = k.weights[persona] ?? 0
     const weight = rawWeight / rawSum
+
+    // Meta-KPI: expand `vendor-readiness-by-layer` into one row per
+    // infrastructure layer. Splits the meta weight evenly across layers so
+    // total architect weight contribution is preserved.
+    if (k.id === 'vendor-readiness-by-layer') {
+      const layers = Array.from(data.vendorReadinessByLayer?.entries() ?? []).filter(
+        ([, v]) => v.count > 0
+      )
+      if (layers.length === 0) {
+        const target = getKpiTarget(persona, country, k.id, k.defaultTarget)
+        rows.push({
+          id: k.id,
+          label: k.label,
+          description: k.description,
+          weight,
+          autoScore: 0,
+          userOverride: false,
+          disabled: true,
+          disabledReason: k.disabledReason,
+          target,
+          targetLabel: target !== undefined ? `Target: ${target}` : undefined,
+        })
+        continue
+      }
+      const perLayerWeight = weight / layers.length
+      for (const [layer, stats] of layers) {
+        const score = Math.round(stats.weighted * 100)
+        const target = getKpiTarget(persona, country, k.id, k.defaultTarget)
+        rows.push({
+          id: `${k.id}:${layer}`,
+          label: `Vendor Readiness — ${layer}`,
+          description: `Tiered PQC-ready share of ${stats.count} ${stats.count === 1 ? 'product' : 'products'} in the ${layer} layer.`,
+          weight: perLayerWeight,
+          autoScore: score,
+          userOverride: true,
+          target,
+          targetLabel: target !== undefined ? `Target: ${target}` : undefined,
+        })
+      }
+      continue
+    }
+
     const auto = k.autoScore ? k.autoScore(data) : undefined
     const disabled = k.autoScore !== undefined && auto === null
     const target = getKpiTarget(persona, country, k.id, k.defaultTarget)
-    return {
+    rows.push({
       id: k.id,
       label: k.label,
       description: k.description,
@@ -482,8 +628,14 @@ export function buildDimensions(
       disabledReason: disabled ? k.disabledReason : undefined,
       target,
       targetLabel: target !== undefined ? `Target: ${target}` : undefined,
-      disabledActionHref: disabled && k.id.startsWith('risk') ? '/assess' : undefined,
-      disabledActionLabel: disabled ? 'Complete assessment →' : undefined,
-    }
-  })
+      disabledActionHref: disabled
+        ? (k.disabledAction?.href ?? (k.id.startsWith('risk') ? '/assess' : undefined))
+        : undefined,
+      disabledActionLabel: disabled
+        ? (k.disabledAction?.label ??
+          (k.id.startsWith('risk') ? 'Complete assessment →' : undefined))
+        : undefined,
+    })
+  }
+  return rows
 }

@@ -13,6 +13,10 @@ import { KPI_PERSONAS, buildDimensions } from '@/data/kpiCatalog'
 
 const MODULE_ID = 'migration-program'
 const SURFACE = 'migration' as const
+// Stable reference — using `?? []` inside the zustand selector would return
+// a new empty array on every call, failing Object.is equality and causing
+// an infinite re-render loop.
+const EMPTY_HISTORY: { ts: number; score: number }[] = []
 
 function coercePersona(p: string | null | undefined): KpiPersonaId {
   if (p && (KPI_PERSONAS as readonly string[]).includes(p)) return p as KpiPersonaId
@@ -32,7 +36,7 @@ export const KPITrackerTemplate: React.FC = () => {
   const execData = useExecutiveModuleData()
   const addExecutiveDocument = useModuleStore((s) => s.addExecutiveDocument)
   const pushRiskScoreSnapshot = useModuleStore((s) => s.pushRiskScoreSnapshot)
-  const riskHistory = useModuleStore((s) => s.kpiHistory?.riskScore ?? [])
+  const riskHistory = useModuleStore((s) => s.kpiHistory?.riskScore) ?? EMPTY_HISTORY
   const globalPersona = usePersonaStore((s) => s.selectedPersona)
 
   const [personaOverride, setPersonaOverride] = useState<KpiPersonaId | null>(null)

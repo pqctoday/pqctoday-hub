@@ -92,6 +92,7 @@ describe('KPI_CATALOG integrity', () => {
       fipsValidatedCount: 0,
       pqcReadyCount: 0,
       vendorReadinessWeighted: 0,
+      vendorReadinessByLayer: new Map(),
       totalProducts: 1,
       frameworks: [],
       frameworksByIndustry: [],
@@ -190,6 +191,7 @@ function mockData(overrides: Partial<ExecutiveModuleData> = {}): ExecutiveModule
     fipsValidatedCount: 5,
     pqcReadyCount: 7,
     vendorReadinessWeighted: 0.5,
+    vendorReadinessByLayer: new Map(),
     totalProducts: 10,
     frameworks: [],
     frameworksByIndustry: [],
@@ -225,9 +227,11 @@ describe('buildDimensions', () => {
   })
 
   it('computes vendor-readiness auto-score from vendorReadinessWeighted', () => {
+    // Architect now gets per-layer rows instead of the global vendor-readiness
+    // KPI, so assert against a persona that still sees the global roll-up.
     const dims = buildDimensions(
-      'architect',
-      'governance',
+      'ops',
+      'migration',
       mockData({ vendorReadinessWeighted: 0.5, totalProducts: 10 })
     )
     const vr = dims.find((d) => d.id === 'vendor-readiness')
@@ -236,7 +240,7 @@ describe('buildDimensions', () => {
   })
 
   it('disables vendor-readiness when totalProducts is zero', () => {
-    const dims = buildDimensions('architect', 'governance', mockData({ totalProducts: 0 }))
+    const dims = buildDimensions('ops', 'migration', mockData({ totalProducts: 0 }))
     const vr = dims.find((d) => d.id === 'vendor-readiness')
     expect(vr?.disabled).toBe(true)
   })
@@ -287,5 +291,197 @@ describe('buildDimensions', () => {
     const am = dims.find((d) => d.id === 'algorithms-migrated')
     expect(am?.target).toBe(80)
     expect(am?.targetLabel).toContain('Target: 80')
+  })
+})
+
+// ── E4: Board-ready NIST CSF composite ─────────────────────────────────────
+
+describe('board-ready-composite (E4)', () => {
+  it('is included in the executive governance set', () => {
+    const ids = getKpiSet('executive', 'governance').map((k) => k.id)
+    expect(ids).toContain('board-ready-composite')
+  })
+
+  it('disabled when assessment categoryScores missing', () => {
+    const dims = buildDimensions('executive', 'governance', mockData({ categoryScores: null }))
+    const brc = dims.find((d) => d.id === 'board-ready-composite')
+    expect(brc?.disabled).toBe(true)
+    expect(brc?.disabledActionHref).toBe('/assess')
+  })
+
+  it('computes 100 - avg(categoryScores) when assessment present', () => {
+    const dims = buildDimensions(
+      'executive',
+      'governance',
+      mockData({
+        categoryScores: {
+          quantumExposure: 80,
+          migrationComplexity: 60,
+          regulatoryPressure: 40,
+          organizationalReadiness: 20,
+        },
+      })
+    )
+    const brc = dims.find((d) => d.id === 'board-ready-composite')
+    // avg = 50 → KPI = 50
+    expect(brc?.autoScore).toBe(50)
+    expect(brc?.disabled).toBe(false)
+  })
+})
+
+// ── D9: Per-layer architect vendor readiness ───────────────────────────────
+
+describe('vendor-readiness-by-layer (D9)', () => {
+  it('expands into one dimension per non-empty infrastructure layer', () => {
+    const layers = new Map([
+      ['Network', { weighted: 0.6, count: 5 }],
+      ['Identity', { weighted: 0.3, count: 3 }],
+      ['Data-at-Rest', { weighted: 0.9, count: 2 }],
+    ])
+    const dims = buildDimensions(
+      'architect',
+      'governance',
+      mockData({ vendorReadinessByLayer: layers })
+    )
+    const layerRows = dims.filter((d) => d.id.startsWith('vendor-readiness-by-layer:'))
+    expect(layerRows).toHaveLength(3)
+    const networkRow = layerRows.find((d) => d.label.includes('Network'))
+    expect(networkRow?.autoScore).toBe(60)
+    const identityRow = layerRows.find((d) => d.label.includes('Identity'))
+    expect(identityRow?.autoScore).toBe(30)
+    const dataRow = layerRows.find((d) => d.label.includes('Data-at-Rest'))
+    expect(dataRow?.autoScore).toBe(90)
+  })
+
+  it('falls back to disabled meta row when no layers are populated', () => {
+    const dims = buildDimensions(
+      'architect',
+      'governance',
+      mockData({ vendorReadinessByLayer: new Map() })
+    )
+    const meta = dims.find((d) => d.id === 'vendor-readiness-by-layer')
+    expect(meta?.disabled).toBe(true)
+  })
+
+  it('splits the meta weight evenly across expanded rows', () => {
+    const layers = new Map([
+      ['Network', { weighted: 0.5, count: 4 }],
+      ['Identity', { weighted: 0.5, count: 2 }],
+    ])
+    const dims = buildDimensions(
+      'architect',
+      'governance',
+      mockData({ vendorReadinessByLayer: layers })
+    )
+    const layerRows = dims.filter((d) => d.id.startsWith('vendor-readiness-by-layer:'))
+    const totalLayerWeight = layerRows.reduce((acc, d) => acc + d.weight, 0)
+    // Both layer rows share the original meta weight; sum across all rows still normalises to 1.
+    const sum = dims.reduce((acc, d) => acc + d.weight, 0)
+    expect(sum).toBeGreaterThan(0.99)
+    expect(sum).toBeLessThan(1.01)
+    expect(layerRows[0].weight).toBeCloseTo(totalLayerWeight / 2, 6)
+  })
+
+  it('does not appear in executive or ops sets', () => {
+    const execIds = getKpiSet('executive', 'governance').map((k) => k.id)
+    const opsIds = getKpiSet('ops', 'migration').map((k) => k.id)
+    expect(execIds).not.toContain('vendor-readiness-by-layer')
+    expect(opsIds).not.toContain('vendor-readiness-by-layer')
+  })
+})
+
+// ── E2: Regulatory exposure index ──────────────────────────────────────────
+
+describe('regulatory-exposure-index (E2)', () => {
+  it('is in the executive governance set only', () => {
+    expect(
+      getKpiSet('executive', 'governance')
+        .map((k) => k.id)
+        .includes('regulatory-exposure-index')
+    ).toBe(true)
+    expect(
+      getKpiSet('executive', 'migration')
+        .map((k) => k.id)
+        .includes('regulatory-exposure-index')
+    ).toBe(false)
+  })
+
+  it('disabled when no compliance selections', () => {
+    const dims = buildDimensions('executive', 'governance', mockData({ complianceSelections: [] }))
+    const rei = dims.find((d) => d.id === 'regulatory-exposure-index')
+    expect(rei?.disabled).toBe(true)
+  })
+
+  it('scores lower for a single high-fine framework vs no fines', () => {
+    const frameworks = [
+      {
+        id: 'GDPR',
+        label: 'GDPR',
+        description: '',
+        industries: [],
+        countries: [],
+        requiresPQC: true,
+        deadline: '',
+        notes: '',
+        enforcementBody: '',
+        libraryRefs: [],
+        timelineRefs: [],
+        bodyType: 'compliance_framework' as const,
+      },
+    ]
+    const dims = buildDimensions(
+      'executive',
+      'governance',
+      mockData({ frameworks, complianceSelections: ['GDPR'] })
+    )
+    const rei = dims.find((d) => d.id === 'regulatory-exposure-index')
+    // GDPR max fine = $25M in the lookup → score should be well below 100
+    expect(rei?.disabled).toBe(false)
+    expect(rei?.autoScore).toBeGreaterThan(0)
+    expect(rei?.autoScore).toBeLessThan(100)
+  })
+
+  it('saturates to a low score when many high-fine frameworks are stacked', () => {
+    const frameworks = ['GDPR', 'NIS2', 'CNSA-2.0', 'DORA', 'HIPAA'].map((id) => ({
+      id,
+      label: id,
+      description: '',
+      industries: [],
+      countries: [],
+      requiresPQC: true,
+      deadline: '',
+      notes: '',
+      enforcementBody: '',
+      libraryRefs: [],
+      timelineRefs: [],
+      bodyType: 'compliance_framework' as const,
+    }))
+    const dims = buildDimensions(
+      'executive',
+      'governance',
+      mockData({ frameworks, complianceSelections: frameworks.map((f) => f.id) })
+    )
+    const rei = dims.find((d) => d.id === 'regulatory-exposure-index')
+    // Total ≈ $551M → log-scaled score should be very low
+    expect(rei?.autoScore).toBeLessThan(20)
+  })
+})
+
+// ── E1: Crown-jewel coverage ───────────────────────────────────────────────
+
+describe('crown-jewel-coverage (E1)', () => {
+  it('is present in the executive governance set as a manual-input KPI', () => {
+    const kpi = KPI_CATALOG.find((k) => k.id === 'crown-jewel-coverage')
+    expect(kpi).toBeDefined()
+    expect(kpi?.autoScore).toBeUndefined() // manual input today
+    expect(kpi?.userOverride).toBe(true)
+    expect(kpi?.weights.executive).toBeDefined()
+  })
+
+  it('renders as an enabled dimension (not disabled)', () => {
+    const dims = buildDimensions('executive', 'governance', mockData())
+    const cj = dims.find((d) => d.id === 'crown-jewel-coverage')
+    expect(cj).toBeDefined()
+    expect(cj?.disabled).toBeFalsy()
   })
 })

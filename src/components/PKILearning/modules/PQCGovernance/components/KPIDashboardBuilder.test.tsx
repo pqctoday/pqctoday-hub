@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-only
-import React from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { KPIDashboardBuilder } from './KPIDashboardBuilder'
@@ -21,6 +20,7 @@ const mockData: ExecutiveModuleData = {
   fipsValidatedCount: 3,
   pqcReadyCount: 4,
   vendorReadinessWeighted: 0.5,
+  vendorReadinessByLayer: new Map(),
   totalProducts: 8,
   frameworks: [],
   frameworksByIndustry: [],

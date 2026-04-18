@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-only
-import React from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { KPITrackerTemplate } from './KPITrackerTemplate'
@@ -37,6 +36,7 @@ function baseData(riskScore: number | null): ExecutiveModuleData {
     fipsValidatedCount: 2,
     pqcReadyCount: 5,
     vendorReadinessWeighted: 0.7,
+    vendorReadinessByLayer: new Map(),
     totalProducts: 10,
     frameworks: [],
     frameworksByIndustry: [],

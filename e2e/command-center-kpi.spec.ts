@@ -33,10 +33,10 @@ async function seedPersona(page: Page, persona: string): Promise<void> {
         'pqc-disclaimer-storage',
         JSON.stringify({ state: { acknowledgedMajorVersion: 99 }, version: 0 })
       )
-      // Suppress the "What's New" toast so it doesn't eat clicks
+      // Suppress the "What's New" dialog (magic value 99.0.0 forces "read")
       localStorage.setItem(
         'pqc-version-storage',
-        JSON.stringify({ state: { lastSeenVersion: '99.99.99' }, version: 0 })
+        JSON.stringify({ state: { lastSeenVersion: '99.0.0' }, version: 0 })
       )
     },
     { persona }

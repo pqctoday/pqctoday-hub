@@ -33,6 +33,9 @@ export interface ExecutiveModuleData {
   pqcReadyCount: number
   /** Tiered readiness as a fraction in [0,1]: sum of per-product readiness ÷ totalProducts. */
   vendorReadinessWeighted: number
+  /** Per-layer tiered readiness (0–1), keyed by infrastructure layer. Drives the
+   *  architect-facing per-layer vendor readiness view (D9). */
+  vendorReadinessByLayer: Map<string, { weighted: number; count: number }>
   totalProducts: number
 
   // Compliance
@@ -154,6 +157,19 @@ export function useExecutiveModuleData(selectedProductKeys?: string[]): Executiv
     const vendorReadinessWeighted =
       filteredSoftware.length > 0 ? readinessWeightSum / filteredSoftware.length : 0
 
+    // Per-layer tiered readiness for the architect view. A product that spans
+    // multiple comma-separated layers contributes to each. Readiness weight
+    // uses the same tier map as the global roll-up.
+    const vendorReadinessByLayer = new Map<string, { weighted: number; count: number }>()
+    for (const [layer, products] of vendorsByLayer.entries()) {
+      let sum = 0
+      for (const p of products) sum += pqcReadinessTier(p.pqcSupport)
+      vendorReadinessByLayer.set(layer, {
+        weighted: products.length > 0 ? sum / products.length : 0,
+        count: products.length,
+      })
+    }
+
     // ── Compliance ────────────────────────────────────────────────────────
     const frameworksByIndustry = effectiveIndustry
       ? complianceFrameworks.filter(
@@ -191,6 +207,7 @@ export function useExecutiveModuleData(selectedProductKeys?: string[]): Executiv
       fipsValidatedCount,
       pqcReadyCount,
       vendorReadinessWeighted,
+      vendorReadinessByLayer,
       totalProducts: filteredSoftware.length,
       frameworks: complianceFrameworks,
       frameworksByIndustry,
