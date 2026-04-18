@@ -453,13 +453,18 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
       const auto = role === 'initiator' ? 'start' : 'route'
       const myCert = role === 'initiator' ? 'initiator' : 'responder'
       const peerCert = role === 'initiator' ? 'responder' : 'initiator'
+      const myIsMldsa = (role === 'initiator' ? clientAlg : serverAlg) === 'ML-DSA'
+      const peerIsMldsa = (role === 'initiator' ? serverAlg : clientAlg) === 'ML-DSA'
+      const leftAuthStr = myIsMldsa ? `  leftsigkey=%smartcard${role === 'initiator' ? '1' : '2'}` : `  leftcert=/etc/ipsec.d/certs/${myCert}.crt`
+      const rightAuthStr = peerIsMldsa ? `  rightsigkey=%smartcard${role === 'initiator' ? '2' : '1'}` : `  rightcert=/etc/ipsec.d/certs/${peerCert}.crt`
+
       const authLines =
         auth === 'psk'
           ? `  leftauth=psk\n  right=${right}\n  rightauth=psk`
-          : `  leftauth=psk\n  leftauth2=pubkey\n  leftcert=/etc/ipsec.d/certs/${myCert}.crt\n  right=${right}\n  rightauth=psk\n  rightauth2=pubkey\n  rightcert=/etc/ipsec.d/certs/${peerCert}.crt`
+          : `  leftauth=psk\n  leftauth2=pubkey\n${leftAuthStr}\n  right=${right}\n  rightauth=psk\n  rightauth2=pubkey\n${rightAuthStr}`
       return `config setup\n  strictcrlpolicy=no\nconn %default\n  ikelifetime=60m\n  keylife=20m\n  rekeymargin=3m\n  keyingtries=1\nconn host-host\n  left=${left}\n${authLines}\n  ike=${modeIke}\n  esp=aes256gcm16!\n  auto=${auto}\n  fragmentation=${frag ? 'yes' : 'no'}`
     },
-    []
+    [clientAlg, serverAlg]
   )
 
   const [activeInitConfig, setActiveInitConfig] = useState(() => buildCharonConf('psk', 1500))
@@ -2459,7 +2464,7 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
                     const proposalMode =
                       selectedMode === 'pure-pqc' ? 1 : selectedMode === 'hybrid' ? 2 : 0
 
-                    if (authMode === 'dual' && certData) {
+                    if (authMode === 'dual' && certData && clientAlg !== 'ML-DSA' && serverAlg !== 'ML-DSA') {
                       // Use pre-provisioned certs generated before daemon start (C8 flow).
                       // ipsec.secrets: PSK only — charon's pkcs11 plugin discovers the private
                       // key via PKCS#11 RPC (C_FindObjects matching the cert's public key modulus).
