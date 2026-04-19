@@ -69,9 +69,9 @@ export const ChatPanelContent: React.FC = () => {
   // E2E UI-decoupled boundary for Test 5
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // @ts-expect-error - e2e hook
+      // @ts-expect-error — e2e hook, augments global window for test harness
       window.__e2e_chat_send = sendQuery
-      // @ts-expect-error
+      // @ts-expect-error — e2e hook, augments global window for test harness
       window.__e2e_chat_store = useChatStore
     }
   }, [sendQuery])
