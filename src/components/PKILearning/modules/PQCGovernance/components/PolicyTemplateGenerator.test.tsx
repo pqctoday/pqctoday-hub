@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-only
-import React from 'react'
 import { describe, it, expect } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { PolicyTemplateGenerator } from './PolicyTemplateGenerator'

@@ -133,18 +133,20 @@ export function CertCapacityCalculator() {
   const cpuData = results.map((r) => ({ name: r.algo, 'CPU (% core)': r.cpuCorePercent }))
 
   const handleExport = useCallback(() => {
-    const rows = results.map((r) => ({
-      Algorithm: r.algo,
-      'Storage MB (annual)': r.storageMB,
-      'Renewals per year': r.renewalsPerYear,
-      'TLS Cert KB per handshake': r.tlsBandwidthKBPerHandshake,
-      'Aggregate bandwidth MB/s': r.tlsAggregateMBPerSec,
-      'Max sign ops/sec': r.signaturesPerSecCapacity,
-      'CPU % of 1 core': r.cpuCorePercent,
-      'Size source': r.sizeSource,
-      'Perf source': r.perfSource,
-    }))
-    downloadCsv(generateCsv(rows), csvFilename('cert-capacity'))
+    downloadCsv(
+      generateCsv(results, [
+        { header: 'Algorithm', accessor: (r) => r.algo },
+        { header: 'Storage MB (annual)', accessor: (r) => r.storageMB },
+        { header: 'Renewals per year', accessor: (r) => r.renewalsPerYear },
+        { header: 'TLS Cert KB per handshake', accessor: (r) => r.tlsBandwidthKBPerHandshake },
+        { header: 'Aggregate bandwidth MB/s', accessor: (r) => r.tlsAggregateMBPerSec },
+        { header: 'Max sign ops/sec', accessor: (r) => r.signaturesPerSecCapacity },
+        { header: 'CPU % of 1 core', accessor: (r) => r.cpuCorePercent },
+        { header: 'Size source', accessor: (r) => r.sizeSource },
+        { header: 'Perf source', accessor: (r) => r.perfSource },
+      ]),
+      csvFilename('cert-capacity')
+    )
   }, [results])
 
   return (

@@ -7,7 +7,7 @@
 // Two workers (ssh client + sshd) run back-to-back: classical then PQC.
 // Results fed into SshComparisonPanel, wire packets shown in a hex tab.
 
-import React, { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { Terminal, Play, RotateCcw, AlertCircle, Info, BookOpen } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'

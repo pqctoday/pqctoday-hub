@@ -3,7 +3,6 @@
 // SshComparisonPanel — side-by-side classical vs PQC SSH handshake results.
 // Port of sandbox SSHComparisonVisualizer with Hub semantic-token styling.
 
-import React from 'react'
 import {
   CheckCircle,
   XCircle,

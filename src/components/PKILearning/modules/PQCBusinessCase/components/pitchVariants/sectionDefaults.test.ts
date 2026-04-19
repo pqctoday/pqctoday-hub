@@ -343,6 +343,7 @@ describe('buildPeerBenchmarkDefault', () => {
           countries: [],
           requiresPQC: true,
           deadline: '2035',
+          deadlinePhase: 'mid',
           notes: '',
           enforcementBody: '',
           libraryRefs: [],

@@ -3,7 +3,7 @@
 // SshLearnSection — Role explainer + 8-step PQC handshake diagram.
 // Port of sandbox SSHLearnSection restyled with Hub semantic tokens.
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { ChevronDown, ChevronRight, ShieldCheck, Network } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 

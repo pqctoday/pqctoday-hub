@@ -162,9 +162,10 @@ export const ROICalculator: React.FC = () => {
 
     return {
       totalMigrationCost,
-      annualOpex,
       breachCostSavings,
       complianceSavings,
+      // computeROI's ROIMetrics already includes annualOpex, so we don't
+      // re-declare it here (would shadow with TS2783 duplicate-property).
       ...roi,
     }
   }, [assumptions, industryBreachBaseline, quantumMultiplier])
@@ -759,7 +760,7 @@ export const ROICalculator: React.FC = () => {
               />
               <YAxis type="category" dataKey="label" tick={{ fontSize: 11 }} width={140} />
               <Tooltip
-                formatter={(value: number) => formatCurrency(value)}
+                formatter={(value) => formatCurrency(Number(value))}
                 cursor={{ fill: 'hsl(var(--muted) / 0.3)' }}
               />
               <ReferenceLine x={0} stroke="hsl(var(--border))" />

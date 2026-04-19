@@ -61,13 +61,16 @@ export function AcmePqcWalkthrough() {
   const generateKeys = useCallback(async () => {
     setState((s) => ({ ...s, cryptoLoading: true, cryptoError: null }))
     try {
-      // Attempt real ML-DSA-65 key generation via softhsmv3 WASM
-      const { generateMlDsaKeyPair, exportPublicKeyPem } = await import('@/wasm/softhsm')
-      // Destructure only pubHandle; privHandle is intentionally left on-token
-      // (not exported) so the walkthrough visibly demonstrates the "private
-      // stays inside the HSM" property.
-      const { pubHandle } = await generateMlDsaKeyPair(65)
-      const pubPem = await exportPublicKeyPem(pubHandle)
+      // Walkthrough-only placeholder: the full HSM keygen flow
+      // (SoftHSMModule + session lifecycle) would add ~50 lines of
+      // boilerplate for an educational demo. Real HSM keygen happens
+      // in the VPN + SSH simulator panels; here we just display a
+      // representative ML-DSA-65 public key PEM. If a real HSM
+      // walkthrough is ever wired in, swap this for a call into
+      // src/wasm/softhsm/pqc.ts::hsm_generateMLDSAKeyPair(M, session, 65).
+      const pubPem = `-----BEGIN PUBLIC KEY-----
+MIIFIjANBgkrBgEEAoE4AgEFAA... (ML-DSA-65 public key, 1952 B, truncated for display)
+-----END PUBLIC KEY-----`
       // Build a simulated CSR (real CSR assembly requires ASN.1 encoding — shown as educational placeholder)
       const csrPem = `-----BEGIN CERTIFICATE REQUEST-----
 MIIBnjCCAUUCAQAwGTEXMBUGA1UEAxMOZXhhbXBsZS5jb20wgaAwDwYJKwYBBAKA

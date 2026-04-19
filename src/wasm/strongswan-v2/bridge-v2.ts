@@ -75,8 +75,16 @@ export async function runV2Selftest(
   const sigLen = mod.ccall('wasm_vpn_ml_dsa_selftest', 'number', [], [])
 
   const match = mod.ccall('wasm_vpn_ml_kem_selftest', 'number', [], [])
-  // Derive sizes from the last ml_kem_selftest event string
-  const kemLine = events.findLast((e) => e.type === 'ml_kem_selftest')?.payload ?? ''
+  // Derive sizes from the last ml_kem_selftest event string. Using a manual
+  // reverse lookup instead of Array.prototype.findLast so we don't require
+  // ES2023 lib target (tsconfig currently targets ES2022).
+  let kemLine = ''
+  for (let i = events.length - 1; i >= 0; i--) {
+    if (events[i].type === 'ml_kem_selftest') {
+      kemLine = events[i].payload
+      break
+    }
+  }
   const parseInt10 = (label: string): number => {
     const m = kemLine.match(new RegExp(`${label}=(\\d+)`))
     return m ? Number(m[1]) : 0

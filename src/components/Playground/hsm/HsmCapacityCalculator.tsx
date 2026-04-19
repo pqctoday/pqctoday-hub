@@ -547,19 +547,33 @@ export function HsmCapacityCalculator() {
       s.perAlgoHsms
         .filter((r) => r.load > 0)
         .map((r) => ({
-          Scenario: s.shortLabel,
-          Workload: s.workload,
-          'HSM profile': s.hsmProfile.name,
-          Algorithm: ALGO_LABELS[r.algo],
-          'Load (ops/s)': Math.round(r.load),
-          'HSM capacity (ops/s)': r.capacity,
-          'HSMs required': r.hsms,
-          'Deployed HSMs': s.deployedHsms,
-          'Utilization %': Math.round(r.utilizationPct),
-          Sufficient: s.sufficient ? 'Yes' : 'No',
+          scenario: s.shortLabel,
+          workload: s.workload,
+          hsmProfile: s.hsmProfile.name,
+          algorithm: ALGO_LABELS[r.algo],
+          load: Math.round(r.load),
+          capacity: r.capacity,
+          hsmsRequired: r.hsms,
+          deployedHsms: s.deployedHsms,
+          utilizationPct: Math.round(r.utilizationPct),
+          sufficient: s.sufficient ? 'Yes' : 'No',
         }))
     )
-    downloadCsv(generateCsv(rows), csvFilename('hsm-capacity'))
+    downloadCsv(
+      generateCsv(rows, [
+        { header: 'Scenario', accessor: (r) => r.scenario },
+        { header: 'Workload', accessor: (r) => r.workload },
+        { header: 'HSM profile', accessor: (r) => r.hsmProfile },
+        { header: 'Algorithm', accessor: (r) => r.algorithm },
+        { header: 'Load (ops/s)', accessor: (r) => r.load },
+        { header: 'HSM capacity (ops/s)', accessor: (r) => r.capacity },
+        { header: 'HSMs required', accessor: (r) => r.hsmsRequired },
+        { header: 'Deployed HSMs', accessor: (r) => r.deployedHsms },
+        { header: 'Utilization %', accessor: (r) => r.utilizationPct },
+        { header: 'Sufficient', accessor: (r) => r.sufficient },
+      ]),
+      csvFilename('hsm-capacity')
+    )
   }, [scenarios])
 
   return (
@@ -772,7 +786,7 @@ export function HsmCapacityCalculator() {
                 ))}
               </Bar>
               <Bar dataKey="Deployed" fill="var(--color-secondary)" radius={[3, 3, 0, 0]}>
-                {fleetChartData.map((d, i) => (
+                {fleetChartData.map((_d, i) => (
                   <Cell
                     key={i}
                     fill={scenarios[i].sufficient ? 'var(--color-secondary)' : 'var(--destructive)'}
