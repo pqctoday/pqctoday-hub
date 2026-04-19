@@ -40,6 +40,7 @@ import {
   type StrongSwanLog,
   type StrongSwanState,
 } from '@/wasm/strongswan/bridge'
+import { runV2Selftest, type V2Event } from '@/wasm/strongswan-v2/bridge-v2'
 import {
   TBSCertificate as X509TBS,
   AlgorithmIdentifier as X509AlgId,
@@ -424,6 +425,110 @@ const IKE_PHASE_CLASS: Record<IkePhase, string> = {
   IKE_INTERMEDIATE: 'bg-secondary/20 text-secondary',
   IKE_AUTH: 'bg-accent/20 text-accent-foreground',
 }
+
+/** Compact "v2 selftest" card. Renders only when VITE_WASM_VPN_V2=1 is in
+ * the env. Drives strongswan-v2.wasm through the stepwise API
+ * (wasm_vpn_ml_dsa_selftest + wasm_vpn_ml_kem_selftest) and displays the
+ * real HSM-produced byte counts. Lives alongside the legacy StrongSwanEngine
+ * flow and takes no action unless the button is clicked. */
+const V2SelftestCard: React.FC = () => {
+  const enabled = import.meta.env.VITE_WASM_VPN_V2 === '1'
+  const [running, setRunning] = useState(false)
+  const [result, setResult] = useState<{
+    mlDsaSigLen: number
+    mlKemPub: number
+    mlKemCt: number
+    mlKemSecret: number
+    mlKemMatch: boolean
+  } | null>(null)
+  const [events, setEvents] = useState<V2Event[]>([])
+  const [err, setErr] = useState<string | null>(null)
+
+  if (!enabled) return null
+
+  const onRun = async () => {
+    setRunning(true)
+    setErr(null)
+    setEvents([])
+    try {
+      const r = await runV2Selftest((e) => setEvents((prev) => [...prev, e]))
+      setResult(r)
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : String(e))
+    } finally {
+      setRunning(false)
+    }
+  }
+
+  return (
+    <div className="rounded-xl border border-primary/40 bg-primary/5 p-4 space-y-3">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <FlaskConical className="h-4 w-4 text-primary" />
+          <span className="font-semibold text-sm">
+            strongSwan v2 WASM — softhsmv3 PKCS#11 selftest
+          </span>
+          <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-primary/20 text-primary">
+            experimental
+          </span>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onRun}
+          disabled={running}
+          className="text-xs font-mono"
+        >
+          {running ? 'Running…' : 'Run ML-DSA + ML-KEM selftest'}
+        </Button>
+      </div>
+
+      {err && <p className="text-xs text-red-400 font-mono">Error: {err}</p>}
+
+      {result && (
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-xs font-mono">
+          <Stat
+            label="ML-DSA-65 sig"
+            value={`${result.mlDsaSigLen} B`}
+            ok={result.mlDsaSigLen > 3000}
+          />
+          <Stat label="ML-KEM pub" value={`${result.mlKemPub} B`} ok={result.mlKemPub === 1184} />
+          <Stat label="ML-KEM ct" value={`${result.mlKemCt} B`} ok={result.mlKemCt === 1088} />
+          <Stat
+            label="Shared secret"
+            value={`${result.mlKemSecret} B`}
+            ok={result.mlKemSecret === 32}
+          />
+          <Stat
+            label="Secrets match"
+            value={result.mlKemMatch ? 'YES' : 'NO'}
+            ok={result.mlKemMatch}
+          />
+        </div>
+      )}
+
+      {events.length > 0 && (
+        <details className="text-xs font-mono">
+          <summary className="cursor-pointer text-muted-foreground">
+            v2 event log ({events.length})
+          </summary>
+          <pre className="mt-2 max-h-40 overflow-auto bg-background/60 p-2 rounded border border-border">
+            {events.map((e) => `[${e.type}] ${e.payload}`).join('\n')}
+          </pre>
+        </details>
+      )}
+    </div>
+  )
+}
+
+const Stat: React.FC<{ label: string; value: string; ok: boolean }> = ({ label, value, ok }) => (
+  <div
+    className={`p-2 rounded border ${ok ? 'border-primary/40 bg-primary/5' : 'border-red-500/40 bg-red-500/5'}`}
+  >
+    <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</div>
+    <div className={ok ? 'text-primary' : 'text-red-400'}>{value}</div>
+  </div>
+)
 
 export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialMode }) => {
   const {
@@ -2102,6 +2207,7 @@ export const VpnSimulationPanel: React.FC<VpnSimulationPanelProps> = ({ initialM
 
   return (
     <div className="space-y-6">
+      <V2SelftestCard />
       <Tabs defaultValue="ui" className="w-full">
         <TabsList className="mb-4">
           <TabsTrigger value="ui">UI Controls</TabsTrigger>
