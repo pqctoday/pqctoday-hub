@@ -44,6 +44,38 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- **strongSwan v2 WASM — experimental softhsmv3 PKCS#11 selftest + cross-Worker
+  ML-KEM-768 handshake** (`public/wasm/strongswan-v2.{js,wasm}`,
+  `public/wasm/strongswan-v2-bob-worker.js`, `src/wasm/strongswan-v2/bridge-v2.ts`,
+  `Playground/hsm/VpnSimulationPanel.tsx`): new 11.7 MB WASM build alongside the
+  existing 12 MB baseline (`strongswan.wasm` untouched), driven by
+  [`pqctoday/pqctoday-hsm`](https://github.com/pqctoday/pqctoday-hsm)'s new
+  `strongswan-wasm-v2-shims/` scaffold. Gated entirely behind the
+  `VITE_WASM_VPN_V2=1` env flag so regular users see no change. When the flag
+  is on, a card at the top of the VPN simulator exposes two actions:
+  - **"Run ML-DSA + ML-KEM selftest"** — in-browser round-trip through softhsmv3:
+    ML-DSA-65 keygen → sign → verify (3309 B signature per FIPS 204) AND
+    ML-KEM-768 encap/decap loopback (1184 B pubkey / 1088 B ciphertext /
+    32 B shared secret per FIPS 203). All crypto is real HSM via PKCS#11
+    mechanisms `CKM_ML_DSA` (0x1D) and `CKM_ML_KEM` (0x17); same code path the
+    native sandbox fixed in `pqctoday-hsm` commit `236d9a4` (10-bug stack:
+    OID alignment, `CKA_ENCAPSULATE`/`DECAPSULATE` attributes, v3.2 function
+    signatures, role-aware length checks).
+  - **"Cross-Worker KEM handshake"** — main thread plays Alice, a dedicated
+    Web Worker plays Bob with an independent WASM instance and independent
+    softhsmv3 state. Bytes-only exchange via `postMessage` (Alice's 1184 B
+    pubkey out, Bob's 1088 B ciphertext back). Both sides derive a 32 B
+    shared secret that must match byte-for-byte. Validates the browser
+    transport primitive needed for the future full IKE_SA_INIT + IKE_AUTH
+    wire-format exchange. The Bob worker lives at
+    `public/wasm/strongswan-v2-bob-worker.js` and uses `importScripts` to
+    load the same v2 loader.
+
+  Live event log + per-metric pass/fail indicators render under both buttons.
+  The experimental label is intentional: this lands the cryptographic
+  primitives + cross-Worker transport, but the full IKE wire format (SA/KE/No
+  payloads, IKE_AUTH with ML-DSA signature) is Phase 5c, not yet integrated.
+
 - **HSM Capacity Calculator** (`src/components/Playground/hsm/HsmCapacityCalculator.tsx`,
   `HsmCapacityCalculator.test.ts`, `src/data/hsmCapacityDefaults.ts`,
   `Playground/workshopRegistry.tsx`, `PKILearning/modules/HsmPqc/index.tsx`,
