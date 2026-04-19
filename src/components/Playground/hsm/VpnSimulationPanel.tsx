@@ -40,7 +40,7 @@ import {
   type StrongSwanLog,
   type StrongSwanState,
 } from '@/wasm/strongswan/bridge'
-import { runV2Selftest, type V2Event } from '@/wasm/strongswan-v2/bridge-v2'
+import { runV2Selftest, runV2KemTwoWorker, type V2Event } from '@/wasm/strongswan-v2/bridge-v2'
 import {
   TBSCertificate as X509TBS,
   AlgorithmIdentifier as X509AlgId,
@@ -443,6 +443,13 @@ const V2SelftestCard: React.FC = () => {
   } | null>(null)
   const [events, setEvents] = useState<V2Event[]>([])
   const [err, setErr] = useState<string | null>(null)
+  const [twoWorker, setTwoWorker] = useState<{
+    alicePub: number
+    bobCt: number
+    secretLen: number
+    match: boolean
+    aliceSecretHex: string
+  } | null>(null)
 
   if (!enabled) return null
 
@@ -453,6 +460,29 @@ const V2SelftestCard: React.FC = () => {
     try {
       const r = await runV2Selftest((e) => setEvents((prev) => [...prev, e]))
       setResult(r)
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : String(e))
+    } finally {
+      setRunning(false)
+    }
+  }
+
+  const onRunTwoWorker = async () => {
+    setRunning(true)
+    setErr(null)
+    setEvents([])
+    try {
+      const r = await runV2KemTwoWorker((e) => setEvents((prev) => [...prev, e]))
+      const hex = Array.from(r.aliceSecret.slice(0, 16))
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('')
+      setTwoWorker({
+        alicePub: r.alicePub,
+        bobCt: r.bobCt,
+        secretLen: r.aliceSecret.length,
+        match: r.secretsMatch,
+        aliceSecretHex: hex,
+      })
     } catch (e) {
       setErr(e instanceof Error ? e.message : String(e))
     } finally {
@@ -472,15 +502,26 @@ const V2SelftestCard: React.FC = () => {
             experimental
           </span>
         </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={onRun}
-          disabled={running}
-          className="text-xs font-mono"
-        >
-          {running ? 'Running…' : 'Run ML-DSA + ML-KEM selftest'}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onRun}
+            disabled={running}
+            className="text-xs font-mono"
+          >
+            {running ? 'Running…' : 'Run ML-DSA + ML-KEM selftest'}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onRunTwoWorker}
+            disabled={running}
+            className="text-xs font-mono"
+          >
+            {running ? 'Running…' : 'Cross-Worker KEM handshake'}
+          </Button>
+        </div>
       </div>
 
       {err && <p className="text-xs text-red-400 font-mono">Error: {err}</p>}
@@ -504,6 +545,37 @@ const V2SelftestCard: React.FC = () => {
             value={result.mlKemMatch ? 'YES' : 'NO'}
             ok={result.mlKemMatch}
           />
+        </div>
+      )}
+
+      {twoWorker && (
+        <div className="pt-2 border-t border-primary/20 space-y-2">
+          <div className="text-[10px] uppercase tracking-wider text-muted-foreground">
+            Cross-Worker result — main thread (alice) ↔ Web Worker (bob)
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-xs font-mono">
+            <Stat
+              label="Alice pub"
+              value={`${twoWorker.alicePub} B`}
+              ok={twoWorker.alicePub === 1184}
+            />
+            <Stat label="Bob ct" value={`${twoWorker.bobCt} B`} ok={twoWorker.bobCt === 1088} />
+            <Stat
+              label="Secret length"
+              value={`${twoWorker.secretLen} B`}
+              ok={twoWorker.secretLen === 32}
+            />
+            <Stat
+              label="Secrets match"
+              value={twoWorker.match ? 'YES' : 'NO'}
+              ok={twoWorker.match}
+            />
+            <Stat
+              label="Alice secret[0..16]"
+              value={twoWorker.aliceSecretHex}
+              ok={twoWorker.match}
+            />
+          </div>
         </div>
       )}
 

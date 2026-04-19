@@ -91,3 +91,94 @@ export async function runV2Selftest(
     events,
   }
 }
+
+export interface V2TwoWorkerResult {
+  alicePub: number
+  bobCt: number
+  aliceSecret: Uint8Array
+  bobSecret: Uint8Array
+  secretsMatch: boolean
+  events: V2Event[]
+}
+
+/** Cross-Worker ML-KEM-768 handshake in the browser. Main thread plays
+ *  Alice; a dedicated Web Worker plays Bob with its own WASM instance.
+ *  Bytes-only exchange (Alice's 1184 B pubkey out; Bob's 1088 B ciphertext
+ *  in). Both derive a 32 B shared secret that must match — the browser
+ *  equivalent of the Node Phase 3d test. */
+export async function runV2KemTwoWorker(
+  onEvent: (e: V2Event) => void = () => {}
+): Promise<V2TwoWorkerResult> {
+  const events: V2Event[] = []
+  const capture = (e: V2Event) => {
+    events.push(e)
+    onEvent(e)
+  }
+
+  const alice = await loadV2(capture)
+  alice.ccall('wasm_vpn_boot', 'number', [], [])
+
+  // Alice keygen: stage pub into her WASM heap, read out.
+  const pubCap = 2048
+  const pubPtr = alice._malloc(pubCap)
+  const pubLen = alice.ccall(
+    'wasm_vpn_kem_alice_init',
+    'number',
+    ['number', 'number'],
+    [pubPtr, pubCap]
+  )
+  if (pubLen <= 0) throw new Error(`alice keygen rv=${pubLen}`)
+  const alicePub = new Uint8Array(alice.HEAPU8.subarray(pubPtr, pubPtr + pubLen)).slice(0)
+  alice._free(pubPtr)
+
+  // Spawn Bob worker, hand over Alice's pubkey.
+  const bob = new Worker('/wasm/strongswan-v2-bob-worker.js')
+  const bobPayload: { ct: Uint8Array; bobSecret: Uint8Array } = await new Promise(
+    (resolve, reject) => {
+      bob.onmessage = (ev) => {
+        const m = ev.data
+        if (m?.kind === 'event') capture({ type: `bob:${m.type}`, payload: m.payload })
+        else if (m?.kind === 'bob_ct') resolve({ ct: m.ct, bobSecret: m.bobSecret })
+        else if (m?.kind === 'bob_error') reject(new Error(`bob err ct=${m.ctLen} sec=${m.secLen}`))
+      }
+      bob.onerror = (e) => reject(new Error(`bob worker error: ${e.message}`))
+      bob.postMessage({ kind: 'alice_pub', bytes: alicePub })
+    }
+  )
+
+  // Alice decap: push Bob's ciphertext, get secret.
+  const ctPtr = alice._malloc(bobPayload.ct.length)
+  alice.HEAPU8.set(bobPayload.ct, ctPtr)
+  const decapRv = alice.ccall(
+    'wasm_vpn_kem_alice_decap',
+    'number',
+    ['number', 'number'],
+    [ctPtr, bobPayload.ct.length]
+  )
+  alice._free(ctPtr)
+  if (decapRv <= 0) throw new Error(`alice decap rv=${decapRv}`)
+
+  const secPtr = alice._malloc(64)
+  const secLen = alice.ccall(
+    'wasm_vpn_kem_get_secret',
+    'number',
+    ['number', 'number'],
+    [secPtr, 64]
+  )
+  const aliceSecret = new Uint8Array(alice.HEAPU8.subarray(secPtr, secPtr + secLen)).slice(0)
+  alice._free(secPtr)
+
+  bob.terminate()
+
+  const bobSec = bobPayload.bobSecret
+  const match = aliceSecret.length === bobSec.length && aliceSecret.every((b, i) => b === bobSec[i])
+
+  return {
+    alicePub: pubLen,
+    bobCt: bobPayload.ct.length,
+    aliceSecret,
+    bobSecret: bobSec,
+    secretsMatch: match,
+    events,
+  }
+}
