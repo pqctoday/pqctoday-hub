@@ -1,6 +1,6 @@
 {
-  "version": "3.3.8",
-  "generatedAt": "2026-04-19T23:54:09.092Z",
+  "version": "3.3.9",
+  "generatedAt": "2026-04-20T00:39:24.053Z",
   "postMessageProtocol": {
     "appToParent": [
       {
