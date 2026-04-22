@@ -11,8 +11,8 @@ var StrongswanV2 = (() => {
   return async function (moduleArg = {}) {
     var moduleRtn
 
-      // include: shell.js
-      // include: minimum_runtime_check.js
+    // include: shell.js
+    // include: minimum_runtime_check.js
     ;(function () {
       // "30.0.0" -> 300000
       function humanReadableVersionToPacked(str) {
@@ -7504,6 +7504,12 @@ var StrongswanV2 = (() => {
       makeInvalidEarlyAccess('_wasm_vpn_initiate'))
     var _wasm_vpn_get_result = (Module['_wasm_vpn_get_result'] =
       makeInvalidEarlyAccess('_wasm_vpn_get_result'))
+    var _wasm_vpn_validate_proposal = (Module['_wasm_vpn_validate_proposal'] =
+      makeInvalidEarlyAccess('_wasm_vpn_validate_proposal'))
+    var _wasm_vpn_validate_cert = (Module['_wasm_vpn_validate_cert'] =
+      makeInvalidEarlyAccess('_wasm_vpn_validate_cert'))
+    var _wasm_vpn_list_key_exchanges = (Module['_wasm_vpn_list_key_exchanges'] =
+      makeInvalidEarlyAccess('_wasm_vpn_list_key_exchanges'))
     var _main = (Module['_main'] = makeInvalidEarlyAccess('_main'))
     var _malloc = (Module['_malloc'] = makeInvalidEarlyAccess('_malloc'))
     var _ntohs = makeInvalidEarlyAccess('_ntohs')
@@ -7528,19 +7534,20 @@ var StrongswanV2 = (() => {
     var dynCall_iii = makeInvalidEarlyAccess('dynCall_iii')
     var dynCall_vi = makeInvalidEarlyAccess('dynCall_vi')
     var dynCall_vii = makeInvalidEarlyAccess('dynCall_vii')
-    var dynCall_viii = makeInvalidEarlyAccess('dynCall_viii')
+    var dynCall_vij = makeInvalidEarlyAccess('dynCall_vij')
+    var dynCall_ji = makeInvalidEarlyAccess('dynCall_ji')
     var dynCall_iiiii = makeInvalidEarlyAccess('dynCall_iiiii')
+    var dynCall_viiii = makeInvalidEarlyAccess('dynCall_viiii')
+    var dynCall_viii = makeInvalidEarlyAccess('dynCall_viii')
     var dynCall_viiiii = makeInvalidEarlyAccess('dynCall_viiiii')
     var dynCall_iiiiii = makeInvalidEarlyAccess('dynCall_iiiiii')
     var dynCall_iiiiiii = makeInvalidEarlyAccess('dynCall_iiiiiii')
     var dynCall_iiiiiiii = makeInvalidEarlyAccess('dynCall_iiiiiiii')
     var dynCall_viiiiii = makeInvalidEarlyAccess('dynCall_viiiiii')
-    var dynCall_viiii = makeInvalidEarlyAccess('dynCall_viiii')
     var dynCall_v = makeInvalidEarlyAccess('dynCall_v')
     var dynCall_viiiiiii = makeInvalidEarlyAccess('dynCall_viiiiiii')
     var dynCall_viidi = makeInvalidEarlyAccess('dynCall_viidi')
     var dynCall_diidi = makeInvalidEarlyAccess('dynCall_diidi')
-    var dynCall_vij = makeInvalidEarlyAccess('dynCall_vij')
     var dynCall_iijii = makeInvalidEarlyAccess('dynCall_iijii')
     var dynCall_iiiiiiiiii = makeInvalidEarlyAccess('dynCall_iiiiiiiiii')
     var dynCall_jii = makeInvalidEarlyAccess('dynCall_jii')
@@ -7618,6 +7625,18 @@ var StrongswanV2 = (() => {
         'missing Wasm export: wasm_vpn_get_result'
       )
       assert(
+        typeof wasmExports['wasm_vpn_validate_proposal'] != 'undefined',
+        'missing Wasm export: wasm_vpn_validate_proposal'
+      )
+      assert(
+        typeof wasmExports['wasm_vpn_validate_cert'] != 'undefined',
+        'missing Wasm export: wasm_vpn_validate_cert'
+      )
+      assert(
+        typeof wasmExports['wasm_vpn_list_key_exchanges'] != 'undefined',
+        'missing Wasm export: wasm_vpn_list_key_exchanges'
+      )
+      assert(
         typeof wasmExports['__main_argc_argv'] != 'undefined',
         'missing Wasm export: __main_argc_argv'
       )
@@ -7673,11 +7692,17 @@ var StrongswanV2 = (() => {
       assert(typeof wasmExports['dynCall_iii'] != 'undefined', 'missing Wasm export: dynCall_iii')
       assert(typeof wasmExports['dynCall_vi'] != 'undefined', 'missing Wasm export: dynCall_vi')
       assert(typeof wasmExports['dynCall_vii'] != 'undefined', 'missing Wasm export: dynCall_vii')
-      assert(typeof wasmExports['dynCall_viii'] != 'undefined', 'missing Wasm export: dynCall_viii')
+      assert(typeof wasmExports['dynCall_vij'] != 'undefined', 'missing Wasm export: dynCall_vij')
+      assert(typeof wasmExports['dynCall_ji'] != 'undefined', 'missing Wasm export: dynCall_ji')
       assert(
         typeof wasmExports['dynCall_iiiii'] != 'undefined',
         'missing Wasm export: dynCall_iiiii'
       )
+      assert(
+        typeof wasmExports['dynCall_viiii'] != 'undefined',
+        'missing Wasm export: dynCall_viiii'
+      )
+      assert(typeof wasmExports['dynCall_viii'] != 'undefined', 'missing Wasm export: dynCall_viii')
       assert(
         typeof wasmExports['dynCall_viiiii'] != 'undefined',
         'missing Wasm export: dynCall_viiiii'
@@ -7698,10 +7723,6 @@ var StrongswanV2 = (() => {
         typeof wasmExports['dynCall_viiiiii'] != 'undefined',
         'missing Wasm export: dynCall_viiiiii'
       )
-      assert(
-        typeof wasmExports['dynCall_viiii'] != 'undefined',
-        'missing Wasm export: dynCall_viiii'
-      )
       assert(typeof wasmExports['dynCall_v'] != 'undefined', 'missing Wasm export: dynCall_v')
       assert(
         typeof wasmExports['dynCall_viiiiiii'] != 'undefined',
@@ -7715,7 +7736,6 @@ var StrongswanV2 = (() => {
         typeof wasmExports['dynCall_diidi'] != 'undefined',
         'missing Wasm export: dynCall_diidi'
       )
-      assert(typeof wasmExports['dynCall_vij'] != 'undefined', 'missing Wasm export: dynCall_vij')
       assert(
         typeof wasmExports['dynCall_iijii'] != 'undefined',
         'missing Wasm export: dynCall_iijii'
@@ -7828,6 +7848,18 @@ var StrongswanV2 = (() => {
         'wasm_vpn_get_result',
         0
       )
+      _wasm_vpn_validate_proposal = Module['_wasm_vpn_validate_proposal'] = createExportWrapper(
+        'wasm_vpn_validate_proposal',
+        1
+      )
+      _wasm_vpn_validate_cert = Module['_wasm_vpn_validate_cert'] = createExportWrapper(
+        'wasm_vpn_validate_cert',
+        2
+      )
+      _wasm_vpn_list_key_exchanges = Module['_wasm_vpn_list_key_exchanges'] = createExportWrapper(
+        'wasm_vpn_list_key_exchanges',
+        0
+      )
       _main = Module['_main'] = createExportWrapper('__main_argc_argv', 2)
       _malloc = Module['_malloc'] = createExportWrapper('malloc', 1)
       _ntohs = createExportWrapper('ntohs', 1)
@@ -7854,19 +7886,20 @@ var StrongswanV2 = (() => {
       dynCall_iii = dynCalls['iii'] = createExportWrapper('dynCall_iii', 3)
       dynCall_vi = dynCalls['vi'] = createExportWrapper('dynCall_vi', 2)
       dynCall_vii = dynCalls['vii'] = createExportWrapper('dynCall_vii', 3)
-      dynCall_viii = dynCalls['viii'] = createExportWrapper('dynCall_viii', 4)
+      dynCall_vij = dynCalls['vij'] = createExportWrapper('dynCall_vij', 3)
+      dynCall_ji = dynCalls['ji'] = createExportWrapper('dynCall_ji', 2)
       dynCall_iiiii = dynCalls['iiiii'] = createExportWrapper('dynCall_iiiii', 5)
+      dynCall_viiii = dynCalls['viiii'] = createExportWrapper('dynCall_viiii', 5)
+      dynCall_viii = dynCalls['viii'] = createExportWrapper('dynCall_viii', 4)
       dynCall_viiiii = dynCalls['viiiii'] = createExportWrapper('dynCall_viiiii', 6)
       dynCall_iiiiii = dynCalls['iiiiii'] = createExportWrapper('dynCall_iiiiii', 6)
       dynCall_iiiiiii = dynCalls['iiiiiii'] = createExportWrapper('dynCall_iiiiiii', 7)
       dynCall_iiiiiiii = dynCalls['iiiiiiii'] = createExportWrapper('dynCall_iiiiiiii', 8)
       dynCall_viiiiii = dynCalls['viiiiii'] = createExportWrapper('dynCall_viiiiii', 7)
-      dynCall_viiii = dynCalls['viiii'] = createExportWrapper('dynCall_viiii', 5)
       dynCall_v = dynCalls['v'] = createExportWrapper('dynCall_v', 1)
       dynCall_viiiiiii = dynCalls['viiiiiii'] = createExportWrapper('dynCall_viiiiiii', 8)
       dynCall_viidi = dynCalls['viidi'] = createExportWrapper('dynCall_viidi', 5)
       dynCall_diidi = dynCalls['diidi'] = createExportWrapper('dynCall_diidi', 5)
-      dynCall_vij = dynCalls['vij'] = createExportWrapper('dynCall_vij', 3)
       dynCall_iijii = dynCalls['iijii'] = createExportWrapper('dynCall_iijii', 5)
       dynCall_iiiiiiiiii = dynCalls['iiiiiiiiii'] = createExportWrapper('dynCall_iiiiiiiiii', 10)
       dynCall_jii = dynCalls['jii'] = createExportWrapper('dynCall_jii', 3)
