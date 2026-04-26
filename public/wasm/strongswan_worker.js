@@ -207,12 +207,18 @@ self.onmessage = (e) => {
               })
             }
           }
-          // Inject PSK into Emscripten ENV so C getenv("WASM_PSK") picks it up
-          if (initPsk && typeof ENV !== 'undefined') {
-            ENV['WASM_PSK'] = initPsk
+          // Inject PSK + role into Emscripten ENV so C getenv() picks them up.
+          // wasm_setup_config() reads WASM_ROLE to set local/remote addresses
+          // (initiator=192.168.0.1, responder=192.168.0.2 — matches bridge.ts).
+          if (typeof ENV !== 'undefined') {
+            if (initPsk) ENV['WASM_PSK'] = initPsk
+            ENV['WASM_ROLE'] = workerRole
             self.postMessage({
               type: 'LOG',
-              payload: { level: 'info', text: `[WASM ENV] Set WASM_PSK (${initPsk.length} chars)` },
+              payload: {
+                level: 'info',
+                text: `[WASM ENV] Set WASM_ROLE=${workerRole}, WASM_PSK (${(initPsk || '').length} chars)`,
+              },
             })
           }
           // Inject strongswan.conf via ENV — library.c reads STRONGSWAN_CONF_DATA
@@ -235,6 +241,7 @@ self.onmessage = (e) => {
             if (envObj) {
               envObj['STRONGSWAN_CONF_DATA'] = confData
               envObj['WASM_PSK'] = initPsk || ''
+              envObj['WASM_ROLE'] = workerRole
               self.postMessage({
                 type: 'LOG',
                 payload: {
