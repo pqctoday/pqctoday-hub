@@ -333,6 +333,14 @@ self.onmessage = (e) => {
             // during onRuntimeInitialized which fires inside successCallback
             if (netInboxSab) self.Module._wasm_net_sab = netInboxSab
             if (pkcs11Sab) self.Module._wasm_pkcs11_sab = pkcs11Sab
+            // Local IP for inbound packets — wasm_net_receive returns this as
+            // dst_ip so charon's IKEv2 config matcher sees the correct local
+            // endpoint (192.168.0.1 or 192.168.0.2) instead of 0.0.0.0/%any.
+            // Stored in NETWORK byte order: sin_addr.s_addr is network-order
+            // per POSIX, so on a LE WASM host the JS u32 must be byte-reversed
+            // (192.168.0.1 = bytes C0 A8 00 01 = LE u32 0x0100A8C0).
+            self.Module._wasm_local_ip =
+              workerRole === 'initiator' ? 0x0100a8c0 : 0x0200a8c0
             successCallback(instance, wasmMod)
           })
           .catch((err) => self.postMessage({ type: 'ERROR', payload: `WASM setup failed: ${err}` }))
