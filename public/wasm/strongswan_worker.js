@@ -392,6 +392,106 @@ self.onmessage = (e) => {
           reply(rv, { value: value ? Array.from(value) : null, length: len })
           break
         }
+        case 'getKeyAttributes': {
+          // Batched attribute read for HsmKeyInspector. Mirrors the panel-side
+          // hsm_getKeyAttributes (src/wasm/softhsm/objects.ts:165) so the inspector
+          // can present the same fields whether the key lives in panel WASM or
+          // a strongSwan worker WASM. One missing attribute = null; one round trip.
+          const hSess = args.hSess >>> 0
+          const hObj = args.hObj >>> 0
+          const ATTR_SIZE = 12
+          // PKCS#11 v3.2 attribute IDs — must match src/wasm/softhsm/constants.ts.
+          const CKA_VALUE_LEN_ID = 0x00000161
+          const CKA_LOCAL_ID = 0x00000163
+          const CKA_NEVER_EXTRACTABLE_ID = 0x00000164
+          const CKA_ALWAYS_SENSITIVE_ID = 0x00000165
+          const CKA_KEY_GEN_MECHANISM_ID = 0x00000166
+          const CKA_HSS_KEYS_REMAINING_ID = 0x0000061c
+          const CKA_XMSS_KEYS_REMAINING_ID = 0x80000106
+          const CKA_ENCAPSULATE_ID = 0x00000633
+          const CKA_DECAPSULATE_ID = 0x00000634
+          const CKA_CHECK_VALUE_ID = 0x00000090
+          const readUlong = (type) => {
+            const tplPtr = M._malloc(ATTR_SIZE)
+            const valPtr = M._malloc(4)
+            const dv = new DataView(M.HEAPU8.buffer)
+            dv.setUint32(tplPtr + 0, type >>> 0, true)
+            dv.setUint32(tplPtr + 4, valPtr, true)
+            dv.setUint32(tplPtr + 8, 4, true)
+            const rv2 = M._C_GetAttributeValue(hSess, hObj, tplPtr, 1) >>> 0
+            const out = rv2 === 0 ? new DataView(M.HEAPU8.buffer).getUint32(valPtr, true) : null
+            M._free(valPtr)
+            M._free(tplPtr)
+            return out
+          }
+          const readBool = (type) => {
+            const tplPtr = M._malloc(ATTR_SIZE)
+            const valPtr = M._malloc(1)
+            const dv = new DataView(M.HEAPU8.buffer)
+            M.HEAPU8[valPtr] = 0
+            dv.setUint32(tplPtr + 0, type >>> 0, true)
+            dv.setUint32(tplPtr + 4, valPtr, true)
+            dv.setUint32(tplPtr + 8, 1, true)
+            const rv2 = M._C_GetAttributeValue(hSess, hObj, tplPtr, 1) >>> 0
+            const out = rv2 === 0 ? M.HEAPU8[valPtr] !== 0 : null
+            M._free(valPtr)
+            M._free(tplPtr)
+            return out
+          }
+          const readBytes = (type) => {
+            // Two-pass length probe + read. Used for CKA_CHECK_VALUE.
+            const tplPtr = M._malloc(ATTR_SIZE)
+            const dv = new DataView(M.HEAPU8.buffer)
+            dv.setUint32(tplPtr + 0, type >>> 0, true)
+            dv.setUint32(tplPtr + 4, 0, true)
+            dv.setUint32(tplPtr + 8, 0, true)
+            let rv2 = M._C_GetAttributeValue(hSess, hObj, tplPtr, 1) >>> 0
+            if (rv2 !== 0) {
+              M._free(tplPtr)
+              return null
+            }
+            const len = new DataView(M.HEAPU8.buffer).getUint32(tplPtr + 8, true)
+            const vPtr = M._malloc(len)
+            dv.setUint32(tplPtr + 4, vPtr, true)
+            dv.setUint32(tplPtr + 8, len, true)
+            rv2 = M._C_GetAttributeValue(hSess, hObj, tplPtr, 1) >>> 0
+            let out = null
+            if (rv2 === 0) {
+              out = Array.from(M.HEAPU8.subarray(vPtr, vPtr + len))
+            }
+            M._free(vPtr)
+            M._free(tplPtr)
+            return out
+          }
+          const attrs = {
+            ckClass: readUlong(CKA_CLASS),
+            ckKeyType: readUlong(CKA_KEY_TYPE),
+            ckParameterSet: readUlong(CKA_PARAMETER_SET),
+            ckKeyGenMechanism: readUlong(CKA_KEY_GEN_MECHANISM_ID),
+            ckToken: readBool(CKA_TOKEN),
+            ckPrivate: readBool(CKA_PRIVATE),
+            ckSensitive: readBool(CKA_SENSITIVE),
+            ckExtractable: readBool(CKA_EXTRACTABLE),
+            ckAlwaysSensitive: readBool(CKA_ALWAYS_SENSITIVE_ID),
+            ckNeverExtractable: readBool(CKA_NEVER_EXTRACTABLE_ID),
+            ckLocal: readBool(CKA_LOCAL_ID),
+            ckEncrypt: readBool(CKA_ENCRYPT),
+            ckDecrypt: readBool(CKA_DECRYPT),
+            ckSign: readBool(CKA_SIGN),
+            ckVerify: readBool(CKA_VERIFY),
+            ckWrap: readBool(CKA_WRAP),
+            ckUnwrap: readBool(CKA_UNWRAP),
+            ckDerive: readBool(CKA_DERIVE),
+            ckEncapsulate: readBool(CKA_ENCAPSULATE_ID),
+            ckDecapsulate: readBool(CKA_DECAPSULATE_ID),
+            ckValueLen: readUlong(CKA_VALUE_LEN_ID),
+            ckHssKeysRemaining: readUlong(CKA_HSS_KEYS_REMAINING_ID),
+            ckXmssKeysRemaining: readUlong(CKA_XMSS_KEYS_REMAINING_ID),
+            ckCheckValue: readBytes(CKA_CHECK_VALUE_ID),
+          }
+          reply(0, attrs)
+          break
+        }
         case 'C_Sign_MLDSA': {
           const hSess = args.hSess >>> 0
           const hPri = args.hPri >>> 0
