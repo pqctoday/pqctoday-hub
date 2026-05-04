@@ -1,4 +1,3 @@
-import React from 'react'
 import { ArrowRight, ArrowLeft, Copy, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { TpmLogEntry } from './TpmPlayground'

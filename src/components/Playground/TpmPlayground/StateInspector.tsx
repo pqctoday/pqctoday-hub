@@ -1,4 +1,3 @@
-import React from 'react'
 import { Database, KeyRound } from 'lucide-react'
 import type { TpmObjectEntry } from './TpmPlayground'
 

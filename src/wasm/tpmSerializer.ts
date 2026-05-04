@@ -37,7 +37,7 @@ export function toHex(buffer: Uint8Array): string {
 }
 
 // Pre-constructed command generators for demo UI
-export function serializeDemoCommand(type: string, algorithm: string): Uint8Array {
+export function serializeDemoCommand(type: string, _algorithm: string): Uint8Array {
   let payload: number[] = []
 
   switch (type) {

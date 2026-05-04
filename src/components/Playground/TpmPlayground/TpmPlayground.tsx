@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ShieldCheck, Terminal, Cpu } from 'lucide-react'
 import { initTpm } from '../../../wasm/tpmBridge'
 import { CommandBuilder } from './CommandBuilder'

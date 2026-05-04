@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { serializeDemoCommand, toHex } from '../../../wasm/tpmSerializer'
 import { executeTpmCommand } from '../../../wasm/tpmBridge'
