@@ -6,6 +6,41 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### TPM Playground — WASM compliance fix + scenario flow tab (May 3, 2026)
+
+- **11/11 V1.85 compliance checks now pass** — fixes V185-008 (CreatePrimary
+  ML-KEM-768 EK) and V185-010 (CreatePrimary ML-DSA-65 AK), which were returning
+  `RC=0x00000101` silently.
+
+  Root cause: the `__EMSCRIPTEN__` stubs in `CryptMlKemGenerateKey` and
+  `CryptMlDsaGenerateKey` called `RAND_bytes()` to populate the public key buffer.
+  With `FILESYSTEM=0`, OpenSSL has no `/dev/urandom` or `getentropy()` entropy source
+  and `RAND_bytes` returns 0 (failure) without calling `FAIL()` / setting
+  `g_inFailureMode`, so the 0x101 RC was invisible to the debug logger. Both stubs
+  now call `DRBG_Generate(rand, …)` from the TPM's own AES-256-CTR DRBG, which is
+  seeded at manufacture and verified working by V185-006/007. The fallback path
+  (no `rand` state) seeds from the key's own `d‖z` bytes via `memcpy` expansion.
+
+- **SHA-2 hash table wrappers** (`CryptHash.c`) — `HASH_DEF_TEMPLATE` stores
+  OpenSSL `SHA256_Init` / `SHA256_Update` / `SHA256_Final` (all return `int`) in
+  `HASH_METHODS` slots typed `void`. Under `EMULATE_FUNCTION_POINTER_CASTS=1` in
+  Emscripten 5.x + binaryen, return-type mismatches still trap via `call_indirect`.
+  Thin `static void` wrapper functions (`tpmHashStart_SHA256_w`, etc.) eliminate
+  the mismatch entirely for all four hash algorithms used in WASM.
+
+- **`EMULATE_FUNCTION_POINTER_CASTS=1`** added to `wasm/CMakeLists.txt` — handles
+  argument-count mismatches in remaining indirect calls (ECC, RSA big-num tables).
+
+- **`ComplianceRunner.tsx` — Scenario Flow tab** added alongside the compliance
+  checklist. Displays a 6-phase command narrative (TPM init → self-test → capability
+  discovery → entropy verification → ML-KEM-768 EK creation → ML-DSA-65 AK creation)
+  with live `→` send / `←` recv lines populated during the run, dynamic values
+  (byte counts, handles, entropy hex), and a TCG V1.85 PQC key hierarchy summary
+  table. Copy-to-clipboard works for both tabs independently.
+
+- **`tpmBridge.ts`** — added `getLastTpmErr()` / `clearLastTpmErr()` to surface
+  `printErr` output from the WASM module in the compliance runner failure detail.
+
 ### Misc — bundled from parallel session (May 3, 2026)
 
 - **Patents data refresh**: replaced `patents_04262026_r2`, `patents_05012026`,
