@@ -119,7 +119,7 @@ var PqcTpmModule = (() => {
     }
     function initRuntime() {
       runtimeInitialized = true
-      wasmExports['w']()
+      wasmExports['B']()
     }
     function postRun() {
       if (Module['postRun']) {
@@ -656,6 +656,42 @@ var PqcTpmModule = (() => {
         }
       },
     }
+    function pqc_bridge_mlkem_keygen(paramSet, seed, seedLen, pkOut, pkOutMax, skOut, skOutMax) {
+      if (!Module._pqcBridge || !Module._pqcBridge.mlkemKeygen) return -1
+      return Module._pqcBridge.mlkemKeygen(
+        paramSet,
+        seed,
+        seedLen,
+        pkOut,
+        pkOutMax,
+        skOut,
+        skOutMax
+      )
+    }
+    function pqc_bridge_mlkem_encap(paramSet, pk, pkLen, ctOut, ctOutMax, ssOut, ssOutMax) {
+      if (!Module._pqcBridge || !Module._pqcBridge.mlkemEncap) return -1
+      return Module._pqcBridge.mlkemEncap(paramSet, pk, pkLen, ctOut, ctOutMax, ssOut, ssOutMax)
+    }
+    function pqc_bridge_mlkem_decap(paramSet, sk, skLen, ct, ctLen, ssOut, ssOutMax) {
+      if (!Module._pqcBridge || !Module._pqcBridge.mlkemDecap) return -1
+      return Module._pqcBridge.mlkemDecap(paramSet, sk, skLen, ct, ctLen, ssOut, ssOutMax)
+    }
+    function pqc_bridge_mldsa_sign(paramSet, sk, skLen, digest, digestLen, sigOut, sigOutMax) {
+      if (!Module._pqcBridge || !Module._pqcBridge.mldsaSign) return -1
+      return Module._pqcBridge.mldsaSign(paramSet, sk, skLen, digest, digestLen, sigOut, sigOutMax)
+    }
+    function pqc_bridge_mldsa_keygen(paramSet, seed, seedLen, pkOut, pkOutMax, skOut, skOutMax) {
+      if (!Module._pqcBridge || !Module._pqcBridge.mldsaKeygen) return -1
+      return Module._pqcBridge.mldsaKeygen(
+        paramSet,
+        seed,
+        seedLen,
+        pkOut,
+        pkOutMax,
+        skOut,
+        skOutMax
+      )
+    }
     var _free,
       _malloc,
       _TPMLIB_ChooseTPMVersion,
@@ -705,31 +741,31 @@ var PqcTpmModule = (() => {
       wasmMemory,
       wasmTable
     function assignWasmExports(wasmExports) {
-      _free = Module['_free'] = wasmExports['y']
-      _malloc = Module['_malloc'] = wasmExports['z']
-      _TPMLIB_ChooseTPMVersion = Module['_TPMLIB_ChooseTPMVersion'] = wasmExports['A']
-      _TPMLIB_MainInit = Module['_TPMLIB_MainInit'] = wasmExports['B']
-      _TPMLIB_Terminate = Module['_TPMLIB_Terminate'] = wasmExports['C']
-      _TPMLIB_Process = Module['_TPMLIB_Process'] = wasmExports['D']
-      _TPMLIB_SetBufferSize = Module['_TPMLIB_SetBufferSize'] = wasmExports['E']
-      _TPMLIB_SetProfile = Module['_TPMLIB_SetProfile'] = wasmExports['F']
-      _TPMLIB_WasManufactured = Module['_TPMLIB_WasManufactured'] = wasmExports['G']
-      _TPMLIB_SetDebugFD = Module['_TPMLIB_SetDebugFD'] = wasmExports['H']
-      _TPMLIB_SetDebugLevel = Module['_TPMLIB_SetDebugLevel'] = wasmExports['I']
-      _tpm_wasm_startup = Module['_tpm_wasm_startup'] = wasmExports['J']
-      _tpm_wasm_process = Module['_tpm_wasm_process'] = wasmExports['K']
-      _tpm_wasm_get_nv_size = Module['_tpm_wasm_get_nv_size'] = wasmExports['L']
-      _tpm_wasm_get_nv = Module['_tpm_wasm_get_nv'] = wasmExports['M']
-      _tpm_wasm_set_nv = Module['_tpm_wasm_set_nv'] = wasmExports['N']
-      _setThrew = wasmExports['O']
-      __emscripten_stack_restore = wasmExports['P']
-      __emscripten_stack_alloc = wasmExports['Q']
-      _emscripten_stack_get_current = wasmExports['R']
+      _free = Module['_free'] = wasmExports['D']
+      _malloc = Module['_malloc'] = wasmExports['E']
+      _TPMLIB_ChooseTPMVersion = Module['_TPMLIB_ChooseTPMVersion'] = wasmExports['F']
+      _TPMLIB_MainInit = Module['_TPMLIB_MainInit'] = wasmExports['G']
+      _TPMLIB_Terminate = Module['_TPMLIB_Terminate'] = wasmExports['H']
+      _TPMLIB_Process = Module['_TPMLIB_Process'] = wasmExports['I']
+      _TPMLIB_SetBufferSize = Module['_TPMLIB_SetBufferSize'] = wasmExports['J']
+      _TPMLIB_SetProfile = Module['_TPMLIB_SetProfile'] = wasmExports['K']
+      _TPMLIB_WasManufactured = Module['_TPMLIB_WasManufactured'] = wasmExports['L']
+      _TPMLIB_SetDebugFD = Module['_TPMLIB_SetDebugFD'] = wasmExports['M']
+      _TPMLIB_SetDebugLevel = Module['_TPMLIB_SetDebugLevel'] = wasmExports['N']
+      _tpm_wasm_startup = Module['_tpm_wasm_startup'] = wasmExports['O']
+      _tpm_wasm_process = Module['_tpm_wasm_process'] = wasmExports['P']
+      _tpm_wasm_get_nv_size = Module['_tpm_wasm_get_nv_size'] = wasmExports['Q']
+      _tpm_wasm_get_nv = Module['_tpm_wasm_get_nv'] = wasmExports['R']
+      _tpm_wasm_set_nv = Module['_tpm_wasm_set_nv'] = wasmExports['S']
+      _setThrew = wasmExports['T']
+      __emscripten_stack_restore = wasmExports['U']
+      __emscripten_stack_alloc = wasmExports['V']
+      _emscripten_stack_get_current = wasmExports['W']
       dynCall_iiii = wasmExports['dynCall_iiii']
       dynCall_iiiii = wasmExports['dynCall_iiiii']
       dynCall_ii = wasmExports['dynCall_ii']
       dynCall_iii = wasmExports['dynCall_iii']
-      dynCall_viiii = wasmExports['S']
+      dynCall_viiii = wasmExports['X']
       dynCall_viii = wasmExports['dynCall_viii']
       dynCall_vi = wasmExports['dynCall_vi']
       dynCall_vii = wasmExports['dynCall_vii']
@@ -749,31 +785,36 @@ var PqcTpmModule = (() => {
       dynCall_vij = wasmExports['dynCall_vij']
       dynCall_jiji = wasmExports['dynCall_jiji']
       dynCall_iidiiii = wasmExports['dynCall_iidiiii']
-      memory = wasmMemory = wasmExports['v']
-      __indirect_function_table = wasmTable = wasmExports['x']
+      memory = wasmMemory = wasmExports['A']
+      __indirect_function_table = wasmTable = wasmExports['C']
     }
     var wasmImports = {
-      d: ___syscall_fcntl64,
-      s: ___syscall_fstat64,
-      l: ___syscall_getdents64,
+      f: ___syscall_fcntl64,
+      y: ___syscall_fstat64,
+      q: ___syscall_getdents64,
       b: ___syscall_ioctl,
-      p: ___syscall_lstat64,
-      q: ___syscall_newfstatat,
-      e: ___syscall_openat,
-      r: ___syscall_stat64,
-      j: __abort_js,
-      i: __emscripten_throw_longjmp,
-      h: _clock_time_get,
-      t: _emscripten_asm_const_int,
-      f: _emscripten_date_now,
-      k: _emscripten_resize_heap,
-      n: _environ_get,
-      o: _environ_sizes_get,
+      v: ___syscall_lstat64,
+      w: ___syscall_newfstatat,
+      g: ___syscall_openat,
+      x: ___syscall_stat64,
+      k: __abort_js,
+      o: __emscripten_throw_longjmp,
+      j: _clock_time_get,
+      l: _emscripten_asm_const_int,
+      h: _emscripten_date_now,
+      p: _emscripten_resize_heap,
+      s: _environ_get,
+      t: _environ_sizes_get,
       a: _fd_close,
-      g: _fd_read,
-      m: _fd_seek,
-      c: _fd_write,
-      u: invoke_viiii,
+      d: _fd_read,
+      r: _fd_seek,
+      e: _fd_write,
+      z: invoke_viiii,
+      i: pqc_bridge_mldsa_keygen,
+      u: pqc_bridge_mldsa_sign,
+      m: pqc_bridge_mlkem_decap,
+      n: pqc_bridge_mlkem_encap,
+      c: pqc_bridge_mlkem_keygen,
     }
     function invoke_viiii(index, a1, a2, a3, a4) {
       var sp = stackSave()
