@@ -1,6 +1,6 @@
 {
   "id": "researcher-basics-all-all-v1",
-  "title": "Researcher PQC Workshop \u2014 All Industries, All Regions",
+  "title": "Researcher PQC Workshop — All Industries, All Regions",
   "match": {
     "roles": ["researcher"],
     "proficiencies": ["basics", "expert"],
@@ -8,7 +8,7 @@
     "regions": "*"
   },
   "whatToExpect": [
-    "Cutting-edge PQC research surfaces \u2014 algorithm internals, security levels, side-channel, QKD",
+    "Cutting-edge PQC research surfaces — algorithm internals, security levels, side-channel, QKD",
     "Modules for the standards landscape, hybrid combiners, SLH-DSA, stateful signatures, QKD",
     "Page tours for /algorithms (full candidate set), /library (RFC corpus), /threats (research models)",
     "~60 minutes at normal speed"
@@ -30,7 +30,7 @@
         },
         "tasks": ["Skim the research scope", "Confirm researcher persona is set"],
         "expectedOutput": "A research reading list and current open-problem inventory.",
-        "narration": "This workshop is the research-grade tour \u2014 algorithm candidates beyond the NIST primary picks, security levels math, side-channel testing, the IETF / standards process, hash-based and stateful signatures as long-life-key alternatives, and QKD as a parallel research thread.",
+        "narration": "This workshop is the research-grade tour — algorithm candidates beyond the NIST primary picks, security levels math, side-channel testing, the IETF / standards process, hash-based and stateful signatures as long-life-key alternatives, and QKD as a parallel research thread.",
         "cues": [
           {
             "tMs": 0,
@@ -40,7 +40,7 @@
           {
             "tMs": 1500,
             "kind": "caption",
-            "text": "Researcher workshop \u2014 algorithm landscape, security models, side-channel, standards process."
+            "text": "Researcher workshop — algorithm landscape, security models, side-channel, standards process."
           },
           {
             "tMs": 180000,
@@ -81,7 +81,7 @@
           {
             "tMs": 1500,
             "kind": "caption",
-            "text": "Persona definition \u2014 four picks shape every page. Researcher drives this flow."
+            "text": "Persona definition — four picks shape every page. Researcher drives this flow."
           },
           {
             "tMs": 5000,
@@ -96,7 +96,7 @@
           {
             "tMs": 8000,
             "kind": "caption",
-            "text": "Step 1 \u2014 Track. Technical track unlocks developer, architect, ops, and researcher roles."
+            "text": "Step 1 — Track. Technical track unlocks developer, architect, ops, and researcher roles."
           },
           {
             "tMs": 10000,
@@ -111,7 +111,7 @@
           {
             "tMs": 16000,
             "kind": "caption",
-            "text": "Step 2 \u2014 Role. Researcher surfaces the modules and tools tuned to your job."
+            "text": "Step 2 — Role. Researcher surfaces the modules and tools tuned to your job."
           },
           {
             "tMs": 18000,
@@ -122,7 +122,7 @@
             "tMs": 22000,
             "kind": "callout",
             "selector": "[data-workshop-target^=\"persona-role-\"][aria-pressed=\"true\"]",
-            "label": "Researcher \u2014 pre-selected for this flow"
+            "label": "Researcher — pre-selected for this flow"
           },
           {
             "tMs": 30000,
@@ -132,7 +132,7 @@
           {
             "tMs": 32000,
             "kind": "caption",
-            "text": "Step 3 \u2014 Region. Filters timeline, leaders, threats and compliance to your jurisdiction."
+            "text": "Step 3 — Region. Filters timeline, leaders, threats and compliance to your jurisdiction."
           },
           {
             "tMs": 34000,
@@ -147,7 +147,7 @@
           {
             "tMs": 44000,
             "kind": "caption",
-            "text": "Step 4 \u2014 Industry. Surfaces industry-specific threats, frameworks and vendors."
+            "text": "Step 4 — Industry. Surfaces industry-specific threats, frameworks and vendors."
           },
           {
             "tMs": 46000,
@@ -183,7 +183,7 @@
           "chapter": "foundations",
           "title": "Research Quantum Impact",
           "estMinutes": 3,
-          "whyItMatters": "The research-grade view \u2014 open problems, candidate algorithms beyond NIST, security model evolution.",
+          "whyItMatters": "The research-grade view — open problems, candidate algorithms beyond NIST, security model evolution.",
           "page": {
             "route": "/learn/research-quantum-impact"
           },
@@ -194,7 +194,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on Research Quantum Impact",
-          "narration": "A research-focused tour of the open problems in PQC \u2014 second-round candidates, unresolved security levels, side-channel attacks, hybrid combiner provability, and the IETF process for standardising new constructions.",
+          "narration": "A research-focused tour of the open problems in PQC — second-round candidates, unresolved security levels, side-channel attacks, hybrid combiner provability, and the IETF process for standardising new constructions.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "research-quantum-impact",
@@ -209,7 +209,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Research Quantum Impact \u2014 The research-grade view \u2014 open problems, candidate algorithms beyond NIST, security model evolution."
+              "text": "Research Quantum Impact — The research-grade view — open problems, candidate algorithms beyond NIST, security model evolution."
             },
             {
               "tMs": 4000,
@@ -294,7 +294,7 @@
             {
               "tMs": 113499,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128749,
@@ -304,7 +304,7 @@
             {
               "tMs": 130249,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145499,
@@ -314,7 +314,7 @@
             {
               "tMs": 146999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162249,
@@ -324,7 +324,7 @@
             {
               "tMs": 163749,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -337,7 +337,7 @@
           "chapter": "foundations",
           "title": "PQC 101",
           "estMinutes": 3,
-          "whyItMatters": "Even researchers benefit from the canonical primer \u2014 sets vocabulary for the rest of the flow.",
+          "whyItMatters": "Even researchers benefit from the canonical primer — sets vocabulary for the rest of the flow.",
           "page": {
             "route": "/learn/pqc-101"
           },
@@ -363,7 +363,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "PQC 101 \u2014 Even researchers benefit from the canonical primer \u2014 sets vocabulary for the rest of the flow."
+              "text": "PQC 101 — Even researchers benefit from the canonical primer — sets vocabulary for the rest of the flow."
             },
             {
               "tMs": 4000,
@@ -468,7 +468,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -478,7 +478,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -488,7 +488,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -498,7 +498,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -537,7 +537,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Quantum Threats \u2014 Shor's, Grover's, and the CRQC timeline projections that pace research priorities."
+              "text": "Quantum Threats — Shor's, Grover's, and the CRQC timeline projections that pace research priorities."
             },
             {
               "tMs": 4000,
@@ -632,7 +632,7 @@
             {
               "tMs": 113499,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128749,
@@ -642,7 +642,7 @@
             {
               "tMs": 130249,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145499,
@@ -652,7 +652,7 @@
             {
               "tMs": 146999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162249,
@@ -662,7 +662,7 @@
             {
               "tMs": 163749,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -675,7 +675,7 @@
           "chapter": "foundations",
           "title": "Entropy & Randomness",
           "estMinutes": 3,
-          "whyItMatters": "TRNG vs QRNG, NIST SP 800-90B testing, ESV program \u2014 entropy is a live research area.",
+          "whyItMatters": "TRNG vs QRNG, NIST SP 800-90B testing, ESV program — entropy is a live research area.",
           "page": {
             "route": "/learn/entropy-randomness"
           },
@@ -816,7 +816,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -826,7 +826,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -836,7 +836,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -846,7 +846,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -859,7 +859,7 @@
           "chapter": "foundations",
           "title": "Standards, Certification & Compliance Bodies",
           "estMinutes": 3,
-          "whyItMatters": "NIST, ETSI, IETF, ISO \u2014 the bodies whose process you need to navigate to publish results.",
+          "whyItMatters": "NIST, ETSI, IETF, ISO — the bodies whose process you need to navigate to publish results.",
           "page": {
             "route": "/learn/standards-bodies"
           },
@@ -870,7 +870,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on Standards, Certification & Compliance Bodies",
-          "narration": "The standards landscape \u2014 NIST, ETSI, IETF, ISO/IEC, regional bodies. How drafts become RFCs, how the IETF process works, where research insights land in the formal standards stack.",
+          "narration": "The standards landscape — NIST, ETSI, IETF, ISO/IEC, regional bodies. How drafts become RFCs, how the IETF process works, where research insights land in the formal standards stack.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "standards-bodies",
@@ -885,7 +885,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Standards, Certification & Compliance Bodies \u2014 NIST, ETSI, IETF, ISO \u2014 the bodies whose process you need to navigate to publish results."
+              "text": "Standards, Certification & Compliance Bodies — NIST, ETSI, IETF, ISO — the bodies whose process you need to navigate to publish results."
             },
             {
               "tMs": 4000,
@@ -1000,7 +1000,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -1010,7 +1010,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -1020,7 +1020,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -1030,7 +1030,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1043,7 +1043,7 @@
           "chapter": "foundations",
           "title": "Hybrid Cryptography",
           "estMinutes": 3,
-          "whyItMatters": "KEM combiners, composite signatures, certificate formats \u2014 the active research area.",
+          "whyItMatters": "KEM combiners, composite signatures, certificate formats — the active research area.",
           "page": {
             "route": "/learn/hybrid-crypto"
           },
@@ -1069,7 +1069,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Hybrid Cryptography \u2014 KEM combiners, composite signatures, certificate formats \u2014 the active research area."
+              "text": "Hybrid Cryptography — KEM combiners, composite signatures, certificate formats — the active research area."
             },
             {
               "tMs": 4000,
@@ -1084,7 +1084,7 @@
             {
               "tMs": 6000,
               "kind": "caption",
-              "text": "Section 1/5: Why Hybrid Cryptography?"
+              "text": "Section 1/4: Why Hybrid Cryptography?"
             },
             {
               "tMs": 16200,
@@ -1094,7 +1094,7 @@
             {
               "tMs": 16400,
               "kind": "caption",
-              "text": "Section 2/5: Hybrid KEM Construction"
+              "text": "Section 3/4: Hybrid KEM Construction"
             },
             {
               "tMs": 26600,
@@ -1104,7 +1104,7 @@
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 3/5: Composite Signatures"
+              "text": "Section 4/4: Hybrid Signature Spectrum"
             },
             {
               "tMs": 37000,
@@ -1114,17 +1114,7 @@
             {
               "tMs": 37200,
               "kind": "caption",
-              "text": "Section 4/5: Hybrid Certificate Formats"
-            },
-            {
-              "tMs": 47400,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"standards\"]"
-            },
-            {
-              "tMs": 47600,
-              "kind": "caption",
-              "text": "Section 5/5: IETF Standards & RFC 9763"
+              "text": "Section 2/4: Hybrid Certificate Formats"
             },
             {
               "tMs": 58000,
@@ -1184,7 +1174,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -1194,7 +1184,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -1204,7 +1194,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -1214,7 +1204,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1227,7 +1217,7 @@
           "chapter": "foundations",
           "title": "PQC Testing & Validation",
           "estMinutes": 3,
-          "whyItMatters": "TVLA side-channel analysis, ACVP, FIPS 140-3 \u2014 the validation methodology stack.",
+          "whyItMatters": "TVLA side-channel analysis, ACVP, FIPS 140-3 — the validation methodology stack.",
           "page": {
             "route": "/learn/pqc-testing-validation"
           },
@@ -1238,7 +1228,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on PQC Testing & Validation",
-          "narration": "Testing PQC implementations \u2014 passive vs active testing, TVLA side-channel analysis, FIPS 140-3 and ACVP automated validation, interoperability testing across libraries.",
+          "narration": "Testing PQC implementations — passive vs active testing, TVLA side-channel analysis, FIPS 140-3 and ACVP automated validation, interoperability testing across libraries.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "pqc-testing-validation",
@@ -1398,7 +1388,7 @@
             {
               "tMs": 113496,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128746,
@@ -1408,7 +1398,7 @@
             {
               "tMs": 130246,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145496,
@@ -1418,7 +1408,7 @@
             {
               "tMs": 146996,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162246,
@@ -1428,7 +1418,7 @@
             {
               "tMs": 163746,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1441,7 +1431,7 @@
           "chapter": "foundations",
           "title": "SLH-DSA",
           "estMinutes": 3,
-          "whyItMatters": "Hash-based signatures \u2014 stateless, conservative security, the long-key-lifetime fallback.",
+          "whyItMatters": "Hash-based signatures — stateless, conservative security, the long-key-lifetime fallback.",
           "page": {
             "route": "/learn/slh-dsa"
           },
@@ -1452,7 +1442,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on SLH-DSA",
-          "narration": "SLH-DSA (formerly SPHINCS+) \u2014 the stateless hash-based signature scheme. Conservative security assumptions, large signatures, the role as a long-key-lifetime fallback when ML-DSA is questioned.",
+          "narration": "SLH-DSA (formerly SPHINCS+) — the stateless hash-based signature scheme. Conservative security assumptions, large signatures, the role as a long-key-lifetime fallback when ML-DSA is questioned.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "slh-dsa",
@@ -1467,7 +1457,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "SLH-DSA \u2014 Hash-based signatures \u2014 stateless, conservative security, the long-key-lifetime fallback."
+              "text": "SLH-DSA — Hash-based signatures — stateless, conservative security, the long-key-lifetime fallback."
             },
             {
               "tMs": 4000,
@@ -1492,7 +1482,7 @@
             {
               "tMs": 19000,
               "kind": "caption",
-              "text": "Section 2/4: WOTS+, FORS & Hypertree Architecture (\u00a73\u20135)"
+              "text": "Section 2/4: WOTS+, FORS & Hypertree Architecture (§3–5)"
             },
             {
               "tMs": 31800,
@@ -1502,7 +1492,7 @@
             {
               "tMs": 32000,
               "kind": "caption",
-              "text": "Section 3/4: Parameter Sets, Tradeoffs & FIPS 205 \u00a76"
+              "text": "Section 3/4: Parameter Sets, Tradeoffs & FIPS 205 §6"
             },
             {
               "tMs": 44800,
@@ -1562,7 +1552,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -1572,7 +1562,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -1582,7 +1572,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -1592,7 +1582,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1605,7 +1595,7 @@
           "chapter": "foundations",
           "title": "Stateful Signatures",
           "estMinutes": 3,
-          "whyItMatters": "LMS / HSS / XMSS \u2014 pre-quantum hash-based signatures with constraints worth understanding.",
+          "whyItMatters": "LMS / HSS / XMSS — pre-quantum hash-based signatures with constraints worth understanding.",
           "page": {
             "route": "/learn/stateful-signatures"
           },
@@ -1616,7 +1606,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on Stateful Signatures",
-          "narration": "Stateful hash-based signatures \u2014 LMS, HSS, XMSS. The state-management constraints, why they pre-date NIST PQC, and where they fit (firmware signing, root signing).",
+          "narration": "Stateful hash-based signatures — LMS, HSS, XMSS. The state-management constraints, why they pre-date NIST PQC, and where they fit (firmware signing, root signing).",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "stateful-signatures",
@@ -1631,7 +1621,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Stateful Signatures \u2014 LMS / HSS / XMSS \u2014 pre-quantum hash-based signatures with constraints worth understanding."
+              "text": "Stateful Signatures — LMS / HSS / XMSS — pre-quantum hash-based signatures with constraints worth understanding."
             },
             {
               "tMs": 4000,
@@ -1726,7 +1716,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -1736,7 +1726,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -1746,7 +1736,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -1756,7 +1746,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1769,7 +1759,7 @@
           "chapter": "foundations",
           "title": "Quantum Key Distribution",
           "estMinutes": 3,
-          "whyItMatters": "QKD as a parallel research thread \u2014 physics-based key distribution, deployment realities.",
+          "whyItMatters": "QKD as a parallel research thread — physics-based key distribution, deployment realities.",
           "page": {
             "route": "/learn/qkd"
           },
@@ -1780,7 +1770,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on Quantum Key Distribution",
-          "narration": "QKD as a complementary research area \u2014 BB84 protocol, post-processing, deployment explorers, integration with classical PKI/HSMs, where QKD fits and where PQC suffices.",
+          "narration": "QKD as a complementary research area — BB84 protocol, post-processing, deployment explorers, integration with classical PKI/HSMs, where QKD fits and where PQC suffices.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "qkd",
@@ -1795,7 +1785,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Quantum Key Distribution \u2014 QKD as a parallel research thread \u2014 physics-based key distribution, deployment realities."
+              "text": "Quantum Key Distribution — QKD as a parallel research thread — physics-based key distribution, deployment realities."
             },
             {
               "tMs": 4000,
@@ -1810,17 +1800,7 @@
             {
               "tMs": 6000,
               "kind": "caption",
-              "text": "Section 1/5: BB84 Protocol & Quantum Channel"
-            },
-            {
-              "tMs": 16200,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"post-processing\"]"
-            },
-            {
-              "tMs": 16400,
-              "kind": "caption",
-              "text": "Section 2/5: Error Correction & Privacy Amplification"
+              "text": "Section 1/4: BB84 Protocol & Quantum Channel"
             },
             {
               "tMs": 26600,
@@ -1830,7 +1810,7 @@
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 3/5: Global QKD Deployments & Infrastructure"
+              "text": "Section 4/4: Global QKD Deployments & Infrastructure"
             },
             {
               "tMs": 37000,
@@ -1840,7 +1820,7 @@
             {
               "tMs": 37200,
               "kind": "caption",
-              "text": "Section 4/5: QKD + Classical Protocol Integration"
+              "text": "Section 2/4: QKD + Classical Protocol Integration"
             },
             {
               "tMs": 47400,
@@ -1850,7 +1830,7 @@
             {
               "tMs": 47600,
               "kind": "caption",
-              "text": "Section 5/5: HSM Key Derivation from QKD"
+              "text": "Section 3/4: HSM Key Derivation from QKD"
             },
             {
               "tMs": 58000,
@@ -1910,7 +1890,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -1920,7 +1900,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -1930,7 +1910,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -1940,7 +1920,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1951,15 +1931,15 @@
         {
           "id": "p-algorithms",
           "chapter": "foundations",
-          "title": "/algorithms \u2014 full NIST candidate landscape",
+          "title": "/algorithms — full NIST candidate landscape",
           "estMinutes": 4,
-          "whyItMatters": "Beyond the primary picks \u2014 second-round candidates, withdrawn algorithms, security level analysis.",
+          "whyItMatters": "Beyond the primary picks — second-round candidates, withdrawn algorithms, security level analysis.",
           "page": {
             "route": "/algorithms"
           },
           "tasks": ["Open the page", "Note the key affordances called out by the workshop"],
-          "expectedOutput": "Familiarity with /algorithms \u2014 full NIST candidate landscape",
-          "narration": "The /algorithms page covers more than the NIST winners \u2014 second-round candidates, withdrawn entries, the security level analysis behind each pick.",
+          "expectedOutput": "Familiarity with /algorithms — full NIST candidate landscape",
+          "narration": "The /algorithms page covers more than the NIST winners — second-round candidates, withdrawn entries, the security level analysis behind each pick.",
           "cues": [
             {
               "tMs": 0,
@@ -1969,12 +1949,12 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "NIST PQC algorithms \u2014 primary picks plus second-round candidates and withdrawn entries."
+              "text": "NIST PQC algorithms — primary picks plus second-round candidates and withdrawn entries."
             },
             {
               "tMs": 60000,
               "kind": "caption",
-              "text": "Security level math \u2014 NIST levels 1, 3, 5 vs concrete bit-security claims."
+              "text": "Security level math — NIST levels 1, 3, 5 vs concrete bit-security claims."
             },
             {
               "tMs": 180000,
@@ -1990,14 +1970,14 @@
         {
           "id": "p-library",
           "chapter": "foundations",
-          "title": "/library \u2014 full standards and RFC corpus",
+          "title": "/library — full standards and RFC corpus",
           "estMinutes": 4,
-          "whyItMatters": "The /library is the primary-source corpus \u2014 RFCs, drafts, FIPS docs, NIST publications.",
+          "whyItMatters": "The /library is the primary-source corpus — RFCs, drafts, FIPS docs, NIST publications.",
           "page": {
             "route": "/library"
           },
           "tasks": ["Open the page", "Note the key affordances called out by the workshop"],
-          "expectedOutput": "Familiarity with /library \u2014 full standards and RFC corpus",
+          "expectedOutput": "Familiarity with /library — full standards and RFC corpus",
           "narration": "The /library is where every claim in the platform traces back to a primary source. RFCs, IETF drafts, FIPS 203/204/205, NIST IR series.",
           "cues": [
             {
@@ -2008,7 +1988,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "/library \u2014 the full standards and RFC corpus. Every PQC claim traces to a primary source."
+              "text": "/library — the full standards and RFC corpus. Every PQC claim traces to a primary source."
             },
             {
               "tMs": 60000,
@@ -2018,7 +1998,7 @@
             {
               "tMs": 180000,
               "kind": "caption",
-              "text": "IETF drafts on hybrid TLS, composite signatures, KEM combiners \u2014 track the active negotiations."
+              "text": "IETF drafts on hybrid TLS, composite signatures, KEM combiners — track the active negotiations."
             },
             {
               "tMs": 240000,
@@ -2029,15 +2009,15 @@
         {
           "id": "p-threats",
           "chapter": "foundations",
-          "title": "/threats \u2014 research-relevant threat models",
+          "title": "/threats — research-relevant threat models",
           "estMinutes": 4,
-          "whyItMatters": "HNDL, HNFL, side-channel \u2014 the threat models that motivate research priorities.",
+          "whyItMatters": "HNDL, HNFL, side-channel — the threat models that motivate research priorities.",
           "page": {
             "route": "/threats"
           },
           "tasks": ["Open the page", "Note the key affordances called out by the workshop"],
-          "expectedOutput": "Familiarity with /threats \u2014 research-relevant threat models",
-          "narration": "The /threats page enumerates the threats driving PQC research \u2014 HNDL (harvest-now-decrypt-later), HNFL (forge-later), side-channel families.",
+          "expectedOutput": "Familiarity with /threats — research-relevant threat models",
+          "narration": "The /threats page enumerates the threats driving PQC research — HNDL (harvest-now-decrypt-later), HNFL (forge-later), side-channel families.",
           "cues": [
             {
               "tMs": 0,
@@ -2047,7 +2027,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "/threats \u2014 the threat models that motivate PQC research and standards."
+              "text": "/threats — the threat models that motivate PQC research and standards."
             },
             {
               "tMs": 60000,
@@ -2076,7 +2056,7 @@
       {
         "id": "close-quiz",
         "chapter": "close",
-        "title": "Quiz \u2014 test what you learned",
+        "title": "Quiz — test what you learned",
         "estMinutes": 3,
         "whyItMatters": "A 5-to-45-minute quiz with persona-tuned topics gives you a quick measure of what stuck.",
         "page": {

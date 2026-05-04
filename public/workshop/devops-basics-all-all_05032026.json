@@ -1,6 +1,6 @@
 {
   "id": "devops-basics-all-all-v1",
-  "title": "DevOps PQC Workshop \u2014 All Industries, All Regions",
+  "title": "DevOps PQC Workshop — All Industries, All Regions",
   "match": {
     "roles": ["ops"],
     "proficiencies": ["basics", "expert"],
@@ -8,9 +8,9 @@
     "regions": "*"
   },
   "whatToExpect": [
-    "Operational PQC concerns \u2014 TLS at scale, KMS rotation, HSM migration, gateway readiness",
+    "Operational PQC concerns — TLS at scale, KMS rotation, HSM migration, gateway readiness",
     "Module walkthroughs for ops-quantum-impact, network/VPN/SSH/web-gateway PQC, KMS, HSM, platform engineering",
-    "Page tours for /timeline, /compliance, /migrate \u2014 the deadlines and vendors that pace your runbook",
+    "Page tours for /timeline, /compliance, /migrate — the deadlines and vendors that pace your runbook",
     "~55 minutes at normal speed"
   ],
   "totalEstMinutes": 49,
@@ -30,7 +30,7 @@
         },
         "tasks": ["Skim the operational scope", "Confirm ops persona is set"],
         "expectedOutput": "A ranked list of operational layers (KMS, HSM, gateways, TLS) by migration urgency.",
-        "narration": "This workshop walks DevOps through the operational layers that need PQC migration \u2014 TLS at scale, KMS key rotation, HSM hardware migration, gateway and VPN readiness. By the end you have a ranked runbook of layers to address and the vendor catalog to source replacements from.",
+        "narration": "This workshop walks DevOps through the operational layers that need PQC migration — TLS at scale, KMS key rotation, HSM hardware migration, gateway and VPN readiness. By the end you have a ranked runbook of layers to address and the vendor catalog to source replacements from.",
         "cues": [
           {
             "tMs": 0,
@@ -40,7 +40,7 @@
           {
             "tMs": 1500,
             "kind": "caption",
-            "text": "DevOps workshop \u2014 TLS at scale, KMS rotation, HSM migration, gateway readiness."
+            "text": "DevOps workshop — TLS at scale, KMS rotation, HSM migration, gateway readiness."
           },
           {
             "tMs": 180000,
@@ -66,7 +66,7 @@
         },
         "tasks": ["Confirm role = Ops", "Confirm proficiency = Beginner or Expert"],
         "expectedOutput": "Persona context locked to Ops.",
-        "narration": "Set the persona once \u2014 the platform tunes every page to operational concerns.",
+        "narration": "Set the persona once — the platform tunes every page to operational concerns.",
         "cues": [
           {
             "tMs": 0,
@@ -81,7 +81,7 @@
           {
             "tMs": 1500,
             "kind": "caption",
-            "text": "Persona definition \u2014 four picks shape every page. Ops drives this flow."
+            "text": "Persona definition — four picks shape every page. Ops drives this flow."
           },
           {
             "tMs": 5000,
@@ -96,7 +96,7 @@
           {
             "tMs": 8000,
             "kind": "caption",
-            "text": "Step 1 \u2014 Track. Technical track unlocks developer, architect, ops, and researcher roles."
+            "text": "Step 1 — Track. Technical track unlocks developer, architect, ops, and researcher roles."
           },
           {
             "tMs": 10000,
@@ -111,7 +111,7 @@
           {
             "tMs": 16000,
             "kind": "caption",
-            "text": "Step 2 \u2014 Role. Ops surfaces the modules and tools tuned to your job."
+            "text": "Step 2 — Role. Ops surfaces the modules and tools tuned to your job."
           },
           {
             "tMs": 18000,
@@ -122,7 +122,7 @@
             "tMs": 22000,
             "kind": "callout",
             "selector": "[data-workshop-target^=\"persona-role-\"][aria-pressed=\"true\"]",
-            "label": "Ops \u2014 pre-selected for this flow"
+            "label": "Ops — pre-selected for this flow"
           },
           {
             "tMs": 30000,
@@ -132,7 +132,7 @@
           {
             "tMs": 32000,
             "kind": "caption",
-            "text": "Step 3 \u2014 Region. Filters timeline, leaders, threats and compliance to your jurisdiction."
+            "text": "Step 3 — Region. Filters timeline, leaders, threats and compliance to your jurisdiction."
           },
           {
             "tMs": 34000,
@@ -147,7 +147,7 @@
           {
             "tMs": 44000,
             "kind": "caption",
-            "text": "Step 4 \u2014 Industry. Surfaces industry-specific threats, frameworks and vendors."
+            "text": "Step 4 — Industry. Surfaces industry-specific threats, frameworks and vendors."
           },
           {
             "tMs": 46000,
@@ -183,7 +183,7 @@
           "chapter": "foundations",
           "title": "Ops Quantum Impact",
           "estMinutes": 3,
-          "whyItMatters": "What changes operationally \u2014 runbooks, key rotation cadence, monitoring, vendor tickets.",
+          "whyItMatters": "What changes operationally — runbooks, key rotation cadence, monitoring, vendor tickets.",
           "page": {
             "route": "/learn/ops-quantum-impact"
           },
@@ -194,7 +194,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on Ops Quantum Impact",
-          "narration": "A DevOps-focused tour of operational changes \u2014 runbook updates, key rotation cadence shifts, new monitoring signals, and the vendor tickets you should be filing today.",
+          "narration": "A DevOps-focused tour of operational changes — runbook updates, key rotation cadence shifts, new monitoring signals, and the vendor tickets you should be filing today.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "ops-quantum-impact",
@@ -209,7 +209,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Ops Quantum Impact \u2014 What changes operationally \u2014 runbooks, key rotation cadence, monitoring, vendor tickets."
+              "text": "Ops Quantum Impact — What changes operationally — runbooks, key rotation cadence, monitoring, vendor tickets."
             },
             {
               "tMs": 4000,
@@ -294,7 +294,7 @@
             {
               "tMs": 113499,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128749,
@@ -304,7 +304,7 @@
             {
               "tMs": 130249,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145499,
@@ -314,7 +314,7 @@
             {
               "tMs": 146999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162249,
@@ -324,7 +324,7 @@
             {
               "tMs": 163749,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -337,7 +337,7 @@
           "chapter": "foundations",
           "title": "Entropy & Randomness",
           "estMinutes": 3,
-          "whyItMatters": "PQC keys eat entropy \u2014 your runtime entropy story is now on the operational radar.",
+          "whyItMatters": "PQC keys eat entropy — your runtime entropy story is now on the operational radar.",
           "page": {
             "route": "/learn/entropy-randomness"
           },
@@ -363,7 +363,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Entropy & Randomness \u2014 PQC keys eat entropy \u2014 your runtime entropy story is now on the operational radar."
+              "text": "Entropy & Randomness — PQC keys eat entropy — your runtime entropy story is now on the operational radar."
             },
             {
               "tMs": 4000,
@@ -478,7 +478,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -488,7 +488,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -498,7 +498,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -508,7 +508,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -521,7 +521,7 @@
           "chapter": "foundations",
           "title": "Crypto Agility",
           "estMinutes": 3,
-          "whyItMatters": "Operational migration patterns \u2014 feature flags, canary rollouts, rollback paths for crypto changes.",
+          "whyItMatters": "Operational migration patterns — feature flags, canary rollouts, rollback paths for crypto changes.",
           "page": {
             "route": "/learn/crypto-agility"
           },
@@ -532,7 +532,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on Crypto Agility",
-          "narration": "Crypto agility from an ops lens \u2014 how to roll out new algorithms with feature flags, canary deployments, and tested rollback paths so a bad cipher choice never bricks production.",
+          "narration": "Crypto agility from an ops lens — how to roll out new algorithms with feature flags, canary deployments, and tested rollback paths so a bad cipher choice never bricks production.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "crypto-agility",
@@ -547,7 +547,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Crypto Agility \u2014 Operational migration patterns \u2014 feature flags, canary rollouts, rollback paths for crypto changes."
+              "text": "Crypto Agility — Operational migration patterns — feature flags, canary rollouts, rollback paths for crypto changes."
             },
             {
               "tMs": 4000,
@@ -632,7 +632,7 @@
             {
               "tMs": 113499,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128749,
@@ -642,7 +642,7 @@
             {
               "tMs": 130249,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145499,
@@ -652,7 +652,7 @@
             {
               "tMs": 146999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162249,
@@ -662,7 +662,7 @@
             {
               "tMs": 163749,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -675,7 +675,7 @@
           "chapter": "foundations",
           "title": "TLS Basics",
           "estMinutes": 3,
-          "whyItMatters": "The protocol you operate at scale \u2014 handshake cost, certificate rotation, cipher policy.",
+          "whyItMatters": "The protocol you operate at scale — handshake cost, certificate rotation, cipher policy.",
           "page": {
             "route": "/learn/tls-basics"
           },
@@ -686,7 +686,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on TLS Basics",
-          "narration": "TLS in production \u2014 handshake CPU cost, certificate rotation cadence, cipher suite policy enforcement across thousands of endpoints.",
+          "narration": "TLS in production — handshake CPU cost, certificate rotation cadence, cipher suite policy enforcement across thousands of endpoints.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "tls-basics",
@@ -701,7 +701,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "TLS Basics \u2014 The protocol you operate at scale \u2014 handshake cost, certificate rotation, cipher policy."
+              "text": "TLS Basics — The protocol you operate at scale — handshake cost, certificate rotation, cipher policy."
             },
             {
               "tMs": 4000,
@@ -756,7 +756,7 @@
             {
               "tMs": 59500,
               "kind": "caption",
-              "text": "Workshop tab \u2014 hands-on, in-browser crypto demos."
+              "text": "Workshop tab — hands-on, in-browser crypto demos."
             },
             {
               "tMs": 112000,
@@ -766,7 +766,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 134333,
@@ -776,7 +776,7 @@
             {
               "tMs": 135833,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 156666,
@@ -786,7 +786,7 @@
             {
               "tMs": 158166,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -810,7 +810,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on Network Security & PQC Migration",
-          "narration": "Network security ops \u2014 how PQC affects TLS inspection (deep packet inspect on encrypted traffic), IDS/IPS signature updates, and zero-trust gateway upgrades.",
+          "narration": "Network security ops — how PQC affects TLS inspection (deep packet inspect on encrypted traffic), IDS/IPS signature updates, and zero-trust gateway upgrades.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "network-security-pqc",
@@ -940,7 +940,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -950,7 +950,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -960,7 +960,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -970,7 +970,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -983,7 +983,7 @@
           "chapter": "foundations",
           "title": "VPN/IPsec & SSH",
           "estMinutes": 3,
-          "whyItMatters": "IKEv2, SSH, WireGuard \u2014 the operational tunnels that need PQC keys.",
+          "whyItMatters": "IKEv2, SSH, WireGuard — the operational tunnels that need PQC keys.",
           "page": {
             "route": "/learn/vpn-ssh-pqc"
           },
@@ -1009,7 +1009,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "VPN/IPsec & SSH \u2014 IKEv2, SSH, WireGuard \u2014 the operational tunnels that need PQC keys."
+              "text": "VPN/IPsec & SSH — IKEv2, SSH, WireGuard — the operational tunnels that need PQC keys."
             },
             {
               "tMs": 4000,
@@ -1084,7 +1084,7 @@
             {
               "tMs": 113499,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128749,
@@ -1094,7 +1094,7 @@
             {
               "tMs": 130249,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145499,
@@ -1104,7 +1104,7 @@
             {
               "tMs": 146999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162249,
@@ -1114,7 +1114,7 @@
             {
               "tMs": 163749,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1138,7 +1138,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on HSM & PQC Operations",
-          "narration": "HSM operations under PQC \u2014 PKCS#11 v3.2 with ML-KEM/ML-DSA mechanisms, vendor migration paths (Thales, Entrust, AWS CloudHSM), FIPS 140-3 cert timelines.",
+          "narration": "HSM operations under PQC — PKCS#11 v3.2 with ML-KEM/ML-DSA mechanisms, vendor migration paths (Thales, Entrust, AWS CloudHSM), FIPS 140-3 cert timelines.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "hsm-pqc",
@@ -1168,7 +1168,7 @@
             {
               "tMs": 6500,
               "kind": "caption",
-              "text": "Section 1/4: PKCS#11 v3.2 PQC Mechanisms"
+              "text": "Section 1/3: PKCS#11 v3.2 PQC Mechanisms"
             },
             {
               "tMs": 19300,
@@ -1178,7 +1178,7 @@
             {
               "tMs": 19500,
               "kind": "caption",
-              "text": "Section 2/4: HSM Vendor Landscape"
+              "text": "Section 2/3: HSM Vendor Landscape"
             },
             {
               "tMs": 32300,
@@ -1188,17 +1188,7 @@
             {
               "tMs": 32500,
               "kind": "caption",
-              "text": "Section 3/4: Firmware Migration & Dual-Partition Strategy"
-            },
-            {
-              "tMs": 45300,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"fips\"]"
-            },
-            {
-              "tMs": 45500,
-              "kind": "caption",
-              "text": "Section 4/4: FIPS 140-3 Validation & CMVP/CAVP"
+              "text": "Section 3/3: Firmware Migration & Dual-Partition Strategy"
             },
             {
               "tMs": 58500,
@@ -1258,7 +1248,7 @@
             {
               "tMs": 114000,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 129250,
@@ -1268,7 +1258,7 @@
             {
               "tMs": 130750,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 146000,
@@ -1278,7 +1268,7 @@
             {
               "tMs": 147500,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162750,
@@ -1288,7 +1278,7 @@
             {
               "tMs": 164250,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180500,
@@ -1312,7 +1302,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on KMS & PQC Key Management",
-          "narration": "KMS operations \u2014 hierarchical key models with PQC roots, envelope encryption with hybrid wrappers, KMIP protocol updates for PQC key types, rotation policies that match new key lifetimes.",
+          "narration": "KMS operations — hierarchical key models with PQC roots, envelope encryption with hybrid wrappers, KMIP protocol updates for PQC key types, rotation policies that match new key lifetimes.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "kms-pqc",
@@ -1327,7 +1317,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "KMS & PQC Key Management \u2014 Key hierarchies, envelope encryption, hybrid wrapping, KMIP for PQC keys."
+              "text": "KMS & PQC Key Management — Key hierarchies, envelope encryption, hybrid wrapping, KMIP for PQC keys."
             },
             {
               "tMs": 4000,
@@ -1442,7 +1432,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -1452,7 +1442,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -1462,7 +1452,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -1472,7 +1462,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1496,7 +1486,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on Platform Engineering for PQC",
-          "narration": "Platform engineering for PQC \u2014 IaC modules that ship safe defaults, golden paths for new services, paved-road crypto choices so app teams can ignore the algorithm rotation underneath.",
+          "narration": "Platform engineering for PQC — IaC modules that ship safe defaults, golden paths for new services, paved-road crypto choices so app teams can ignore the algorithm rotation underneath.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "platform-eng-pqc",
@@ -1511,7 +1501,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Platform Engineering for PQC \u2014 IaC modules, golden paths, paved-road crypto choices for app teams."
+              "text": "Platform Engineering for PQC — IaC modules, golden paths, paved-road crypto choices for app teams."
             },
             {
               "tMs": 4000,
@@ -1546,7 +1536,7 @@
             {
               "tMs": 20856,
               "kind": "caption",
-              "text": "Section 3/7: Container & Artifact Signing: ECDSA \u2192 ML-DSA"
+              "text": "Section 3/7: Container & Artifact Signing: ECDSA → ML-DSA"
             },
             {
               "tMs": 28084,
@@ -1656,7 +1646,7 @@
             {
               "tMs": 113496,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128746,
@@ -1666,7 +1656,7 @@
             {
               "tMs": 130246,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145496,
@@ -1676,7 +1666,7 @@
             {
               "tMs": 146996,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162246,
@@ -1686,7 +1676,7 @@
             {
               "tMs": 163746,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1697,14 +1687,14 @@
         {
           "id": "p-timeline",
           "chapter": "foundations",
-          "title": "/timeline \u2014 operational deadline planning",
+          "title": "/timeline — operational deadline planning",
           "estMinutes": 4,
-          "whyItMatters": "The deadline runway \u2014 what your runbooks need to address and by when.",
+          "whyItMatters": "The deadline runway — what your runbooks need to address and by when.",
           "page": {
             "route": "/timeline"
           },
           "tasks": ["Open the page", "Note the key affordances called out by the workshop"],
-          "expectedOutput": "Familiarity with /timeline \u2014 operational deadline planning",
+          "expectedOutput": "Familiarity with /timeline — operational deadline planning",
           "narration": "The /timeline page lists every regulatory and standards deadline. Filter by your country to see your operational runway.",
           "cues": [
             {
@@ -1715,7 +1705,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Global PQC migration timeline \u2014 every deadline operations needs to plan against."
+              "text": "Global PQC migration timeline — every deadline operations needs to plan against."
             },
             {
               "tMs": 60000,
@@ -1736,15 +1726,15 @@
         {
           "id": "p-compliance",
           "chapter": "foundations",
-          "title": "/compliance \u2014 frameworks and operational impact",
+          "title": "/compliance — frameworks and operational impact",
           "estMinutes": 4,
-          "whyItMatters": "Which frameworks gate your operational changes \u2014 PCI, ISM, CCCS, FedRAMP.",
+          "whyItMatters": "Which frameworks gate your operational changes — PCI, ISM, CCCS, FedRAMP.",
           "page": {
             "route": "/compliance"
           },
           "tasks": ["Open the page", "Note the key affordances called out by the workshop"],
-          "expectedOutput": "Familiarity with /compliance \u2014 frameworks and operational impact",
-          "narration": "The /compliance page maps frameworks to operational requirements \u2014 what audits will check, what evidence you need to retain.",
+          "expectedOutput": "Familiarity with /compliance — frameworks and operational impact",
+          "narration": "The /compliance page maps frameworks to operational requirements — what audits will check, what evidence you need to retain.",
           "cues": [
             {
               "tMs": 0,
@@ -1754,7 +1744,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Compliance frameworks with PQC requirements \u2014 what audits will check."
+              "text": "Compliance frameworks with PQC requirements — what audits will check."
             },
             {
               "tMs": 60000,
@@ -1775,14 +1765,14 @@
         {
           "id": "p-migrate",
           "chapter": "foundations",
-          "title": "/migrate \u2014 operational vendor catalog",
+          "title": "/migrate — operational vendor catalog",
           "estMinutes": 4,
-          "whyItMatters": "Vendor products ranked by PQC readiness \u2014 pick replacements for your KMS, HSM, gateways.",
+          "whyItMatters": "Vendor products ranked by PQC readiness — pick replacements for your KMS, HSM, gateways.",
           "page": {
             "route": "/migrate"
           },
           "tasks": ["Open the page", "Note the key affordances called out by the workshop"],
-          "expectedOutput": "Familiarity with /migrate \u2014 operational vendor catalog",
+          "expectedOutput": "Familiarity with /migrate — operational vendor catalog",
           "narration": "The /migrate catalog filters vendor products by infrastructure layer. Use it to source replacements for your operational stack.",
           "cues": [
             {
@@ -1793,7 +1783,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "/migrate \u2014 operational vendor catalog. Filter by layer to find replacement candidates."
+              "text": "/migrate — operational vendor catalog. Filter by layer to find replacement candidates."
             },
             {
               "tMs": 30000,
@@ -1803,7 +1793,7 @@
             {
               "tMs": 31500,
               "kind": "caption",
-              "text": "Hardware layer \u2014 HSMs and secure elements with PQC support. Entrust nShield is the verified leader."
+              "text": "Hardware layer — HSMs and secure elements with PQC support. Entrust nShield is the verified leader."
             },
             {
               "tMs": 90000,
@@ -1813,7 +1803,7 @@
             {
               "tMs": 91500,
               "kind": "caption",
-              "text": "Network layer \u2014 gateways, firewalls, load balancers with PQC TLS support."
+              "text": "Network layer — gateways, firewalls, load balancers with PQC TLS support."
             },
             {
               "tMs": 180000,
@@ -1837,7 +1827,7 @@
       {
         "id": "close-quiz",
         "chapter": "close",
-        "title": "Quiz \u2014 test what you learned",
+        "title": "Quiz — test what you learned",
         "estMinutes": 3,
         "whyItMatters": "A 5-to-45-minute quiz with persona-tuned topics gives you a quick measure of what stuck.",
         "page": {

@@ -1,6 +1,6 @@
 {
   "id": "executive-basics-finance-and-banking-amer-apac-v1",
-  "title": "Executive PQC Workshop \u2014 Finance (US / Canada / Australia)",
+  "title": "Executive PQC Workshop — Finance (US / Canada / Australia)",
   "match": {
     "roles": ["executive"],
     "proficiencies": ["basics", "expert"],
@@ -30,7 +30,7 @@
         },
         "tasks": ["Skim the four outcomes below", "Confirm 90 minutes of uninterrupted time"],
         "expectedOutput": "Clear understanding of the four outcomes: quantum threat literacy, jurisdictional deadlines, board-ready risk report, 90-day action plan.",
-        "narration": "Welcome. In the next ninety minutes you will leave with four things: first, a plain-English understanding of why quantum computing breaks classical cryptography and what Harvest-Now Decrypt-Later already does to your data. Second, your jurisdiction\u2019s post-quantum deadlines \u2014 the dates regulators have already committed to. Third, a personalised, board-ready risk report tied to your country and to finance. And fourth, a ninety-day action plan you can hand to your CISO before close of business.",
+        "narration": "Welcome. In the next ninety minutes you will leave with four things: first, a plain-English understanding of why quantum computing breaks classical cryptography and what Harvest-Now Decrypt-Later already does to your data. Second, your jurisdiction’s post-quantum deadlines — the dates regulators have already committed to. Third, a personalised, board-ready risk report tied to your country and to finance. And fourth, a ninety-day action plan you can hand to your CISO before close of business.",
         "cues": []
       }
     ]
@@ -55,8 +55,8 @@
           "Choose your country: United States, Canada, or Australia",
           "Set industry to Finance & Banking"
         ],
-        "expectedOutput": "Persona chip shows Executive \u00b7 Basics \u00b7 your country \u00b7 Finance & Banking. The journey panel reflects the executive sequence.",
-        "narration": "Before we begin, we set four things: your role as executive, your proficiency at basics \u2014 meaning we assume no prior post-quantum exposure \u2014 your country, and your industry as finance and banking. The application personalises every page from these four signals. Pick one country now; we will swap it later if you want to compare jurisdictions.",
+        "expectedOutput": "Persona chip shows Executive · Basics · your country · Finance & Banking. The journey panel reflects the executive sequence.",
+        "narration": "Before we begin, we set four things: your role as executive, your proficiency at basics — meaning we assume no prior post-quantum exposure — your country, and your industry as finance and banking. The application personalises every page from these four signals. Pick one country now; we will swap it later if you want to compare jurisdictions.",
         "completionSignal": {
           "kind": "route-visited",
           "route": "/"
@@ -66,19 +66,19 @@
       {
         "id": "prereq-02-persona",
         "chapter": "prereq",
-        "title": "Persona Definition \u2014 How the Platform Personalises Every Page",
+        "title": "Persona Definition — How the Platform Personalises Every Page",
         "estMinutes": 2,
-        "whyItMatters": "Every recommendation, every filter, every score is derived from four persona facets: experience \u00d7 role \u00d7 region \u00d7 industry.",
+        "whyItMatters": "Every recommendation, every filter, every score is derived from four persona facets: experience × role × region × industry.",
         "page": {
           "route": "/"
         },
         "tasks": [
           "See where the persona wizard lives on the landing page",
           "Note the four facets that drive personalisation",
-          "Confirm the executive \u00b7 beginner \u00b7 Americas \u00b7 Finance combination is set"
+          "Confirm the executive · beginner · Americas · Finance combination is set"
         ],
         "expectedOutput": "A clear mental model of how the platform reshapes itself from your four picks.",
-        "narration": "PQC Today personalises every page from four persona facets \u2014 experience level, role, region, and industry. Set on this landing page, they ripple through every filter, every recommendation, every score and chart. The executive flow you are running now assumes Beginner experience, Executive role, Americas region, and Finance & Banking industry. Change any one and the entire workshop re-personalises around the new combination.",
+        "narration": "PQC Today personalises every page from four persona facets — experience level, role, region, and industry. Set on this landing page, they ripple through every filter, every recommendation, every score and chart. The executive flow you are running now assumes Beginner experience, Executive role, Americas region, and Finance & Banking industry. Change any one and the entire workshop re-personalises around the new combination.",
         "cues": [
           {
             "tMs": 0,
@@ -93,7 +93,7 @@
           {
             "tMs": 1500,
             "kind": "caption",
-            "text": "Persona definition \u2014 three picks shape every page, every recommendation, every score."
+            "text": "Persona definition — three picks shape every page, every recommendation, every score."
           },
           {
             "tMs": 5000,
@@ -103,12 +103,12 @@
           {
             "tMs": 5500,
             "kind": "caption",
-            "text": "Opening the persona wizard \u2014 it's collapsed once you've set a profile."
+            "text": "Opening the persona wizard — it's collapsed once you've set a profile."
           },
           {
             "tMs": 9000,
             "kind": "caption",
-            "text": "Step 1 \u2014 Track. Business track sets you up as an executive: governance, risk, compliance focus."
+            "text": "Step 1 — Track. Business track sets you up as an executive: governance, risk, compliance focus."
           },
           {
             "tMs": 11000,
@@ -119,7 +119,7 @@
             "tMs": 14000,
             "kind": "callout",
             "selector": "[data-workshop-target^=\"persona-track-\"][aria-pressed=\"true\"]",
-            "label": "Business \u2014 pre-selected for the executive flow"
+            "label": "Business — pre-selected for the executive flow"
           },
           {
             "tMs": 22000,
@@ -129,7 +129,7 @@
           {
             "tMs": 24000,
             "kind": "caption",
-            "text": "Step 2 \u2014 Region. Filters timeline, leaders, threats and compliance to your jurisdiction."
+            "text": "Step 2 — Region. Filters timeline, leaders, threats and compliance to your jurisdiction."
           },
           {
             "tMs": 26000,
@@ -140,7 +140,7 @@
             "tMs": 30000,
             "kind": "callout",
             "selector": "[data-workshop-target^=\"persona-region-\"][aria-pressed=\"true\"]",
-            "label": "Americas \u2014 drives the region chapter (US / CA / AU branch)"
+            "label": "Americas — drives the region chapter (US / CA / AU branch)"
           },
           {
             "tMs": 38000,
@@ -150,7 +150,7 @@
           {
             "tMs": 40000,
             "kind": "caption",
-            "text": "Step 3 \u2014 Industry. Surfaces industry-specific threats, frameworks and vendors."
+            "text": "Step 3 — Industry. Surfaces industry-specific threats, frameworks and vendors."
           },
           {
             "tMs": 42000,
@@ -161,7 +161,7 @@
             "tMs": 46000,
             "kind": "callout",
             "selector": "[data-workshop-target^=\"persona-industry-\"][aria-pressed=\"true\"]",
-            "label": "Finance & Banking \u2014 drives every industry-scoped filter"
+            "label": "Finance & Banking — drives every industry-scoped filter"
           },
           {
             "tMs": 56000,
@@ -192,7 +192,7 @@
           "chapter": "foundations",
           "title": "Orient on the Landing page",
           "estMinutes": 4,
-          "whyItMatters": "The landing page is your command centre entry point. The hero CTA and journey steps are filtered to the executive persona \u2014 there is no need to wade through developer playgrounds.",
+          "whyItMatters": "The landing page is your command centre entry point. The hero CTA and journey steps are filtered to the executive persona — there is no need to wade through developer playgrounds.",
           "page": {
             "route": "/"
           },
@@ -202,12 +202,12 @@
             "Identify the secondary CTA: Open Command Center"
           ],
           "expectedOutput": "You can describe the four executive sections without scrolling and you know where the Command Center lives.",
-          "narration": "This is the executive landing. Notice the journey is already filtered for you \u2014 no playgrounds, no algorithm trees. The primary action is Start the Journey, the secondary is Open Command Center, which we will visit at the end. For now, we follow the journey.",
+          "narration": "This is the executive landing. Notice the journey is already filtered for you — no playgrounds, no algorithm trees. The primary action is Start the Journey, the secondary is Open Command Center, which we will visit at the end. For now, we follow the journey.",
           "cues": [
             {
               "tMs": 4000,
               "kind": "caption",
-              "text": "The executive landing \u2014 journey already filtered for you."
+              "text": "The executive landing — journey already filtered for you."
             },
             {
               "tMs": 8000,
@@ -224,7 +224,7 @@
             {
               "tMs": 60000,
               "kind": "caption",
-              "text": "Secondary CTA \u2014 Open Command Center \u2014 is where we end the workshop."
+              "text": "Secondary CTA — Open Command Center — is where we end the workshop."
             },
             {
               "tMs": 65000,
@@ -273,7 +273,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Executive Quantum Impact \u2014 You need a common board-ready vocabulary: Q-Day, HNDL, CNSA 2.0 deadlines. This module gives you the five-second answers."
+              "text": "Executive Quantum Impact — You need a common board-ready vocabulary: Q-Day, HNDL, CNSA 2.0 deadlines. This module gives you the five-second answers."
             },
             {
               "tMs": 4000,
@@ -318,7 +318,7 @@
             {
               "tMs": 150999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 180000,
@@ -331,7 +331,7 @@
           "chapter": "foundations",
           "title": "Quantum Threats",
           "estMinutes": 3,
-          "whyItMatters": "Shor, Grover, CRQC, and Harvest-Now-Decrypt-Later \u2014 the four words a finance CISO will say at every PQC meeting.",
+          "whyItMatters": "Shor, Grover, CRQC, and Harvest-Now-Decrypt-Later — the four words a finance CISO will say at every PQC meeting.",
           "page": {
             "route": "/learn/quantum-threats"
           },
@@ -342,7 +342,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points from \"Quantum Threats\" you can take to your next governance conversation.",
-          "narration": "Shor, Grover, CRQC, and Harvest-Now-Decrypt-Later \u2014 the four words a finance CISO will say at every PQC meeting.",
+          "narration": "Shor, Grover, CRQC, and Harvest-Now-Decrypt-Later — the four words a finance CISO will say at every PQC meeting.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "quantum-threats",
@@ -357,7 +357,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Quantum Threats \u2014 Shor, Grover, CRQC, and Harvest-Now-Decrypt-Later \u2014 the four words a finance CISO will say at every PQC meeting."
+              "text": "Quantum Threats — Shor, Grover, CRQC, and Harvest-Now-Decrypt-Later — the four words a finance CISO will say at every PQC meeting."
             },
             {
               "tMs": 4000,
@@ -402,7 +402,7 @@
             {
               "tMs": 150999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 180000,
@@ -441,7 +441,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "PQC Risk Management \u2014 How to put quantum risk on your enterprise risk register, score it on a heatmap, and turn it into a board-level KPI."
+              "text": "PQC Risk Management — How to put quantum risk on your enterprise risk register, score it on a heatmap, and turn it into a board-level KPI."
             },
             {
               "tMs": 4000,
@@ -486,7 +486,7 @@
             {
               "tMs": 150999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 180000,
@@ -525,7 +525,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Compliance & Regulatory Strategy \u2014 Map your jurisdiction's PQC deadlines (NIST 2030/2035, CCCS 2031/2035, ASD end-2030) to your audit calendar."
+              "text": "Compliance & Regulatory Strategy — Map your jurisdiction's PQC deadlines (NIST 2030/2035, CCCS 2031/2035, ASD end-2030) to your audit calendar."
             },
             {
               "tMs": 4000,
@@ -570,7 +570,7 @@
             {
               "tMs": 150999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 180000,
@@ -609,7 +609,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "PQC Business Case \u2014 ROI, breach cost modelling, and the three slides every CFO will ask for before signing the budget."
+              "text": "PQC Business Case — ROI, breach cost modelling, and the three slides every CFO will ask for before signing the budget."
             },
             {
               "tMs": 4000,
@@ -654,7 +654,7 @@
             {
               "tMs": 150999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 180000,
@@ -693,7 +693,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "PQC Governance & Policy \u2014 Who owns cryptography, who approves exceptions, who reports to the board. The org-chart questions PQC forces you to answer."
+              "text": "PQC Governance & Policy — Who owns cryptography, who approves exceptions, who reports to the board. The org-chart questions PQC forces you to answer."
             },
             {
               "tMs": 4000,
@@ -738,7 +738,7 @@
             {
               "tMs": 150999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 180000,
@@ -777,7 +777,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Vendor & Supply Chain Risk \u2014 Your vendors' PQC roadmap IS your PQC roadmap. Contract language, certification deadlines, and the readiness scorecard you should send to every supplier."
+              "text": "Vendor & Supply Chain Risk — Your vendors' PQC roadmap IS your PQC roadmap. Contract language, certification deadlines, and the readiness scorecard you should send to every supplier."
             },
             {
               "tMs": 4000,
@@ -832,7 +832,7 @@
             {
               "tMs": 151000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 180000,
@@ -845,7 +845,7 @@
           "chapter": "foundations",
           "title": "Migration Program Mgmt",
           "estMinutes": 3,
-          "whyItMatters": "Treat PQC migration like Y2K \u2014 a 3-year programme with stakeholders, milestones, and a deployment plan, not a one-quarter project.",
+          "whyItMatters": "Treat PQC migration like Y2K — a 3-year programme with stakeholders, milestones, and a deployment plan, not a one-quarter project.",
           "page": {
             "route": "/learn/migration-program"
           },
@@ -856,7 +856,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points from \"Migration Program Mgmt\" you can take to your next governance conversation.",
-          "narration": "Treat PQC migration like Y2K \u2014 a 3-year programme with stakeholders, milestones, and a deployment plan, not a one-quarter project.",
+          "narration": "Treat PQC migration like Y2K — a 3-year programme with stakeholders, milestones, and a deployment plan, not a one-quarter project.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "migration-program",
@@ -871,7 +871,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Migration Program Mgmt \u2014 Treat PQC migration like Y2K \u2014 a 3-year programme with stakeholders, milestones, and a deployment plan, not a one-quarter project."
+              "text": "Migration Program Mgmt — Treat PQC migration like Y2K — a 3-year programme with stakeholders, milestones, and a deployment plan, not a one-quarter project."
             },
             {
               "tMs": 4000,
@@ -926,7 +926,7 @@
             {
               "tMs": 151000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 180000,
@@ -949,7 +949,7 @@
             "Note References standards"
           ],
           "expectedOutput": "Module-level talking points on Data & Asset Sensitivity",
-          "narration": "Before you can prioritise a multi-year PQC migration, you need to know which assets carry the highest stakes. Classification + sensitivity scoring give you the prioritised list the board needs to see \u2014 what is HNDL-exposed, what is regulator-bound, what is high-blast-radius.",
+          "narration": "Before you can prioritise a multi-year PQC migration, you need to know which assets carry the highest stakes. Classification + sensitivity scoring give you the prioritised list the board needs to see — what is HNDL-exposed, what is regulator-bound, what is high-blast-radius.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "data-asset-sensitivity",
@@ -964,7 +964,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Data & Asset Sensitivity \u2014 Classify what you're protecting before you spend a dollar migrating it. The board will ask which crown-jewel data falls under HNDL exposure."
+              "text": "Data & Asset Sensitivity — Classify what you're protecting before you spend a dollar migrating it. The board will ask which crown-jewel data falls under HNDL exposure."
             },
             {
               "tMs": 4000,
@@ -979,7 +979,7 @@
             {
               "tMs": 6000,
               "kind": "caption",
-              "text": "Section 1/5: Data Asset Classification"
+              "text": "Section 1/3: Data Asset Classification"
             },
             {
               "tMs": 34200,
@@ -989,7 +989,7 @@
             {
               "tMs": 34400,
               "kind": "caption",
-              "text": "Section 2/5: Compliance Mapping (GDPR, HIPAA, DORA, NIS2)"
+              "text": "Section 2/3: Compliance Mapping (GDPR, HIPAA, DORA, NIS2)"
             },
             {
               "tMs": 62600,
@@ -999,27 +999,7 @@
             {
               "tMs": 62800,
               "kind": "caption",
-              "text": "Section 3/5: Risk Methodology (NIST RMF, ISO 27005, FAIR)"
-            },
-            {
-              "tMs": 91000,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"scoring\"]"
-            },
-            {
-              "tMs": 91200,
-              "kind": "caption",
-              "text": "Section 4/5: PQC Sensitivity Scoring"
-            },
-            {
-              "tMs": 119400,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"priority\"]"
-            },
-            {
-              "tMs": 119600,
-              "kind": "caption",
-              "text": "Section 5/5: Migration Priority Map"
+              "text": "Section 3/3: Risk Methodology (NIST RMF, ISO 27005, FAIR)"
             },
             {
               "tMs": 149500,
@@ -1029,7 +1009,7 @@
             {
               "tMs": 151000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 180000,
@@ -1042,7 +1022,7 @@
           "chapter": "foundations",
           "title": "Standards, Certification & Compliance Bodies",
           "estMinutes": 3,
-          "whyItMatters": "Know which body publishes, which certifies, which enforces \u2014 so when a regulator cites a framework, you know its authority and timeline.",
+          "whyItMatters": "Know which body publishes, which certifies, which enforces — so when a regulator cites a framework, you know its authority and timeline.",
           "page": {
             "route": "/learn/standards-bodies"
           },
@@ -1067,7 +1047,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Standards, Certification & Compliance Bodies \u2014 Know which body publishes, which certifies, which enforces \u2014 so when a regulator cites a framework, you know its authority and timeline."
+              "text": "Standards, Certification & Compliance Bodies — Know which body publishes, which certifies, which enforces — so when a regulator cites a framework, you know its authority and timeline."
             },
             {
               "tMs": 4000,
@@ -1132,7 +1112,7 @@
             {
               "tMs": 151000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 180000,
@@ -1145,7 +1125,7 @@
           "chapter": "foundations",
           "title": "Source the standards",
           "estMinutes": 6,
-          "whyItMatters": "Your CISO will ask \"what document says that?\". The library gives you the primary sources \u2014 NIST FIPS, CCCS ITSM, ASD ISM \u2014 without leaving the app.",
+          "whyItMatters": "Your CISO will ask \"what document says that?\". The library gives you the primary sources — NIST FIPS, CCCS ITSM, ASD ISM — without leaving the app.",
           "page": {
             "route": "/library"
           },
@@ -1156,7 +1136,7 @@
             "Bookmark NIST IR 8547 (deprecation timeline)"
           ],
           "expectedOutput": "Three documents bookmarked from the executive-relevant categories.",
-          "narration": "These are the primary sources. FIPS 203 standardises ML-KEM, the key encapsulation mechanism that replaces RSA key exchange. FIPS 204 standardises ML-DSA, the signature algorithm. NIST Internal Report 8547 is the deprecation calendar \u2014 it is the document your auditors will cite when they ask why you are still running ECDSA in 2031.",
+          "narration": "These are the primary sources. FIPS 203 standardises ML-KEM, the key encapsulation mechanism that replaces RSA key exchange. FIPS 204 standardises ML-DSA, the signature algorithm. NIST Internal Report 8547 is the deprecation calendar — it is the document your auditors will cite when they ask why you are still running ECDSA in 2031.",
           "completionSignal": {
             "kind": "bookmark-added",
             "surface": "library"
@@ -1165,7 +1145,7 @@
             {
               "tMs": 4000,
               "kind": "caption",
-              "text": "Primary sources \u2014 what your CISO will cite when asked \"what document says that?\"."
+              "text": "Primary sources — what your CISO will cite when asked \"what document says that?\"."
             },
             {
               "tMs": 60000,
@@ -1180,7 +1160,7 @@
             {
               "tMs": 240000,
               "kind": "caption",
-              "text": "NIST IR 8547 \u2014 the deprecation calendar your auditors will cite in 2031."
+              "text": "NIST IR 8547 — the deprecation calendar your auditors will cite in 2031."
             },
             {
               "tMs": 300000,
@@ -1212,7 +1192,7 @@
             "Answer four to six questions about data sensitivity, retention, and existing crypto inventory"
           ],
           "expectedOutput": "Assessment status changes to complete; report becomes available.",
-          "narration": "Quick mode is calibrated for executives \u2014 six questions, two minutes. The questions are about data sensitivity, retention horizon, and whether you already have a cryptographic inventory. The output is a risk profile that we use as the input to the next page.",
+          "narration": "Quick mode is calibrated for executives — six questions, two minutes. The questions are about data sensitivity, retention horizon, and whether you already have a cryptographic inventory. The output is a risk profile that we use as the input to the next page.",
           "completionSignal": {
             "kind": "assessment-complete"
           },
@@ -1220,7 +1200,7 @@
             {
               "tMs": 2000,
               "kind": "caption",
-              "text": "Quick mode \u2014 six questions, calibrated for executives."
+              "text": "Quick mode — six questions, calibrated for executives."
             },
             {
               "tMs": 4000,
@@ -1235,7 +1215,7 @@
             {
               "tMs": 12000,
               "kind": "caption",
-              "text": "Step 1: Industry \u2014 pre-filled from your persona."
+              "text": "Step 1: Industry — pre-filled from your persona."
             },
             {
               "tMs": 16000,
@@ -1245,7 +1225,7 @@
             {
               "tMs": 22000,
               "kind": "caption",
-              "text": "Step 2: Country \u2014 pre-filled."
+              "text": "Step 2: Country — pre-filled."
             },
             {
               "tMs": 26000,
@@ -1255,7 +1235,7 @@
             {
               "tMs": 32000,
               "kind": "caption",
-              "text": "Step 3: Crypto inventory \u2014 picking 'I'm not sure'."
+              "text": "Step 3: Crypto inventory — picking 'I'm not sure'."
             },
             {
               "tMs": 36000,
@@ -1270,7 +1250,7 @@
             {
               "tMs": 50000,
               "kind": "caption",
-              "text": "Step 4: Data sensitivity \u2014 picking 'I'm not sure'."
+              "text": "Step 4: Data sensitivity — picking 'I'm not sure'."
             },
             {
               "tMs": 54000,
@@ -1285,7 +1265,7 @@
             {
               "tMs": 68000,
               "kind": "caption",
-              "text": "Step 5: Compliance frameworks \u2014 picking 'I'm not sure'."
+              "text": "Step 5: Compliance frameworks — picking 'I'm not sure'."
             },
             {
               "tMs": 72000,
@@ -1300,7 +1280,7 @@
             {
               "tMs": 86000,
               "kind": "caption",
-              "text": "Step 6: Migration status \u2014 picking 'I'm not sure'."
+              "text": "Step 6: Migration status — picking 'I'm not sure'."
             },
             {
               "tMs": 90000,
@@ -1315,7 +1295,7 @@
             {
               "tMs": 104000,
               "kind": "caption",
-              "text": "Step 7: Infrastructure \u2014 picking 'I'm not sure'."
+              "text": "Step 7: Infrastructure — picking 'I'm not sure'."
             },
             {
               "tMs": 108000,
@@ -1330,7 +1310,7 @@
             {
               "tMs": 122000,
               "kind": "caption",
-              "text": "Step 8: Timeline pressure \u2014 picking 'I'm not sure'."
+              "text": "Step 8: Timeline pressure — picking 'I'm not sure'."
             },
             {
               "tMs": 126000,
@@ -1350,7 +1330,7 @@
             {
               "tMs": 200000,
               "kind": "caption",
-              "text": "Risk profile complete \u2014 your personalised report is live."
+              "text": "Risk profile complete — your personalised report is live."
             },
             {
               "tMs": 320000,
@@ -1378,7 +1358,7 @@
             "Generate a shareable URL"
           ],
           "expectedOutput": "Shareable report URL is visible; you can describe the top five actions in one breath.",
-          "narration": "Notice what is hidden: algorithm migration tables, mitigation deep-dives. Those are not for you. What is shown is a five-action shortlist tied to your jurisdiction. The share button generates a token-bearing URL \u2014 not a PDF \u2014 that your board secretary can embed in the next agenda. PDFs go stale; this URL re-renders against current data.",
+          "narration": "Notice what is hidden: algorithm migration tables, mitigation deep-dives. Those are not for you. What is shown is a five-action shortlist tied to your jurisdiction. The share button generates a token-bearing URL — not a PDF — that your board secretary can embed in the next agenda. PDFs go stale; this URL re-renders against current data.",
           "cues": [
             {
               "tMs": 0,
@@ -1388,7 +1368,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Your personalised PQC report \u2014 board-pack format, hides developer-only sections."
+              "text": "Your personalised PQC report — board-pack format, hides developer-only sections."
             },
             {
               "tMs": 4000,
@@ -1398,7 +1378,7 @@
             {
               "tMs": 4200,
               "kind": "caption",
-              "text": "Section 1/8: Key Findings \u2014 your personalised top-line risks, ranked."
+              "text": "Section 1/8: Key Findings — your personalised top-line risks, ranked."
             },
             {
               "tMs": 29000,
@@ -1408,7 +1388,7 @@
             {
               "tMs": 29200,
               "kind": "caption",
-              "text": "Section 2/8: Risk Score \u2014 quantified exposure based on your inputs."
+              "text": "Section 2/8: Risk Score — quantified exposure based on your inputs."
             },
             {
               "tMs": 54000,
@@ -1418,7 +1398,7 @@
             {
               "tMs": 54200,
               "kind": "caption",
-              "text": "Section 3/8: Executive Summary \u2014 the 60-second board-pack narrative."
+              "text": "Section 3/8: Executive Summary — the 60-second board-pack narrative."
             },
             {
               "tMs": 79000,
@@ -1428,7 +1408,7 @@
             {
               "tMs": 79200,
               "kind": "caption",
-              "text": "Section 4/8: HNDL / HNFL \u2014 what an attacker can harvest today and decrypt later."
+              "text": "Section 4/8: HNDL / HNFL — what an attacker can harvest today and decrypt later."
             },
             {
               "tMs": 104000,
@@ -1438,7 +1418,7 @@
             {
               "tMs": 104200,
               "kind": "caption",
-              "text": "Section 5/8: Algorithm Migration \u2014 which classical algorithms need replacing first."
+              "text": "Section 5/8: Algorithm Migration — which classical algorithms need replacing first."
             },
             {
               "tMs": 129000,
@@ -1448,7 +1428,7 @@
             {
               "tMs": 129200,
               "kind": "caption",
-              "text": "Section 6/8: Compliance Impact \u2014 frameworks that gate your jurisdiction."
+              "text": "Section 6/8: Compliance Impact — frameworks that gate your jurisdiction."
             },
             {
               "tMs": 154000,
@@ -1458,7 +1438,7 @@
             {
               "tMs": 154200,
               "kind": "caption",
-              "text": "Section 7/8: Recommended Actions \u2014 the 5-action shortlist tied to your country."
+              "text": "Section 7/8: Recommended Actions — the 5-action shortlist tied to your country."
             },
             {
               "tMs": 179000,
@@ -1468,12 +1448,12 @@
             {
               "tMs": 179200,
               "kind": "caption",
-              "text": "Section 8/8: Migration Roadmap \u2014 your 3-year phased plan."
+              "text": "Section 8/8: Migration Roadmap — your 3-year phased plan."
             },
             {
               "tMs": 208000,
               "kind": "caption",
-              "text": "Share button generates a token-bearing URL \u2014 re-renders against current data, no PDFs going stale."
+              "text": "Share button generates a token-bearing URL — re-renders against current data, no PDFs going stale."
             },
             {
               "tMs": 240000,
@@ -1485,13 +1465,13 @@
     },
     {
       "id": "action",
-      "title": "Action plan \u2014 Command Center CSWP 39 walk-through",
+      "title": "Action plan — Command Center CSWP 39 walk-through",
       "estMinutes": 40,
       "steps": [
         {
           "id": "a1a-gov-business-and-threats",
           "chapter": "action",
-          "title": "Governance \u2014 Business case + Threats (CSWP \u00a75.1)",
+          "title": "Governance — Business case + Threats (CSWP §5.1)",
           "estMinutes": 5,
           "whyItMatters": "Before policy you need executive narrative. ROI, board deck, and a CRQC-scenario walk give the C-suite a defensible reason to fund migration.",
           "page": {
@@ -1575,7 +1555,7 @@
             {
               "tMs": 204000,
               "kind": "caption",
-              "text": "A scripted what-if for \"the day a CRQC is announced\" \u2014 your incident response, day zero."
+              "text": "A scripted what-if for \"the day a CRQC is announced\" — your incident response, day zero."
             },
             {
               "tMs": 298000,
@@ -1591,7 +1571,7 @@
         {
           "id": "a1b-gov-standards-and-regulations",
           "chapter": "action",
-          "title": "Governance \u2014 Standards & Regulations (CSWP \u00a75.1)",
+          "title": "Governance — Standards & Regulations (CSWP §5.1)",
           "estMinutes": 5,
           "whyItMatters": "Policy authority comes from external standards. The audit checklist and compliance docs make your governance defensible to regulators and external auditors.",
           "page": {
@@ -1691,9 +1671,9 @@
         {
           "id": "a1c-gov-crypto-policies",
           "chapter": "action",
-          "title": "Governance \u2014 Crypto Policies (CSWP \u00a75.3)",
+          "title": "Governance — Crypto Policies (CSWP §5.3)",
           "estMinutes": 5,
-          "whyItMatters": "The policy layer itself. Without a published mandate, every later artifact stalls in committee. CSWP \u00a75.3 is the heart of governance.",
+          "whyItMatters": "The policy layer itself. Without a published mandate, every later artifact stalls in committee. CSWP §5.3 is the heart of governance.",
           "page": {
             "route": "/business",
             "query": {
@@ -1707,7 +1687,7 @@
             "Generate the Stakeholder Comms"
           ],
           "expectedOutput": "3 governance artifacts created.",
-          "narration": "The policy layer itself. Without a published mandate, every later artifact stalls in committee. CSWP \u00a75.3 is the heart of governance. Policy Draft, RACI Matrix, Stakeholder Comms.",
+          "narration": "The policy layer itself. Without a published mandate, every later artifact stalls in committee. CSWP §5.3 is the heart of governance. Policy Draft, RACI Matrix, Stakeholder Comms.",
           "cues": [
             {
               "tMs": 0,
@@ -1720,7 +1700,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "The policy layer itself. Without a published mandate, every later artifact stalls in committee. CSWP \u00a75.3 is the heart of governance."
+              "text": "The policy layer itself. Without a published mandate, every later artifact stalls in committee. CSWP §5.3 is the heart of governance."
             },
             {
               "tMs": 3000,
@@ -1760,7 +1740,7 @@
             {
               "tMs": 108000,
               "kind": "caption",
-              "text": "PQC champion responsible \u00b7 CISO accountable \u00b7 CRO consulted \u00b7 Board sponsor informed. Names, not roles."
+              "text": "PQC champion responsible · CISO accountable · CRO consulted · Board sponsor informed. Names, not roles."
             },
             {
               "tMs": 198000,
@@ -1791,7 +1771,7 @@
         {
           "id": "a1d-gov-supply-chain",
           "chapter": "action",
-          "title": "Governance \u2014 Supply Chain (CSWP \u00a75.4)",
+          "title": "Governance — Supply Chain (CSWP §5.4)",
           "estMinutes": 5,
           "whyItMatters": "Your vendors' PQC roadmap IS your PQC roadmap. The scorecard, contract clause, and supply chain matrix close the loop on third-party risk.",
           "page": {
@@ -1891,7 +1871,7 @@
         {
           "id": "a1e-gov-architecture",
           "chapter": "action",
-          "title": "Governance \u2014 Crypto Architecture (CSWP \u00a75.1)",
+          "title": "Governance — Crypto Architecture (CSWP §5.1)",
           "estMinutes": 2,
           "whyItMatters": "A single architectural diagram of your cryptographic estate. The picture every executive review starts with.",
           "page": {
@@ -1943,7 +1923,7 @@
             {
               "tMs": 15000,
               "kind": "caption",
-              "text": "Layered diagram: applications \u2192 libraries \u2192 HSMs \u2192 vendors. Annotated with classical and post-quantum algorithms."
+              "text": "Layered diagram: applications → libraries → HSMs → vendors. Annotated with classical and post-quantum algorithms."
             },
             {
               "tMs": 117000,
@@ -1959,7 +1939,7 @@
         {
           "id": "a1f-gov-kpis",
           "chapter": "action",
-          "title": "Governance \u2014 KPIs & Tools Audit (cross-zone)",
+          "title": "Governance — KPIs & Tools Audit (cross-zone)",
           "estMinutes": 3,
           "whyItMatters": "Governance feeds risk-management dashboards. The KPI dashboard and management tools audit make your migration progress visible quarterly.",
           "page": {
@@ -2043,9 +2023,9 @@
         {
           "id": "a2-cswp-assets",
           "chapter": "action",
-          "title": "CSWP 39 \u00a75.2 \u2014 Assets zone (CBOM)",
+          "title": "CSWP 39 §5.2 — Assets zone (CBOM)",
           "estMinutes": 5,
-          "whyItMatters": "You cannot migrate cryptography you do not know you have. The Assets zone is where the Cryptographic Bill of Materials lives \u2014 code, libraries, applications, files, protocols, systems. CSWP.39 \u00a75.2 is the inventory pillar.",
+          "whyItMatters": "You cannot migrate cryptography you do not know you have. The Assets zone is where the Cryptographic Bill of Materials lives — code, libraries, applications, files, protocols, systems. CSWP.39 §5.2 is the inventory pillar.",
           "page": {
             "route": "/business",
             "query": {
@@ -2058,15 +2038,15 @@
             "Generate the vendor-letter campaign (asks every crypto vendor for their PQC roadmap)"
           ],
           "expectedOutput": "CBOM template + vendor-letter campaign downloaded.",
-          "narration": "The Assets zone is the cryptographic bill of materials. Six classes \u2014 code, libraries, applications, files, protocols, systems \u2014 every one of which can hide a cryptographic dependency. The CBOM template is pre-populated with the six classes; your team fills in the rows over four to six weeks using existing CMDB and SBOM tooling. The vendor-letter campaign sends a single templated request to every cryptographic vendor in your inventory: tell us your post-quantum roadmap. The replies are themselves a CBOM input.",
+          "narration": "The Assets zone is the cryptographic bill of materials. Six classes — code, libraries, applications, files, protocols, systems — every one of which can hide a cryptographic dependency. The CBOM template is pre-populated with the six classes; your team fills in the rows over four to six weeks using existing CMDB and SBOM tooling. The vendor-letter campaign sends a single templated request to every cryptographic vendor in your inventory: tell us your post-quantum roadmap. The replies are themselves a CBOM input.",
           "cues": []
         },
         {
           "id": "a3-cswp-risk",
           "chapter": "action",
-          "title": "CSWP 39 \u00a76.5 \u2014 Data-Centric Risk Management zone",
+          "title": "CSWP 39 §6.5 — Data-Centric Risk Management zone",
           "estMinutes": 5,
-          "whyItMatters": "This is the executive zone. The Information Repository feeds the Risk Analysis Engine, which produces the KPI dashboards your board will see. If your risk register does not have HNDL on it, your auditor will add it next quarter \u2014 on their framing, not yours.",
+          "whyItMatters": "This is the executive zone. The Information Repository feeds the Risk Analysis Engine, which produces the KPI dashboards your board will see. If your risk register does not have HNDL on it, your auditor will add it next quarter — on their framing, not yours.",
           "page": {
             "route": "/business",
             "query": {
@@ -2080,15 +2060,15 @@
             "Generate the quarterly board report template"
           ],
           "expectedOutput": "Risk register entry + KPI dashboard + board report template downloaded.",
-          "narration": "Section six-point-five of CSWP 39 is the maturity assessment. This zone is where the work of every other zone becomes visible to executives. Three KPIs matter: the percentage of your cryptographic estate covered by FIPS 140-3 certified modules, the share of your active certificates that are post-quantum-ready or hybrid, and the percentage of your top-twenty cryptographic vendors with a published PQC roadmap. The dashboard renders these against your jurisdictional deadline \u2014 2030 for ASD, 2031 for CCCS high-priority, 2035 for NIST disallow.",
+          "narration": "Section six-point-five of CSWP 39 is the maturity assessment. This zone is where the work of every other zone becomes visible to executives. Three KPIs matter: the percentage of your cryptographic estate covered by FIPS 140-3 certified modules, the share of your active certificates that are post-quantum-ready or hybrid, and the percentage of your top-twenty cryptographic vendors with a published PQC roadmap. The dashboard renders these against your jurisdictional deadline — 2030 for ASD, 2031 for CCCS high-priority, 2035 for NIST disallow.",
           "cues": []
         },
         {
           "id": "a4-cswp-migration",
           "chapter": "action",
-          "title": "CSWP 39 \u00a73.2 \u2014 Migration zone (90-day plan)",
+          "title": "CSWP 39 §3.2 — Migration zone (90-day plan)",
           "estMinutes": 5,
-          "whyItMatters": "Migration is the preferred long-term path \u2014 full algorithm replacement, library upgrades, certificate re-issuance, ACME/EST/CMP automation. The 90-day plan turns CSWP.39 \u00a73.2 into three concrete workstreams an executive can be accountable to.",
+          "whyItMatters": "Migration is the preferred long-term path — full algorithm replacement, library upgrades, certificate re-issuance, ACME/EST/CMP automation. The 90-day plan turns CSWP.39 §3.2 into three concrete workstreams an executive can be accountable to.",
           "page": {
             "route": "/business",
             "query": {
@@ -2097,12 +2077,12 @@
           },
           "tasks": [
             "Open the Migration zone",
-            "Generate the 90-day action plan (inventory \u00b7 vendor letters \u00b7 pilot scope)",
+            "Generate the 90-day action plan (inventory · vendor letters · pilot scope)",
             "Generate the certificate-lifecycle automation checklist (ACME / EST / CMP)",
             "Download the full report bundle as a ZIP"
           ],
           "expectedOutput": "90-day plan + cert-automation checklist + report ZIP downloaded.",
-          "narration": "CSWP 39 section three-point-two covers algorithm transitions \u2014 the migration zone. Three workstreams, ninety days. First, the cryptographic inventory pilot using existing CMDB and SBOM tooling \u2014 output is a populated CBOM. Second, the vendor-letter campaign you saw in the Assets zone \u2014 output is a vendor-readiness scorecard. Third, a hybrid post-quantum pilot, usually on internal TLS or code-signing, that proves your operations team can run ML-KEM and ML-DSA in production. Three workstreams, three artifacts, one board meeting at the end of the quarter.",
+          "narration": "CSWP 39 section three-point-two covers algorithm transitions — the migration zone. Three workstreams, ninety days. First, the cryptographic inventory pilot using existing CMDB and SBOM tooling — output is a populated CBOM. Second, the vendor-letter campaign you saw in the Assets zone — output is a vendor-readiness scorecard. Third, a hybrid post-quantum pilot, usually on internal TLS or code-signing, that proves your operations team can run ML-KEM and ML-DSA in production. Three workstreams, three artifacts, one board meeting at the end of the quarter.",
           "cues": []
         }
       ]
@@ -2111,7 +2091,7 @@
   "regions": {
     "US": {
       "id": "region-us",
-      "title": "United States \u2014 your region",
+      "title": "United States — your region",
       "estMinutes": 17,
       "steps": [
         {
@@ -2134,7 +2114,7 @@
             "Note the 2030 hybrid TLS and 2035 disallow markers"
           ],
           "expectedOutput": "Three U.S. frameworks bookmarked; deadlines noted.",
-          "narration": "CNSA 2.0 is the National Security Agency\u2019s Commercial National Security Algorithm Suite, version two. By 2030, federal TLS, code-signing, and key exchange must use hybrid post-quantum schemes. By 2035, classical-only is disallowed. FIPS 140-3 is the validation programme \u2014 your hardware security modules and crypto libraries must hold a current certificate.",
+          "narration": "CNSA 2.0 is the National Security Agency’s Commercial National Security Algorithm Suite, version two. By 2030, federal TLS, code-signing, and key exchange must use hybrid post-quantum schemes. By 2035, classical-only is disallowed. FIPS 140-3 is the validation programme — your hardware security modules and crypto libraries must hold a current certificate.",
           "cues": [
             {
               "tMs": 0,
@@ -2157,7 +2137,7 @@
             {
               "tMs": 4500,
               "kind": "caption",
-              "text": "For You \u2014 your personalised compliance view, computed from your persona context."
+              "text": "For You — your personalised compliance view, computed from your persona context."
             },
             {
               "tMs": 11800,
@@ -2167,7 +2147,7 @@
             {
               "tMs": 12000,
               "kind": "caption",
-              "text": "Profile Summary \u2014 your country + industry + role drives every section below."
+              "text": "Profile Summary — your country + industry + role drives every section below."
             },
             {
               "tMs": 36800,
@@ -2177,7 +2157,7 @@
             {
               "tMs": 37000,
               "kind": "caption",
-              "text": "Regulatory Clock \u2014 visual countdown to your most binding deadline."
+              "text": "Regulatory Clock — visual countdown to your most binding deadline."
             },
             {
               "tMs": 61800,
@@ -2187,7 +2167,7 @@
             {
               "tMs": 62000,
               "kind": "caption",
-              "text": "Mandatory frameworks \u2014 what your jurisdiction binds you to today."
+              "text": "Mandatory frameworks — what your jurisdiction binds you to today."
             },
             {
               "tMs": 86800,
@@ -2197,7 +2177,7 @@
             {
               "tMs": 87000,
               "kind": "caption",
-              "text": "Recognized standards \u2014 what your auditor will accept as evidence."
+              "text": "Recognized standards — what your auditor will accept as evidence."
             },
             {
               "tMs": 111800,
@@ -2207,7 +2187,7 @@
             {
               "tMs": 112000,
               "kind": "caption",
-              "text": "Cross-border frameworks \u2014 what subsidiaries and partners need."
+              "text": "Cross-border frameworks — what subsidiaries and partners need."
             },
             {
               "tMs": 136800,
@@ -2217,7 +2197,7 @@
             {
               "tMs": 137000,
               "kind": "caption",
-              "text": "Next Decision \u2014 the one action your board should sign off on this quarter."
+              "text": "Next Decision — the one action your board should sign off on this quarter."
             },
             {
               "tMs": 161800,
@@ -2227,7 +2207,7 @@
             {
               "tMs": 162000,
               "kind": "caption",
-              "text": "Sector threats \u2014 country-tagged threats your finance peers are tracking."
+              "text": "Sector threats — country-tagged threats your finance peers are tracking."
             },
             {
               "tMs": 186800,
@@ -2237,7 +2217,7 @@
             {
               "tMs": 187000,
               "kind": "caption",
-              "text": "Top library docs \u2014 primary-source reading list for the CISO."
+              "text": "Top library docs — primary-source reading list for the CISO."
             },
             {
               "tMs": 240000,
@@ -2249,7 +2229,7 @@
           "id": "us-02-timeline",
           "chapter": "region",
           "region": "US",
-          "title": "U.S. timeline \u2014 DoD, FedRAMP, G7",
+          "title": "U.S. timeline — DoD, FedRAMP, G7",
           "estMinutes": 4,
           "whyItMatters": "Federal moves cascade into private sector procurement, especially for banks that serve federal customers or operate cross-border.",
           "page": {
@@ -2273,7 +2253,7 @@
           "region": "US",
           "title": "Threats with U.S. context",
           "estMinutes": 3,
-          "whyItMatters": "The same finance threats land differently in the U.S. \u2014 FedWire, CHIPS, and SWIFT messaging make HSM and settlement-log exposure operationally severe.",
+          "whyItMatters": "The same finance threats land differently in the U.S. — FedWire, CHIPS, and SWIFT messaging make HSM and settlement-log exposure operationally severe.",
           "page": {
             "route": "/threats",
             "query": {
@@ -2293,7 +2273,7 @@
           "id": "us-04-leaders",
           "chapter": "region",
           "region": "US",
-          "title": "U.S. finance leader \u2014 Citi / FS-ISAC",
+          "title": "U.S. finance leader — Citi / FS-ISAC",
           "estMinutes": 3,
           "whyItMatters": "Sudha Iyer at Citi is a founding FS-ISAC PQC working-group member. Her public statements give you board-ready external citations.",
           "page": {
@@ -2302,7 +2282,7 @@
               "country": "United States"
             }
           },
-          "tasks": ["Open Sudha Iyer\u2019s profile", "Bookmark for board citation"],
+          "tasks": ["Open Sudha Iyer’s profile", "Bookmark for board citation"],
           "expectedOutput": "Citation bookmarked.",
           "narration": "Sudha Iyer has been at Citi for two decades and is a founding member of the FS-ISAC post-quantum working group. She is your reference point for \"what is a tier-one U.S. bank already doing\".",
           "cues": []
@@ -2311,7 +2291,7 @@
           "id": "us-05-library",
           "chapter": "region",
           "region": "US",
-          "title": "PCI DSS 4.0 \u00a712.3.3 \u2014 the de-facto deadline",
+          "title": "PCI DSS 4.0 §12.3.3 — the de-facto deadline",
           "estMinutes": 3,
           "whyItMatters": "Even before federal mandates bind on you, PCI DSS 4.0 already requires a cryptographic inventory and a crypto-agility plan. That is post-quantum readiness in everything but name.",
           "page": {
@@ -2326,14 +2306,14 @@
     },
     "CA": {
       "id": "region-ca",
-      "title": "Canada \u2014 your region",
+      "title": "Canada — your region",
       "estMinutes": 17,
       "steps": [
         {
           "id": "ca-01-compliance",
           "chapter": "region",
           "region": "CA",
-          "title": "CCCS ITSM.40.001 \u2014 phased mandate",
+          "title": "CCCS ITSM.40.001 — phased mandate",
           "estMinutes": 4,
           "whyItMatters": "Canada has the most prescriptive federal roadmap of the three jurisdictions: 2026 plans due, 2031 high-priority complete, 2035 full migration.",
           "page": {
@@ -2361,7 +2341,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Canada \u2014 CCCS ITSM.40.001 phased mandate (2026 plans, 2031 high-priority, 2035 full)."
+              "text": "Canada — CCCS ITSM.40.001 phased mandate (2026 plans, 2031 high-priority, 2035 full)."
             },
             {
               "tMs": 4000,
@@ -2371,7 +2351,7 @@
             {
               "tMs": 4500,
               "kind": "caption",
-              "text": "For You \u2014 your personalised compliance view, computed from your persona context."
+              "text": "For You — your personalised compliance view, computed from your persona context."
             },
             {
               "tMs": 11800,
@@ -2381,7 +2361,7 @@
             {
               "tMs": 12000,
               "kind": "caption",
-              "text": "Profile Summary \u2014 your country + industry + role drives every section below."
+              "text": "Profile Summary — your country + industry + role drives every section below."
             },
             {
               "tMs": 36800,
@@ -2391,7 +2371,7 @@
             {
               "tMs": 37000,
               "kind": "caption",
-              "text": "Regulatory Clock \u2014 visual countdown to your most binding deadline."
+              "text": "Regulatory Clock — visual countdown to your most binding deadline."
             },
             {
               "tMs": 61800,
@@ -2401,7 +2381,7 @@
             {
               "tMs": 62000,
               "kind": "caption",
-              "text": "Mandatory frameworks \u2014 what your jurisdiction binds you to today."
+              "text": "Mandatory frameworks — what your jurisdiction binds you to today."
             },
             {
               "tMs": 86800,
@@ -2411,7 +2391,7 @@
             {
               "tMs": 87000,
               "kind": "caption",
-              "text": "Recognized standards \u2014 what your auditor will accept as evidence."
+              "text": "Recognized standards — what your auditor will accept as evidence."
             },
             {
               "tMs": 111800,
@@ -2421,7 +2401,7 @@
             {
               "tMs": 112000,
               "kind": "caption",
-              "text": "Cross-border frameworks \u2014 what subsidiaries and partners need."
+              "text": "Cross-border frameworks — what subsidiaries and partners need."
             },
             {
               "tMs": 136800,
@@ -2431,7 +2411,7 @@
             {
               "tMs": 137000,
               "kind": "caption",
-              "text": "Next Decision \u2014 the one action your board should sign off on this quarter."
+              "text": "Next Decision — the one action your board should sign off on this quarter."
             },
             {
               "tMs": 161800,
@@ -2441,7 +2421,7 @@
             {
               "tMs": 162000,
               "kind": "caption",
-              "text": "Sector threats \u2014 country-tagged threats your finance peers are tracking."
+              "text": "Sector threats — country-tagged threats your finance peers are tracking."
             },
             {
               "tMs": 186800,
@@ -2451,7 +2431,7 @@
             {
               "tMs": 187000,
               "kind": "caption",
-              "text": "Top library docs \u2014 primary-source reading list for the CISO."
+              "text": "Top library docs — primary-source reading list for the CISO."
             },
             {
               "tMs": 240000,
@@ -2463,7 +2443,7 @@
           "id": "ca-02-timeline",
           "chapter": "region",
           "region": "CA",
-          "title": "Canadian timeline \u2014 ISED, CCCS, TBS",
+          "title": "Canadian timeline — ISED, CCCS, TBS",
           "estMinutes": 4,
           "whyItMatters": "Three documents define your runway: ISED industry guidance from 2023, CCCS roadmap from June 2025, and the TBS Security Policy Implementation Notice from October 2025.",
           "page": {
@@ -2478,7 +2458,7 @@
             "Open TBS SPIN Notice (2025-10-09)"
           ],
           "expectedOutput": "Three Canadian milestones reviewed; country bookmarked.",
-          "narration": "The runway is in three documents. Innovation, Science and Economic Development Canada published the original best practices in 2023 \u2014 that is when your peers first started budgeting. The CCCS roadmap of June 2025 is the binding federal document. The Treasury Board Secretariat Security Policy Implementation Notice of October 2025 turns the roadmap into a contractual obligation across federal procurement.",
+          "narration": "The runway is in three documents. Innovation, Science and Economic Development Canada published the original best practices in 2023 — that is when your peers first started budgeting. The CCCS roadmap of June 2025 is the binding federal document. The Treasury Board Secretariat Security Policy Implementation Notice of October 2025 turns the roadmap into a contractual obligation across federal procurement.",
           "cues": []
         },
         {
@@ -2487,7 +2467,7 @@
           "region": "CA",
           "title": "Threats with Canadian framing",
           "estMinutes": 3,
-          "whyItMatters": "Canada participates in the G7 framework; the FIN- threats apply with cross-border emphasis given Canadian banks\u2019 U.S. and U.K. footprints.",
+          "whyItMatters": "Canada participates in the G7 framework; the FIN- threats apply with cross-border emphasis given Canadian banks’ U.S. and U.K. footprints.",
           "page": {
             "route": "/threats",
             "query": {
@@ -2500,16 +2480,16 @@
             "Open FIN-005 FS-ISAC sector-readiness warning"
           ],
           "expectedOutput": "Three threats reviewed in Canadian context.",
-          "narration": "For Canadian banks, FIN-001 matters because Canada participates in the Group of Seven coordinating framework. FIN-002 is operationally severe because HNDL on cross-border settlement traffic creates a permanent privacy exposure that pre-existing Canadian privacy law \u2014 PIPEDA, the new C-27 \u2014 already covers. FIN-005 applies \u2014 your sector readiness is no better than your U.S. peers.",
+          "narration": "For Canadian banks, FIN-001 matters because Canada participates in the Group of Seven coordinating framework. FIN-002 is operationally severe because HNDL on cross-border settlement traffic creates a permanent privacy exposure that pre-existing Canadian privacy law — PIPEDA, the new C-27 — already covers. FIN-005 applies — your sector readiness is no better than your U.S. peers.",
           "cues": []
         },
         {
           "id": "ca-04-leaders",
           "chapter": "region",
           "region": "CA",
-          "title": "Canadian leader \u2014 Sami Khoury",
+          "title": "Canadian leader — Sami Khoury",
           "estMinutes": 3,
-          "whyItMatters": "Canada\u2019s Senior Official for Cyber Security and former CCCS head wrote the playbook. His public statements are board-grade citations.",
+          "whyItMatters": "Canada’s Senior Official for Cyber Security and former CCCS head wrote the playbook. His public statements are board-grade citations.",
           "page": {
             "route": "/leaders",
             "query": {
@@ -2518,14 +2498,14 @@
           },
           "tasks": ["Open Sami Khoury profile", "Bookmark for board citation"],
           "expectedOutput": "Citation bookmarked.",
-          "narration": "Sami Khoury is currently Canada\u2019s Senior Official for Cyber Security and was the head of the Canadian Centre for Cyber Security when ITSAP.00.017 was published. He is your in-country reference point.",
+          "narration": "Sami Khoury is currently Canada’s Senior Official for Cyber Security and was the head of the Canadian Centre for Cyber Security when ITSAP.00.017 was published. He is your in-country reference point.",
           "cues": []
         },
         {
           "id": "ca-05-library",
           "chapter": "region",
           "region": "CA",
-          "title": "CCCS ITSAP.00.017 \u2014 practitioner guide",
+          "title": "CCCS ITSAP.00.017 — practitioner guide",
           "estMinutes": 3,
           "whyItMatters": "ITSAP.00.017 is the practitioner-facing companion to the ITSM roadmap. It is what your CISO will hand to engineering.",
           "page": {
@@ -2537,21 +2517,21 @@
             "Bookmark NIST FIPS 203 and 204 (Canada aligns to NIST)"
           ],
           "expectedOutput": "CCCS practitioner guide and NIST FIPS bookmarked.",
-          "narration": "Canada aligns to NIST standards \u2014 there is no separate Canadian algorithm suite. ITSAP.00.017 is the practitioner guide that translates NIST FIPS 203 and 204 into deployment guidance for federal departments. Your CISO will treat this as the authoritative implementation document.",
+          "narration": "Canada aligns to NIST standards — there is no separate Canadian algorithm suite. ITSAP.00.017 is the practitioner guide that translates NIST FIPS 203 and 204 into deployment guidance for federal departments. Your CISO will treat this as the authoritative implementation document.",
           "cues": []
         }
       ]
     },
     "AU": {
       "id": "region-au",
-      "title": "Australia \u2014 your region",
+      "title": "Australia — your region",
       "estMinutes": 17,
       "steps": [
         {
           "id": "au-01-compliance",
           "chapter": "region",
           "region": "AU",
-          "title": "ASD ISM-1917 \u2014 2030 prohibition",
+          "title": "ASD ISM-1917 — 2030 prohibition",
           "estMinutes": 4,
           "whyItMatters": "Australia has the tightest deadline of the three jurisdictions by five years. By end-2030, traditional crypto is prohibited under the Information Security Manual.",
           "page": {
@@ -2566,7 +2546,7 @@
             "Note the required algorithms: ML-DSA-87, ML-KEM-1024, SHA-384/512, AES-256"
           ],
           "expectedOutput": "ISM-1917 framework bookmarked; required algorithms noted.",
-          "narration": "The Australian Signals Directorate updated the Information Security Manual in December 2024 with control 1917. By end of 2030, traditional cryptography \u2014 RSA, ECDSA, ECDH \u2014 is prohibited for protected systems. Required algorithms are at the highest NIST security levels: ML-DSA-87 for signatures, ML-KEM-1024 for key encapsulation, SHA-384 or SHA-512, AES-256. This is five years ahead of the U.S. and U.K. equivalents.",
+          "narration": "The Australian Signals Directorate updated the Information Security Manual in December 2024 with control 1917. By end of 2030, traditional cryptography — RSA, ECDSA, ECDH — is prohibited for protected systems. Required algorithms are at the highest NIST security levels: ML-DSA-87 for signatures, ML-KEM-1024 for key encapsulation, SHA-384 or SHA-512, AES-256. This is five years ahead of the U.S. and U.K. equivalents.",
           "cues": [
             {
               "tMs": 0,
@@ -2589,7 +2569,7 @@
             {
               "tMs": 5000,
               "kind": "caption",
-              "text": "For You \u2014 your personalised compliance view, computed from your persona context."
+              "text": "For You — your personalised compliance view, computed from your persona context."
             },
             {
               "tMs": 12300,
@@ -2599,7 +2579,7 @@
             {
               "tMs": 12500,
               "kind": "caption",
-              "text": "Profile Summary \u2014 your country + industry + role drives every section below."
+              "text": "Profile Summary — your country + industry + role drives every section below."
             },
             {
               "tMs": 37300,
@@ -2609,7 +2589,7 @@
             {
               "tMs": 37500,
               "kind": "caption",
-              "text": "Regulatory Clock \u2014 visual countdown to your most binding deadline."
+              "text": "Regulatory Clock — visual countdown to your most binding deadline."
             },
             {
               "tMs": 62300,
@@ -2619,7 +2599,7 @@
             {
               "tMs": 62500,
               "kind": "caption",
-              "text": "Mandatory frameworks \u2014 what your jurisdiction binds you to today."
+              "text": "Mandatory frameworks — what your jurisdiction binds you to today."
             },
             {
               "tMs": 87300,
@@ -2629,7 +2609,7 @@
             {
               "tMs": 87500,
               "kind": "caption",
-              "text": "Recognized standards \u2014 what your auditor will accept as evidence."
+              "text": "Recognized standards — what your auditor will accept as evidence."
             },
             {
               "tMs": 112300,
@@ -2639,7 +2619,7 @@
             {
               "tMs": 112500,
               "kind": "caption",
-              "text": "Cross-border frameworks \u2014 what subsidiaries and partners need."
+              "text": "Cross-border frameworks — what subsidiaries and partners need."
             },
             {
               "tMs": 137300,
@@ -2649,7 +2629,7 @@
             {
               "tMs": 137500,
               "kind": "caption",
-              "text": "Next Decision \u2014 the one action your board should sign off on this quarter."
+              "text": "Next Decision — the one action your board should sign off on this quarter."
             },
             {
               "tMs": 162300,
@@ -2659,7 +2639,7 @@
             {
               "tMs": 162500,
               "kind": "caption",
-              "text": "Sector threats \u2014 country-tagged threats your finance peers are tracking."
+              "text": "Sector threats — country-tagged threats your finance peers are tracking."
             },
             {
               "tMs": 187300,
@@ -2669,7 +2649,7 @@
             {
               "tMs": 187500,
               "kind": "caption",
-              "text": "Top library docs \u2014 primary-source reading list for the CISO."
+              "text": "Top library docs — primary-source reading list for the CISO."
             },
             {
               "tMs": 240500,
@@ -2681,7 +2661,7 @@
           "id": "au-02-timeline",
           "chapter": "region",
           "region": "AU",
-          "title": "Australian timeline \u2014 three migration phases",
+          "title": "Australian timeline — three migration phases",
           "estMinutes": 4,
           "whyItMatters": "The phasing is explicit: planning 2024-2026, critical systems migration 2026-2028, full migration 2028-2030. You are already in phase one.",
           "page": {
@@ -2696,7 +2676,7 @@
             "Open ASD September 2025 LATICE update"
           ],
           "expectedOutput": "Three milestones reviewed; phasing noted.",
-          "narration": "The first ASD planning guide is from 2022. The binding update is from December 2024. The most recent practitioner refresh is the LATICE framework from September 2025. The three phases \u2014 planning by 2026, critical migration by 2028, full migration by 2030 \u2014 leave Australian banks with the smallest remaining runway of the three jurisdictions in this workshop.",
+          "narration": "The first ASD planning guide is from 2022. The binding update is from December 2024. The most recent practitioner refresh is the LATICE framework from September 2025. The three phases — planning by 2026, critical migration by 2028, full migration by 2030 — leave Australian banks with the smallest remaining runway of the three jurisdictions in this workshop.",
           "cues": [
             {
               "tMs": 4000,
@@ -2718,7 +2698,7 @@
             {
               "tMs": 60000,
               "kind": "caption",
-              "text": "Three phases \u2014 planning 2024-2026, critical-systems migration 2026-2028, full migration 2028-2030."
+              "text": "Three phases — planning 2024-2026, critical-systems migration 2026-2028, full migration 2028-2030."
             },
             {
               "tMs": 120000,
@@ -2760,7 +2740,7 @@
             {
               "tMs": 3000,
               "kind": "caption",
-              "text": "In Australia, these stop being threats \u2014 they become compliance gates after end-2030."
+              "text": "In Australia, these stop being threats — they become compliance gates after end-2030."
             },
             {
               "tMs": 6000,
@@ -2785,7 +2765,7 @@
             {
               "tMs": 120000,
               "kind": "caption",
-              "text": "FIN-005: FS-ISAC warns the sector is short of resources \u2014 and you have five fewer years than U.S. peers."
+              "text": "FIN-005: FS-ISAC warns the sector is short of resources — and you have five fewer years than U.S. peers."
             },
             {
               "tMs": 125000,
@@ -2802,7 +2782,7 @@
           "id": "au-04-leaders",
           "chapter": "region",
           "region": "AU",
-          "title": "Australian leader \u2014 Rachel Noble (former ASD DG)",
+          "title": "Australian leader — Rachel Noble (former ASD DG)",
           "estMinutes": 3,
           "whyItMatters": "Rachel Noble led ASD from 2020 to September 2024 and oversaw the Australian quantum-safe strategy. Her statements are board-grade citations.",
           "page": {
@@ -2813,12 +2793,12 @@
           },
           "tasks": ["Open Rachel Noble profile (deep-linked)", "Bookmark for board citation"],
           "expectedOutput": "Citation bookmarked.",
-          "narration": "Rachel Noble was the Director-General of ASD from 2020 to September 2024 and was the public face of Australia\u2019s post-quantum migration strategy and quantum-computing investments. She is your reference point for \"what does the Australian government expect us to do\".",
+          "narration": "Rachel Noble was the Director-General of ASD from 2020 to September 2024 and was the public face of Australia’s post-quantum migration strategy and quantum-computing investments. She is your reference point for \"what does the Australian government expect us to do\".",
           "cues": [
             {
               "tMs": 4000,
               "kind": "caption",
-              "text": "Rachel Noble led ASD from 2020 to September 2024 \u2014 the public face of Australia\u2019s post-quantum strategy."
+              "text": "Rachel Noble led ASD from 2020 to September 2024 — the public face of Australia’s post-quantum strategy."
             },
             {
               "tMs": 60000,
@@ -2840,9 +2820,9 @@
           "id": "au-05-migrate",
           "chapter": "region",
           "region": "AU",
-          "title": "Vendor reality \u2014 Dell BSAFE certified products",
+          "title": "Vendor reality — Dell BSAFE certified products",
           "estMinutes": 3,
-          "whyItMatters": "Dell Australia\u2019s BSAFE products are already NIST-validated for ML-DSA and ML-KEM. Concrete proof that the vendor ecosystem is ready before your deadline.",
+          "whyItMatters": "Dell Australia’s BSAFE products are already NIST-validated for ML-DSA and ML-KEM. Concrete proof that the vendor ecosystem is ready before your deadline.",
           "page": {
             "route": "/migrate"
           },
@@ -2852,7 +2832,7 @@
             "Open the BSAFE Crypto Module for Java"
           ],
           "expectedOutput": "Two Dell BSAFE certifications opened.",
-          "narration": "Dell Australia is the named vendor on multiple ACVP certificates \u2014 A8272 for the C module, with separate certificates for Java. ML-DSA and ML-KEM are both validated. This matters because the most common board objection \u2014 \"the vendors are not ready\" \u2014 is already factually incorrect for your jurisdiction.",
+          "narration": "Dell Australia is the named vendor on multiple ACVP certificates — A8272 for the C module, with separate certificates for Java. ML-DSA and ML-KEM are both validated. This matters because the most common board objection — \"the vendors are not ready\" — is already factually incorrect for your jurisdiction.",
           "cues": [
             {
               "tMs": 4000,
@@ -2873,13 +2853,13 @@
               "tMs": 16000,
               "kind": "callout",
               "selector": "[data-workshop-target=\"migrate-product-dell-bsafe-crypto-module-for-c\"]",
-              "label": "A8272 \u2014 ACVP certified",
+              "label": "A8272 — ACVP certified",
               "arrow": "right"
             },
             {
               "tMs": 60000,
               "kind": "caption",
-              "text": "A8272 for the C module \u00b7 separate certificates for Java."
+              "text": "A8272 for the C module · separate certificates for Java."
             },
             {
               "tMs": 65000,
@@ -2894,7 +2874,7 @@
             {
               "tMs": 120000,
               "kind": "caption",
-              "text": "The most common board objection \u2014 \"the vendors are not ready\" \u2014 is already factually incorrect."
+              "text": "The most common board objection — \"the vendors are not ready\" — is already factually incorrect."
             },
             {
               "tMs": 180000,
@@ -2913,7 +2893,7 @@
       {
         "id": "close-quiz",
         "chapter": "close",
-        "title": "Quiz \u2014 test what you learned",
+        "title": "Quiz — test what you learned",
         "estMinutes": 3,
         "whyItMatters": "A 5-to-45-minute quiz with persona-tuned topics gives you a quick measure of what stuck.",
         "page": {
@@ -3007,7 +2987,7 @@
       {
         "id": "close-01-about",
         "chapter": "close",
-        "title": "Trust and transparency \u2014 the About page",
+        "title": "Trust and transparency — the About page",
         "estMinutes": 3,
         "whyItMatters": "Before you share this report with your board, your CISO will ask three questions: where does the data come from, who maintains it, and is the platform itself secure? The About page answers all three in one page.",
         "page": {
@@ -3015,7 +2995,7 @@
         },
         "tasks": ["Watch the page scroll through About sections"],
         "expectedOutput": "You can describe the project trust model: vision, who-it-is-for, privacy, security, license, community.",
-        "narration": "Before sharing the report with your CISO, walk the About page top-to-bottom. The captions below name each section as the page scrolls \u2014 vision, founding principles, who it is for, urgency, data privacy, security audit, open source license, and community.",
+        "narration": "Before sharing the report with your CISO, walk the About page top-to-bottom. The captions below name each section as the page scrolls — vision, founding principles, who it is for, urgency, data privacy, security audit, open source license, and community.",
         "cues": [
           {
             "tMs": 0,
@@ -3092,7 +3072,7 @@
           {
             "tMs": 60000,
             "kind": "caption",
-            "text": "One URL \u2014 governance, risk, 90-day plan, region chapter."
+            "text": "One URL — governance, risk, 90-day plan, region chapter."
           },
           {
             "tMs": 120000,

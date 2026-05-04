@@ -690,18 +690,15 @@ export const LEARN_SECTIONS: Record<string, { id: string; label: string }[]> = {
     { id: 'next-steps', label: 'Your Next Steps' },
   ],
   'quantum-threats': [
-    { id: 'shor', label: "Shor's Algorithm & RSA/ECC Vulnerability" },
-    { id: 'grover', label: "Grover's Algorithm & Symmetric Key Impact" },
     { id: 'crqc', label: 'CRQC Timeline & Harvest Now Decrypt Later' },
     { id: 'hndl', label: 'HNDL/HNFL Risk Windows & Prioritization' },
     { id: 'security-levels', label: 'Post-Quantum Security Levels' },
   ],
   'hybrid-crypto': [
     { id: 'why-hybrid', label: 'Why Hybrid Cryptography?' },
-    { id: 'kem', label: 'Hybrid KEM Construction' },
-    { id: 'composite', label: 'Composite Signatures' },
     { id: 'cert-formats', label: 'Hybrid Certificate Formats' },
-    { id: 'standards', label: 'IETF Standards & RFC 9763' },
+    { id: 'kem', label: 'Hybrid KEM Construction' },
+    { id: 'composite', label: 'Hybrid Signature Spectrum' },
   ],
   'crypto-agility': [
     { id: 'abstraction', label: 'Crypto Abstraction Layers' },
@@ -750,7 +747,6 @@ export const LEARN_SECTIONS: Record<string, { id: string; label: string }[]> = {
     { id: 'pkcs11', label: 'PKCS#11 v3.2 PQC Mechanisms' },
     { id: 'vendors', label: 'HSM Vendor Landscape' },
     { id: 'migration', label: 'Firmware Migration & Dual-Partition Strategy' },
-    { id: 'fips', label: 'FIPS 140-3 Validation & CMVP/CAVP' },
   ],
   'slh-dsa': [
     { id: 'overview', label: 'SLH-DSA Overview & Why Stateless' },
@@ -799,14 +795,12 @@ export const LEARN_SECTIONS: Record<string, { id: string; label: string }[]> = {
   ],
   qkd: [
     { id: 'bb84', label: 'BB84 Protocol & Quantum Channel' },
-    { id: 'post-processing', label: 'Error Correction & Privacy Amplification' },
-    { id: 'deployment', label: 'Global QKD Deployments & Infrastructure' },
     { id: 'integration', label: 'QKD + Classical Protocol Integration' },
     { id: 'hsm-derivation', label: 'HSM Key Derivation from QKD' },
+    { id: 'deployment', label: 'Global QKD Deployments & Infrastructure' },
   ],
   'code-signing': [
-    { id: 'classical', label: 'Classical Code Signing Fundamentals' },
-    { id: 'pqc-signing', label: 'ML-DSA Code Signing' },
+    { id: 'classical', label: 'Classical vs PQC Code Signing' },
     { id: 'packages', label: 'Package Signing & Verification (RPM/APT)' },
     { id: 'sigstore', label: 'Sigstore Keyless Signing' },
     { id: 'secure-boot', label: 'Secure Boot & Firmware Trust Chains' },
@@ -881,8 +875,6 @@ export const LEARN_SECTIONS: Record<string, { id: string; label: string }[]> = {
     { id: 'classification', label: 'Data Asset Classification' },
     { id: 'compliance', label: 'Compliance Mapping (GDPR, HIPAA, DORA, NIS2)' },
     { id: 'methodology', label: 'Risk Methodology (NIST RMF, ISO 27005, FAIR)' },
-    { id: 'scoring', label: 'PQC Sensitivity Scoring' },
-    { id: 'priority', label: 'Migration Priority Map' },
   ],
   'standards-bodies': [
     { id: 'three-roles', label: 'The Three Roles: Standards, Certification & Compliance' },
@@ -1029,9 +1021,8 @@ export const LEARN_SECTIONS: Record<string, { id: string; label: string }[]> = {
       id: 'secure-boot-fundamentals',
       label: 'UEFI Secure Boot: PK, KEK, db, and dbx Key Hierarchy',
     },
-    { id: 'tpm-attestation', label: 'TPM 2.0 and Measured Boot Attestation' },
     { id: 'firmware-signing', label: 'Firmware Signing and PQC Migration' },
-    { id: 'dice-hardware-roots', label: 'DICE and Hardware Roots of Trust' },
+    { id: 'tpm-attestation', label: 'TPM 2.0 and Measured Boot Attestation' },
     { id: 'vendor-roadmaps', label: 'UEFI and Firmware Vendor PQC Roadmaps' },
   ],
   'os-pqc': [

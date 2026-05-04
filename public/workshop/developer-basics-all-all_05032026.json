@@ -1,6 +1,6 @@
 {
   "id": "developer-basics-all-all-v1",
-  "title": "Developer PQC Workshop \u2014 All Industries, All Regions",
+  "title": "Developer PQC Workshop — All Industries, All Regions",
   "match": {
     "roles": ["developer"],
     "proficiencies": ["basics", "expert"],
@@ -10,7 +10,7 @@
   "whatToExpect": [
     "Hands-on tour of the algorithms, libraries, and migration patterns developers need",
     "Module walkthroughs for PQC primer, hybrid crypto, crypto agility, TLS, dev APIs, code signing",
-    "Page tours for /algorithms, /playground, /migrate \u2014 the developer's working surfaces",
+    "Page tours for /algorithms, /playground, /migrate — the developer's working surfaces",
     "~55 minutes at normal speed"
   ],
   "totalEstMinutes": 50,
@@ -40,7 +40,7 @@
           {
             "tMs": 1500,
             "kind": "caption",
-            "text": "Developer workshop \u2014 algorithms, libraries, hands-on demos, migration patterns."
+            "text": "Developer workshop — algorithms, libraries, hands-on demos, migration patterns."
           },
           {
             "tMs": 180000,
@@ -66,7 +66,7 @@
         },
         "tasks": ["Confirm role = Developer", "Confirm proficiency = Beginner or Expert"],
         "expectedOutput": "Persona context locked to Developer.",
-        "narration": "The persona context drives every recommendation across the platform \u2014 set it before starting any flow.",
+        "narration": "The persona context drives every recommendation across the platform — set it before starting any flow.",
         "cues": [
           {
             "tMs": 0,
@@ -81,7 +81,7 @@
           {
             "tMs": 1500,
             "kind": "caption",
-            "text": "Persona definition \u2014 four picks shape every page. Developer drives this flow."
+            "text": "Persona definition — four picks shape every page. Developer drives this flow."
           },
           {
             "tMs": 5000,
@@ -96,7 +96,7 @@
           {
             "tMs": 8000,
             "kind": "caption",
-            "text": "Step 1 \u2014 Track. Technical track unlocks developer, architect, ops, and researcher roles."
+            "text": "Step 1 — Track. Technical track unlocks developer, architect, ops, and researcher roles."
           },
           {
             "tMs": 10000,
@@ -111,7 +111,7 @@
           {
             "tMs": 16000,
             "kind": "caption",
-            "text": "Step 2 \u2014 Role. Developer surfaces the modules and tools tuned to your job."
+            "text": "Step 2 — Role. Developer surfaces the modules and tools tuned to your job."
           },
           {
             "tMs": 18000,
@@ -122,7 +122,7 @@
             "tMs": 22000,
             "kind": "callout",
             "selector": "[data-workshop-target^=\"persona-role-\"][aria-pressed=\"true\"]",
-            "label": "Developer \u2014 pre-selected for this flow"
+            "label": "Developer — pre-selected for this flow"
           },
           {
             "tMs": 30000,
@@ -132,7 +132,7 @@
           {
             "tMs": 32000,
             "kind": "caption",
-            "text": "Step 3 \u2014 Region. Filters timeline, leaders, threats and compliance to your jurisdiction."
+            "text": "Step 3 — Region. Filters timeline, leaders, threats and compliance to your jurisdiction."
           },
           {
             "tMs": 34000,
@@ -147,7 +147,7 @@
           {
             "tMs": 44000,
             "kind": "caption",
-            "text": "Step 4 \u2014 Industry. Surfaces industry-specific threats, frameworks and vendors."
+            "text": "Step 4 — Industry. Surfaces industry-specific threats, frameworks and vendors."
           },
           {
             "tMs": 46000,
@@ -183,7 +183,7 @@
           "chapter": "foundations",
           "title": "Developer Quantum Impact",
           "estMinutes": 3,
-          "whyItMatters": "What changes for the code you write \u2014 APIs, key sizes, latency, library availability.",
+          "whyItMatters": "What changes for the code you write — APIs, key sizes, latency, library availability.",
           "page": {
             "route": "/learn/dev-quantum-impact"
           },
@@ -209,7 +209,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Developer Quantum Impact \u2014 What changes for the code you write \u2014 APIs, key sizes, latency, library availability."
+              "text": "Developer Quantum Impact — What changes for the code you write — APIs, key sizes, latency, library availability."
             },
             {
               "tMs": 4000,
@@ -294,7 +294,7 @@
             {
               "tMs": 113499,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128749,
@@ -304,7 +304,7 @@
             {
               "tMs": 130249,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145499,
@@ -314,7 +314,7 @@
             {
               "tMs": 146999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162249,
@@ -324,7 +324,7 @@
             {
               "tMs": 163749,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -337,7 +337,7 @@
           "chapter": "foundations",
           "title": "PQC 101",
           "estMinutes": 3,
-          "whyItMatters": "The algorithm primer \u2014 what is being replaced, what is replacing it, what the names mean.",
+          "whyItMatters": "The algorithm primer — what is being replaced, what is replacing it, what the names mean.",
           "page": {
             "route": "/learn/pqc-101"
           },
@@ -348,7 +348,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on PQC 101",
-          "narration": "A plain-language introduction to post-quantum cryptography \u2014 the threat, the NIST algorithm picks, and what your code needs to support.",
+          "narration": "A plain-language introduction to post-quantum cryptography — the threat, the NIST algorithm picks, and what your code needs to support.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "pqc-101",
@@ -363,7 +363,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "PQC 101 \u2014 The algorithm primer \u2014 what is being replaced, what is replacing it, what the names mean."
+              "text": "PQC 101 — The algorithm primer — what is being replaced, what is replacing it, what the names mean."
             },
             {
               "tMs": 4000,
@@ -468,7 +468,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -478,7 +478,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -488,7 +488,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -498,7 +498,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -511,7 +511,7 @@
           "chapter": "foundations",
           "title": "Quantum Threats",
           "estMinutes": 3,
-          "whyItMatters": "Shor and Grover \u2014 the two algorithms that motivate every line of PQC code you'll write.",
+          "whyItMatters": "Shor and Grover — the two algorithms that motivate every line of PQC code you'll write.",
           "page": {
             "route": "/learn/quantum-threats"
           },
@@ -537,7 +537,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Quantum Threats \u2014 Shor and Grover \u2014 the two algorithms that motivate every line of PQC code you'll write."
+              "text": "Quantum Threats — Shor and Grover — the two algorithms that motivate every line of PQC code you'll write."
             },
             {
               "tMs": 4000,
@@ -632,7 +632,7 @@
             {
               "tMs": 113499,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128749,
@@ -642,7 +642,7 @@
             {
               "tMs": 130249,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145499,
@@ -652,7 +652,7 @@
             {
               "tMs": 146999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162249,
@@ -662,7 +662,7 @@
             {
               "tMs": 163749,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -675,7 +675,7 @@
           "chapter": "foundations",
           "title": "Entropy & Randomness",
           "estMinutes": 3,
-          "whyItMatters": "Every PQC algorithm depends on quality randomness \u2014 and your DRBG choice still matters.",
+          "whyItMatters": "Every PQC algorithm depends on quality randomness — and your DRBG choice still matters.",
           "page": {
             "route": "/learn/entropy-randomness"
           },
@@ -701,7 +701,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Entropy & Randomness \u2014 Every PQC algorithm depends on quality randomness \u2014 and your DRBG choice still matters."
+              "text": "Entropy & Randomness — Every PQC algorithm depends on quality randomness — and your DRBG choice still matters."
             },
             {
               "tMs": 4000,
@@ -816,7 +816,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -826,7 +826,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -836,7 +836,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -846,7 +846,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -859,7 +859,7 @@
           "chapter": "foundations",
           "title": "Hybrid Cryptography",
           "estMinutes": 3,
-          "whyItMatters": "KEM combiners and composite signatures \u2014 the migration bridge between classical and PQC.",
+          "whyItMatters": "KEM combiners and composite signatures — the migration bridge between classical and PQC.",
           "page": {
             "route": "/learn/hybrid-crypto"
           },
@@ -885,7 +885,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Hybrid Cryptography \u2014 KEM combiners and composite signatures \u2014 the migration bridge between classical and PQC."
+              "text": "Hybrid Cryptography — KEM combiners and composite signatures — the migration bridge between classical and PQC."
             },
             {
               "tMs": 4000,
@@ -900,7 +900,7 @@
             {
               "tMs": 6000,
               "kind": "caption",
-              "text": "Section 1/5: Why Hybrid Cryptography?"
+              "text": "Section 1/4: Why Hybrid Cryptography?"
             },
             {
               "tMs": 16200,
@@ -910,7 +910,7 @@
             {
               "tMs": 16400,
               "kind": "caption",
-              "text": "Section 2/5: Hybrid KEM Construction"
+              "text": "Section 3/4: Hybrid KEM Construction"
             },
             {
               "tMs": 26600,
@@ -920,7 +920,7 @@
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 3/5: Composite Signatures"
+              "text": "Section 4/4: Hybrid Signature Spectrum"
             },
             {
               "tMs": 37000,
@@ -930,17 +930,7 @@
             {
               "tMs": 37200,
               "kind": "caption",
-              "text": "Section 4/5: Hybrid Certificate Formats"
-            },
-            {
-              "tMs": 47400,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"standards\"]"
-            },
-            {
-              "tMs": 47600,
-              "kind": "caption",
-              "text": "Section 5/5: IETF Standards & RFC 9763"
+              "text": "Section 2/4: Hybrid Certificate Formats"
             },
             {
               "tMs": 58000,
@@ -1000,7 +990,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -1010,7 +1000,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -1020,7 +1010,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -1030,7 +1020,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1054,7 +1044,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on Crypto Agility",
-          "narration": "Crypto agility is the design principle for code that survives algorithm changes \u2014 abstraction layers, CBOM (Crypto Bill of Materials), and the runtime-vs-compile-time tradeoffs that determine your migration speed.",
+          "narration": "Crypto agility is the design principle for code that survives algorithm changes — abstraction layers, CBOM (Crypto Bill of Materials), and the runtime-vs-compile-time tradeoffs that determine your migration speed.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "crypto-agility",
@@ -1069,7 +1059,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Crypto Agility \u2014 Abstraction layers, CBOM, and the migration patterns to build in once and survive every algorithm rotation."
+              "text": "Crypto Agility — Abstraction layers, CBOM, and the migration patterns to build in once and survive every algorithm rotation."
             },
             {
               "tMs": 4000,
@@ -1154,7 +1144,7 @@
             {
               "tMs": 113499,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128749,
@@ -1164,7 +1154,7 @@
             {
               "tMs": 130249,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145499,
@@ -1174,7 +1164,7 @@
             {
               "tMs": 146999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162249,
@@ -1184,7 +1174,7 @@
             {
               "tMs": 163749,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1197,7 +1187,7 @@
           "chapter": "foundations",
           "title": "TLS Basics",
           "estMinutes": 3,
-          "whyItMatters": "TLS handshake, certificate chain, cipher suites \u2014 the protocol every developer touches first.",
+          "whyItMatters": "TLS handshake, certificate chain, cipher suites — the protocol every developer touches first.",
           "page": {
             "route": "/learn/tls-basics"
           },
@@ -1223,7 +1213,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "TLS Basics \u2014 TLS handshake, certificate chain, cipher suites \u2014 the protocol every developer touches first."
+              "text": "TLS Basics — TLS handshake, certificate chain, cipher suites — the protocol every developer touches first."
             },
             {
               "tMs": 4000,
@@ -1278,7 +1268,7 @@
             {
               "tMs": 59500,
               "kind": "caption",
-              "text": "Workshop tab \u2014 hands-on, in-browser crypto demos."
+              "text": "Workshop tab — hands-on, in-browser crypto demos."
             },
             {
               "tMs": 112000,
@@ -1288,7 +1278,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 134333,
@@ -1298,7 +1288,7 @@
             {
               "tMs": 135833,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 156666,
@@ -1308,7 +1298,7 @@
             {
               "tMs": 158166,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1321,7 +1311,7 @@
           "chapter": "foundations",
           "title": "Crypto Developer APIs",
           "estMinutes": 3,
-          "whyItMatters": "Web Crypto, JCA, OpenSSL EVP, BoringSSL, libsodium \u2014 the API surfaces that need PQC.",
+          "whyItMatters": "Web Crypto, JCA, OpenSSL EVP, BoringSSL, libsodium — the API surfaces that need PQC.",
           "page": {
             "route": "/learn/crypto-dev-apis"
           },
@@ -1332,7 +1322,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on Crypto Developer APIs",
-          "narration": "The API surfaces developers use \u2014 Web Crypto, Java JCA, OpenSSL's EVP_PKEY interfaces, BoringSSL \u2014 and where PQC support lands first in each.",
+          "narration": "The API surfaces developers use — Web Crypto, Java JCA, OpenSSL's EVP_PKEY interfaces, BoringSSL — and where PQC support lands first in each.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "crypto-dev-apis",
@@ -1402,7 +1392,7 @@
             {
               "tMs": 27300,
               "kind": "caption",
-              "text": "Section 5/10: PKCS#11 \u2014 Hardware Abstraction"
+              "text": "Section 5/10: PKCS#11 — Hardware Abstraction"
             },
             {
               "tMs": 32300,
@@ -1542,7 +1532,7 @@
             {
               "tMs": 114000,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 129250,
@@ -1552,7 +1542,7 @@
             {
               "tMs": 130750,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 146000,
@@ -1562,7 +1552,7 @@
             {
               "tMs": 147500,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162750,
@@ -1572,7 +1562,7 @@
             {
               "tMs": 164250,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180500,
@@ -1585,7 +1575,7 @@
           "chapter": "foundations",
           "title": "Code Signing",
           "estMinutes": 3,
-          "whyItMatters": "Signing artifacts, container images, and OS packages \u2014 where ML-DSA and SLH-DSA replace RSA/ECDSA.",
+          "whyItMatters": "Signing artifacts, container images, and OS packages — where ML-DSA and SLH-DSA replace RSA/ECDSA.",
           "page": {
             "route": "/learn/code-signing"
           },
@@ -1596,7 +1586,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Module-level talking points on Code Signing",
-          "narration": "Code signing pipelines are an early PQC adopter \u2014 sigstore, container image signing, package signing all need ML-DSA or SLH-DSA replacements for long-lived signatures.",
+          "narration": "Code signing pipelines are an early PQC adopter — sigstore, container image signing, package signing all need ML-DSA or SLH-DSA replacements for long-lived signatures.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "code-signing",
@@ -1626,17 +1616,7 @@
             {
               "tMs": 6500,
               "kind": "caption",
-              "text": "Section 1/5: Classical Code Signing Fundamentals"
-            },
-            {
-              "tMs": 16700,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"pqc-signing\"]"
-            },
-            {
-              "tMs": 16900,
-              "kind": "caption",
-              "text": "Section 2/5: ML-DSA Code Signing"
+              "text": "Section 1/4: Classical vs PQC Code Signing"
             },
             {
               "tMs": 27100,
@@ -1646,7 +1626,7 @@
             {
               "tMs": 27300,
               "kind": "caption",
-              "text": "Section 3/5: Package Signing & Verification (RPM/APT)"
+              "text": "Section 2/4: Package Signing & Verification (RPM/APT)"
             },
             {
               "tMs": 37500,
@@ -1656,7 +1636,7 @@
             {
               "tMs": 37700,
               "kind": "caption",
-              "text": "Section 4/5: Sigstore Keyless Signing"
+              "text": "Section 3/4: Sigstore Keyless Signing"
             },
             {
               "tMs": 47900,
@@ -1666,7 +1646,7 @@
             {
               "tMs": 48100,
               "kind": "caption",
-              "text": "Section 5/5: Secure Boot & Firmware Trust Chains"
+              "text": "Section 4/4: Secure Boot & Firmware Trust Chains"
             },
             {
               "tMs": 58500,
@@ -1726,7 +1706,7 @@
             {
               "tMs": 114000,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 129250,
@@ -1736,7 +1716,7 @@
             {
               "tMs": 130750,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 146000,
@@ -1746,7 +1726,7 @@
             {
               "tMs": 147500,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162750,
@@ -1756,7 +1736,7 @@
             {
               "tMs": 164250,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180500,
@@ -1767,14 +1747,14 @@
         {
           "id": "p-algorithms",
           "chapter": "foundations",
-          "title": "NIST PQC Algorithms \u2014 sizes and tradeoffs",
+          "title": "NIST PQC Algorithms — sizes and tradeoffs",
           "estMinutes": 4,
           "whyItMatters": "See key sizes, signature sizes, and performance for the NIST primary picks at a glance.",
           "page": {
             "route": "/algorithms"
           },
           "tasks": ["Open the page", "Note the key affordances called out by the workshop"],
-          "expectedOutput": "Familiarity with NIST PQC Algorithms \u2014 sizes and tradeoffs",
+          "expectedOutput": "Familiarity with NIST PQC Algorithms — sizes and tradeoffs",
           "narration": "The /algorithms page lists every NIST PQC algorithm with key sizes, signature sizes, and benchmark data. Use this when sizing your protocols.",
           "cues": [
             {
@@ -1806,15 +1786,15 @@
         {
           "id": "p-playground",
           "chapter": "foundations",
-          "title": "/playground \u2014 interactive ML-KEM + ML-DSA demos",
+          "title": "/playground — interactive ML-KEM + ML-DSA demos",
           "estMinutes": 5,
           "whyItMatters": "Run real PQC keygen, sign, verify in the browser. Confirm the algorithms work end-to-end.",
           "page": {
             "route": "/playground"
           },
           "tasks": ["Open the page", "Note the key affordances called out by the workshop"],
-          "expectedOutput": "Familiarity with /playground \u2014 interactive ML-KEM + ML-DSA demos",
-          "narration": "The /playground gives you working in-browser PQC demos \u2014 keygen, sign, verify, KEM encapsulate/decapsulate. The fastest way to confirm your mental model.",
+          "expectedOutput": "Familiarity with /playground — interactive ML-KEM + ML-DSA demos",
+          "narration": "The /playground gives you working in-browser PQC demos — keygen, sign, verify, KEM encapsulate/decapsulate. The fastest way to confirm your mental model.",
           "cues": [
             {
               "tMs": 0,
@@ -1824,12 +1804,12 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Interactive PQC playground \u2014 every NIST algorithm runs in your browser via WASM."
+              "text": "Interactive PQC playground — every NIST algorithm runs in your browser via WASM."
             },
             {
               "tMs": 60000,
               "kind": "caption",
-              "text": "Run an ML-KEM keygen \u2014 see the actual public/private key sizes and shared secret derivation."
+              "text": "Run an ML-KEM keygen — see the actual public/private key sizes and shared secret derivation."
             },
             {
               "tMs": 180000,
@@ -1839,7 +1819,7 @@
             {
               "tMs": 270000,
               "kind": "caption",
-              "text": "The playground uses the same WASM crypto as production \u2014 these are not toy implementations."
+              "text": "The playground uses the same WASM crypto as production — these are not toy implementations."
             },
             {
               "tMs": 300000,
@@ -1850,15 +1830,15 @@
         {
           "id": "p-migrate",
           "chapter": "foundations",
-          "title": "/migrate \u2014 library and SDK options",
+          "title": "/migrate — library and SDK options",
           "estMinutes": 4,
-          "whyItMatters": "Find PQC-ready libraries for your language and stack \u2014 filter by layer, vendor, license.",
+          "whyItMatters": "Find PQC-ready libraries for your language and stack — filter by layer, vendor, license.",
           "page": {
             "route": "/migrate"
           },
           "tasks": ["Open the page", "Note the key affordances called out by the workshop"],
-          "expectedOutput": "Familiarity with /migrate \u2014 library and SDK options",
-          "narration": "The /migrate page is the catalog of PQC-ready software \u2014 filter by infrastructure layer, vendor, license type, FIPS validation status. Your library shortlist starts here.",
+          "expectedOutput": "Familiarity with /migrate — library and SDK options",
+          "narration": "The /migrate page is the catalog of PQC-ready software — filter by infrastructure layer, vendor, license type, FIPS validation status. Your library shortlist starts here.",
           "cues": [
             {
               "tMs": 0,
@@ -1868,7 +1848,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "/migrate \u2014 vendor catalog of PQC-ready libraries, KMS, HSMs, gateways."
+              "text": "/migrate — vendor catalog of PQC-ready libraries, KMS, HSMs, gateways."
             },
             {
               "tMs": 30000,
@@ -1878,7 +1858,7 @@
             {
               "tMs": 31500,
               "kind": "caption",
-              "text": "Libraries layer \u2014 filter to crypto SDKs you can drop into your codebase today."
+              "text": "Libraries layer — filter to crypto SDKs you can drop into your codebase today."
             },
             {
               "tMs": 90000,
@@ -1888,12 +1868,12 @@
             {
               "tMs": 91500,
               "kind": "caption",
-              "text": "AppServers layer \u2014 TLS-terminating products with PQC support."
+              "text": "AppServers layer — TLS-terminating products with PQC support."
             },
             {
               "tMs": 180000,
               "kind": "caption",
-              "text": "Each entry shows verification status \u2014 Verified, Trusted Vendor, or Pending."
+              "text": "Each entry shows verification status — Verified, Trusted Vendor, or Pending."
             },
             {
               "tMs": 240000,
@@ -1912,7 +1892,7 @@
       {
         "id": "close-quiz",
         "chapter": "close",
-        "title": "Quiz \u2014 test what you learned",
+        "title": "Quiz — test what you learned",
         "estMinutes": 3,
         "whyItMatters": "A 5-to-45-minute quiz with persona-tuned topics gives you a quick measure of what stuck.",
         "page": {

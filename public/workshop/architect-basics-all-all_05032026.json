@@ -1,6 +1,6 @@
 {
   "id": "architect-basics-all-all-v1",
-  "title": "Security Architect Workshop \u2014 All Industries, All Regions",
+  "title": "Security Architect Workshop — All Industries, All Regions",
   "match": {
     "roles": ["architect"],
     "proficiencies": ["basics", "expert"],
@@ -10,7 +10,7 @@
   "whatToExpect": [
     "Concept-to-implementation tour through 18 architecture-relevant learn modules",
     "Hands-on Migrate + Compliance + Threats + Timeline walkthrough filtered to your country and industry",
-    "Stable selectors auto-clicked so each module\u2019s Workshop tab steps execute end-to-end",
+    "Stable selectors auto-clicked so each module’s Workshop tab steps execute end-to-end",
     "~70 minutes at normal speed (35 min fast / 140 min slow)"
   ],
   "totalEstMinutes": 81,
@@ -55,7 +55,7 @@
           "Set country (any) and industry (any)"
         ],
         "expectedOutput": "Persona chip shows Security Architect.",
-        "narration": "Confirm your persona is Security Architect. Country and industry can be anything \u2014 this workshop is region-agnostic and applies the same architecture lens regardless of where you sit.",
+        "narration": "Confirm your persona is Security Architect. Country and industry can be anything — this workshop is region-agnostic and applies the same architecture lens regardless of where you sit.",
         "cues": [
           {
             "tMs": 0,
@@ -70,7 +70,7 @@
           {
             "tMs": 1500,
             "kind": "caption",
-            "text": "Persona definition \u2014 four picks shape every page. Security Architect drives this flow."
+            "text": "Persona definition — four picks shape every page. Security Architect drives this flow."
           },
           {
             "tMs": 5000,
@@ -85,7 +85,7 @@
           {
             "tMs": 8000,
             "kind": "caption",
-            "text": "Step 1 \u2014 Track. Technical track unlocks developer, architect, ops, and researcher roles."
+            "text": "Step 1 — Track. Technical track unlocks developer, architect, ops, and researcher roles."
           },
           {
             "tMs": 10000,
@@ -100,7 +100,7 @@
           {
             "tMs": 16000,
             "kind": "caption",
-            "text": "Step 2 \u2014 Role. Security Architect surfaces the modules and tools tuned to your job."
+            "text": "Step 2 — Role. Security Architect surfaces the modules and tools tuned to your job."
           },
           {
             "tMs": 18000,
@@ -111,7 +111,7 @@
             "tMs": 22000,
             "kind": "callout",
             "selector": "[data-workshop-target^=\"persona-role-\"][aria-pressed=\"true\"]",
-            "label": "Security Architect \u2014 pre-selected for this flow"
+            "label": "Security Architect — pre-selected for this flow"
           },
           {
             "tMs": 30000,
@@ -121,7 +121,7 @@
           {
             "tMs": 32000,
             "kind": "caption",
-            "text": "Step 3 \u2014 Region. Filters timeline, leaders, threats and compliance to your jurisdiction."
+            "text": "Step 3 — Region. Filters timeline, leaders, threats and compliance to your jurisdiction."
           },
           {
             "tMs": 34000,
@@ -136,7 +136,7 @@
           {
             "tMs": 44000,
             "kind": "caption",
-            "text": "Step 4 \u2014 Industry. Surfaces industry-specific threats, frameworks and vendors."
+            "text": "Step 4 — Industry. Surfaces industry-specific threats, frameworks and vendors."
           },
           {
             "tMs": 46000,
@@ -172,7 +172,7 @@
           "chapter": "foundations",
           "title": "Architect Quantum Impact",
           "estMinutes": 3,
-          "whyItMatters": "Role-specific architecture lens on the quantum threat \u2014 the why for the rest of this tour.",
+          "whyItMatters": "Role-specific architecture lens on the quantum threat — the why for the rest of this tour.",
           "page": {
             "route": "/learn/arch-quantum-impact"
           },
@@ -183,7 +183,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Architecture-level talking points from \"Architect Quantum Impact\" you can apply to your migration plan.",
-          "narration": "Role-specific architecture lens on the quantum threat \u2014 the why for the rest of this tour.",
+          "narration": "Role-specific architecture lens on the quantum threat — the why for the rest of this tour.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "arch-quantum-impact",
@@ -198,7 +198,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Architect Quantum Impact \u2014 Role-specific architecture lens on the quantum threat \u2014 the why for the rest of this tour."
+              "text": "Architect Quantum Impact — Role-specific architecture lens on the quantum threat — the why for the rest of this tour."
             },
             {
               "tMs": 4000,
@@ -283,7 +283,7 @@
             {
               "tMs": 113499,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128749,
@@ -293,7 +293,7 @@
             {
               "tMs": 130249,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145499,
@@ -303,7 +303,7 @@
             {
               "tMs": 146999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162249,
@@ -313,7 +313,7 @@
             {
               "tMs": 163749,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -326,7 +326,7 @@
           "chapter": "foundations",
           "title": "PQC 101",
           "estMinutes": 3,
-          "whyItMatters": "Foundation vocabulary \u2014 Q-Day, HNDL, FIPS 203/204 \u2014 the same five-second answers any architect needs.",
+          "whyItMatters": "Foundation vocabulary — Q-Day, HNDL, FIPS 203/204 — the same five-second answers any architect needs.",
           "page": {
             "route": "/learn/pqc-101"
           },
@@ -337,7 +337,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Architecture-level talking points from \"PQC 101\" you can apply to your migration plan.",
-          "narration": "Foundation vocabulary \u2014 Q-Day, HNDL, FIPS 203/204 \u2014 the same five-second answers any architect needs.",
+          "narration": "Foundation vocabulary — Q-Day, HNDL, FIPS 203/204 — the same five-second answers any architect needs.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "pqc-101",
@@ -352,7 +352,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "PQC 101 \u2014 Foundation vocabulary \u2014 Q-Day, HNDL, FIPS 203/204 \u2014 the same five-second answers any architect needs."
+              "text": "PQC 101 — Foundation vocabulary — Q-Day, HNDL, FIPS 203/204 — the same five-second answers any architect needs."
             },
             {
               "tMs": 4000,
@@ -457,7 +457,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -467,7 +467,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -477,7 +477,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -487,7 +487,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -500,7 +500,7 @@
           "chapter": "foundations",
           "title": "Quantum Threats",
           "estMinutes": 3,
-          "whyItMatters": "Shor, Grover, CRQC, HNDL \u2014 the four threat patterns you will design around.",
+          "whyItMatters": "Shor, Grover, CRQC, HNDL — the four threat patterns you will design around.",
           "page": {
             "route": "/learn/quantum-threats"
           },
@@ -511,7 +511,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Architecture-level talking points from \"Quantum Threats\" you can apply to your migration plan.",
-          "narration": "Shor, Grover, CRQC, HNDL \u2014 the four threat patterns you will design around.",
+          "narration": "Shor, Grover, CRQC, HNDL — the four threat patterns you will design around.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "quantum-threats",
@@ -526,7 +526,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Quantum Threats \u2014 Shor, Grover, CRQC, HNDL \u2014 the four threat patterns you will design around."
+              "text": "Quantum Threats — Shor, Grover, CRQC, HNDL — the four threat patterns you will design around."
             },
             {
               "tMs": 4000,
@@ -621,7 +621,7 @@
             {
               "tMs": 113499,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128749,
@@ -631,7 +631,7 @@
             {
               "tMs": 130249,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145499,
@@ -641,7 +641,7 @@
             {
               "tMs": 146999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162249,
@@ -651,7 +651,7 @@
             {
               "tMs": 163749,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -690,7 +690,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Entropy & Randomness \u2014 The most under-discussed architecture risk. Bad RNG breaks every PQC algorithm regardless of the math."
+              "text": "Entropy & Randomness — The most under-discussed architecture risk. Bad RNG breaks every PQC algorithm regardless of the math."
             },
             {
               "tMs": 4000,
@@ -805,7 +805,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -815,7 +815,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -825,7 +825,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -835,7 +835,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -848,7 +848,7 @@
           "chapter": "foundations",
           "title": "Standards, Certification & Compliance Bodies",
           "estMinutes": 3,
-          "whyItMatters": "Who publishes what \u2014 NIST, IETF, ISO, ETSI, ENISA, CCCS, ASD. The org chart of crypto authority.",
+          "whyItMatters": "Who publishes what — NIST, IETF, ISO, ETSI, ENISA, CCCS, ASD. The org chart of crypto authority.",
           "page": {
             "route": "/learn/standards-bodies"
           },
@@ -859,7 +859,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Architecture-level talking points from \"Standards, Certification & Compliance Bodies\" you can apply to your migration plan.",
-          "narration": "Who publishes what \u2014 NIST, IETF, ISO, ETSI, ENISA, CCCS, ASD. The org chart of crypto authority.",
+          "narration": "Who publishes what — NIST, IETF, ISO, ETSI, ENISA, CCCS, ASD. The org chart of crypto authority.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "standards-bodies",
@@ -874,7 +874,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Standards, Certification & Compliance Bodies \u2014 Who publishes what \u2014 NIST, IETF, ISO, ETSI, ENISA, CCCS, ASD. The org chart of crypto authority."
+              "text": "Standards, Certification & Compliance Bodies — Who publishes what — NIST, IETF, ISO, ETSI, ENISA, CCCS, ASD. The org chart of crypto authority."
             },
             {
               "tMs": 4000,
@@ -989,7 +989,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -999,7 +999,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -1009,7 +1009,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -1019,7 +1019,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1058,7 +1058,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Data & Asset Sensitivity \u2014 Classify before migrating. The crypto inventory that has no data classification is a guess."
+              "text": "Data & Asset Sensitivity — Classify before migrating. The crypto inventory that has no data classification is a guess."
             },
             {
               "tMs": 4000,
@@ -1073,7 +1073,7 @@
             {
               "tMs": 6000,
               "kind": "caption",
-              "text": "Section 1/5: Data Asset Classification"
+              "text": "Section 1/3: Data Asset Classification"
             },
             {
               "tMs": 16200,
@@ -1083,7 +1083,7 @@
             {
               "tMs": 16400,
               "kind": "caption",
-              "text": "Section 2/5: Compliance Mapping (GDPR, HIPAA, DORA, NIS2)"
+              "text": "Section 2/3: Compliance Mapping (GDPR, HIPAA, DORA, NIS2)"
             },
             {
               "tMs": 26600,
@@ -1094,26 +1094,6 @@
               "tMs": 26800,
               "kind": "caption",
               "text": "Section 3 of 5. Risk methodology. NIST risk management framework. ISO 27005. FAIR."
-            },
-            {
-              "tMs": 37000,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"scoring\"]"
-            },
-            {
-              "tMs": 37200,
-              "kind": "caption",
-              "text": "Section 4/5: PQC Sensitivity Scoring"
-            },
-            {
-              "tMs": 47400,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"priority\"]"
-            },
-            {
-              "tMs": 47600,
-              "kind": "caption",
-              "text": "Section 5/5: Migration Priority Map"
             },
             {
               "tMs": 58000,
@@ -1173,7 +1153,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -1183,7 +1163,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -1193,7 +1173,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -1203,7 +1183,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1242,7 +1222,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Hybrid Cryptography \u2014 KEM combiners, composite signatures, X.509 hybrid certificate formats. The transition state."
+              "text": "Hybrid Cryptography — KEM combiners, composite signatures, X.509 hybrid certificate formats. The transition state."
             },
             {
               "tMs": 4000,
@@ -1257,7 +1237,7 @@
             {
               "tMs": 6000,
               "kind": "caption",
-              "text": "Section 1/5: Why Hybrid Cryptography?"
+              "text": "Section 1/4: Why Hybrid Cryptography?"
             },
             {
               "tMs": 16200,
@@ -1267,7 +1247,7 @@
             {
               "tMs": 16400,
               "kind": "caption",
-              "text": "Section 2/5: Hybrid KEM Construction"
+              "text": "Section 3/4: Hybrid KEM Construction"
             },
             {
               "tMs": 26600,
@@ -1277,7 +1257,7 @@
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 3/5: Composite Signatures"
+              "text": "Section 4/4: Hybrid Signature Spectrum"
             },
             {
               "tMs": 37000,
@@ -1287,17 +1267,7 @@
             {
               "tMs": 37200,
               "kind": "caption",
-              "text": "Section 4/5: Hybrid Certificate Formats"
-            },
-            {
-              "tMs": 47400,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"standards\"]"
-            },
-            {
-              "tMs": 47600,
-              "kind": "caption",
-              "text": "Section 5/5: IETF Standards & RFC 9763"
+              "text": "Section 2/4: Hybrid Certificate Formats"
             },
             {
               "tMs": 58000,
@@ -1357,7 +1327,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -1367,7 +1337,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -1377,7 +1347,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -1387,7 +1357,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1426,7 +1396,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Crypto Agility \u2014 Abstraction layers, CBOM, migration patterns. The architectural posture that makes the next migration cheaper."
+              "text": "Crypto Agility — Abstraction layers, CBOM, migration patterns. The architectural posture that makes the next migration cheaper."
             },
             {
               "tMs": 4000,
@@ -1511,7 +1481,7 @@
             {
               "tMs": 113499,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128749,
@@ -1521,7 +1491,7 @@
             {
               "tMs": 130249,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145499,
@@ -1531,7 +1501,7 @@
             {
               "tMs": 146999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162249,
@@ -1541,7 +1511,7 @@
             {
               "tMs": 163749,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -1554,7 +1524,7 @@
           "chapter": "foundations",
           "title": "PQC Network Testing & Validation",
           "estMinutes": 3,
-          "whyItMatters": "Performance testing, interop, side-channel TVLA, FIPS ACVP \u2014 how you verify the migration actually works.",
+          "whyItMatters": "Performance testing, interop, side-channel TVLA, FIPS ACVP — how you verify the migration actually works.",
           "page": {
             "route": "/learn/pqc-testing-validation"
           },
@@ -1565,7 +1535,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Architecture-level talking points from \"PQC Network Testing & Validation\" you can apply to your migration plan.",
-          "narration": "Performance testing, interop, side-channel TVLA, FIPS ACVP \u2014 how you verify the migration actually works.",
+          "narration": "Performance testing, interop, side-channel TVLA, FIPS ACVP — how you verify the migration actually works.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "pqc-testing-validation",
@@ -1725,7 +1695,7 @@
             {
               "tMs": 115496,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 130746,
@@ -1735,7 +1705,7 @@
             {
               "tMs": 132246,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 147496,
@@ -1745,7 +1715,7 @@
             {
               "tMs": 148996,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 164246,
@@ -1755,7 +1725,7 @@
             {
               "tMs": 165746,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 182000,
@@ -1909,7 +1879,7 @@
             {
               "tMs": 114000,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 129250,
@@ -1919,7 +1889,7 @@
             {
               "tMs": 130750,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 146000,
@@ -1929,7 +1899,7 @@
             {
               "tMs": 147500,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162750,
@@ -1939,7 +1909,7 @@
             {
               "tMs": 164250,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180500,
@@ -1952,7 +1922,7 @@
           "chapter": "foundations",
           "title": "TLS Basics",
           "estMinutes": 3,
-          "whyItMatters": "Handshake, certificates, ciphers \u2014 refresh the protocol you will be migrating most often.",
+          "whyItMatters": "Handshake, certificates, ciphers — refresh the protocol you will be migrating most often.",
           "page": {
             "route": "/learn/tls-basics"
           },
@@ -1963,7 +1933,7 @@
             "Note Reference standards"
           ],
           "expectedOutput": "Architecture-level talking points from \"TLS Basics\" you can apply to your migration plan.",
-          "narration": "Handshake, certificates, ciphers \u2014 refresh the protocol you will be migrating most often.",
+          "narration": "Handshake, certificates, ciphers — refresh the protocol you will be migrating most often.",
           "completionSignal": {
             "kind": "module-progress",
             "moduleId": "tls-basics",
@@ -1978,7 +1948,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "TLS Basics \u2014 Handshake, certificates, ciphers \u2014 refresh the protocol you will be migrating most often."
+              "text": "TLS Basics — Handshake, certificates, ciphers — refresh the protocol you will be migrating most often."
             },
             {
               "tMs": 4000,
@@ -2033,7 +2003,7 @@
             {
               "tMs": 59500,
               "kind": "caption",
-              "text": "Workshop tab \u2014 hands-on, in-browser crypto demos."
+              "text": "Workshop tab — hands-on, in-browser crypto demos."
             },
             {
               "tMs": 112000,
@@ -2043,7 +2013,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 134333,
@@ -2053,7 +2023,7 @@
             {
               "tMs": 135833,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 156666,
@@ -2063,7 +2033,7 @@
             {
               "tMs": 158166,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -2177,7 +2147,7 @@
             {
               "tMs": 113499,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128749,
@@ -2187,7 +2157,7 @@
             {
               "tMs": 130249,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145499,
@@ -2197,7 +2167,7 @@
             {
               "tMs": 146999,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162249,
@@ -2207,7 +2177,7 @@
             {
               "tMs": 163749,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -2246,7 +2216,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Web Gateway PQC \u2014 Edge architecture, certificate lifecycle, performance, inspection, CDN/edge, vendor paths."
+              "text": "Web Gateway PQC — Edge architecture, certificate lifecycle, performance, inspection, CDN/edge, vendor paths."
             },
             {
               "tMs": 4000,
@@ -2371,7 +2341,7 @@
             {
               "tMs": 113496,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128746,
@@ -2381,7 +2351,7 @@
             {
               "tMs": 130246,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145496,
@@ -2391,7 +2361,7 @@
             {
               "tMs": 146996,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162246,
@@ -2401,7 +2371,7 @@
             {
               "tMs": 163746,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -2455,7 +2425,7 @@
             {
               "tMs": 6500,
               "kind": "caption",
-              "text": "Section 1/5: UEFI Secure Boot: PK, KEK, db, and dbx Key Hierarchy"
+              "text": "Section 1/4: UEFI Secure Boot: PK, KEK, db, and dbx Key Hierarchy"
             },
             {
               "tMs": 16700,
@@ -2465,7 +2435,7 @@
             {
               "tMs": 16900,
               "kind": "caption",
-              "text": "Section 2/5: TPM 2.0 and Measured Boot Attestation"
+              "text": "Section 3/4: TPM 2.0 and Measured Boot Attestation"
             },
             {
               "tMs": 27100,
@@ -2475,17 +2445,7 @@
             {
               "tMs": 27300,
               "kind": "caption",
-              "text": "Section 3/5: Firmware Signing and PQC Migration"
-            },
-            {
-              "tMs": 37500,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"dice-hardware-roots\"]"
-            },
-            {
-              "tMs": 37700,
-              "kind": "caption",
-              "text": "Section 4/5: DICE and Hardware Roots of Trust"
+              "text": "Section 2/4: Firmware Signing and PQC Migration"
             },
             {
               "tMs": 47900,
@@ -2495,7 +2455,7 @@
             {
               "tMs": 48100,
               "kind": "caption",
-              "text": "Section 5/5: UEFI and Firmware Vendor PQC Roadmaps"
+              "text": "Section 4/4: UEFI and Firmware Vendor PQC Roadmaps"
             },
             {
               "tMs": 58500,
@@ -2555,7 +2515,7 @@
             {
               "tMs": 114000,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 129250,
@@ -2565,7 +2525,7 @@
             {
               "tMs": 130750,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 146000,
@@ -2575,7 +2535,7 @@
             {
               "tMs": 147500,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162750,
@@ -2585,7 +2545,7 @@
             {
               "tMs": 164250,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180500,
@@ -2624,7 +2584,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Confidential Computing & TEEs \u2014 Vendor architectures, attestation, memory encryption, TEE+HSM topology, quantum threats."
+              "text": "Confidential Computing & TEEs — Vendor architectures, attestation, memory encryption, TEE+HSM topology, quantum threats."
             },
             {
               "tMs": 4000,
@@ -2749,7 +2709,7 @@
             {
               "tMs": 113496,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128746,
@@ -2759,7 +2719,7 @@
             {
               "tMs": 130246,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145496,
@@ -2769,7 +2729,7 @@
             {
               "tMs": 146996,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162246,
@@ -2779,7 +2739,7 @@
             {
               "tMs": 163746,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -2833,7 +2793,7 @@
             {
               "tMs": 6000,
               "kind": "caption",
-              "text": "Section 1/4: PKCS#11 v3.2 PQC Mechanisms"
+              "text": "Section 1/3: PKCS#11 v3.2 PQC Mechanisms"
             },
             {
               "tMs": 18800,
@@ -2843,7 +2803,7 @@
             {
               "tMs": 19000,
               "kind": "caption",
-              "text": "Section 2/4: HSM Vendor Landscape"
+              "text": "Section 2/3: HSM Vendor Landscape"
             },
             {
               "tMs": 31800,
@@ -2853,17 +2813,7 @@
             {
               "tMs": 32000,
               "kind": "caption",
-              "text": "Section 3/4: Firmware Migration & Dual-Partition Strategy"
-            },
-            {
-              "tMs": 44800,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"fips\"]"
-            },
-            {
-              "tMs": 45000,
-              "kind": "caption",
-              "text": "Section 4/4: FIPS 140-3 Validation & CMVP/CAVP"
+              "text": "Section 3/3: Firmware Migration & Dual-Partition Strategy"
             },
             {
               "tMs": 58000,
@@ -2923,7 +2873,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -2933,7 +2883,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -2943,7 +2893,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -2953,7 +2903,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -2992,7 +2942,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "KMS & PQC Key Management \u2014 Key hierarchy, envelope encryption, hybrid wrap, rotation cadence, KMIP coverage."
+              "text": "KMS & PQC Key Management — Key hierarchy, envelope encryption, hybrid wrap, rotation cadence, KMIP coverage."
             },
             {
               "tMs": 4000,
@@ -3107,7 +3057,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -3117,7 +3067,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -3127,7 +3077,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -3137,7 +3087,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -3176,7 +3126,7 @@
             {
               "tMs": 1500,
               "kind": "caption",
-              "text": "Quantum Key Distribution \u2014 BB84, post-processing, deployment topologies, protocol integration, HSM derivation."
+              "text": "Quantum Key Distribution — BB84, post-processing, deployment topologies, protocol integration, HSM derivation."
             },
             {
               "tMs": 4000,
@@ -3191,17 +3141,7 @@
             {
               "tMs": 6000,
               "kind": "caption",
-              "text": "Section 1/5: BB84 Protocol & Quantum Channel"
-            },
-            {
-              "tMs": 16200,
-              "kind": "scroll-to",
-              "selector": "[data-section-id=\"post-processing\"]"
-            },
-            {
-              "tMs": 16400,
-              "kind": "caption",
-              "text": "Section 2/5: Error Correction & Privacy Amplification"
+              "text": "Section 1/4: BB84 Protocol & Quantum Channel"
             },
             {
               "tMs": 26600,
@@ -3211,7 +3151,7 @@
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 3/5: Global QKD Deployments & Infrastructure"
+              "text": "Section 4/4: Global QKD Deployments & Infrastructure"
             },
             {
               "tMs": 37000,
@@ -3221,7 +3161,7 @@
             {
               "tMs": 37200,
               "kind": "caption",
-              "text": "Section 4/5: QKD + Classical Protocol Integration"
+              "text": "Section 2/4: QKD + Classical Protocol Integration"
             },
             {
               "tMs": 47400,
@@ -3231,7 +3171,7 @@
             {
               "tMs": 47600,
               "kind": "caption",
-              "text": "Section 5/5: HSM Key Derivation from QKD"
+              "text": "Section 3/4: HSM Key Derivation from QKD"
             },
             {
               "tMs": 58000,
@@ -3291,7 +3231,7 @@
             {
               "tMs": 113500,
               "kind": "caption",
-              "text": "Visual tab \u2014 diagrams and animations for this topic."
+              "text": "Visual tab — diagrams and animations for this topic."
             },
             {
               "tMs": 128750,
@@ -3301,7 +3241,7 @@
             {
               "tMs": 130250,
               "kind": "caption",
-              "text": "Exercises \u2014 short knowledge checks to confirm you got it."
+              "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
               "tMs": 145500,
@@ -3311,7 +3251,7 @@
             {
               "tMs": 147000,
               "kind": "caption",
-              "text": "References \u2014 primary sources every claim is cited from."
+              "text": "References — primary sources every claim is cited from."
             },
             {
               "tMs": 162250,
@@ -3321,7 +3261,7 @@
             {
               "tMs": 163750,
               "kind": "caption",
-              "text": "Tools & Products \u2014 vendor tooling and PQC-ready software."
+              "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
             {
               "tMs": 180000,
@@ -3332,7 +3272,7 @@
         {
           "id": "p-migrate",
           "chapter": "foundations",
-          "title": "Migrate \u2014 vendor + product catalogue",
+          "title": "Migrate — vendor + product catalogue",
           "estMinutes": 5,
           "whyItMatters": "The CBOM you build needs vendor mappings. The Migrate page is the catalogue you cite when filing tickets with each vendor.",
           "page": {
@@ -3344,7 +3284,7 @@
             "Check the certification cross-reference column"
           ],
           "expectedOutput": "You can identify which of your active vendors have published a PQC-ready roadmap.",
-          "narration": "The Migrate page is your vendor catalogue. Each row links to the vendor\u2019s public PQC roadmap and to the certifications that vendor\u2019s products carry \u2014 FIPS 140-3, ACVP, Common Criteria.",
+          "narration": "The Migrate page is your vendor catalogue. Each row links to the vendor’s public PQC roadmap and to the certifications that vendor’s products carry — FIPS 140-3, ACVP, Common Criteria.",
           "cues": [
             {
               "tMs": 0,
@@ -3354,12 +3294,12 @@
             {
               "tMs": 2000,
               "kind": "caption",
-              "text": "Migrate \u2014 vendor + product catalogue. The list you cite in vendor PQC tickets."
+              "text": "Migrate — vendor + product catalogue. The list you cite in vendor PQC tickets."
             },
             {
               "tMs": 60000,
               "kind": "caption",
-              "text": "Each row carries the vendor\u2019s public PQC roadmap and current certifications."
+              "text": "Each row carries the vendor’s public PQC roadmap and current certifications."
             },
             {
               "tMs": 180000,
@@ -3375,9 +3315,9 @@
         {
           "id": "p-compliance",
           "chapter": "foundations",
-          "title": "Compliance \u2014 frameworks + binding deadlines",
+          "title": "Compliance — frameworks + binding deadlines",
           "estMinutes": 5,
-          "whyItMatters": "Every architecture decision lands in an audit. The Compliance page maps your country\u2019s active frameworks to the algorithms they require.",
+          "whyItMatters": "Every architecture decision lands in an audit. The Compliance page maps your country’s active frameworks to the algorithms they require.",
           "page": {
             "route": "/compliance"
           },
@@ -3387,7 +3327,7 @@
             "Note the binding deadline + required algorithms"
           ],
           "expectedOutput": "You can quote the framework + deadline + required algorithm for any architecture review.",
-          "narration": "Compliance maps every published framework to the binding deadline and the required algorithm set. NIST CNSA 2.0, CCCS ITSM.40.001, ASD ISM-1917, ENISA \u2014 all in one filter.",
+          "narration": "Compliance maps every published framework to the binding deadline and the required algorithm set. NIST CNSA 2.0, CCCS ITSM.40.001, ASD ISM-1917, ENISA — all in one filter.",
           "cues": [
             {
               "tMs": 0,
@@ -3397,7 +3337,7 @@
             {
               "tMs": 2000,
               "kind": "caption",
-              "text": "Compliance \u2014 every published framework with binding deadlines and required algorithms."
+              "text": "Compliance — every published framework with binding deadlines and required algorithms."
             },
             {
               "tMs": 60000,
@@ -3418,7 +3358,7 @@
         {
           "id": "p-threats",
           "chapter": "foundations",
-          "title": "Threats \u2014 cross-industry threat catalogue",
+          "title": "Threats — cross-industry threat catalogue",
           "estMinutes": 3,
           "whyItMatters": "Architects design across industries. The Threats catalogue is sorted by industry but the underlying patterns generalise.",
           "page": {
@@ -3429,7 +3369,7 @@
             "Note the affected protocols / surfaces"
           ],
           "expectedOutput": "You can describe at least one HIGH-severity threat that affects your stack.",
-          "narration": "Threats \u2014 cross-industry catalogue. Filter by industry to surface what affects your stack first.",
+          "narration": "Threats — cross-industry catalogue. Filter by industry to surface what affects your stack first.",
           "cues": [
             {
               "tMs": 0,
@@ -3439,7 +3379,7 @@
             {
               "tMs": 2000,
               "kind": "caption",
-              "text": "Threats \u2014 sorted by industry. The patterns generalise across stacks."
+              "text": "Threats — sorted by industry. The patterns generalise across stacks."
             },
             {
               "tMs": 90000,
@@ -3455,7 +3395,7 @@
         {
           "id": "p-timeline",
           "chapter": "foundations",
-          "title": "Timeline \u2014 government + industry milestones",
+          "title": "Timeline — government + industry milestones",
           "estMinutes": 2,
           "whyItMatters": "Federal moves cascade into private sector procurement. The Timeline is the runway for every contract you sign in the next five years.",
           "page": {
@@ -3463,7 +3403,7 @@
           },
           "tasks": ["Filter by your country", "Skim the next 12 months of milestones"],
           "expectedOutput": "You can recite the next 3 government milestones for your jurisdiction.",
-          "narration": "Timeline \u2014 government + industry milestones. The runway for every contract you sign in the next five years.",
+          "narration": "Timeline — government + industry milestones. The runway for every contract you sign in the next five years.",
           "cues": [
             {
               "tMs": 0,
@@ -3473,7 +3413,7 @@
             {
               "tMs": 2000,
               "kind": "caption",
-              "text": "Timeline \u2014 government + industry milestones, your migration runway."
+              "text": "Timeline — government + industry milestones, your migration runway."
             },
             {
               "tMs": 60000,
@@ -3514,7 +3454,7 @@
       {
         "id": "close-quiz",
         "chapter": "close",
-        "title": "Quiz \u2014 test what you learned",
+        "title": "Quiz — test what you learned",
         "estMinutes": 3,
         "whyItMatters": "A 5-to-45-minute quiz with persona-tuned topics gives you a quick measure of what stuck.",
         "page": {
@@ -3608,7 +3548,7 @@
       {
         "id": "close-02-about",
         "chapter": "close",
-        "title": "About PQC Today \u2014 trust + transparency",
+        "title": "About PQC Today — trust + transparency",
         "estMinutes": 3,
         "whyItMatters": "Before sharing this workshop with your team, the About page answers the trust questions: who maintains the platform, what data leaves your browser, and what license governs reuse.",
         "page": {
@@ -3616,7 +3556,7 @@
         },
         "tasks": ["Watch the page scroll through About sections"],
         "expectedOutput": "You can answer team trust questions: vision, privacy, security, license, community.",
-        "narration": "About is the trust page. The captions below name each section as the page scrolls \u2014 vision, founding principles, who it is for, urgency, data privacy, security audit, open source license, and community.",
+        "narration": "About is the trust page. The captions below name each section as the page scrolls — vision, founding principles, who it is for, urgency, data privacy, security audit, open source license, and community.",
         "cues": [
           {
             "tMs": 0,
