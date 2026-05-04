@@ -6,6 +6,101 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Workshop — dynamic caption timing, voice priming, anchor coverage, registry trim (May 3, 2026)
+
+Two-commit hardening pass on the workshop system: voice + cue-timing
+fixes that surfaced from in-browser testing, bulk anchor instrumentation
+across 20 modules, a semantic caption-vs-content audit, and a follow-on
+trim of the `LEARN_SECTIONS` registry to eliminate registry-vs-DOM drift.
+
+#### Voice + cue timing
+
+- **Dynamic caption timing** ([VideoOverlay.tsx](src/components/Workshop/VideoOverlay.tsx),
+  [WorkshopStepCard.tsx](src/components/RightPanel/WorkshopStepCard.tsx)):
+  next caption now fires at `previous_speech_end + 1.5s` instead of a
+  fixed `2.5 × ttsPace` multiplier. Eliminates dead air after short
+  captions and absorbs long ones without truncation. Speech duration is
+  estimated at ~14 chars/sec at the 0.85 narration rate.
+- **WaveNet / neural voice auto-pick** ([WorkshopPanel.tsx](src/components/RightPanel/WorkshopPanel.tsx)):
+  when `ttsVoiceURI` is null, prefers Google WaveNet, Microsoft
+  Aria/Guy/Davis/Jenny, and Apple Premium / Enhanced / Neural / Siri
+  voices over the system default.
+- **Chrome 15s idle TTS bug fix**: 10-second `setInterval` keepalive on
+  `speechSynthesis.resume()` prevents the silent failure mode where
+  Chrome's TTS engine pauses itself after 15s of inactivity.
+- **TTS priming on user gesture** ([useWorkshopStore.ts](src/store/useWorkshopStore.ts)):
+  `setTtsEnabled` setter speaks an inaudible priming utterance on the
+  user-gesture click that turns voice on, so the first real caption
+  always plays. Plus a "Test Voice" button next to the On/Off toggle.
+
+#### Cues + anchors
+
+- **20 module Introductions anchored** with `data-section-id` for
+  deterministic `scroll-to` cues:
+  - 5 role-guide modules via the shared
+    [RoleIntroduction.tsx](src/components/PKILearning/common/roleGuide/RoleIntroduction.tsx)
+    (`why-it-matters`, `what-to-learn`, `how-to-act` — covers exec/dev/
+    arch/ops/research-quantum-impact)
+  - 15 module-specific Introductions covering 73 sections total
+  - Two modules (PQCTestingValidation, SecureBootPQC) gained a
+    `sectionId` prop on their shared `CollapsibleSection` to avoid
+    duplicating markup
+- **LearnStepper navigation fix**: 8 modules use a stepper that renders
+  one section at a time. Their `data-section-id` anchors were
+  unreachable inside `Step1...StepN` sub-components. Generator now
+  flags them as `learnTabIsStepper: true` and emits
+  `click [data-workshop-target="learn-stepper-next"]` cues instead.
+  13 dead anchors stripped from sub-components.
+- **`Workshop N/M:` → `Hands-on N/M:`**: 212 captions across all flows
+  plus the cue generator template renamed to clarify the tab boundary
+  (the Workshop tab is now Hands-on).
+
+#### Content
+
+- **4 new persona flows**:
+  [developer](public/workshop/developer-basics-all-all_05032026.json),
+  [devops](public/workshop/devops-basics-all-all_05032026.json),
+  [researcher](public/workshop/researcher-basics-all-all_05032026.json),
+  [curious](public/workshop/curious-curious-all-all_05032026.json).
+  Curious is page-tour only (no module deep-dives).
+- **Executive flow** added `data-asset-sensitivity` +
+  `standards-bodies` modules; foundations 44 → 50 min, total 118 →
+  127 min.
+- **Quiz showcase close step** in all 7 flows (~12 cues each, ends at
+  the Start button without running). 7 stable
+  `data-workshop-target` selectors added to QuizIntro + TopicSelector.
+- **Stale `ROLE_ADAPTATIONS` strings** in
+  [PersonalizationSection.tsx](src/components/Landing/PersonalizationSection.tsx)
+  updated to match the current `PERSONA_HERO_CTA` map for 5 personas.
+
+#### Audit + registry trim
+
+- **Semantic caption-vs-content audit** (446 of 703 module-tour
+  captions across all 7 flows). Found one HARD mismatch
+  (`f-mod-exec-quantum-impact` cue 0 promised "FIPS 203/204" but the
+  module never teaches it) — rewritten to "CNSA 2.0 deadlines" in
+  whyItMatters + narration + caption.
+- **`LEARN_SECTIONS` registry trim** in
+  [moduleData.ts](src/components/PKILearning/moduleData.ts):
+  7 modules had registry entries with no rendered DOM section.
+  Trimmed to match what the user actually sees:
+  - `quantum-threats` 5 → 3 (drop shor, grover)
+  - `hybrid-crypto` 5 → 4 (drop standards, reorder, relabel composite
+    → "Hybrid Signature Spectrum")
+  - `hsm-pqc` 4 → 3 (drop fips)
+  - `qkd` 5 → 4 (drop post-processing, reorder)
+  - `data-asset-sensitivity` 5 → 3 (drop scoring, priority)
+  - `secure-boot-pqc` 5 → 4 (drop dice-hardware-roots, reorder)
+  - `code-signing` 5 → 4 (drop pqc-signing, fold into "Classical vs
+    PQC Code Signing")
+- **52 caption updates** across architect / developer / devops /
+  executive / researcher flows: renumbered N/M denominators, dropped
+  phantom-section captions + their preceding `scroll-to` cues,
+  retargeted scroll-to selectors to canonical section IDs, deduped
+  one consecutive identical caption.
+
+Verification: `npx tsc --noEmit` clean; `npx vitest run` 2086/2086 pass.
+
 ### TPM Playground — WASM compliance fix + scenario flow tab (May 3, 2026)
 
 - **11/11 V1.85 compliance checks now pass** — fixes V185-008 (CreatePrimary
