@@ -725,9 +725,8 @@ export const LEARN_SECTIONS: Record<string, { id: string; label: string }[]> = {
     { id: 'wireguard', label: 'WireGuard Rosenpass & Protocol Comparison' },
   ],
   'email-signing': [
-    { id: 'smime', label: 'S/MIME & Certificate Fundamentals' },
-    { id: 'cms', label: 'CMS Signing & SignedData Structure' },
-    { id: 'kem-email', label: 'KEM-Based Encryption (RFC 9629)' },
+    { id: 'smime', label: 'S/MIME, CMS & KEM Encryption' },
+    { id: 'cms', label: 'Certificate Requirements & Migration' },
   ],
   'pki-workshop': [
     { id: 'fundamentals', label: 'PKI Fundamentals & Trust Models' },
@@ -755,10 +754,9 @@ export const LEARN_SECTIONS: Record<string, { id: string; label: string }[]> = {
     { id: 'advanced', label: 'Context Strings, Deterministic Mode & HashSLH-DSA' },
   ],
   'stateful-signatures': [
-    { id: 'lms', label: 'LMS/HSS Merkle Tree Signatures' },
-    { id: 'xmss', label: 'XMSS/XMSS^MT Parameter Trade-offs' },
-    { id: 'state', label: 'Critical State Management & Key Exhaustion' },
-    { id: 'slh-dsa', label: 'SLH-DSA Stateless Comparison (FIPS 205)' },
+    { id: 'lms', label: 'Why Stateful Signatures & Merkle Trees' },
+    { id: 'xmss', label: 'LMS/HSS & XMSS/XMSS^MT' },
+    { id: 'state', label: 'The State Problem & Resources' },
   ],
   'digital-assets': [
     { id: 'bitcoin', label: 'Bitcoin: secp256k1 & ECDSA' },
@@ -845,14 +843,13 @@ export const LEARN_SECTIONS: Record<string, { id: string; label: string }[]> = {
     { id: 'heatmap', label: 'Risk Heatmap & Prioritization' },
   ],
   'pqc-business-case': [
-    { id: 'roi', label: 'ROI Analysis for PQC Investment' },
-    { id: 'breach', label: 'Quantum Breach Cost Modeling' },
-    { id: 'board', label: 'Board-Level Business Case' },
+    { id: 'roi', label: 'Why PQC Investment & Cost Categories' },
+    { id: 'board', label: 'Workshop & Resources' },
   ],
   'pqc-governance': [
-    { id: 'model', label: 'PQC Governance Model (Centralized vs Federated)' },
-    { id: 'policy', label: 'PQC Policy Drafting & Exception Handling' },
-    { id: 'kpi', label: 'KPI Dashboard & Board Reporting' },
+    { id: 'model', label: 'Why Governance, RACI & Policy Hierarchy' },
+    { id: 'policy', label: 'Governance Models, Escalation & KPIs' },
+    { id: 'kpi', label: 'Resources & Workshop' },
   ],
   'vendor-risk': [
     { id: 'readiness', label: 'Vendor PQC Readiness Assessment' },
@@ -861,15 +858,13 @@ export const LEARN_SECTIONS: Record<string, { id: string; label: string }[]> = {
     { id: 'risk-matrix', label: 'Layer-wise Risk Matrix' },
   ],
   'migration-program': [
-    { id: 'roadmap', label: '3-Year Phased Migration Roadmap' },
-    { id: 'stakeholders', label: 'Stakeholder Communications Plan' },
-    { id: 'kpi', label: 'Migration KPIs & Metrics' },
-    { id: 'deployment', label: 'Deployment Playbook & Execution' },
+    { id: 'roadmap', label: 'Program Overview & 7-Phase Framework' },
+    { id: 'deployment', label: 'Critical Success Factors & Workshop' },
   ],
   'compliance-strategy': [
-    { id: 'frameworks', label: 'PQC Compliance Frameworks (CNSA 2.0, ETSI, NIST)' },
-    { id: 'jurisdiction', label: 'Multi-Jurisdiction Requirements' },
-    { id: 'audit', label: 'Audit Readiness & Compliance Timeline' },
+    { id: 'frameworks', label: 'Compliance Landscape & Key Frameworks' },
+    { id: 'jurisdiction', label: 'Compliance vs Risk Approach & Major Deadlines' },
+    { id: 'audit', label: 'Country Deadlines, Dependencies & Workshop' },
   ],
   'data-asset-sensitivity': [
     { id: 'classification', label: 'Data Asset Classification' },
@@ -877,11 +872,11 @@ export const LEARN_SECTIONS: Record<string, { id: string; label: string }[]> = {
     { id: 'methodology', label: 'Risk Methodology (NIST RMF, ISO 27005, FAIR)' },
   ],
   'standards-bodies': [
-    { id: 'three-roles', label: 'The Three Roles: Standards, Certification & Compliance' },
-    { id: 'gov-vs-nongov', label: 'Governmental vs Non-Governmental Bodies' },
-    { id: 'global-regional', label: 'Global vs Regional Coverage' },
-    { id: 'app-pages-guide', label: 'Reading the App: Compliance & Migrate Pages' },
-    { id: 'ietf-process', label: 'IETF Working Groups & the RFC Process' },
+    { id: 'three-roles', label: 'Three Roles' },
+    { id: 'gov-vs-nongov', label: 'Gov vs Non-Gov' },
+    { id: 'global-regional', label: 'Global & Regional' },
+    { id: 'app-pages-guide', label: 'App Pages Guide' },
+    { id: 'ietf-process', label: 'IETF & RFC Process' },
   ],
   'confidential-computing': [
     { id: 'tee-fundamentals', label: 'TEE Fundamentals & Threat Model' },

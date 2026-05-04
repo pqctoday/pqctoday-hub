@@ -75,6 +75,7 @@ export default function TpmPlayground() {
               disabled={!isWasmReady}
               onLogUpdate={(log) => setLogs((prev) => [...prev, log])}
               onObjectUpdate={(obj) => setObjects((prev) => [...prev, obj])}
+              objects={objects}
             />
           </div>
 

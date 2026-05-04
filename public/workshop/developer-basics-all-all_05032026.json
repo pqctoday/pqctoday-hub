@@ -905,32 +905,32 @@
             {
               "tMs": 16200,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"kem\"]"
+              "selector": "[data-section-id=\"cert-formats\"]"
             },
             {
               "tMs": 16400,
               "kind": "caption",
-              "text": "Section 3/4: Hybrid KEM Construction"
+              "text": "Section 2/4: Hybrid Certificate Formats"
             },
             {
               "tMs": 26600,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"composite\"]"
+              "selector": "[data-section-id=\"kem\"]"
             },
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 4/4: Hybrid Signature Spectrum"
+              "text": "Section 3/4: Hybrid KEM Construction"
             },
             {
               "tMs": 37000,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"cert-formats\"]"
+              "selector": "[data-section-id=\"composite\"]"
             },
             {
               "tMs": 37200,
               "kind": "caption",
-              "text": "Section 2/4: Hybrid Certificate Formats"
+              "text": "Section 4/4: Hybrid Signature Spectrum"
             },
             {
               "tMs": 58000,

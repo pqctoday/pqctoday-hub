@@ -900,47 +900,47 @@
             {
               "tMs": 6000,
               "kind": "caption",
-              "text": "Section 1/5: The Three Roles: Standards, Certification & Compliance"
+              "text": "Section 1/5: Three Roles"
             },
             {
-              "tMs": 16100,
-              "kind": "click",
-              "selector": "[data-workshop-target=\"learn-stepper-next\"]"
+              "tMs": 16200,
+              "kind": "scroll-to",
+              "selector": "[data-section-id=\"gov-vs-nongov\"]"
             },
             {
               "tMs": 16400,
               "kind": "caption",
-              "text": "Section 2/5: Governmental vs Non-Governmental Bodies"
+              "text": "Section 2/5: Gov vs Non-Gov"
             },
             {
-              "tMs": 26500,
-              "kind": "click",
-              "selector": "[data-workshop-target=\"learn-stepper-next\"]"
+              "tMs": 26600,
+              "kind": "scroll-to",
+              "selector": "[data-section-id=\"global-regional\"]"
             },
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 3/5: Global vs Regional Coverage"
+              "text": "Section 3/5: Global & Regional"
             },
             {
-              "tMs": 36900,
-              "kind": "click",
-              "selector": "[data-workshop-target=\"learn-stepper-next\"]"
+              "tMs": 37000,
+              "kind": "scroll-to",
+              "selector": "[data-section-id=\"app-pages-guide\"]"
             },
             {
               "tMs": 37200,
               "kind": "caption",
-              "text": "Section 4/5: Reading the App: Compliance & Migrate Pages"
+              "text": "Section 4/5: App Pages Guide"
             },
             {
-              "tMs": 47300,
-              "kind": "click",
-              "selector": "[data-workshop-target=\"learn-stepper-next\"]"
+              "tMs": 47400,
+              "kind": "scroll-to",
+              "selector": "[data-section-id=\"ietf-process\"]"
             },
             {
               "tMs": 47600,
               "kind": "caption",
-              "text": "Section 5/5: IETF Working Groups & the RFC Process"
+              "text": "Section 5/5: IETF & RFC Process"
             },
             {
               "tMs": 58000,
@@ -1089,32 +1089,32 @@
             {
               "tMs": 16200,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"kem\"]"
+              "selector": "[data-section-id=\"cert-formats\"]"
             },
             {
               "tMs": 16400,
               "kind": "caption",
-              "text": "Section 3/4: Hybrid KEM Construction"
+              "text": "Section 2/4: Hybrid Certificate Formats"
             },
             {
               "tMs": 26600,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"composite\"]"
+              "selector": "[data-section-id=\"kem\"]"
             },
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 4/4: Hybrid Signature Spectrum"
+              "text": "Section 3/4: Hybrid KEM Construction"
             },
             {
               "tMs": 37000,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"cert-formats\"]"
+              "selector": "[data-section-id=\"composite\"]"
             },
             {
               "tMs": 37200,
               "kind": "caption",
-              "text": "Section 2/4: Hybrid Certificate Formats"
+              "text": "Section 4/4: Hybrid Signature Spectrum"
             },
             {
               "tMs": 58000,
@@ -1636,115 +1636,105 @@
             {
               "tMs": 6000,
               "kind": "caption",
-              "text": "Section 1/4: LMS/HSS Merkle Tree Signatures"
+              "text": "Section 1/3: Why Stateful Signatures & Merkle Trees"
             },
             {
-              "tMs": 18700,
-              "kind": "click",
-              "selector": "[data-workshop-target=\"learn-stepper-next\"]"
+              "tMs": 23133,
+              "kind": "scroll-to",
+              "selector": "[data-section-id=\"xmss\"]"
             },
             {
-              "tMs": 19000,
+              "tMs": 23333,
               "kind": "caption",
-              "text": "Section 2/4: XMSS/XMSS^MT Parameter Trade-offs"
+              "text": "Section 2/3: LMS/HSS & XMSS/XMSS^MT"
             },
             {
-              "tMs": 31700,
-              "kind": "click",
-              "selector": "[data-workshop-target=\"learn-stepper-next\"]"
+              "tMs": 40466,
+              "kind": "scroll-to",
+              "selector": "[data-section-id=\"state\"]"
             },
             {
-              "tMs": 32000,
+              "tMs": 40666,
               "kind": "caption",
-              "text": "Section 3/4: Critical State Management & Key Exhaustion"
+              "text": "Section 3/3: The State Problem & Resources"
             },
             {
-              "tMs": 44700,
-              "kind": "click",
-              "selector": "[data-workshop-target=\"learn-stepper-next\"]"
-            },
-            {
-              "tMs": 45000,
-              "kind": "caption",
-              "text": "Section 4/4: SLH-DSA Stateless Comparison (FIPS 205)"
-            },
-            {
-              "tMs": 58000,
+              "tMs": 57999,
               "kind": "select-tab",
               "tabName": "Workshop"
             },
             {
-              "tMs": 59500,
+              "tMs": 59499,
               "kind": "caption",
               "text": "Hands-on 1/4: LMS Key Generation"
             },
             {
-              "tMs": 70550,
+              "tMs": 70549,
               "kind": "click",
               "selector": "[data-workshop-target=\"learn-stepper-next\"]"
             },
             {
-              "tMs": 72500,
+              "tMs": 72499,
               "kind": "caption",
               "text": "Hands-on 2/4: XMSS Key Generation"
             },
             {
-              "tMs": 83550,
+              "tMs": 83549,
               "kind": "click",
               "selector": "[data-workshop-target=\"learn-stepper-next\"]"
             },
             {
-              "tMs": 85500,
+              "tMs": 85499,
               "kind": "caption",
               "text": "Hands-on 3/4: State Management"
             },
             {
-              "tMs": 96550,
+              "tMs": 96549,
               "kind": "click",
               "selector": "[data-workshop-target=\"learn-stepper-next\"]"
             },
             {
-              "tMs": 98500,
+              "tMs": 98499,
               "kind": "caption",
               "text": "Hands-on 4/4: SLH-DSA Live Demo"
             },
             {
-              "tMs": 112000,
+              "tMs": 111999,
               "kind": "select-tab",
               "tabName": "Visual"
             },
             {
-              "tMs": 113500,
+              "tMs": 113499,
               "kind": "caption",
               "text": "Visual tab — diagrams and animations for this topic."
             },
             {
-              "tMs": 128750,
+              "tMs": 128749,
               "kind": "select-tab",
               "tabName": "Exercises"
             },
             {
-              "tMs": 130250,
+              "tMs": 130249,
               "kind": "caption",
               "text": "Exercises — short knowledge checks to confirm you got it."
             },
             {
-              "tMs": 145500,
+              "tMs": 145499,
               "kind": "select-tab",
               "tabName": "References"
             },
             {
-              "tMs": 147000,
+              "tMs": 146999,
               "kind": "caption",
               "text": "References — primary sources every claim is cited from."
             },
             {
-              "tMs": 162250,
+              "tMs": 162249,
               "kind": "select-tab",
               "tabName": "Tools & Products"
             },
             {
-              "tMs": 163750,
+              "tMs": 163749,
               "kind": "caption",
               "text": "Tools & Products — vendor tooling and PQC-ready software."
             },
@@ -1805,32 +1795,32 @@
             {
               "tMs": 26600,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"deployment\"]"
+              "selector": "[data-section-id=\"integration\"]"
             },
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 4/4: Global QKD Deployments & Infrastructure"
+              "text": "Section 2/4: QKD + Classical Protocol Integration"
             },
             {
               "tMs": 37000,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"integration\"]"
+              "selector": "[data-section-id=\"hsm-derivation\"]"
             },
             {
               "tMs": 37200,
               "kind": "caption",
-              "text": "Section 2/4: QKD + Classical Protocol Integration"
+              "text": "Section 3/4: HSM Key Derivation from QKD"
             },
             {
               "tMs": 47400,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"hsm-derivation\"]"
+              "selector": "[data-section-id=\"deployment\"]"
             },
             {
               "tMs": 47600,
               "kind": "caption",
-              "text": "Section 3/4: HSM Key Derivation from QKD"
+              "text": "Section 4/4: Global QKD Deployments & Infrastructure"
             },
             {
               "tMs": 58000,

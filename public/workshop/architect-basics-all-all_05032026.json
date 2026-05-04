@@ -889,47 +889,47 @@
             {
               "tMs": 6000,
               "kind": "caption",
-              "text": "Section 1/5: The Three Roles: Standards, Certification & Compliance"
+              "text": "Section 1/5: Three Roles"
             },
             {
-              "tMs": 16100,
-              "kind": "click",
-              "selector": "[data-workshop-target=\"learn-stepper-next\"]"
+              "tMs": 16200,
+              "kind": "scroll-to",
+              "selector": "[data-section-id=\"gov-vs-nongov\"]"
             },
             {
               "tMs": 16400,
               "kind": "caption",
-              "text": "Section 2/5: Governmental vs Non-Governmental Bodies"
+              "text": "Section 2/5: Gov vs Non-Gov"
             },
             {
-              "tMs": 26500,
-              "kind": "click",
-              "selector": "[data-workshop-target=\"learn-stepper-next\"]"
+              "tMs": 26600,
+              "kind": "scroll-to",
+              "selector": "[data-section-id=\"global-regional\"]"
             },
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 3/5: Global vs Regional Coverage"
+              "text": "Section 3/5: Global & Regional"
             },
             {
-              "tMs": 36900,
-              "kind": "click",
-              "selector": "[data-workshop-target=\"learn-stepper-next\"]"
+              "tMs": 37000,
+              "kind": "scroll-to",
+              "selector": "[data-section-id=\"app-pages-guide\"]"
             },
             {
               "tMs": 37200,
               "kind": "caption",
-              "text": "Section 4/5: Reading the App: Compliance & Migrate Pages"
+              "text": "Section 4/5: App Pages Guide"
             },
             {
-              "tMs": 47300,
-              "kind": "click",
-              "selector": "[data-workshop-target=\"learn-stepper-next\"]"
+              "tMs": 47400,
+              "kind": "scroll-to",
+              "selector": "[data-section-id=\"ietf-process\"]"
             },
             {
               "tMs": 47600,
               "kind": "caption",
-              "text": "Section 5/5: IETF Working Groups & the RFC Process"
+              "text": "Section 5/5: IETF & RFC Process"
             },
             {
               "tMs": 58000,
@@ -1093,7 +1093,7 @@
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 3 of 5. Risk methodology. NIST risk management framework. ISO 27005. FAIR."
+              "text": "Section 3/3: Risk Methodology (NIST RMF, ISO 27005, FAIR)"
             },
             {
               "tMs": 58000,
@@ -1242,32 +1242,32 @@
             {
               "tMs": 16200,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"kem\"]"
+              "selector": "[data-section-id=\"cert-formats\"]"
             },
             {
               "tMs": 16400,
               "kind": "caption",
-              "text": "Section 3/4: Hybrid KEM Construction"
+              "text": "Section 2/4: Hybrid Certificate Formats"
             },
             {
               "tMs": 26600,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"composite\"]"
+              "selector": "[data-section-id=\"kem\"]"
             },
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 4/4: Hybrid Signature Spectrum"
+              "text": "Section 3/4: Hybrid KEM Construction"
             },
             {
               "tMs": 37000,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"cert-formats\"]"
+              "selector": "[data-section-id=\"composite\"]"
             },
             {
               "tMs": 37200,
               "kind": "caption",
-              "text": "Section 2/4: Hybrid Certificate Formats"
+              "text": "Section 4/4: Hybrid Signature Spectrum"
             },
             {
               "tMs": 58000,
@@ -2430,22 +2430,22 @@
             {
               "tMs": 16700,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"tpm-attestation\"]"
+              "selector": "[data-section-id=\"firmware-signing\"]"
             },
             {
               "tMs": 16900,
               "kind": "caption",
-              "text": "Section 3/4: TPM 2.0 and Measured Boot Attestation"
+              "text": "Section 2/4: Firmware Signing and PQC Migration"
             },
             {
               "tMs": 27100,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"firmware-signing\"]"
+              "selector": "[data-section-id=\"tpm-attestation\"]"
             },
             {
               "tMs": 27300,
               "kind": "caption",
-              "text": "Section 2/4: Firmware Signing and PQC Migration"
+              "text": "Section 3/4: TPM 2.0 and Measured Boot Attestation"
             },
             {
               "tMs": 47900,
@@ -3146,32 +3146,32 @@
             {
               "tMs": 26600,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"deployment\"]"
+              "selector": "[data-section-id=\"integration\"]"
             },
             {
               "tMs": 26800,
               "kind": "caption",
-              "text": "Section 4/4: Global QKD Deployments & Infrastructure"
+              "text": "Section 2/4: QKD + Classical Protocol Integration"
             },
             {
               "tMs": 37000,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"integration\"]"
+              "selector": "[data-section-id=\"hsm-derivation\"]"
             },
             {
               "tMs": 37200,
               "kind": "caption",
-              "text": "Section 2/4: QKD + Classical Protocol Integration"
+              "text": "Section 3/4: HSM Key Derivation from QKD"
             },
             {
               "tMs": 47400,
               "kind": "scroll-to",
-              "selector": "[data-section-id=\"hsm-derivation\"]"
+              "selector": "[data-section-id=\"deployment\"]"
             },
             {
               "tMs": 47600,
               "kind": "caption",
-              "text": "Section 3/4: HSM Key Derivation from QKD"
+              "text": "Section 4/4: Global QKD Deployments & Infrastructure"
             },
             {
               "tMs": 58000,
