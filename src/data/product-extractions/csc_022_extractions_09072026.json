@@ -1,0 +1,43 @@
+[
+  {
+    "platform_name": "PQC InfoHub - Tencent Post-Quantum Cryptography Information Center",
+    "category": "PQC Programs & Research Initiatives",
+    "product_name": "PQC InfoHub - Tencent Post-Quantum Cryptography Information Center",
+    "product_brief": "Information center for PQC standards, migration solutions, and industry practices supported by Tencent Cloud and XuanWu Lab.",
+    "pqc_support": "Planned (with timeline)",
+    "pqc_capability_description": "Tencent Cloud has initiated preliminary research and planning for post-quantum migration since the end of 2024. The platform provides intelligence support, tracks standards, offers performance evaluation, and provides migration guidance.",
+    "pqc_migration_priority": "Unknown",
+    "crypto_primitives": "RSA, Elliptic Curve Cryptography",
+    "key_management_model": "Unknown",
+    "supported_blockchains": "Unknown",
+    "architecture_type": "Unknown",
+    "infrastructure_layer": "Cloud",
+    "license_type": "Unknown",
+    "license": "Unknown",
+    "latest_version": "Unknown",
+    "release_date": "Unknown",
+    "fips_validated": "No",
+    "primary_platforms": "Tencent Cloud",
+    "target_industries": "Industry (general), Cloud service providers",
+    "regulatory_status": "Unknown",
+    "pqc_roadmap_details": "Preliminary research and planning initiated since the end of 2024.",
+    "consensus_mechanism": "Unknown",
+    "signature_schemes": "Unknown",
+    "authoritative_source_url": "PQC-InfoHub-Tencent-Post-Quantum-Cryptog-44fde4be.html",
+    "implementation_attack_surface": "Unknown",
+    "cryptographic_discovery_&_inventory": "Unknown",
+    "testing_&_validation_methods": "Unknown",
+    "qkd_protocols_&_quantum_networking": "Unknown",
+    "qrng_&_entropy_sources": "Unknown",
+    "constrained_device_&_iot_suitability": "Unknown",
+    "supply_chain_&_vendor_risk": "Unknown",
+    "deployment_&_migration_complexity": "Unknown",
+    "financial_&_business_impact": "Unknown",
+    "organizational_readiness": "Unknown",
+    "_generation": {
+      "model": "mlx-community/Qwen3.6-27B-8bit",
+      "backend": "mlx",
+      "generated_at": "2026-09-07"
+    }
+  }
+]

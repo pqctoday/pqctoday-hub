@@ -1,7 +1,7 @@
 {
   "description": "Downloaded digital proofs backing the migrate catalog (accumulated across passes)",
   "generated": "2026-07-09",
-  "count": 1185,
+  "count": 1198,
   "downloads": [
     {
       "product_id": "btq-bitcoin-quantum",
@@ -13602,6 +13602,97 @@
       "sha256": "868777e139b3d1a26f335583f6189d75d62f0e79edab918f37716363e42b01a1",
       "sizeBytes": 283492,
       "hashedAt": "2026-09-06"
+    },
+    {
+      "product_id": "libcrux-crates-io-Rust-Package-Registry",
+      "url": "https://crates.io/crates/libcrux",
+      "file": "libcrux-crates-io-Rust-Package-Registry-ac790dc9.html",
+      "bytes": 32943,
+      "tier": "playwright-stealth"
+    },
+    {
+      "product_id": "GitHub-aws-aws-lc-rs",
+      "url": "https://github.com/aws/aws-lc-rs",
+      "file": "GitHub-aws-aws-lc-rs-5184ac4f.html",
+      "bytes": 335809,
+      "tier": "curl_cffi:chrome124"
+    },
+    {
+      "product_id": "Dashboard-PQProbe",
+      "url": "https://pqprobe.com/app",
+      "file": "Dashboard-PQProbe-2d7914d5.html",
+      "bytes": 30912,
+      "tier": "curl_cffi:chrome124"
+    },
+    {
+      "product_id": "PQ-SORT-Post-Quantum-Signatures-On-Ramp",
+      "url": "https://pqsort.tii.ae/",
+      "file": "PQ-SORT-Post-Quantum-Signatures-On-Ramp-9d9fbd91.html",
+      "bytes": 16889,
+      "tier": "curl_cffi:chrome124"
+    },
+    {
+      "product_id": "PQConnect-Intro",
+      "url": "https://www.pqconnect.net/",
+      "file": "PQConnect-Intro-83c011b5.html",
+      "bytes": 7840,
+      "tier": "curl_cffi:chrome124"
+    },
+    {
+      "product_id": "Cryptography-std-crypto-Zig",
+      "url": "https://www.mintlify.com/ziglang/zig/api/crypto",
+      "file": "Cryptography-std-crypto-Zig-a722bf9b.html",
+      "bytes": 1345104,
+      "tier": "curl_cffi:chrome124"
+    },
+    {
+      "product_id": "What-is-Post-Quantum-Encryption-And-How",
+      "url": "https://www.alibabacloud.com/blog/what-is-post-quantum-encryption---and-how-to-enable-it-on-esa_603220",
+      "file": "What-is-Post-Quantum-Encryption-And-How-889815dd.html",
+      "bytes": 43201,
+      "tier": "curl_cffi:chrome124"
+    },
+    {
+      "product_id": "SMAUG-T-HAETAE-HAETAE",
+      "url": "https://kpqc.cryptolab.co.kr/haetae",
+      "file": "SMAUG-T-HAETAE-HAETAE-aa56a2a4.html",
+      "bytes": 177780,
+      "tier": "curl_cffi:chrome124"
+    },
+    {
+      "product_id": "Dilithium-Software",
+      "url": "https://pq-crystals.org/dilithium/software.shtml",
+      "file": "Dilithium-Software-47bfc9e9.html",
+      "bytes": 5702,
+      "tier": "curl_cffi:chrome124"
+    },
+    {
+      "product_id": "Kyber-Software",
+      "url": "https://pq-crystals.org/kyber/software.shtml",
+      "file": "Kyber-Software-ce0ffb4a.html",
+      "bytes": 6944,
+      "tier": "curl_cffi:chrome124"
+    },
+    {
+      "product_id": "SPHINCS-Software",
+      "url": "https://sphincs.org/software.html",
+      "file": "SPHINCS-Software-0f780525.html",
+      "bytes": 6523,
+      "tier": "curl_cffi:chrome124"
+    },
+    {
+      "product_id": "PQC-InfoHub-Tencent-Post-Quantum-Cryptog",
+      "url": "https://pqc.tencent.com/en",
+      "file": "PQC-InfoHub-Tencent-Post-Quantum-Cryptog-44fde4be.html",
+      "bytes": 91708,
+      "tier": "curl_cffi:chrome124"
+    },
+    {
+      "product_id": "Lean-Consensus-Roadmap",
+      "url": "https://leanroadmap.org/",
+      "file": "Lean-Consensus-Roadmap-70887fc6.html",
+      "bytes": 212814,
+      "tier": "curl_cffi:chrome124"
     }
   ],
   "hashBackfillNote": "sha256 and sizeBytes added for 0 entr(ies) on 2026-09-06 by maintenance/lineage/rebuild_manifest.py --additive. No existing field was modified; entries whose file could not be located were left untouched."
