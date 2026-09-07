@@ -259,12 +259,52 @@ const VND054_URL_REVERTED_NOT_REMOVED =
   'replacement coverage_notes. VND-054 is present, active, and richer in the ' +
   'newest generation under the restored URL/title.'
 
+/** migrate_vendor_roadmap_: same one-row-per-vendor pattern as VND-054 above.
+ *  09072026 review-proposals pass approved a citation upgrade for VND-032 —
+ *  its existing 'Building Levee' strategy article was superseded by the more
+ *  incremental 'What's new in PQC in RHEL 10.1' post per the review's
+ *  explicit approval. add_row.py's REFRESH mechanism (one row per vendor)
+ *  updated roadmap_url/title on the SAME vendor row, so the old key reads as
+ *  removed even though VND-032 is present, active, and current. */
+const VND032_CITATION_UPGRADE_09072026 =
+  'roadmap_url/title upgraded per the 09072026 review-proposals pass: the ' +
+  "existing 'Building Levee' strategy article was replaced with the more " +
+  "current 'What's new in PQC in RHEL 10.1' post (user-approved citation " +
+  'refresh, not a removal). VND-032 is present, active, and current under ' +
+  'the new URL/title.'
+
+/** library_: the 09072026 add of the tc26.ru (Kodieum/Kryptonit) Russian
+ *  press-coverage row hit a slugifier bug on the Cyrillic title and got
+ *  reference_id='untitled' — a non-descriptive, effectively unusable id.
+ *  Corrected in-place (CSV row + manifest.json entry + cached filename all
+ *  renamed together) the same session the row was created, before anything
+ *  else could reference it by id — an exception to the sacred-id rule
+ *  justified only because nothing yet depended on the broken id. */
+const LIBRARY_UNTITLED_SLUG_BUG_FIXED_09072026 =
+  "reference_id 'untitled' was a slugifier bug (Cyrillic title did not " +
+  'transliterate) on a row added earlier the same day — renamed in-place to ' +
+  "'tc26-Kodieum-Kryptonit-PQ-Mechanism' (CSV + manifest.json + cached " +
+  'filename all updated together) before any other row could reference the ' +
+  'broken id.'
+
 export const RECORDED_REMOVALS: RecordedRemoval[] = [
   {
     family: 'migrate_vendor_roadmap_',
     key: 'VND-054 | QuSecure Inc. | https://www.hpcwire.com/off-the-wire/qusecure-and-nists-nccoe-partner-to-address-post-quantum-algorithm-migration/ | QuSecure and NIST NCCoE Partner on Post-Quantum Algorithm Migration',
     reason: VND054_URL_REVERTED_NOT_REMOVED,
     recorded: '2026-09-02',
+  },
+  {
+    family: 'migrate_vendor_roadmap_',
+    key: "VND-032 | Red Hat Inc. | https://www.redhat.com/en/blog/building-levee-why-red-hats-post-quantum-strategy-already-production | Building the levee: Red Hat's post-quantum strategy is already in production",
+    reason: VND032_CITATION_UPGRADE_09072026,
+    recorded: '2026-09-07',
+  },
+  {
+    family: 'library_',
+    key: 'untitled',
+    reason: LIBRARY_UNTITLED_SLUG_BUG_FIXED_09072026,
+    recorded: '2026-09-07',
   },
   {
     family: 'industry_market_size_',
