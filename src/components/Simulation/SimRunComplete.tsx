@@ -149,7 +149,8 @@ export function SimRunComplete({
                   Discipline <b>{score.trapScore}</b>
                 </div>
                 <div>
-                  Compliance <b>{score.complianceScore}</b>
+                  Strategy alignment{' '}
+                  <b>{score.alignmentScore === null ? 'not evaluated' : score.alignmentScore}</b>
                 </div>
                 <div>
                   On-time <b>{score.onTimeScore}</b>

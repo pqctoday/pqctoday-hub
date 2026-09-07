@@ -59,11 +59,11 @@ describe('computeReadiness (WS-04 — two-gate, estate-grounded)', () => {
     // readiness is identical — the pure edges still count as migrated
     expect(de.migrated).toBe(us.migrated)
     expect(de.migrated).toBeGreaterThan(0)
-    // but compliance differs: 0% in DE, 100% in US (CNSA 2.0 accepts pure)
-    expect(de.compliancePct).toBe(0)
-    expect(us.compliancePct).toBe(100)
-    // hybrid is compliant in DE
-    expect(computeReadiness('mid', 1, decideAll('mid', 'hybrid'), 'DE').compliancePct).toBe(100)
+    // but strategy alignment differs: 0% in DE, 100% in US (CNSA 2.0 accepts pure)
+    expect(de.alignmentPct).toBe(0)
+    expect(us.alignmentPct).toBe(100)
+    // hybrid is aligned in DE
+    expect(computeReadiness('mid', 1, decideAll('mid', 'hybrid'), 'DE').alignmentPct).toBe(100)
   })
 
   it('clamps out-of-range fractions and falls back to a known size', () => {

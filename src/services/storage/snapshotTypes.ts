@@ -183,6 +183,13 @@ export interface SimulationData {
   securedBudgetM: number
   spentBudgetM: number
   trapsThisRun: number
+  /** W1 — run-scoped evidence records (provenance + status per resource).
+   *  `unknown[]` here for the same reason as `events`: snapshotTypes must not
+   *  import the simulation's own types. Validated on import. */
+  evidence: unknown[]
+  /** W5 — year each objective was first achieved. Omitted before v18, which
+   *  silently zeroed the on-time badges and the run grade on any import. */
+  objectiveAchievedYears: Record<string, number>
 }
 
 /**

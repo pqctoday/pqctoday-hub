@@ -14,6 +14,8 @@ import type { SimulationData } from '@/services/storage/snapshotTypes'
 import type { DifficultyId } from '@/data/simBalance'
 import { newSeed } from '@/simulation/rng'
 import type { QuarterEffects } from '@/simulation/quarterEngine'
+import { upsertEvidence, type SimEvidenceRecord } from '@/simulation/evidence'
+import { validateSave, SAVE_SCHEMA_VERSION, SAVE_KIND } from '@/simulation/saveSchema'
 
 const DIFFICULTIES: DifficultyId[] = ['easy', 'realistic', 'hard']
 
@@ -85,6 +87,11 @@ export interface SimulationState {
   catalogCompleted: string[]
   /** Tree step keys (`${phase}::${to}`) delegated to / auto-done by the AI team. */
   auto: string[]
+  /** W1 — run-scoped evidence: what was touched, how far the learner got, and
+   *  who produced it. Kept HERE rather than in the shared Learn/document stores
+   *  so a narrated demonstration can never be mistaken for the learner's own
+   *  curriculum progress. Cleared by RESET; travels in a run export. */
+  evidence: SimEvidenceRecord[]
   /** Deterministic run seed — same seed + same turn reproduces a quarter. */
   seed: number
   /** Difficulty preset selecting the active SIM_BALANCE (WS-14). */
@@ -187,6 +194,10 @@ export interface SimulationState {
   autoCompleteSteps: (keys: string[]) => void
   /** Cancel auto-completion for a phase (remove its `${phase}::` keys). */
   clearAuto: (phase: string) => void
+  /** W1 — file a run-scoped evidence record. Upserts by id, keeping the
+   *  strongest status seen and never letting a demonstration overwrite
+   *  learner-authored provenance. */
+  recordEvidence: (record: SimEvidenceRecord) => void
   /** Select a difficulty preset (WS-14). */
   setDifficulty: (d: DifficultyId) => void
   /** Wave 4 (WP4.6) — set the run's deterministic seed. Callers gate this to a
@@ -245,6 +256,7 @@ const SEED = {
   picks: [] as string[],
   catalogCompleted: [] as string[],
   auto: [] as string[],
+  evidence: [] as SimEvidenceRecord[],
   seed: 0, // replaced with a fresh seed on create / reset / migrate
   difficulty: 'realistic' as DifficultyId,
   securedBudgetM: 0,
@@ -256,8 +268,7 @@ const SEED = {
  *  used calculation) don't hardcode a copy of SEED.year/q that could drift. */
 export const RUN_START = { year: SEED.year, q: SEED.q }
 
-const STORE_VERSION = 17
-const SAVE_KIND = 'pqc-simulation-save'
+const STORE_VERSION = SAVE_SCHEMA_VERSION
 
 const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null
 
@@ -304,6 +315,13 @@ export function migrateSimulationState(persisted: unknown) {
     picks: Array.isArray(s.picks) ? (s.picks as string[]) : [],
     catalogCompleted: Array.isArray(s.catalogCompleted) ? (s.catalogCompleted as string[]) : [],
     auto: Array.isArray(s.auto) ? (s.auto as string[]) : [],
+    // W1 (v18): evidence carries provenance, and pre-v18 runs never recorded
+    // any. We deliberately do NOT synthesise records for the old markers: who
+    // completed a historic step (the learner, or a narrated autorun) was never
+    // stored, and inventing an origin would be exactly the false-confidence
+    // problem this field exists to remove. The old markers are preserved above
+    // and keep working; evidence accrues from here on.
+    evidence: Array.isArray(s.evidence) ? (s.evidence as SimEvidenceRecord[]) : [],
     seed: typeof s.seed === 'number' ? (s.seed as number) : newSeed(),
     difficulty: asDifficulty(s.difficulty),
     tourSeen: typeof s.tourSeen === 'boolean' ? s.tourSeen : false,
@@ -355,6 +373,10 @@ const saveSlice = (s: SimulationState): SimulationData => ({
   securedBudgetM: s.securedBudgetM,
   spentBudgetM: s.spentBudgetM,
   trapsThisRun: s.trapsThisRun,
+  evidence: s.evidence,
+  // W5: the run's results depend on this — omitting it made every export
+  // silently lose the on-time objective record it is graded against.
+  objectiveAchievedYears: s.objectiveAchievedYears,
 })
 
 function fromSave(s: Record<string, unknown>) {
@@ -384,6 +406,10 @@ function fromSave(s: Record<string, unknown>) {
     securedBudgetM: typeof s.securedBudgetM === 'number' ? (s.securedBudgetM as number) : 0,
     spentBudgetM: typeof s.spentBudgetM === 'number' ? (s.spentBudgetM as number) : 0,
     trapsThisRun: typeof s.trapsThisRun === 'number' ? (s.trapsThisRun as number) : 0,
+    evidence: Array.isArray(s.evidence) ? (s.evidence as SimEvidenceRecord[]) : [],
+    objectiveAchievedYears: isRecord(s.objectiveAchievedYears)
+      ? (s.objectiveAchievedYears as Record<string, number>)
+      : {},
   }
 }
 
@@ -497,6 +523,7 @@ export const useSimulationStore = create<SimulationState>()(
         set((s) => ({ auto: Array.from(new Set([...s.auto, ...keys])) })),
       clearAuto: (phase) =>
         set((s) => ({ auto: s.auto.filter((k) => !k.startsWith(`${phase}::`)) })),
+      recordEvidence: (record) => set((s) => ({ evidence: upsertEvidence(s.evidence, record) })),
       setSecuredBudget: (m) => set({ securedBudgetM: m }),
       spendBudget: (m) => set((s) => ({ spentBudgetM: Math.max(0, s.spentBudgetM + m) })),
       creditBudget: (m) => set((s) => ({ spentBudgetM: Math.max(0, s.spentBudgetM - m) })),
@@ -529,12 +556,14 @@ export const useSimulationStore = create<SimulationState>()(
           null,
           2
         ),
+      // W5: validate the WHOLE payload before touching the run. A rejected
+      // import leaves the current run exactly as it was; the errors are
+      // available via validateSave for callers that want to show them.
       importSave: (json) => {
         try {
-          const parsed = JSON.parse(json) as unknown
-          if (!isRecord(parsed) || parsed.kind !== SAVE_KIND || !isRecord(parsed.state))
-            return false
-          set(fromSave(parsed.state))
+          const result = validateSave(JSON.parse(json) as unknown)
+          if (!result.ok) return false
+          set(fromSave(result.data as unknown as Record<string, unknown>))
           return true
         } catch {
           return false

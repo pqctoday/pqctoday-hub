@@ -125,7 +125,8 @@ describe('SimRunComplete (run-end ceremony)', () => {
         parQuarters: 20,
         paceScore: 100,
         trapScore: 90,
-        complianceScore: 100,
+        alignmentScore: 100,
+        scoredComponents: 4,
         onTimeScore: 90,
       },
     })
@@ -144,7 +145,8 @@ describe('SimRunComplete (run-end ceremony)', () => {
         parQuarters: 24,
         paceScore: 20,
         trapScore: 30,
-        complianceScore: 50,
+        alignmentScore: 50,
+        scoredComponents: 4,
         onTimeScore: 60,
       },
     })

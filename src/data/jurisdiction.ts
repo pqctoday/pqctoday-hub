@@ -36,27 +36,55 @@ export function recommendedChoice(rule: JurisdictionRule): string {
 
 export interface ComplianceVerdict {
   ok: boolean
-  level: 'ok' | 'warn' | 'fail'
+  level: 'ok' | 'warn' | 'fail' | 'unknown'
   reason: string
+  /** W4: false when no rule applies, so NOTHING was assessed. The absence of a
+   *  rule is not a pass — it used to return `ok` and read as compliance. */
+  evaluated: boolean
 }
 
-/** Is a migration choice compliant in this jurisdiction? (App. D validation) */
+/**
+ * Is a migration choice aligned with this jurisdiction's stated position?
+ *
+ * This is scenario strategy alignment, not a compliance determination: it
+ * compares a choice against one country-level stance, with no view of sector,
+ * system scope, or effective date. An unknown jurisdiction returns `unknown`
+ * (not evaluated) rather than a pass.
+ */
 export function checkChoice(country: string, choice: MigChoice): ComplianceVerdict {
   const rule = JURISDICTION_RULES[country]
-  if (!rule) return { ok: true, level: 'ok', reason: 'No jurisdiction rule.' }
+  if (!rule)
+    return {
+      ok: false,
+      level: 'unknown',
+      reason: 'No rule on file for this jurisdiction — not evaluated.',
+      evaluated: false,
+    }
   if (choice === 'classical')
-    return { ok: false, level: 'fail', reason: 'Classical-only is not PQC-compliant anywhere.' }
+    return {
+      ok: false,
+      level: 'fail',
+      reason: 'Classical-only is not PQC-compliant anywhere.',
+      evaluated: true,
+    }
   if (rule.hybrid === 'required' && choice === 'pure')
     return {
       ok: false,
       level: 'fail',
       reason: `${rule.authority} requires hybrid — a pure choice is non-compliant.`,
+      evaluated: true,
     }
   if (rule.endState === 'pure' && choice === 'hybrid')
     return {
       ok: true,
       level: 'warn',
       reason: `${rule.authority} end state is pure — hybrid is fine as interim, plan a sunset.`,
+      evaluated: true,
     }
-  return { ok: true, level: 'ok', reason: `Compliant with ${rule.authority}.` }
+  return {
+    ok: true,
+    level: 'ok',
+    reason: `Aligned with ${rule.authority}.`,
+    evaluated: true,
+  }
 }

@@ -186,6 +186,14 @@ import { ArchitecturePanel } from './ArchitecturePanel'
 import { ARCHITECTURES, edgeState } from '@/data/simArchitecture'
 import { TrapInsightsPanel } from './TrapInsightsPanel'
 import { useSimulationStore, RUN_START } from '@/store/useSimulationStore'
+import {
+  documentApplicability,
+  evidenceId,
+  hasEvidence,
+  runFingerprint,
+  type EvidenceKind,
+  type EvidenceStatus,
+} from '@/simulation/evidence'
 import { computeRunScore } from '@/simulation/runScore'
 import { useModuleStore } from '@/store/useModuleStore'
 import { usePersonaStore } from '@/store/usePersonaStore'
@@ -199,7 +207,7 @@ import { SimRunComplete } from './SimRunComplete'
 import { SimConfirmDialog } from './SimConfirmDialog'
 import { QuizGateModal } from './QuizGateModal'
 import toast from 'react-hot-toast'
-import { pickQuizQuestion, questionsForModule } from '@/simulation/quizSelection'
+import { pickQuizQuestion, gateCoverageFor } from '@/simulation/quizSelection'
 import type { QuizQuestion } from '@/components/PKILearning/modules/Quiz/types'
 import pqctodayLogo from '@/assets/pqctoday-logo.png'
 
@@ -354,6 +362,8 @@ export function SimulationView() {
     auto,
     autoCompleteSteps,
     clearAuto,
+    evidence,
+    recordEvidence,
     exportSave,
     importSave,
     difficulty,
@@ -1021,7 +1031,15 @@ export function SimulationView() {
     })
   }
   const docTypes = useMemo(() => new Set((docs ?? []).map((d) => d.type)), [docs])
-  const moduleDone = (id?: string) => !!id && moduleProgress[id]?.status === 'completed'
+  const runFp = runFingerprint(size, country, sector)
+  // W1: a learn step clears on the learner's own shared completion OR on this
+  // run's evidence — which is where a narrated demonstration is recorded. The
+  // two stay separate: the run advances without the shared curriculum being
+  // marked complete on the learner's behalf.
+  const moduleDone = (id?: string) =>
+    !!id &&
+    (moduleProgress[id]?.status === 'completed' ||
+      hasEvidence(evidence, { resourceId: id, kind: 'learn' }))
   // W7 (decision Q4 = shared, by design): activity completion is keyed by artifact
   // TYPE, not by which step produced it. So a doc of type T (e.g. a crypto-cbom)
   // satisfies EVERY step that produces T — confirming the P3 Transition tab (which
@@ -1030,8 +1048,43 @@ export function SimulationView() {
   // is intentional: a CBOM / architecture is ONE real deliverable — producing it
   // once legitimately satisfies the framework's "you have a CBOM" gate wherever it
   // recurs, rather than forcing the player to rebuild the same artifact per phase.
-  const artifactDone = (t?: ExecutiveDocumentType) => !!t && docTypes.has(t)
+  //
+  // W1.4: reuse stays legitimate, but TYPE alone is no longer the whole test —
+  // the document must also belong to this run's world (or predate the run).
+  const artifactDone = (t?: ExecutiveDocumentType) => {
+    if (!t) return false
+    const app = documentApplicability({
+      type: t,
+      docs: docs ?? [],
+      records: evidence,
+      fingerprint: runFp,
+    })
+    return app.present && app.matchesWorld
+  }
   const refDone = (id?: string) => !!id && visitedRefs.includes(id)
+  // W1.5: the learner's own work, recorded in the RUN. A Simulation check
+  // records comprehension of what the sim asked; it deliberately does NOT mark
+  // the shared Learn module complete on the learner's behalf, because one
+  // question is not the module's whole curriculum.
+  const recordLearnerEvidence = (
+    kind: EvidenceKind,
+    resourceId: string,
+    status: EvidenceStatus,
+    phase: string = sel
+  ) => {
+    const runId = `run-${seed}`
+    recordEvidence({
+      id: evidenceId(runId, phase, kind, resourceId),
+      runId,
+      phase: phase as PhaseId,
+      resourceId,
+      kind,
+      origin: 'learner',
+      status,
+      fingerprint: runFp,
+      createdAt: Date.now(),
+    })
+  }
   const autoKey = (phase: string, to: string) => `${phase}::${to}`
   // WS-04: how many migratable edges this run's architecture actually has — caps
   // an `architecture` step's minDecisions so a fixed threshold can never exceed
@@ -1495,7 +1548,7 @@ export function SimulationView() {
     over: clock.over,
     // Wave 5 (WP5.1) — additive: the same live values the ribbon/ceremony
     // already compute, captured at commit time for the /report section.
-    compliancePct: readiness.compliancePct,
+    alignmentPct: readiness.alignmentPct,
     objectives: scoreboard.objectives.map((o) => ({
       id: o.id,
       label: o.label,
@@ -1507,7 +1560,7 @@ export function SimulationView() {
       quartersUsed: (year - RUN_START.year) * 4 + (q - RUN_START.q),
       difficulty,
       trapsThisRun,
-      compliancePct: readiness.compliancePct,
+      alignmentPct: readiness.alignmentPct,
       objectivesOnTime,
       objectivesTotal: scoreboard.objectives.length,
     }),
@@ -1756,7 +1809,9 @@ export function SimulationView() {
                       if (q) {
                         setQuizGate({ moduleId, title: step.label, question: q })
                       } else {
-                        updateModuleProgress(moduleId, { status: 'completed' })
+                        // No check exists for this module: record it as read,
+                        // self-reported. Never claim it was comprehension-checked.
+                        recordLearnerEvidence('learn', moduleId, 'viewed')
                       }
                     }}
                     className="mt-2 h-auto w-full rounded-md border border-success/50 bg-success/10 px-3 py-2 text-[11px] font-bold text-success hover:bg-success/20"
@@ -1937,7 +1992,7 @@ export function SimulationView() {
               moduleTitle={quizGate.title}
               onCancel={() => setQuizGate(null)}
               onPass={() => {
-                updateModuleProgress(quizGate.moduleId, { status: 'completed' })
+                recordLearnerEvidence('learn', quizGate.moduleId, 'comprehension-checked')
                 setQuizGate(null)
               }}
             />
@@ -2777,15 +2832,16 @@ export function SimulationView() {
               {learnEmbed &&
                 (() => {
                   const done = moduleDone(learnEmbed.moduleId)
-                  const hasGate = questionsForModule(learnEmbed.moduleId).length > 0
+                  const coverage = gateCoverageFor(learnEmbed.moduleId)
+                  const hasGate = coverage.state === 'checked'
                   return (
                     <span className="flex shrink-0 items-center gap-1.5">
-                      {done && !hasGate && (
+                      {!hasGate && (
                         <span
                           className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted-foreground"
-                          title="No quiz question exists yet for this module — completion is self-reported, not comprehension-checked."
+                          title="No comprehension check exists for this module yet — marking it done is self-reported, not checked."
                         >
-                          self-attested
+                          check unavailable
                         </span>
                       )}
                       <Button
@@ -2804,7 +2860,7 @@ export function SimulationView() {
                               question: q,
                             })
                           } else {
-                            updateModuleProgress(learnEmbed.moduleId, { status: 'completed' })
+                            recordLearnerEvidence('learn', learnEmbed.moduleId, 'viewed')
                           }
                         }}
                         aria-pressed={done}
@@ -4555,7 +4611,7 @@ export function SimulationView() {
             moduleTitle={quizGate.title}
             onCancel={() => setQuizGate(null)}
             onPass={() => {
-              updateModuleProgress(quizGate.moduleId, { status: 'completed' })
+              recordLearnerEvidence('learn', quizGate.moduleId, 'comprehension-checked')
               setQuizGate(null)
             }}
           />
@@ -4679,7 +4735,7 @@ export function SimulationView() {
             quartersUsed: (year - RUN_START.year) * 4 + (q - RUN_START.q),
             difficulty,
             trapsThisRun,
-            compliancePct: readiness.compliancePct,
+            alignmentPct: readiness.alignmentPct,
             objectivesOnTime,
             objectivesTotal: scoreboard.objectives.length,
           })}
