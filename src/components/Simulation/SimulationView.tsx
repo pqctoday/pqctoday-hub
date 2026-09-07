@@ -364,6 +364,9 @@ export function SimulationView() {
     clearAuto,
     evidence,
     recordEvidence,
+    attempts,
+    recordAttempt,
+    clearAttempt,
     exportSave,
     importSave,
     difficulty,
@@ -1463,6 +1466,12 @@ export function SimulationView() {
     )
     .filter((m) => isGatingStep(m.step))
   const nextMove = firstOpenIdx < 0 ? null : (stepMeta[firstOpenIdx] ?? null)
+  // W3: the attempt already recorded for this exact step (run/phase/activity/
+  // step), so a reload or rerender re-renders the decision the player made
+  // rather than reopening it.
+  const nextMoveAttempt = nextMove
+    ? attempts[`${sel}:${nextMove.act.id}:${nextMove.step.to}`]
+    : undefined
   // Assess recommendation matching the current next-move's learn module (badge only)
   const nextMoveRec =
     nextMove?.step.kind === 'learn' && nextMove.step.moduleId
@@ -1947,6 +1956,10 @@ export function SimulationView() {
             assessRec={nextMoveRec}
             onTrapPicked={incrementTrapsThisRun}
             allowRetry={balance.decisions.freeRetryOnWrongPick}
+            runSeed={seed}
+            attempt={nextMoveAttempt}
+            onDecide={recordAttempt}
+            onClearAttempt={clearAttempt}
             // WS-1: mirrors the desktop DecisionSection instance exactly (incl.
             // the p5 edge-decision rollback) — this used to hard-code p0/p1's
             // formula only, which was correct while mobile play was p0/p1-only
@@ -3411,6 +3424,10 @@ export function SimulationView() {
                         assessRec={nextMoveRec}
                         onTrapPicked={incrementTrapsThisRun}
                         allowRetry={balance.decisions.freeRetryOnWrongPick}
+                        runSeed={seed}
+                        attempt={nextMoveAttempt}
+                        onDecide={recordAttempt}
+                        onClearAttempt={clearAttempt}
                         wrongPickCostQuarters={sel === 'p1' || sel === 'p5' ? 2 : 1}
                         onWrongPick={(label) => {
                           // WP4.4 — uniform stakes: 1 quarter of rework everywhere, 2 on

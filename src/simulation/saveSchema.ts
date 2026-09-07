@@ -180,6 +180,16 @@ export function validateSave(input: unknown): ValidationResult {
     if (!Array.isArray(s.evidence)) errors.push('evidence: expected an array')
     else s.evidence.forEach((r, i) => validateEvidenceRecord(r, i, errors))
   }
+  if (s.attempts !== undefined) {
+    if (!isRecord(s.attempts)) {
+      errors.push('attempts: expected an object')
+    } else {
+      for (const [k, v] of Object.entries(s.attempts)) {
+        if (!isRecord(v) || !isInt(v.index) || v.index < 0 || typeof v.correct !== 'boolean')
+          errors.push(`attempts.${k}: expected { index, correct, at }`)
+      }
+    }
+  }
   if (s.objectiveAchievedYears !== undefined) {
     if (!isRecord(s.objectiveAchievedYears)) {
       errors.push('objectiveAchievedYears: expected an object')
@@ -219,6 +229,7 @@ export function validateSave(input: unknown): ValidationResult {
       spentBudgetM: s.spentBudgetM as number,
       trapsThisRun: s.trapsThisRun as number,
       evidence: (s.evidence as SimEvidenceRecord[]) ?? [],
+      attempts: (s.attempts as Record<string, unknown>) ?? {},
       objectiveAchievedYears: (s.objectiveAchievedYears as Record<string, number>) ?? {},
     },
   }

@@ -10,6 +10,9 @@ import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { useFocusTrap } from '@/hooks/useFocusTrap'
 import { MATURITY_LEVEL_NAMES } from '@/data/phaseMaturity'
+import { mulberry32 } from '@/simulation/rng'
+import { hashString as hashKey } from '@/simulation/quizSelection'
+import type { DecisionAttempt } from '@/store/useSimulationStore'
 import { type PhaseId } from '@/data/frameworkPhases'
 import { SIM_MOVES, type MoveCtx } from '@/data/simMoves'
 import type { SimEvent } from '@/data/simEvents'
@@ -193,6 +196,10 @@ export function DecisionSection({
   onTrapPicked,
   allowRetry = false,
   wrongPickCostQuarters,
+  runSeed = 0,
+  attempt,
+  onDecide,
+  onClearAttempt,
 }: {
   phaseId: PhaseId
   ctx: MoveCtx
@@ -230,15 +237,24 @@ export function DecisionSection({
    *  carries in THIS phase, stated in the feedback box itself so the player
    *  sees what the misstep cost without hunting for the setback toast. */
   wrongPickCostQuarters?: number
+  /** W3 — the run seed. Option order is shuffled deterministically from this
+   *  plus the step's own identity, so the correct answer is neither always in
+   *  slot A nor a function of the visible step counter, and the order is stable
+   *  across rerender, reload and seeded replay. */
+  runSeed?: number
+  /** W3 — the attempt already recorded for this step, if any. Persisted by the
+   *  store, so a reload does not reopen a decision the player already made. */
+  attempt?: DecisionAttempt
+  /** W3 — record the single attempt for this step. */
+  onDecide?: (key: string, index: number, correct: boolean) => void
+  /** W3 — clear it again (Easy's advertised free retry). */
+  onClearAttempt?: (key: string) => void
 }) {
-  const [chosen, setChosen] = useState<number | null>(null)
-  // reset the choice whenever the move changes (new phase or a step completed)
-  const moveKey = `${phaseId}:${stepsDone}`
-  const [lastKey, setLastKey] = useState(moveKey)
-  if (lastKey !== moveKey) {
-    setLastKey(moveKey)
-    setChosen(null)
-  }
+  // W3: the persisted attempt is the source of truth, but the component also
+  // holds its own submitted-pick so single-attempt semantics survive even
+  // without a parent wiring `attempt`/`onDecide`. A component that charges a
+  // consequence once per click is wrong on its own terms.
+  const [localPick, setLocalPick] = useState<{ key: string; index: number } | null>(null)
 
   // wrong-move pool: context-aware traps (SIM_MOVES) + framework Common Failures.
   const ctxTraps = (SIM_MOVES[phaseId] ?? [])
@@ -259,9 +275,14 @@ export function DecisionSection({
     )
   }
 
-  // Build the choice: the correct tree step + two wrong moves, ordered by the
-  // step count so the right answer isn't always in the same slot.
-  const wrong = pickWrong(pool, stepsDone, 2)
+  // W3 — every draw below is keyed to the STEP's own identity plus the run
+  // seed, never to the visible `stepsDone` counter. The old scheme put the
+  // correct card at `stepsDone % 3`, and the counter is printed directly above
+  // the cards, so the right answer's slot could be read off without reading the
+  // options at all.
+  const attemptKey = `${phaseId}:${nextMove.act.id}:${nextMove.step.to}`
+  const stepRng = mulberry32(((runSeed ?? 0) ^ hashKey(attemptKey)) >>> 0)
+  const wrong = pickWrong(pool, hashKey(attemptKey), 2)
   const correctCard: DecisionCard = {
     correct: true,
     // WP2.6: a strategy-shaped decision phrasing when the activity has one,
@@ -277,14 +298,15 @@ export function DecisionSection({
     label: w.title,
     detail: w.why,
   }))
-  const insertAt = wrongCards.length ? stepsDone % (wrongCards.length + 1) : 0
+  const insertAt = wrongCards.length ? Math.floor(stepRng() * (wrongCards.length + 1)) : 0
   const cards: DecisionCard[] = [
     ...wrongCards.slice(0, insertAt),
     correctCard,
     ...wrongCards.slice(insertAt),
   ]
 
-  const chosenCard = chosen != null ? cards[chosen] : null
+  const chosen = attempt ? attempt.index : localPick?.key === attemptKey ? localPick.index : null
+  const chosenCard = chosen != null ? (cards[chosen] ?? null) : null
   const step = nextMove.step
 
   return (
@@ -330,16 +352,30 @@ export function DecisionSection({
               key={`${c.label}-${i}`}
               type="button"
               aria-label={`Option ${String.fromCharCode(65 + i)}: ${c.label}`}
+              disabled={chosen != null}
               onClick={() => {
-                setChosen(i)
-                // WS-16 / PR-5: record which Common Failure the player fell for —
-                // GA4 (aggregate) + a local tally that drives the Trap Insights board.
+                // W3: one decision, one attempt. The buttons carried no
+                // disabled state and no already-answered guard, so clicking the
+                // same wrong option three times charged three setbacks and
+                // three trap penalties. `recordAttempt` is first-answer-wins,
+                // and the guard here stops the consequence callbacks re-firing.
+                if (chosen != null) return
+                setLocalPick({ key: attemptKey, index: i })
+                onDecide?.(attemptKey, i, c.correct)
                 if (!c.correct) {
+                  // WS-16 / PR-5: record which Common Failure the player fell for —
+                  // GA4 (aggregate) + a local tally that drives the Trap Insights board.
+                  // Telemetry always records the misstep; the CONSEQUENCE is
+                  // difficulty-scoped below.
                   logSimTrapPick(phaseId, c.label)
                   recordTrapPick(phaseId, c.label)
-                  onTrapPicked?.()
-                  // I1: a wrong pick costs the player time (pilot phases wire this).
-                  onWrongPick?.(c.label)
+                  // Easy advertises a FREE retry, so it charges neither the
+                  // score penalty nor the clock setback — "free" has to mean
+                  // free. Realistic/Hard charge exactly once.
+                  if (!allowRetry) {
+                    onTrapPicked?.()
+                    onWrongPick?.(c.label)
+                  }
                 }
               }}
               className={`flex h-auto w-full flex-col items-start justify-start whitespace-normal rounded-lg border p-2.5 text-left transition-opacity ${
@@ -457,7 +493,10 @@ export function DecisionSection({
             <Button
               variant="ghost"
               type="button"
-              onClick={() => setChosen(null)}
+              onClick={() => {
+                setLocalPick(null)
+                onClearAttempt?.(attemptKey)
+              }}
               className="mt-1 h-auto p-0 font-mono text-sim-micro font-bold text-primary hover:bg-transparent"
             >
               ↺ try again

@@ -187,6 +187,8 @@ export interface SimulationData {
    *  `unknown[]` here for the same reason as `events`: snapshotTypes must not
    *  import the simulation's own types. Validated on import. */
   evidence: unknown[]
+  /** W3 — decision attempts, keyed by run/phase/activity/step. */
+  attempts: Record<string, unknown>
   /** W5 — year each objective was first achieved. Omitted before v18, which
    *  silently zeroed the on-time badges and the run grade on any import. */
   objectiveAchievedYears: Record<string, number>

@@ -19,6 +19,15 @@ import { validateSave, SAVE_SCHEMA_VERSION, SAVE_KIND } from '@/simulation/saveS
 
 const DIFFICULTIES: DifficultyId[] = ['easy', 'realistic', 'hard']
 
+/** A decision the player has already submitted for one tree step. */
+export interface DecisionAttempt {
+  /** Index of the option chosen, in the order the player actually saw. */
+  index: number
+  correct: boolean
+  /** Quarter stamp when it was answered, for the run debrief. */
+  at: string
+}
+
 export interface SimulationState {
   size: string
   country: string
@@ -87,6 +96,11 @@ export interface SimulationState {
   catalogCompleted: string[]
   /** Tree step keys (`${phase}::${to}`) delegated to / auto-done by the AI team. */
   auto: string[]
+  /** W3 — one decision, one attempt. Keyed by run/phase/activity/step rather
+   *  than by the displayed step counter, so the same move cannot be answered
+   *  twice (a repeat click used to re-charge the setback) and a reload does not
+   *  reopen a decision the player already made. */
+  attempts: Record<string, DecisionAttempt>
   /** W1 — run-scoped evidence: what was touched, how far the learner got, and
    *  who produced it. Kept HERE rather than in the shared Learn/document stores
    *  so a narrated demonstration can never be mistaken for the learner's own
@@ -194,6 +208,10 @@ export interface SimulationState {
   autoCompleteSteps: (keys: string[]) => void
   /** Cancel auto-completion for a phase (remove its `${phase}::` keys). */
   clearAuto: (phase: string) => void
+  /** W3 — record the player's single attempt at one decision step. */
+  recordAttempt: (key: string, index: number, correct: boolean) => void
+  /** W3 — clear an attempt so it can be retried (Easy's advertised free retry). */
+  clearAttempt: (key: string) => void
   /** W1 — file a run-scoped evidence record. Upserts by id, keeping the
    *  strongest status seen and never letting a demonstration overwrite
    *  learner-authored provenance. */
@@ -257,6 +275,7 @@ const SEED = {
   catalogCompleted: [] as string[],
   auto: [] as string[],
   evidence: [] as SimEvidenceRecord[],
+  attempts: {} as Record<string, DecisionAttempt>,
   seed: 0, // replaced with a fresh seed on create / reset / migrate
   difficulty: 'realistic' as DifficultyId,
   securedBudgetM: 0,
@@ -322,6 +341,7 @@ export function migrateSimulationState(persisted: unknown) {
     // problem this field exists to remove. The old markers are preserved above
     // and keep working; evidence accrues from here on.
     evidence: Array.isArray(s.evidence) ? (s.evidence as SimEvidenceRecord[]) : [],
+    attempts: isRecord(s.attempts) ? (s.attempts as Record<string, DecisionAttempt>) : {},
     seed: typeof s.seed === 'number' ? (s.seed as number) : newSeed(),
     difficulty: asDifficulty(s.difficulty),
     tourSeen: typeof s.tourSeen === 'boolean' ? s.tourSeen : false,
@@ -374,6 +394,7 @@ const saveSlice = (s: SimulationState): SimulationData => ({
   spentBudgetM: s.spentBudgetM,
   trapsThisRun: s.trapsThisRun,
   evidence: s.evidence,
+  attempts: s.attempts,
   // W5: the run's results depend on this — omitting it made every export
   // silently lose the on-time objective record it is graded against.
   objectiveAchievedYears: s.objectiveAchievedYears,
@@ -407,6 +428,7 @@ function fromSave(s: Record<string, unknown>) {
     spentBudgetM: typeof s.spentBudgetM === 'number' ? (s.spentBudgetM as number) : 0,
     trapsThisRun: typeof s.trapsThisRun === 'number' ? (s.trapsThisRun as number) : 0,
     evidence: Array.isArray(s.evidence) ? (s.evidence as SimEvidenceRecord[]) : [],
+    attempts: isRecord(s.attempts) ? (s.attempts as Record<string, DecisionAttempt>) : {},
     objectiveAchievedYears: isRecord(s.objectiveAchievedYears)
       ? (s.objectiveAchievedYears as Record<string, number>)
       : {},
@@ -523,6 +545,26 @@ export const useSimulationStore = create<SimulationState>()(
         set((s) => ({ auto: Array.from(new Set([...s.auto, ...keys])) })),
       clearAuto: (phase) =>
         set((s) => ({ auto: s.auto.filter((k) => !k.startsWith(`${phase}::`)) })),
+      recordAttempt: (key, index, correct) =>
+        set((s) =>
+          // First answer wins: a repeat submission is ignored outright rather
+          // than re-charging the consequence.
+          s.attempts[key]
+            ? s
+            : {
+                attempts: {
+                  ...s.attempts,
+                  [key]: { index, correct, at: `Q${s.q} ${s.year}` },
+                },
+              }
+        ),
+      clearAttempt: (key) =>
+        set((s) => {
+          if (!s.attempts[key]) return s
+          const attempts = { ...s.attempts }
+          delete attempts[key]
+          return { attempts }
+        }),
       recordEvidence: (record) => set((s) => ({ evidence: upsertEvidence(s.evidence, record) })),
       setSecuredBudget: (m) => set({ securedBudgetM: m }),
       spendBudget: (m) => set((s) => ({ spentBudgetM: Math.max(0, s.spentBudgetM + m) })),
