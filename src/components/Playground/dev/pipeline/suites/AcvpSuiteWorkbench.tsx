@@ -68,7 +68,7 @@ export const AcvpSuiteWorkbench = () => {
 
   // Engineering-workbench surface — same gate as the suite trigger in
   // DeveloperTab; belt and braces for a stale/hand-crafted deep link.
-  if (role === 'curious' || role === 'executive') return null
+  if (role === 'curious' || role === 'executive' || role === 'grc') return null
 
   const runCode = async () => {
     setCodeRunning(true)
