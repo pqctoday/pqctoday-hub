@@ -63,12 +63,13 @@ export const Introduction: React.FC<IntroductionProps> = ({ onNavigateToWorkshop
           </p>
           <div className="bg-muted/50 rounded-lg p-4 border border-primary/20">
             <blockquote className="text-sm italic text-foreground/90">
-              &ldquo;Organizations should not wait for quantum computers to become a reality before
-              taking action. The time to start planning for the transition to post-quantum
-              cryptography is now.&rdquo;
+              &ldquo;This means that even if quantum computers are a decade away, organizations must
+              begin the migration to post-quantum cryptography today to avoid having their encrypted
+              data exposed once quantum computers become operational in the future.&rdquo;
             </blockquote>
             <p className="text-xs text-muted-foreground mt-2">
-              &mdash; NIST IR 8547, Transition to Post-Quantum Cryptography Standards
+              &mdash; NIST IR 8547 ipd (Initial Public Draft), Transition to Post-Quantum
+              Cryptography Standards, November 2024. Draft status: not final guidance.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -123,9 +124,13 @@ export const Introduction: React.FC<IntroductionProps> = ({ onNavigateToWorkshop
                 </InlineTooltip>{' '}
                 is one powerful enough to break <InlineTooltip term="RSA">RSA</InlineTooltip>,{' '}
                 <InlineTooltip term="ECC">ECC</InlineTooltip>, and{' '}
-                <InlineTooltip term="DH">Diffie-Hellman</InlineTooltip> key exchange. Expert
-                estimates for CRQC arrival range from 2030 to 2045+, with a median around 2035. Your
-                organization&apos;s planning horizon should be based on conservative estimates.
+                <InlineTooltip term="DH">Diffie-Hellman</InlineTooltip> key exchange. Quantum
+                computers already exist; none published to date is cryptographically relevant, and
+                the gap between the two is large. Published expert estimates for CRQC arrival vary
+                widely &mdash; commonly spanning the 2030s and beyond &mdash; and they are opinion
+                surveys, not measurements, so treat any single date as a planning assumption you
+                choose rather than a forecast. Plan against the date you would regret being wrong
+                about.
               </p>
             </div>
             <div className="bg-muted/50 rounded-lg p-4 border border-border">
@@ -318,7 +323,11 @@ export const Introduction: React.FC<IntroductionProps> = ({ onNavigateToWorkshop
                   &bull; NSA <InlineTooltip term="CNSA 2.0">CNSA 2.0</InlineTooltip>: PQC required
                   for NSS by 2030&ndash;2035
                 </li>
-                <li>&bull; NIST: Deprecating RSA/ECC in standards by 2030</li>
+                <li>
+                  &bull; NIST IR 8547 ipd (draft): classical signatures at the 112-bit security
+                  level deprecated after 2030, disallowed after 2035 &mdash; a security-strength
+                  scope, not a blanket RSA/ECC ban
+                </li>
                 <li>&bull; EU/ANSSI: Active PQC transition guidance</li>
                 <li>&bull; Financial regulators examining quantum risk</li>
               </ul>

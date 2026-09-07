@@ -189,6 +189,8 @@ export interface SimulationData {
   evidence: unknown[]
   /** W3 — decision attempts, keyed by run/phase/activity/step. */
   attempts: Record<string, unknown>
+  /** W4.6 — whether the optional cyber-insurance hypothetical is switched on. */
+  insuranceAssumed: boolean
   /** W5 — year each objective was first achieved. Omitted before v18, which
    *  silently zeroed the on-time badges and the run grade on any import. */
   objectiveAchievedYears: Record<string, number>

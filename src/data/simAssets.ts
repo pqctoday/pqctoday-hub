@@ -8,6 +8,11 @@
  * Assets are real per-industry items from src/data/pqcassessment_*.csv; tiers
  * follow the module's low/medium/high/critical model (sensitivity 0/5/15/25).
  *
+ * ILLUSTRATIVE MODEL. Asset values, the insurance policy and the per-tier
+ * deadlines below are scenario teaching aids with stated assumptions — they are
+ * not measurements of any real organisation and must be labelled as such
+ * wherever they are displayed (see ILLUSTRATIVE_NOTE).
+ *
  * Timeline assumption (set by product):
  *  - 2029: the first CRQC arrives and can break the MOST sensitive assets.
  *  - 2035: CRQC is broadly available — EVERY sensitivity tier is at risk.
@@ -17,14 +22,29 @@
 
 import { QC_FIRST_YEAR, QC_BROAD_YEAR } from './quantumTimeline'
 
+/** One line the UI must show next to any figure derived from this module. */
+export const ILLUSTRATIVE_NOTE =
+  'Illustrative scenario figures — modelled from the assessment catalogue at a default org scale, not measured values for your organisation.'
+
 export type OrgSize = 'small' | 'mid' | 'large' | 'global'
 export type SensitivityTier = 'critical' | 'high' | 'medium' | 'low'
 
 // Q-Day horizon — single source in quantumTimeline (shared with moscaClock + Assess).
 export { QC_FIRST_YEAR, QC_BROAD_YEAR }
 
-/** The year each sensitivity tier comes under quantum risk (interpolated 2029→2035). */
-export const TIER_AT_RISK_YEAR: Record<SensitivityTier, number> = {
+/**
+ * W4.5 — the scenario's MIGRATION DEADLINE per sensitivity tier: the year by
+ * which this scenario expects an asset of that tier to have been migrated.
+ *
+ * This is NOT a claim about when an algorithm becomes breakable. Sensitivity
+ * does not change the cryptanalysis: when a CRQC arrives it threatens every
+ * quantum-vulnerable asset regardless of tier. What sensitivity changes is
+ * URGENCY — an asset whose confidentiality must survive for decades is exposed
+ * to harvest-now-decrypt-later today, so it has to be migrated first. These
+ * years are the scenario's illustrative prioritisation ladder between the
+ * first-CRQC and broad-availability anchors, not a forecast.
+ */
+export const TIER_MIGRATION_DEADLINE_YEAR: Record<SensitivityTier, number> = {
   critical: QC_FIRST_YEAR, // 2029
   high: 2031,
   medium: 2033,
@@ -233,9 +253,17 @@ export function insurancePremium(coverageM: number): number {
   return Math.round(coverageM * 0.0015 * 1000) / 1000
 }
 
-/** Is an asset of this tier under quantum risk at the given (shifted) date? */
-export function assetAtRisk(tier: SensitivityTier, currentYear: number, crqcShift = 0): boolean {
-  return currentYear >= TIER_AT_RISK_YEAR[tier] - crqcShift
+/**
+ * Has the scenario's migration deadline for this tier passed at the given
+ * (shifted) date? Named for what it measures: a scenario prioritisation
+ * deadline, not the year an algorithm breaks.
+ */
+export function assetPastMigrationDeadline(
+  tier: SensitivityTier,
+  currentYear: number,
+  crqcShift = 0
+): boolean {
+  return currentYear >= TIER_MIGRATION_DEADLINE_YEAR[tier] - crqcShift
 }
 
 /**

@@ -230,6 +230,7 @@ export function validateSave(input: unknown): ValidationResult {
       trapsThisRun: s.trapsThisRun as number,
       evidence: (s.evidence as SimEvidenceRecord[]) ?? [],
       attempts: (s.attempts as Record<string, unknown>) ?? {},
+      insuranceAssumed: s.insuranceAssumed === true,
       objectiveAchievedYears: (s.objectiveAchievedYears as Record<string, number>) ?? {},
     },
   }

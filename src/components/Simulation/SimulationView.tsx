@@ -369,6 +369,8 @@ export function SimulationView() {
     clearAuto,
     evidence,
     recordEvidence,
+    insuranceAssumed,
+    setInsuranceAssumed,
     attempts,
     recordAttempt,
     clearAttempt,
@@ -1221,7 +1223,16 @@ export function SimulationView() {
   const archetypeNotice = useArchetypeChangeNotice(assessProfile?.country)
 
   // Mosca clock (turn-aware: fractional year + CRQC shift) — derived in useSimClock (PR6).
-  const { clock, currentYear, horizonYear, simShelfLifeYears, simMigrationYears } = deriveSimClock({
+  const {
+    clock,
+    currentYear,
+    horizonYear,
+    threatHorizonYear,
+    regulatoryDueYear,
+    bindingHorizon,
+    simShelfLifeYears,
+    simMigrationYears,
+  } = deriveSimClock({
     year,
     q,
     country,
@@ -1361,9 +1372,15 @@ export function SimulationView() {
   const exposure = exposeAssets(portfolioFor(sector, sizeKey), threat.hndl.score, threat.tnfl.score)
   const assets = exposure.rows
   const exposedValueM = exposure.totalM
-  const insurancePolicyM = insuranceCoverage(sizeKey, exposure.rows)
-  const premiumM = insurancePremium(insurancePolicyM)
-  const uninsuredM = Math.max(0, Math.round((exposedValueM - insurancePolicyM) * 10) / 10)
+  // W4.6 — the insurance hypothetical is OPT-IN. Off by default, the scenario
+  // makes no coverage assumption at all: quantum-exposed value stands on its
+  // own rather than being silently reduced by a policy the player never bought
+  // and whose limits/exclusions were never stated.
+  const insurancePolicyM = insuranceAssumed ? insuranceCoverage(sizeKey, exposure.rows) : 0
+  const premiumM = insuranceAssumed ? insurancePremium(insurancePolicyM) : 0
+  const uninsuredM = insuranceAssumed
+    ? Math.max(0, Math.round((exposedValueM - insurancePolicyM) * 10) / 10)
+    : exposedValueM
 
   // ---- budget: starts at €0, earned by executing P0 activities + P0 maturity ----
   const p0Tree = SIM_TREES.p0
@@ -2237,7 +2254,9 @@ export function SimulationView() {
               { label: 'Program complete', value: scoreboard.complete ? 'Yes ✓' : 'Not yet' },
               {
                 label: 'Quantum-exposed value',
-                value: `€${Math.round(exposedValueM)}M (€${Math.round(uninsuredM)}M uninsured)`,
+                value: insuranceAssumed
+                  ? `€${Math.round(exposedValueM)}M (€${Math.round(uninsuredM)}M uninsured)`
+                  : `€${Math.round(exposedValueM)}M exposed (illustrative)`,
               },
               { label: 'Years to act (Mosca)', value: `${clock.yearsToHorizon.toFixed(1)}y` },
               {
@@ -2597,7 +2616,15 @@ export function SimulationView() {
                     between 2026-08-02 and 2026-08-09 (the build died at gate:precache),
                     which is why a week passed before it surfaced. */}
                 <PlanningBadge
-                  tip={`Years to Q-Day — horizon ≈ ${horizonYear} · X+Y>Z. The Q-Day horizon is an illustrative planning anchor, not a published date.`}
+                  tip={
+                    `Years to the planning anchor (${horizonYear}) — the EARLIER of two different things, shown apart because they mean different things:` +
+                    ` • Threat horizon ${threatHorizonYear} — this scenario's illustrative CRQC planning estimate. Not a published date, and not moved by any regulation.` +
+                    (regulatoryDueYear !== null
+                      ? ` • Regulatory due date ${regulatoryDueYear} — a dated obligation for this jurisdiction. A legal deadline, not a forecast.`
+                      : ' • Regulatory due date: none on file for this jurisdiction — which is not the same as having no deadline.') +
+                    ` Currently binding: the ${bindingHorizon === 'regulatory' ? 'regulatory due date' : 'threat horizon'}.` +
+                    ' Mosca: migrate when shelf life (X) + migration time (Y) exceeds the time remaining (Z).'
+                  }
                   // a11y: same fix as the shelf-life badge above.
                   className="border-background/40 bg-background/10 text-background decoration-background/60 hover:bg-background/20"
                 />
@@ -4223,48 +4250,84 @@ export function SimulationView() {
                             </div>
                           )}
 
-                          {/* Cyber insurance — policy limit vs the quantum-exposed value */}
+                          {/* Cyber insurance — an OPTIONAL hypothetical (W4.6) */}
                           <div className="mt-3 border-t border-border pt-2.5">
-                            <span className="mb-1 block text-sim-micro font-semibold text-muted-foreground">
-                              Cyber insurance
-                            </span>
-                            <div className="flex items-baseline justify-between">
-                              <span className="text-[19px] font-extrabold text-foreground">
-                                €{insurancePolicyM}M
+                            <div className="mb-1 flex items-center justify-between gap-2">
+                              <span className="block text-sim-micro font-semibold text-muted-foreground">
+                                Cyber insurance{' '}
+                                <span className="font-normal">· optional assumption</span>
                               </span>
-                              <span className="font-mono text-sim-micro text-muted-foreground">
-                                covers critical + high
-                              </span>
-                            </div>
-                            <div className="mt-0.5 flex items-center justify-between font-mono text-sim-micro">
-                              <span className="text-muted-foreground">Annual premium · 0.15%</span>
-                              <span className="font-bold text-foreground">
-                                {premiumM >= 1
-                                  ? `€${premiumM}M`
-                                  : `€${Math.round(premiumM * 1000)}k`}
-                                /yr
-                              </span>
-                            </div>
-                            <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
-                              <div
-                                className={
-                                  uninsuredM > 0 ? 'h-full bg-warning' : 'h-full bg-success'
-                                }
-                                style={{
-                                  width: `${exposedValueM > 0 ? Math.min(100, (Math.min(insurancePolicyM, exposedValueM) / exposedValueM) * 100) : 100}%`,
-                                }}
-                              />
-                            </div>
-                            <div className="mt-1.5 flex items-center justify-between font-mono text-sim-micro">
-                              <span className="text-muted-foreground">
-                                Uninsured quantum exposure
-                              </span>
-                              <span
-                                className={`font-bold ${uninsuredM > 0 ? 'text-destructive' : 'text-success'}`}
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                aria-pressed={insuranceAssumed}
+                                onClick={() => setInsuranceAssumed(!insuranceAssumed)}
+                                className="h-auto rounded-md border border-border px-2 py-0.5 font-mono text-sim-micro font-bold text-foreground"
                               >
-                                €{uninsuredM}M
-                              </span>
+                                {insuranceAssumed ? 'on' : 'off'}
+                              </Button>
                             </div>
+                            {!insuranceAssumed && (
+                              <p className="text-sim-micro leading-snug text-muted-foreground">
+                                No policy is assumed, so none of the exposure above is treated as
+                                covered. Switch this on to model a hypothetical policy — it does not
+                                reduce quantum risk, it only transfers part of the modelled
+                                financial loss.
+                              </p>
+                            )}
+                            {insuranceAssumed && (
+                              <p className="mb-1.5 text-sim-micro leading-snug text-muted-foreground">
+                                Hypothetical policy. Assumes a size-based limit raised to cover
+                                critical + high tier value, a 0.15% annual premium, and no
+                                exclusions. Real cyber policies commonly exclude unremediated known
+                                vulnerabilities and may not pay out on harvested data decrypted
+                                years later — model this as a planning input, not protection you
+                                have.
+                              </p>
+                            )}
+                            {insuranceAssumed && (
+                              <>
+                                <div className="flex items-baseline justify-between">
+                                  <span className="text-[19px] font-extrabold text-foreground">
+                                    €{insurancePolicyM}M
+                                  </span>
+                                  <span className="font-mono text-sim-micro text-muted-foreground">
+                                    covers critical + high
+                                  </span>
+                                </div>
+                                <div className="mt-0.5 flex items-center justify-between font-mono text-sim-micro">
+                                  <span className="text-muted-foreground">
+                                    Annual premium · 0.15%
+                                  </span>
+                                  <span className="font-bold text-foreground">
+                                    {premiumM >= 1
+                                      ? `€${premiumM}M`
+                                      : `€${Math.round(premiumM * 1000)}k`}
+                                    /yr
+                                  </span>
+                                </div>
+                                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
+                                  <div
+                                    className={
+                                      uninsuredM > 0 ? 'h-full bg-warning' : 'h-full bg-success'
+                                    }
+                                    style={{
+                                      width: `${exposedValueM > 0 ? Math.min(100, (Math.min(insurancePolicyM, exposedValueM) / exposedValueM) * 100) : 100}%`,
+                                    }}
+                                  />
+                                </div>
+                                <div className="mt-1.5 flex items-center justify-between font-mono text-sim-micro">
+                                  <span className="text-muted-foreground">
+                                    Uninsured quantum exposure
+                                  </span>
+                                  <span
+                                    className={`font-bold ${uninsuredM > 0 ? 'text-destructive' : 'text-success'}`}
+                                  >
+                                    €{uninsuredM}M
+                                  </span>
+                                </div>
+                              </>
+                            )}
                           </div>
                         </div>
 

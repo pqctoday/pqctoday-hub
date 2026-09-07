@@ -1,0 +1,65 @@
+// SPDX-License-Identifier: GPL-3.0-only
+/**
+ * W4.4 — the threat horizon and the regulatory due date are different claims.
+ *
+ * The clock used to collapse them with `Math.min(CRQC estimate, country
+ * deadline)` and present the result through Q-Day/Mosca language. A country
+ * with an earlier compliance date therefore appeared to have an earlier
+ * cryptanalytic prediction, which is not what a deadline means.
+ *
+ * Acceptance (plan, W4): "changing regulatory due date does not change a
+ * displayed CRQC prediction".
+ */
+import { describe, it, expect } from 'vitest'
+import { deriveSimClock } from './useSimClock'
+import { SIM_CRQC_YEAR, COUNTRY_DEADLINE_YEAR } from '@/data/moscaClock'
+
+const base = {
+  year: 2026,
+  q: 1,
+  sector: 'financial',
+  size: 'mid',
+  crqcShift: 0,
+  assessMosca: null,
+}
+
+/** A country the scenario gives a dated obligation, and one it does not. */
+const withDeadline = Object.keys(COUNTRY_DEADLINE_YEAR)[0]!
+
+describe('threat horizon vs regulatory due date (W4.4)', () => {
+  it('reports the CRQC threat horizon independently of any jurisdiction', () => {
+    const a = deriveSimClock({ ...base, country: withDeadline })
+    const b = deriveSimClock({ ...base, country: '__no_such_country__' })
+    // The regulatory date differs between these two; the threat horizon must not.
+    expect(a.threatHorizonYear).toBe(SIM_CRQC_YEAR)
+    expect(b.threatHorizonYear).toBe(SIM_CRQC_YEAR)
+    expect(a.threatHorizonYear).toBe(b.threatHorizonYear)
+  })
+
+  it('only an in-run threat event moves the threat horizon', () => {
+    const shifted = deriveSimClock({ ...base, country: withDeadline, crqcShift: 3 })
+    expect(shifted.threatHorizonYear).toBe(SIM_CRQC_YEAR - 3)
+  })
+
+  it('reports a missing regulatory date as absent, not as "no deadline"', () => {
+    const none = deriveSimClock({ ...base, country: '__no_such_country__' })
+    expect(none.regulatoryDueYear).toBeNull()
+    // With no dated obligation, the schedule is bound by the threat horizon.
+    expect(none.bindingHorizon).toBe('threat')
+    expect(none.horizonYear).toBe(none.threatHorizonYear)
+  })
+
+  it('names which of the two actually binds the schedule', () => {
+    const due = COUNTRY_DEADLINE_YEAR[withDeadline]!
+    const c = deriveSimClock({ ...base, country: withDeadline })
+    expect(c.regulatoryDueYear).toBe(due)
+    if (due < SIM_CRQC_YEAR) {
+      expect(c.bindingHorizon).toBe('regulatory')
+      expect(c.horizonYear).toBe(due)
+    } else {
+      expect(c.bindingHorizon).toBe('threat')
+    }
+    // whichever binds, the planning anchor is never later than either input
+    expect(c.horizonYear).toBeLessThanOrEqual(c.threatHorizonYear)
+  })
+})

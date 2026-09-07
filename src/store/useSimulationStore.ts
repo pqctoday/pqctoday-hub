@@ -96,6 +96,11 @@ export interface SimulationState {
   catalogCompleted: string[]
   /** Tree step keys (`${phase}::${to}`) delegated to / auto-done by the AI team. */
   auto: string[]
+  /** W4.6 — whether the OPTIONAL cyber-insurance hypothetical is switched on.
+   *  Default false: the scenario used to compute a policy limit automatically
+   *  and subtract it from quantum exposure, which read as coverage the player
+   *  had established rather than an assumption the model made for them. */
+  insuranceAssumed: boolean
   /** W3 — one decision, one attempt. Keyed by run/phase/activity/step rather
    *  than by the displayed step counter, so the same move cannot be answered
    *  twice (a repeat click used to re-charge the setback) and a reload does not
@@ -208,6 +213,8 @@ export interface SimulationState {
   autoCompleteSteps: (keys: string[]) => void
   /** Cancel auto-completion for a phase (remove its `${phase}::` keys). */
   clearAuto: (phase: string) => void
+  /** W4.6 — toggle the optional cyber-insurance hypothetical. */
+  setInsuranceAssumed: (on: boolean) => void
   /** W3 — record the player's single attempt at one decision step. */
   recordAttempt: (key: string, index: number, correct: boolean) => void
   /** W3 — clear an attempt so it can be retried (Easy's advertised free retry). */
@@ -250,19 +257,14 @@ const SEED = {
   year: 2026,
   q: 1,
   crqcShift: 0,
-  events: [
-    {
-      sev: 'danger',
-      t: 'Q3 2026',
-      txt: 'Harvest-now capture suspected on classical TLS — patient records exposed',
-    },
-    {
-      sev: 'success',
-      t: 'Q2 2026',
-      txt: 'CycloneDX CBOM published for Layers 1–2 — Phase 2 cleared',
-    },
-    { sev: 'info', t: 'Q2 2026', txt: 'Your TLS stack ships hardware-accelerated ML-DSA' },
-  ] as SimEvent[],
+  // W4.8: a run starts with an EMPTY history. This used to seed three
+  // hand-authored events — dated Q2/Q3 2026 in a run that begins at Q1 2026,
+  // including a healthcare-worded breach line that shipped in financial-sector
+  // samples and a "Phase 2 cleared" achievement the player had not earned.
+  // Exported saves carried all of it as though it had happened. Real events are
+  // drawn per quarter from simEvents.ts, which already fills sector/country/
+  // authority from the actual run state.
+  events: [] as SimEvent[],
   mobilePlayOpen: false,
   autoRunResumeIndex: 0,
   autoRunLastMode: null as string | null,
@@ -276,6 +278,7 @@ const SEED = {
   auto: [] as string[],
   evidence: [] as SimEvidenceRecord[],
   attempts: {} as Record<string, DecisionAttempt>,
+  insuranceAssumed: false,
   seed: 0, // replaced with a fresh seed on create / reset / migrate
   difficulty: 'realistic' as DifficultyId,
   securedBudgetM: 0,
@@ -342,6 +345,7 @@ export function migrateSimulationState(persisted: unknown) {
     // and keep working; evidence accrues from here on.
     evidence: Array.isArray(s.evidence) ? (s.evidence as SimEvidenceRecord[]) : [],
     attempts: isRecord(s.attempts) ? (s.attempts as Record<string, DecisionAttempt>) : {},
+    insuranceAssumed: typeof s.insuranceAssumed === 'boolean' ? s.insuranceAssumed : false,
     seed: typeof s.seed === 'number' ? (s.seed as number) : newSeed(),
     difficulty: asDifficulty(s.difficulty),
     tourSeen: typeof s.tourSeen === 'boolean' ? s.tourSeen : false,
@@ -395,6 +399,7 @@ const saveSlice = (s: SimulationState): SimulationData => ({
   trapsThisRun: s.trapsThisRun,
   evidence: s.evidence,
   attempts: s.attempts,
+  insuranceAssumed: s.insuranceAssumed,
   // W5: the run's results depend on this — omitting it made every export
   // silently lose the on-time objective record it is graded against.
   objectiveAchievedYears: s.objectiveAchievedYears,
@@ -429,6 +434,7 @@ function fromSave(s: Record<string, unknown>) {
     trapsThisRun: typeof s.trapsThisRun === 'number' ? (s.trapsThisRun as number) : 0,
     evidence: Array.isArray(s.evidence) ? (s.evidence as SimEvidenceRecord[]) : [],
     attempts: isRecord(s.attempts) ? (s.attempts as Record<string, DecisionAttempt>) : {},
+    insuranceAssumed: typeof s.insuranceAssumed === 'boolean' ? s.insuranceAssumed : false,
     objectiveAchievedYears: isRecord(s.objectiveAchievedYears)
       ? (s.objectiveAchievedYears as Record<string, number>)
       : {},
@@ -545,6 +551,7 @@ export const useSimulationStore = create<SimulationState>()(
         set((s) => ({ auto: Array.from(new Set([...s.auto, ...keys])) })),
       clearAuto: (phase) =>
         set((s) => ({ auto: s.auto.filter((k) => !k.startsWith(`${phase}::`)) })),
+      setInsuranceAssumed: (insuranceAssumed) => set({ insuranceAssumed }),
       recordAttempt: (key, index, correct) =>
         set((s) =>
           // First answer wins: a repeat submission is ignored outright rather

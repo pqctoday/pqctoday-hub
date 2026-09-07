@@ -5,7 +5,7 @@ import {
   portfolioFor,
   portfolioValue,
   programBudgetTarget,
-  assetAtRisk,
+  assetPastMigrationDeadline,
   exposeAssets,
   criticalExposedValue,
   insuranceCoverage,
@@ -54,10 +54,10 @@ describe('simAssets — date-driven threat', () => {
 
 describe('simAssets — asset risk timeline', () => {
   it('critical assets are at risk from 2029, low only by 2035', () => {
-    expect(assetAtRisk('critical', QC_FIRST_YEAR)).toBe(true)
-    expect(assetAtRisk('critical', QC_FIRST_YEAR - 1)).toBe(false)
-    expect(assetAtRisk('low', QC_FIRST_YEAR)).toBe(false)
-    expect(assetAtRisk('low', QC_BROAD_YEAR)).toBe(true)
+    expect(assetPastMigrationDeadline('critical', QC_FIRST_YEAR)).toBe(true)
+    expect(assetPastMigrationDeadline('critical', QC_FIRST_YEAR - 1)).toBe(false)
+    expect(assetPastMigrationDeadline('low', QC_FIRST_YEAR)).toBe(false)
+    expect(assetPastMigrationDeadline('low', QC_BROAD_YEAR)).toBe(true)
   })
 })
 
