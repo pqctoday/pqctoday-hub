@@ -39,8 +39,13 @@ export interface SimRunCompleteObjective {
 export interface SimRunCompleteProps {
   /** The three program objectives + whether each was met. */
   objectives: SimRunCompleteObjective[]
-  /** Program maturity reached (0–4). */
+  /** Program maturity reached (0–4), on the framework's own ladder. */
   maturity: number
+  /** W2 — true only when the simulation covers every framework criterion AND
+   *  the player cleared them. False here means the run finished every exercise
+   *  the simulation OFFERS, which is not the same as full framework maturity
+   *  and must not be worded as though it were. */
+  claimsFullFrameworkMaturity?: boolean
   /** The program horizon year (operate/govern through here). */
   programEndYear: number
   /** WP4.2 — the run's graded breakdown, visible not a black box. Omit to hide
@@ -68,6 +73,7 @@ const GRADE_TONE: Record<RunScoreBreakdown['grade'], string> = {
 export function SimRunComplete({
   objectives,
   maturity,
+  claimsFullFrameworkMaturity = false,
   programEndYear,
   score,
   onCopyChallenge,
@@ -198,8 +204,10 @@ export function SimRunComplete({
 
           <p className="mb-4 text-xs text-muted-foreground">
             {allMet
-              ? `Critical assets protected and the migration completed on the program timeline — operating at full maturity through ${programEndYear}.`
-              : 'Program complete — some objectives finished behind their target dates.'}
+              ? claimsFullFrameworkMaturity
+                ? `Critical assets protected and the migration completed on the program timeline — operating at full maturity through ${programEndYear}.`
+                : `Critical assets protected and every exercise in this scenario completed on the program timeline, through ${programEndYear}. This is the full scope the simulation currently teaches — not full framework maturity: some framework criteria have no exercise here yet (see Progress).`
+              : 'Scenario complete — some objectives finished behind their target dates.'}
           </p>
 
           {topTraps.length > 0 && (

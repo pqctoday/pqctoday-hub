@@ -128,7 +128,11 @@ import {
   type TreeStep,
   type TreeActivity,
 } from '@/simulation'
-import { topBandLevel, normalizeLevel, phaseReadinessFraction } from '@/simulation/maturityScale'
+import {
+  topBandLevel,
+  frameworkLevel,
+  scenarioCompletionFraction,
+} from '@/simulation/maturityScale'
 import { pickBriefCheckQuestion } from '@/simulation/briefCheck'
 import { useSandboxAvailable } from '@/components/Playground/useSandboxAvailable'
 import { computeReadiness } from '@/simulation/readiness'
@@ -186,6 +190,7 @@ import { ArchitecturePanel } from './ArchitecturePanel'
 import { ARCHITECTURES, edgeState } from '@/data/simArchitecture'
 import { TrapInsightsPanel } from './TrapInsightsPanel'
 import { useSimulationStore, RUN_START } from '@/store/useSimulationStore'
+import { FRAMEWORK_COVERAGE, hasCompleteCoverage } from '@/simulation/frameworkCoverage'
 import {
   documentApplicability,
   evidenceId,
@@ -1155,24 +1160,34 @@ export function SimulationView() {
   // only to p3, which can't exceed L2.)
   const MAX_LEVEL = MATURITY_LEVEL_NAMES.length - 1 // levels run 0..4
   const topBandOf = (p: string): number => topBandLevel(SIM_TREES[p as PhaseId], MAX_LEVEL)
-  // A phase's achieved level rescaled onto the 0..MAX_LEVEL ladder relative to its
-  // own top band, so a fully-cleared short phase counts as maxed.
-  const normalizedLevelOf = (p: string): number =>
-    normalizeLevel(levelOf(p), topBandOf(p), MAX_LEVEL)
+  // W2.3 — FRAMEWORK maturity is the source's own 0..4 ladder, never rescaled
+  // against whatever this simulator happens to ship. A phase whose ladder stops
+  // at L2 reports 2. Rescaling it to 4 reported P3 L2 as fully mature and hid
+  // the framework's own L3/L4 criteria entirely.
+  const frameworkLevelOf = (p: string): number => frameworkLevel(levelOf(p), MAX_LEVEL)
+  // W2 — the framework cells this simulation cannot take the player through for
+  // the phase on screen. Shown in Progress so the gap is stated, not hidden.
+  const phaseUnsupported = FRAMEWORK_COVERAGE.filter(
+    (c) => c.phase === sel && c.status === 'unsupported'
+  )
 
   // DERIVED program maturity (0–5) — read-only. A completed assessment makes the
   // program "Aware" (Level 1); Levels 2–5 are EARNED from the sim, each domain
   // taking the weakest of its mapped phases' earned levels (normalized per-phase so
   // a phase at its own top band counts as maxed). Overall = the weakest domain.
-  const maturity = deriveMaturity(!!assessSnap, (p) => normalizedLevelOf(p))
+  const maturity = deriveMaturity(!!assessSnap, (p) => frameworkLevelOf(p))
 
   // T3.1 — sim-local readiness trend: the assessed org-readiness baseline vs the
   // projection earned by clearing framework maturity in-game. Sim-local only.
-  const maturityFrac =
-    LIFECYCLE.reduce((s, p) => s + phaseReadinessFraction(levelOf(p), topBandOf(p)), 0) /
+  // SCENARIO COMPLETION (not maturity): the share of the exercises this
+  // simulation actually offers that the player has finished.
+  const scenarioCompletionFrac =
+    LIFECYCLE.reduce((s, p) => s + scenarioCompletionFraction(levelOf(p), topBandOf(p)), 0) /
     LIFECYCLE.length
   const readinessTrend =
-    assessKpis != null ? projectReadiness(assessKpis.organizationalReadiness, maturityFrac) : null
+    assessKpis != null
+      ? projectReadiness(assessKpis.organizationalReadiness, scenarioCompletionFrac)
+      : null
 
   // setup-dial-derived facts
   const sizeOpt = SIZES.find((s) => s.id === size) ?? SIZES[1]
@@ -1230,7 +1245,17 @@ export function SimulationView() {
   // The run is COMPLETE only when every phase reaches its own top band (full maturity) — not
   // merely the L2 win bar. In the breadth-first climb, all-cleared-to-L2 happens at pass 2, so
   // the run-end ceremony must wait for the top-band pass (pass 4 ≈ 2035), not fire at pass 2.
-  const fullyMature = LIFECYCLE.every((p) => levelOf(p) >= topBandOf(p))
+  // Every phase cleared to the top of what this simulation SHIPS. That is
+  // scenario completion — the run is over — and deliberately NOT a claim of
+  // framework maturity, which stays incomplete while any source cell has no
+  // supported evidence path (see frameworkCoverage.ts).
+  const scenarioComplete = LIFECYCLE.every((p) => levelOf(p) >= topBandOf(p))
+  // A run can complete every exercise the simulation offers (scenarioComplete)
+  // without the simulation covering every framework criterion. Only the second
+  // condition licenses a "full framework maturity" claim, and it is false while
+  // any source cell lacks a supported evidence path.
+  const claimsFullFrameworkMaturity = scenarioComplete && hasCompleteCoverage()
+
   // WP2.7 — ceremony-stacking guard: a "Play This Phase" run that happens to
   // clear the LAST phase needed for full maturity would otherwise open BOTH
   // this phase's end screen AND the run-complete ceremony at once (two
@@ -1240,7 +1265,7 @@ export function SimulationView() {
   // true this render; the player sees the run ceremony instead.
   useEffect(() => {
     if (isPhaseMode(autoRunPlayer.mode) && autoRunPlayer.done) {
-      if (!phaseRunCelebratedRef.current && !fullyMature) {
+      if (!phaseRunCelebratedRef.current && !scenarioComplete) {
         phaseRunCelebratedRef.current = true
         setPhaseRunDoneOpen(true)
       }
@@ -1248,18 +1273,20 @@ export function SimulationView() {
       phaseRunCelebratedRef.current = false
       setPhaseRunDoneOpen(false)
     }
-  }, [autoRunPlayer.mode, autoRunPlayer.done, fullyMature])
+  }, [autoRunPlayer.mode, autoRunPlayer.done, scenarioComplete])
   // Transformation status — the board headline (3 objectives + 4 tracks + dynamic HNDL
   // exposure), scenario-driven. Replaces the static, unwinnable Mosca "over by N years" gauge.
   const txStatus = transformationStatus({
     scenario: getScenario(country),
     // Continuous (avg normalized fraction × MAX) so the headline climbs SMOOTHLY rather than
     // sitting frozen at the weakest-domain integer until the slowest phase crosses a level.
-    programMaturity: maturityFrac * MAX_LEVEL,
+    // W2.3: the framework ladder, averaged — NOT scenario completion stretched
+    // to 0..4, which reported a shortened ladder as full program maturity.
+    programMaturity: LIFECYCLE.reduce((sum, p) => sum + frameworkLevelOf(p), 0) / LIFECYCLE.length,
     p0Level: levelOf('p0'),
     // Grounded: the share of vulnerable edges actually migrated (both gates), not raw P5 progress.
     migrationFraction: readiness.vulnerable ? readiness.migrated / readiness.vulnerable : 0,
-    allAtTopBand: fullyMature,
+    allAtTopBand: scenarioComplete,
     currentYear: year,
   })
   // WP2.2: the ONE program-progress object every UI surface (ribbon, the
@@ -1270,7 +1297,7 @@ export function SimulationView() {
     lifecyclePhases: LIFECYCLE,
     levelOf,
     winLevel: PHASE_WIN_LEVEL,
-    fullyMature,
+    fullyMature: scenarioComplete,
     txStatus,
   })
 
@@ -1285,7 +1312,7 @@ export function SimulationView() {
   // own score card — computed once so both read the same number.
   const objectivesOnTime = scoreboard.objectives.filter((o) => o.onTime === 'done').length
   useEffect(() => {
-    if (!fullyMature || runCompleteSeen) return
+    if (!scenarioComplete || runCompleteSeen) return
     const id = setTimeout(() => {
       setRunCompleteOpen(true)
       markRunComplete()
@@ -1293,7 +1320,7 @@ export function SimulationView() {
     }, 0)
     return () => clearTimeout(id)
   }, [
-    fullyMature,
+    scenarioComplete,
     runCompleteSeen,
     markRunComplete,
     recordSimRunCompletion,
@@ -3157,7 +3184,7 @@ export function SimulationView() {
                       {LIFECYCLE.map((p) => {
                         const fp = FRAMEWORK_PHASES[p]
                         const lv = levelOf(p)
-                        const dlv = normalizedLevelOf(p) // 0–4 against the phase's own top band
+                        const dlv = frameworkLevelOf(p) // 0–4 on the framework's own ladder
                         const isCleared = lv >= PHASE_WIN_LEVEL
                         const current = p === sel
                         const owner = Object.values(ROLE_CROSSWALK).some(
@@ -3533,6 +3560,26 @@ export function SimulationView() {
                             )}{' '}
                             <span className="italic">(rises as you complete phases)</span>
                           </p>
+                          {/* W2 — publish the supported scope. A band the
+                              simulation does not implement stays VISIBLE as
+                              unsupported instead of silently vanishing from the
+                              ladder, which is what let a shortened ladder read
+                              as full maturity. */}
+                          {phaseUnsupported.length > 0 && (
+                            <p className="mb-2 rounded-md border border-border bg-muted/40 px-2 py-1.5 text-sim-micro leading-snug text-muted-foreground">
+                              <span className="font-bold text-foreground">
+                                Not practised in this simulation:
+                              </span>{' '}
+                              {phaseUnsupported
+                                .map((c) => `L${c.level} — ${c.criterion}`)
+                                .join(' · ')}{' '}
+                              <span className="italic">
+                                These are real framework criteria (v2.1, p.
+                                {phaseUnsupported[0]!.sourcePage}); the simulation has no exercise
+                                for them yet, so this phase cannot demonstrate them.
+                              </span>
+                            </p>
+                          )}
                           {/* ANY-ORDER WITHIN THE ACTIVE LEVEL: the in-progress band (the first
                     not-yet-earned band, in ascending order) expands its steps as
                     individually-openable controls — the player can open/complete ALL of
@@ -4747,6 +4794,7 @@ export function SimulationView() {
             achievedYear: objectiveAchievedYears[o.id],
           }))}
           maturity={scoreboard.maturity}
+          claimsFullFrameworkMaturity={claimsFullFrameworkMaturity}
           programEndYear={getScenario(country).programEndYear}
           score={computeRunScore({
             quartersUsed: (year - RUN_START.year) * 4 + (q - RUN_START.q),

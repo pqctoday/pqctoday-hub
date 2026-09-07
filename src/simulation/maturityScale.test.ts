@@ -1,8 +1,22 @@
 // SPDX-License-Identifier: GPL-3.0-only
+/**
+ * W2.3 — framework maturity and scenario completion are different numbers.
+ *
+ * The suite this replaces asserted `normalizeLevel(2, 2, 4) === 4`: a phase
+ * that ships only L1–L2 reported framework level 4 once cleared. That was the
+ * level-inflation defect written down as an expectation, so it had to change
+ * with the behaviour rather than be preserved.
+ */
 import { describe, it, expect } from 'vitest'
-import { topBandLevel, normalizeLevel, phaseReadinessFraction } from './maturityScale'
+import {
+  topBandLevel,
+  frameworkLevel,
+  scenarioCompletionFraction,
+  hasShortenedLadder,
+} from './maturityScale'
 import { SIM_TREES } from './index'
 import type { PhaseTree } from './types'
+import { coverageFor } from './frameworkCoverage'
 
 const tree = (levels: number[]): PhaseTree => ({
   phase: 'p1',
@@ -22,44 +36,60 @@ describe('topBandLevel', () => {
     expect(topBandLevel(undefined, 4)).toBe(4)
     expect(topBandLevel(tree([]), 4)).toBe(4)
   })
-  it('matches the real shipped trees (p3 caps at 2, p6 at 3)', () => {
+  it('reports what the SIMULATOR ships (p3 stops at 2, p6 at 3)', () => {
     expect(topBandLevel(SIM_TREES.p3, 4)).toBe(2)
     expect(topBandLevel(SIM_TREES.p6, 4)).toBe(3)
     expect(topBandLevel(SIM_TREES.p4, 4)).toBe(4)
   })
 })
 
-describe('normalizeLevel — a phase at its own top band reads as maxed', () => {
-  it('clearing a 2-band phase (p3) scores full, not half', () => {
-    expect(normalizeLevel(2, 2, 4)).toBe(4) // was 2 on the old fixed scale → frozen
-    expect(normalizeLevel(1, 2, 4)).toBe(2)
-    expect(normalizeLevel(0, 2, 4)).toBe(0)
+describe('frameworkLevel — never rescaled against our own ladder', () => {
+  it('P3 at L2 is framework level 2, NOT 4', () => {
+    // The defect: a phase shipping L1-L2 read as fully mature once cleared,
+    // silently skipping the framework's own L3 and L4 criteria.
+    expect(frameworkLevel(2, 4)).toBe(2)
   })
-  it('clearing a 3-band phase (p6) scores full', () => {
-    expect(normalizeLevel(3, 3, 4)).toBe(4)
-    expect(normalizeLevel(2, 3, 4)).toBe(3) // round(2/3*4)=2.67→3
+  it('P6 at L2 is framework level 2, not a stretched 3', () => {
+    expect(frameworkLevel(2, 4)).toBe(2)
   })
-  it('a full 4-band phase is unchanged', () => {
-    expect(normalizeLevel(4, 4, 4)).toBe(4)
-    expect(normalizeLevel(2, 4, 4)).toBe(2)
-  })
-  it('clamps over-top and guards top=0', () => {
-    expect(normalizeLevel(5, 2, 4)).toBe(4)
-    expect(normalizeLevel(3, 0, 4)).toBe(0)
+  it('clamps to the ladder without inflating', () => {
+    expect(frameworkLevel(5, 4)).toBe(4)
+    expect(frameworkLevel(-1, 4)).toBe(0)
+    expect(frameworkLevel(4, 4)).toBe(4)
   })
 })
 
-describe('phaseReadinessFraction', () => {
+describe('scenarioCompletionFraction — completion, explicitly not maturity', () => {
   it('a fully-cleared phase contributes 1 regardless of ladder length', () => {
-    expect(phaseReadinessFraction(2, 2)).toBe(1)
-    expect(phaseReadinessFraction(3, 3)).toBe(1)
-    expect(phaseReadinessFraction(4, 4)).toBe(1)
+    expect(scenarioCompletionFraction(2, 2)).toBe(1)
+    expect(scenarioCompletionFraction(3, 3)).toBe(1)
+    expect(scenarioCompletionFraction(4, 4)).toBe(1)
   })
   it('partial progress is the level over the top band', () => {
-    expect(phaseReadinessFraction(1, 2)).toBe(0.5)
-    expect(phaseReadinessFraction(0, 4)).toBe(0)
+    expect(scenarioCompletionFraction(1, 2)).toBe(0.5)
+    expect(scenarioCompletionFraction(0, 4)).toBe(0)
   })
   it('guards top=0', () => {
-    expect(phaseReadinessFraction(1, 0)).toBe(0)
+    expect(scenarioCompletionFraction(1, 0)).toBe(0)
+  })
+})
+
+describe('shortened ladders are detectable, and match the coverage manifest', () => {
+  it('flags the phases whose ladder cannot reach the framework top band', () => {
+    expect(hasShortenedLadder(SIM_TREES.p3, 4)).toBe(true)
+    expect(hasShortenedLadder(SIM_TREES.p6, 4)).toBe(true)
+    expect(hasShortenedLadder(SIM_TREES.p4, 4)).toBe(false)
+  })
+
+  it('every band above a phase’s top is recorded as unsupported coverage', () => {
+    // The manifest and the runtime trees must tell the same story: if the tree
+    // cannot reach L3, the manifest must say L3 is unsupported.
+    for (const phase of ['p3', 'p6'] as const) {
+      const top = topBandLevel(SIM_TREES[phase], 4)
+      for (const level of [1, 2, 3, 4] as const) {
+        if (level <= top) continue
+        expect(coverageFor(phase, level)?.status, `${phase}/L${level}`).toBe('unsupported')
+      }
+    }
   })
 })
