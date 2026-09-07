@@ -17,6 +17,7 @@ async function seedPersona(page: Page, persona: string): Promise<void> {
         JSON.stringify({
           state: {
             selectedPersona: persona,
+            hasAcknowledgedExecutiveGrcSplit: true,
             hasSeenPersonaPicker: true,
             selectedRegion: 'americas',
             selectedIndustry: 'Finance & Banking',

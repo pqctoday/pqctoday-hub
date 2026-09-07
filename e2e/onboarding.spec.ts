@@ -68,6 +68,7 @@ test.describe('ASR Core Profile Onboarding (Assess -> Report -> BC)', () => {
       const personaState = {
         state: {
           selectedPersona: 'executive',
+          hasAcknowledgedExecutiveGrcSplit: true,
           experienceLevel: 'expert',
           isPersonaConfirmed: true,
         },

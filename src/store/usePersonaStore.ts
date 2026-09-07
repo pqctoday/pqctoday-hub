@@ -241,7 +241,16 @@ export const usePersonaStore = create<PersonaState>()(
           // combined role they picked no longer exists as-is. Everyone else
           // (other personas, or no persona chosen yet) gets `true` so the
           // one-time notice never shows for someone it doesn't apply to.
-          s.hasAcknowledgedExecutiveGrcSplit = s.selectedPersona !== 'executive'
+          //
+          // A real pre-v11 store never had this key at all, so this branch is
+          // exactly the "no explicit value yet" case for actual users. Only
+          // an already-boolean value here (impossible pre-v11 in practice,
+          // but a legitimate way for a test fixture to seed a settled,
+          // already-acknowledged 'executive' store without also bumping its
+          // seeded version) is left alone rather than overwritten.
+          if (typeof s.hasAcknowledgedExecutiveGrcSplit !== 'boolean') {
+            s.hasAcknowledgedExecutiveGrcSplit = s.selectedPersona !== 'executive'
+          }
         }
         return s
       },
