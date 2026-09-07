@@ -29,6 +29,25 @@ first time (don't ship dev-speak and reformat later):
 - **One entry = one user-visible change.** If it has no user-visible effect,
   it probably doesn't need a changelog entry.
 
+## [4.81.0] - 2026-09-07
+
+Almost every fact on the site can now be traced to a document you can open — evidence coverage went from 85.5% to 99.2%, and around 310 missing source documents were recovered and checked.
+
+### Data
+
+- **Nearly every catalogue entry now has a source document behind it** [view:/compliance] [view:/timeline] [view:/library] [view:/migrate] [view:/threats] [persona:executive] [persona:architect] [persona:researcher] [persona:ops]: evidence coverage rose from 85.5% to 99.2% of active entries, and the Timeline, Threats, Vendor Roadmaps and Industry pages now have a document behind **every** entry they show. Around 310 documents were recovered, and each one was checked to confirm it is a real document and the right one for the entry citing it.
+- **Four compliance entries now link to the actual document instead of a company's front page** [view:/compliance] [persona:executive] [persona:architect]: Common Criteria, EUCC, FedRAMP and the CA/Browser Forum S/MIME ballot each pointed at a bare domain you could not navigate from. Each now links the specific document, verified against the publisher's own site.
+- **Standards that cost money to read now show a free source that covers the same ground** [view:/library] [view:/compliance] [persona:researcher] [persona:architect]: 38 entries rest on paywalled standards — ISO, ANSI, IEEE, RTCA. Where a publicly readable equivalent exists and genuinely covers the same mechanisms, it is now recorded alongside, so a reader can check the claim without buying the standard.
+- **An industry entry was reading the wrong file for a 3GPP specification** [view:/threats] [persona:developer] [persona:ops]: two entries named an HTML file while the real 1-million-character 3GPP specification had been on disk since August. They now point at the document that was there all along.
+
+### Fixed
+
+- **A page that says "no roadmap published" is no longer treated as missing information** [view:/migrate] [persona:ops] [persona:researcher]: several vendor entries deliberately record that an organisation has published no post-quantum roadmap — a real finding, with the date it was checked. Those are now recognised as complete records rather than gaps.
+
+### Changed
+
+- **Every piece of evidence is now checked before it is accepted** [view:/compliance] [view:/library] [view:/migrate] [persona:architect] [persona:researcher]: a downloaded page is only used if it is genuinely a document rather than a cookie banner, a login wall, an error page or a list of links — and if it is the document the entry actually cites. Around 40 pages that looked fine were rejected on those grounds and never became evidence.
+
 ## [4.80.0] - 2026-09-04
 
 A global accuracy and consistency pass across all six role-based home boards, closing out the 2026-09-03 review with over 50 individual fixes plus two new pieces of user-visible behavior — plus a smaller Algorithms page default-filter change.

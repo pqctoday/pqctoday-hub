@@ -56,10 +56,22 @@ describe('complianceData', () => {
   const byId = (id: string) => complianceFrameworks.find((f) => f.id === id)
 
   it('treats an in-force phased range as active, not a distant deadline', () => {
-    // CNSA 2.0 "2025-2033" / ANSSI "2025-2030" straddle the current year and are in
-    // force now — the parser must not bucket them by the far endpoint (mid/long).
+    // CNSA 2.0 "2025-2033" straddles the current year and is in force now — the
+    // parser must not bucket it by the far endpoint (mid/long).
     expect(byId('CNSA-2')?.deadlinePhase).toBe('active')
-    expect(byId('ANSSI')?.deadlinePhase).toBe('active')
+  })
+
+  it('does not present ANSSI as a dated mandate', () => {
+    // ANSSI was asserted here as a second in-force phased range ("2025-2030").
+    // Checked against ANSSI's own pages on 2026-09-07: those markers are Phase 2
+    // "not earlier than 2025" and Phase 3 "probably not earlier than 2030" —
+    // floors on when ANSSI will begin issuing a class of security visa, which is
+    // the opposite of a date by which anyone must act. ANSSI states directly that
+    // "Les préconisations de l'ANSSI sur la PQC (y compris sur l'hybridation)
+    // n'ont pas à ce jour de caractère d'obligation réglementaire." The deadline
+    // was cleared; the assertion moved here rather than being deleted, so the
+    // reason survives.
+    expect(byId('ANSSI')?.deadlinePhase).not.toBe('active')
   })
 
   it('classifies anticipated/advisory frameworks correctly', () => {

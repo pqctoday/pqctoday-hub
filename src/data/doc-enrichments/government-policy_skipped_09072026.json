@@ -1,0 +1,34 @@
+[
+  {
+    "ref_id": "QCCPA-2022",
+    "reason": "Probable landing page, not the document (362,134 bytes of markup, only 3,969 chars of text). Re-fetch the linked document before treating this as covered."
+  },
+  {
+    "ref_id": "EO-14144",
+    "reason": "single-window failed (no requirements key; got []); 3-window fallback also found nothing"
+  },
+  {
+    "ref_id": "HKMA-Fintech-Blueprint-2026",
+    "reason": "Probable landing page, not the document (81,742 bytes of markup, only 5,002 chars of text). Re-fetch the linked document before treating this as covered."
+  },
+  {
+    "ref_id": "Singapore-NQSN-Plus",
+    "reason": "Probable landing page, not the document (290,181 bytes of markup, only 5,659 chars of text). Re-fetch the linked document before treating this as covered."
+  },
+  {
+    "ref_id": "UK-DSIT-CNI-PQC-Perspectives-2025",
+    "reason": "single-window failed (no requirements key; got []); 3-window fallback also found nothing"
+  },
+  {
+    "ref_id": "SG-MAS-QKD-Sandbox-Report-2025",
+    "reason": "Probable landing page, not the document (253,950 bytes of markup, only 4,167 chars of text). Re-fetch the linked document before treating this as covered."
+  },
+  {
+    "ref_id": "NATO-Quantum-Strategy-2024",
+    "reason": "Probable landing page, not the document (313,593 bytes of markup, only 6,777 chars of text). Re-fetch the linked document before treating this as covered."
+  },
+  {
+    "ref_id": "CISA-Bad-Practices-PQC-2025",
+    "reason": "single-window failed (no requirements key; got []); 3-window fallback also found nothing"
+  }
+]

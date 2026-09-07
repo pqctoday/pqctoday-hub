@@ -1278,6 +1278,12 @@ export const PROTOCOL_MATRIX: ProtocolMatrixRow[] = [
         url: 'https://datatracker.ietf.org/doc/draft-ietf-lamps-cms-composite-sigs/',
         date: '2026-04',
       },
+      {
+        id: 'draft-becker-cnsa2-smime-profile-05',
+        title: 'draft-becker-cnsa2-smime-profile-05 — CNSA 2.0 Profile for S/MIME',
+        url: 'https://datatracker.ietf.org/doc/draft-becker-cnsa2-smime-profile/',
+        date: '2026-08-18',
+      },
     ],
     dimensions: {
       pureKem: {
@@ -1313,7 +1319,8 @@ export const PROTOCOL_MATRIX: ProtocolMatrixRow[] = [
       pureSig: {
         value: 'rfc',
         stage: 'rfc-published',
-        stageNote: 'RFC 9882 published 2025-10',
+        stageNote:
+          'RFC 9882 (ML-DSA) published 2025-10; FN-DSA-in-CMS still in early WG draft (draft-ietf-lamps-cms-fn-dsa-00, 2026-05)',
         refs: [
           {
             kind: 'rfc',
@@ -1321,6 +1328,13 @@ export const PROTOCOL_MATRIX: ProtocolMatrixRow[] = [
             title: 'Use of ML-DSA in CMS (formerly the lamps-cms-ml-dsa work item)',
             url: 'https://datatracker.ietf.org/doc/html/rfc9882',
             publishedOn: '2025-10',
+          },
+          {
+            kind: 'draft',
+            id: 'draft-ietf-lamps-cms-fn-dsa-00',
+            title: 'Use of the FN-DSA Signature Algorithm in CMS',
+            url: 'https://datatracker.ietf.org/doc/draft-ietf-lamps-cms-fn-dsa/',
+            publishedOn: '2026-05',
           },
         ],
       },
@@ -1365,7 +1379,7 @@ export const PROTOCOL_MATRIX: ProtocolMatrixRow[] = [
       },
     ],
     noDeploymentReason:
-      'S/MIME PQ standards are very fresh (ML-DSA Oct 2025, SLH-DSA Jul 2025, ML-KEM Mar 2026) — typical standards-to-ship gap is 12–24 months. The quantum-safe consumer-email market migrated to OpenPGP (Proton Mail) and proprietary protocols (Tuta / TutaCrypt) rather than S/MIME; mainstream providers (Gmail / Outlook / Apple Mail) rely on TLS-in-transit + at-rest encryption and do not drive S/MIME at all. The procurement-cycle slots that will force S/MIME PQ deployment — CNSA 2.0 S/MIME profile (still draft) and X9 Financial PKI consumers — have not yet shipped a product. Building blocks (OpenSSL 3.5 `cms`, Bouncy Castle 1.79+ CMS API) exist and IETF Hackathon runs cross-vendor interop tests, but no end-user product deployment.',
+      'S/MIME PQ standards are very fresh (ML-DSA Oct 2025, SLH-DSA Jul 2025, ML-KEM Mar 2026) — typical standards-to-ship gap is 12–24 months. The quantum-safe consumer-email market migrated to OpenPGP (Proton Mail) and proprietary protocols (Tuta / TutaCrypt) rather than S/MIME; mainstream providers (Gmail / Outlook / Apple Mail) rely on TLS-in-transit + at-rest encryption and do not drive S/MIME at all. The procurement-cycle slots that will force S/MIME PQ deployment — the CNSA 2.0 S/MIME profile (draft-becker-cnsa2-smime-profile-05, still draft) and X9 Financial PKI consumers — have not yet shipped a product. Building blocks (OpenSSL 3.5 `cms`, Bouncy Castle 1.79+ CMS API) exist and IETF Hackathon runs cross-vendor interop tests, but no end-user product deployment.',
     sources: [
       {
         label: 'IETF LAMPS working group documents',
