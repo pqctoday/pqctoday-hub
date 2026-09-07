@@ -1,0 +1,43 @@
+[
+  {
+    "platform_name": "Lean Consensus Roadmap",
+    "category": "Blockchain & DLT Protocols",
+    "product_name": "Lean Consensus",
+    "product_brief": "A complete redesign of Ethereum's consensus layer hardened for security, decentralization, and finality in seconds.",
+    "pqc_support": "Yes (with details)",
+    "pqc_capability_description": "Implements \"Lean Cryptography\" using hash-based signatures (XMSS) for post-quantum security. Includes leanSig (signature scheme) and leanMultisig (aggregation scheme). Devnets pq-devnet-0 through pq-devnet-4 have integrated leanSig/leanMultisig. Research tracks include hash-based multi-signatures replacing BLS and zkVM-optimized aggregation.",
+    "pqc_migration_priority": "Critical",
+    "crypto_primitives": "XMSS, BLS (current, being replaced), Poseidon (hash function), FRI, STU, WHIR (proof systems)",
+    "key_management_model": "Unknown",
+    "supported_blockchains": "Ethereum",
+    "architecture_type": "Consensus Layer Protocol",
+    "infrastructure_layer": "Network",
+    "license_type": "Open Source",
+    "license": "Not stated",
+    "latest_version": "Not stated",
+    "release_date": "2026-05-01",
+    "fips_validated": "No",
+    "primary_platforms": "Not stated",
+    "target_industries": "Cryptocurrency, Blockchain",
+    "regulatory_status": "Not stated",
+    "pqc_roadmap_details": "pq-devnet-0 (Oct 25): No PQ sigs. pq-devnet-1 (Dec 25): Integrated leanSig. pq-devnet-2 (Jan 26): Integrated leanMultisig. pq-devnet-3 (Feb 26): Decoupled aggregation. pq-devnet-4 (Mar 26): Recursive PQ aggregation. pq-devnet-5 (Planned): Block-level aggregation proof, replace 3SF-mini with PQ heartbeat.",
+    "consensus_mechanism": "3SF-mini (modified), PQ heartbeat (planned)",
+    "signature_schemes": "XMSS (current/planned), BLS (current, being replaced)",
+    "authoritative_source_url": "Not stated",
+    "implementation_attack_surface": "Unknown",
+    "cryptographic_discovery_&_inventory": "Unknown",
+    "testing_&_validation_methods": "Formal verification (Lean 4 framework for FRI, STU, WHIR), interoperability trials (Hive, multi-client coordination), performance benchmarking (leanBench)",
+    "qkd_protocols_&_quantum_networking": "Unknown",
+    "qrng_&_entropy_sources": "Unknown",
+    "constrained_device_&_iot_suitability": "Unknown",
+    "supply_chain_&_vendor_risk": "Unknown",
+    "deployment_&_migration_complexity": "Unknown",
+    "financial_&_business_impact": "Unknown",
+    "organizational_readiness": "Unknown",
+    "_generation": {
+      "model": "mlx-community/Qwen3.6-27B-8bit",
+      "backend": "mlx",
+      "generated_at": "2026-09-07"
+    }
+  }
+]
