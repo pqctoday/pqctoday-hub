@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-07T02:38:28.824716+00:00",
+  "generated": "2026-09-07T02:48:24.369841+00:00",
   "entries": [
     {
       "refId": "NIST",
@@ -507,12 +507,15 @@
     },
     {
       "refId": "CAB-FORUM-SMC013",
-      "url": "https://cabforum.org/",
-      "status": "downloaded",
+      "url": "https://cabforum.org/2025/07/02/ballot-smc-013/",
+      "status": "recaptured",
       "filename": "CAB-FORUM-SMC013.html",
-      "sizeBytes": 20006,
+      "sizeBytes": 23447,
       "contentType": "text/html",
-      "sha256": "b122e2fd62eae06c058277d81f77803a75620024dd7d36a267c01aa19059a3ca"
+      "sha256": "7a1e34b94444e7cd69b35e414fc5bbaca6cda4d88501fadcaca75869d4fe7043",
+      "recaptured_at": "2026-09-07T02:48:19.888501+00:00",
+      "recaptured_reason": "D26: previous capture was a landing/ToC page; this html is the linked document",
+      "superseded_file": "_superseded-20260906/compliance/CAB-FORUM-SMC013.html"
     },
     {
       "refId": "ACVP",
@@ -2007,7 +2010,7 @@
       "attempts": 7
     },
     "KCMVP": {
-      "reason": "unusable content: only 13 chars of visible text (floor 200) \u2014 a shell, not a document",
+      "reason": "unusable content: only 13 chars of visible text (floor 200) — a shell, not a document",
       "blocked_at": "2026-07-31T22:02:59.774776+00:00",
       "attempts": 6
     },
@@ -2032,7 +2035,7 @@
       "attempts": 2
     },
     "BRAZIL-BACEN-4893": {
-      "reason": "unusable content: only 23 chars of visible text (floor 200) \u2014 a shell, not a document",
+      "reason": "unusable content: only 23 chars of visible text (floor 200) — a shell, not a document",
       "blocked_at": "2026-09-02T15:59:33.864660+00:00",
       "attempts": 2
     }
