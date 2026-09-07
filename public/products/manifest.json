@@ -19756,6 +19756,166 @@
       "bytes": 267554,
       "downloadedAt": "2026-09-07T20:06:27.690627+00:00",
       "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "credebl",
+      "refId": "credebl",
+      "file": "credebl-fb698032.html",
+      "url": "https://github.com/credebl",
+      "sha256": "d21418b8ef1ddd6f7f67919bf4e61a8a02f17e2d089b4d538becd04f3df5f6ec",
+      "bytes": 303334,
+      "downloadedAt": "2026-09-07T20:55:34.230659+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "zodia-custody",
+      "refId": "zodia-custody",
+      "file": "zodia-custody-834637f0.html",
+      "url": "https://zodia-custody.com/custody/",
+      "sha256": "6a45de41c1422c0bf5be4a027589bd7f1f0268c1a01216027a2c30e71a4bc8de",
+      "bytes": 145754,
+      "downloadedAt": "2026-09-07T20:55:34.230791+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "soc-2-quantum-trust-criteria",
+      "refId": "soc-2-quantum-trust-criteria",
+      "file": "soc-2-quantum-trust-criteria-36051952.html",
+      "url": "https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-quantum-readiness",
+      "sha256": "7874124fa37106c0c7ce1a38ebed2a2e243fe40f0f0677ced97612cf164135d7",
+      "bytes": 236718,
+      "downloadedAt": "2026-09-07T20:55:34.230796+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "mtg-ag-cara",
+      "refId": "mtg-ag-cara",
+      "file": "mtg-ag-cara-abc9c4d2.html",
+      "url": "https://docs.mtg.de/enterprise-resource-security-cara/latest/introduction.html",
+      "sha256": "47032ce73a649fb75b9b727034914616f3aa34943707bbbd1f4fd4e2e2b21447",
+      "bytes": 38748,
+      "downloadedAt": "2026-09-07T20:55:34.230799+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "spherity-caro-pharma-pqc",
+      "refId": "spherity-caro-pharma-pqc",
+      "file": "spherity-caro-pharma-pqc-a0d6015a.html",
+      "url": "https://medium.com/spherity/countdown-to-quantum-threat-upgrade-your-digital-identity-with-a-pqc-ready-european-business-c64f16dbde52",
+      "sha256": "ad75ac00beb6326f34735799f1697afc7b88247fcdc0fb17d126be02b0589c57",
+      "bytes": 422738,
+      "downloadedAt": "2026-09-07T20:55:34.230801+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "fujitsu-pqc-networks",
+      "refId": "fujitsu-pqc-networks",
+      "file": "fujitsu-pqc-networks-c04ae823.html",
+      "url": "https://corporate-blog.global.fujitsu.com/fgb/2025-09-16/01/",
+      "sha256": "5d3cb40d6bb45326e8d400bb0e8d10aa6549fe852d7012262b3721b2cc0d1e75",
+      "bytes": 429304,
+      "downloadedAt": "2026-09-07T20:55:34.230804+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "pqctoday-composite-mkcert",
+      "refId": "pqctoday-composite-mkcert",
+      "file": "composite-mkcert-4e8daa25.html",
+      "url": "https://lamps-wg.github.io/draft-composite-sigs/draft-ietf-lamps-pq-composite-sigs.html",
+      "sha256": "837e07fde5d856540fa3bd4283913171ac0c8a1a46a0aa3129928d1660556d30",
+      "bytes": 796891,
+      "downloadedAt": "2026-09-07T20:55:34.230806+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "age-plugin-pqkem",
+      "refId": "age-plugin-pqkem",
+      "file": "age-plugin-pqkem-2491d9c9.html",
+      "url": "https://github.com/FiloSottile/age/releases",
+      "sha256": "e547776efc0edee0e6c640b12612793b12146162171020a50e3d27d7938f757c",
+      "bytes": 520708,
+      "downloadedAt": "2026-09-07T20:55:34.230808+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "Cryptographic-library-NesLib-6-11-0-on-S",
+      "refId": "Cryptographic-library-NesLib-6-11-0-on-S",
+      "file": "cryptographic-library-neslib-6-11-0-on-st31r480-a01-r-f-rence-neslib-version-6-11-7926e84a.pdf",
+      "url": "https://messervices.cyber.gouv.fr/visas/ANSSI-CC-2025-26-rapport.pdf",
+      "sha256": "ffc843cc6976508aba176f46a0bb81612ea8c6eb061114938acea82a5584ae38",
+      "bytes": 341654,
+      "downloadedAt": "2026-09-07T20:55:34.230811+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "Dashboard-PQProbe",
+      "refId": "Dashboard-PQProbe",
+      "file": "dashboard-pqprobe-2d7914d5.html",
+      "url": "https://pqprobe.com/app",
+      "sha256": "b91f6cb6877ee290fdd5f93af86a7f94e74f022f0626e1fde9a2fbd6fe2f841a",
+      "bytes": 30912,
+      "downloadedAt": "2026-09-07T20:55:34.230813+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "Cryptography-std-crypto-Zig",
+      "refId": "Cryptography-std-crypto-Zig",
+      "file": "cryptography-std-crypto-zig-a722bf9b.html",
+      "url": "https://www.mintlify.com/ziglang/zig/api/crypto",
+      "sha256": "d7a1cbed615c816bf083d0f3861125b0cae9fe46421e158d7cbcc35534faa5e2",
+      "bytes": 1345180,
+      "downloadedAt": "2026-09-07T20:55:34.230815+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "SPHINCS-Software",
+      "refId": "SPHINCS-Software",
+      "file": "sphincs-software-0f780525.html",
+      "url": "https://sphincs.org/software.html",
+      "sha256": "d01769e15c0b44d24fad1eaf6a1e445fa102daa58dd83eb8f5ec457dcf71a937",
+      "bytes": 6529,
+      "downloadedAt": "2026-09-07T20:55:34.230817+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "PQC-InfoHub-Tencent-Post-Quantum-Cryptog",
+      "refId": "PQC-InfoHub-Tencent-Post-Quantum-Cryptog",
+      "file": "pqc-infohub-tencent-post-quantum-cryptography-information-center-44fde4be.html",
+      "url": "https://pqc.tencent.com/en",
+      "sha256": "f8ad4ce73d7e3afa69499c3b8403ff472591d3e834ba8e6ee78d8bab20da3327",
+      "bytes": 91712,
+      "downloadedAt": "2026-09-07T20:55:34.230819+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "intel-platform-trust-technology-ptt",
+      "refId": "intel-platform-trust-technology-ptt",
+      "file": "intel-platform-trust-technology-ptt-5df97c26.html",
+      "url": "https://www.intel.com/content/www/us/en/support/articles/000094205/processors/intel-core-processors.html",
+      "sha256": "855c85d933eb534886cba083e3a02ef33eaa008d2ee7b3479b8e7cfef4f66a75",
+      "bytes": 691113,
+      "downloadedAt": "2026-09-07T21:52:45.500235+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "dell-powerstore-os-4-0",
+      "refId": "dell-powerstore-os-4-0",
+      "file": "dell-powerstore-os-4-0-9e4076ce.pdf",
+      "url": "https://dl.dell.com/content/manual29055882",
+      "sha256": "42431857ce08bbd0d1b086540e35e1e966d4e85457d38429d0fb14f5801dc78a",
+      "bytes": 293327,
+      "downloadedAt": "2026-09-07T21:52:45.500379+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "SMAUG-T-HAETAE-HAETAE",
+      "refId": "SMAUG-T-HAETAE-HAETAE",
+      "file": "smaug-t-haetae-haetae-aa56a2a4.pdf",
+      "url": "https://www.kpqc.or.kr/images/pdf2/HAETAE.pdf",
+      "sha256": "80d28b3af9af2a27dba0eb4746f9b5755e05cb9a86bb6596f45fda06c605f3f6",
+      "bytes": 445450,
+      "downloadedAt": "2026-09-07T21:52:45.500382+00:00",
+      "recoveredBy": "codex url research + lineage gates"
     }
   ],
   "total": 1892,
