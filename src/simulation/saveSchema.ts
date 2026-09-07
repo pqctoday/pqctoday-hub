@@ -33,6 +33,8 @@ const DIFFICULTIES: DifficultyId[] = ['easy', 'realistic', 'hard']
 const EDGE_CHOICES = ['hybrid', 'pure']
 const ORIGINS: EvidenceOrigin[] = ['learner', 'imported', 'narrated-example', 'ai-delegated']
 const EVENT_SEVERITIES = ['danger', 'warning', 'success', 'info']
+/** W5.5 — the phase tabs a restored run may point at. */
+const PHASE_TABS = ['decide', 'progress', 'resources', 'signals']
 
 /** A run cannot start before the framework existed or run past a sane horizon. */
 const YEAR_MIN = 2020
@@ -155,6 +157,8 @@ export function validateSave(input: unknown): ValidationResult {
     if (!isStringArray(s[key])) errors.push(`${key}: expected an array of strings`)
   }
   if (typeof s.runCompleteSeen !== 'boolean') errors.push('runCompleteSeen: expected a boolean')
+  if (s.activeTab !== undefined && !PHASE_TABS.includes(s.activeTab as string))
+    errors.push(`activeTab: expected one of ${PHASE_TABS.join(', ')}`)
 
   if (!isRecord(s.edgeDecisions)) {
     errors.push('edgeDecisions: expected an object')
@@ -231,6 +235,7 @@ export function validateSave(input: unknown): ValidationResult {
       evidence: (s.evidence as SimEvidenceRecord[]) ?? [],
       attempts: (s.attempts as Record<string, unknown>) ?? {},
       insuranceAssumed: s.insuranceAssumed === true,
+      activeTab: typeof s.activeTab === 'string' ? s.activeTab : 'decide',
       objectiveAchievedYears: (s.objectiveAchievedYears as Record<string, number>) ?? {},
     },
   }

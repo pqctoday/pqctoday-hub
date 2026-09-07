@@ -96,6 +96,12 @@ export interface SimulationState {
   catalogCompleted: string[]
   /** Tree step keys (`${phase}::${to}`) delegated to / auto-done by the AI team. */
   auto: string[]
+  /** W5.5 — the selected phase tab (Decide/Progress/Resources/Signals).
+   *  Run-local navigation state, persisted: it used to be component state, so a
+   *  reload or a navigate-away-and-back always dropped the player back on
+   *  Decide even if they were working in Resources. Still resets to 'decide' on
+   *  a deliberate phase switch, which is a different thing from a reload. */
+  activeTab: string
   /** W4.6 — whether the OPTIONAL cyber-insurance hypothetical is switched on.
    *  Default false: the scenario used to compute a policy limit automatically
    *  and subtract it from quantum exposure, which read as coverage the player
@@ -213,6 +219,8 @@ export interface SimulationState {
   autoCompleteSteps: (keys: string[]) => void
   /** Cancel auto-completion for a phase (remove its `${phase}::` keys). */
   clearAuto: (phase: string) => void
+  /** W5.5 — select the phase tab. */
+  setActiveTab: (tab: string) => void
   /** W4.6 — toggle the optional cyber-insurance hypothetical. */
   setInsuranceAssumed: (on: boolean) => void
   /** W3 — record the player's single attempt at one decision step. */
@@ -279,6 +287,7 @@ const SEED = {
   evidence: [] as SimEvidenceRecord[],
   attempts: {} as Record<string, DecisionAttempt>,
   insuranceAssumed: false,
+  activeTab: 'decide',
   seed: 0, // replaced with a fresh seed on create / reset / migrate
   difficulty: 'realistic' as DifficultyId,
   securedBudgetM: 0,
@@ -346,6 +355,7 @@ export function migrateSimulationState(persisted: unknown) {
     evidence: Array.isArray(s.evidence) ? (s.evidence as SimEvidenceRecord[]) : [],
     attempts: isRecord(s.attempts) ? (s.attempts as Record<string, DecisionAttempt>) : {},
     insuranceAssumed: typeof s.insuranceAssumed === 'boolean' ? s.insuranceAssumed : false,
+    activeTab: typeof s.activeTab === 'string' ? s.activeTab : 'decide',
     seed: typeof s.seed === 'number' ? (s.seed as number) : newSeed(),
     difficulty: asDifficulty(s.difficulty),
     tourSeen: typeof s.tourSeen === 'boolean' ? s.tourSeen : false,
@@ -400,6 +410,7 @@ const saveSlice = (s: SimulationState): SimulationData => ({
   evidence: s.evidence,
   attempts: s.attempts,
   insuranceAssumed: s.insuranceAssumed,
+  activeTab: s.activeTab,
   // W5: the run's results depend on this — omitting it made every export
   // silently lose the on-time objective record it is graded against.
   objectiveAchievedYears: s.objectiveAchievedYears,
@@ -435,6 +446,7 @@ function fromSave(s: Record<string, unknown>) {
     evidence: Array.isArray(s.evidence) ? (s.evidence as SimEvidenceRecord[]) : [],
     attempts: isRecord(s.attempts) ? (s.attempts as Record<string, DecisionAttempt>) : {},
     insuranceAssumed: typeof s.insuranceAssumed === 'boolean' ? s.insuranceAssumed : false,
+    activeTab: typeof s.activeTab === 'string' ? s.activeTab : 'decide',
     objectiveAchievedYears: isRecord(s.objectiveAchievedYears)
       ? (s.objectiveAchievedYears as Record<string, number>)
       : {},
@@ -551,6 +563,7 @@ export const useSimulationStore = create<SimulationState>()(
         set((s) => ({ auto: Array.from(new Set([...s.auto, ...keys])) })),
       clearAuto: (phase) =>
         set((s) => ({ auto: s.auto.filter((k) => !k.startsWith(`${phase}::`)) })),
+      setActiveTab: (activeTab) => set({ activeTab }),
       setInsuranceAssumed: (insuranceAssumed) => set({ insuranceAssumed }),
       recordAttempt: (key, index, correct) =>
         set((s) =>

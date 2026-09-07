@@ -191,6 +191,7 @@ import { ARCHITECTURES, edgeState } from '@/data/simArchitecture'
 import { TrapInsightsPanel } from './TrapInsightsPanel'
 import { useSimulationStore, RUN_START } from '@/store/useSimulationStore'
 import { FRAMEWORK_COVERAGE, hasCompleteCoverage } from '@/simulation/frameworkCoverage'
+import { validateSave, previewSave } from '@/simulation/saveSchema'
 import {
   documentApplicability,
   evidenceId,
@@ -264,6 +265,29 @@ const SIM_TRACKED = (() => {
   }
   return { modules, artifacts }
 })()
+
+/** W5.3 — every resource id the trees in THIS build can resolve. An imported
+ *  run may reference a module/workshop/reference that has since been renamed or
+ *  removed; the import preview names those rather than silently restoring a run
+ *  whose evidence points at nothing. */
+const KNOWN_RESOURCE_IDS = (() => {
+  const ids = new Set<string>()
+  for (const tree of Object.values(SIM_TREES)) {
+    for (const step of tree ? flattenTree(tree) : []) {
+      for (const id of [
+        step.moduleId,
+        step.refId,
+        step.workshopId,
+        step.catalogId,
+        step.scenarioId,
+        step.artifactType,
+      ]) {
+        if (id) ids.add(id)
+      }
+    }
+  }
+  return ids
+})()
 const TIER_CHIP: Record<SensitivityTier, string> = {
   critical: 'bg-destructive/15 text-destructive',
   high: 'bg-warning/15 text-warning',
@@ -335,7 +359,6 @@ export function SimulationView() {
   // co-rendered. Replaces both the GUIDED/Expert mode split and the old rail's
   // "Show N more" disclosure boolean. Local state, deliberately not persisted:
   // it always resets to 'decide' on a phase switch, so there is nothing to keep.
-  const [activePhaseTab, setActivePhaseTab] = useState<PhaseTab>('decide')
   const {
     size,
     country,
@@ -371,6 +394,8 @@ export function SimulationView() {
     recordEvidence,
     insuranceAssumed,
     setInsuranceAssumed,
+    activeTab,
+    setActiveTab,
     attempts,
     recordAttempt,
     clearAttempt,
@@ -395,13 +420,27 @@ export function SimulationView() {
     recordSimRunCompletion,
     setSeed,
   } = useSimulationStore()
+  // W5.5: store-backed so a reload / navigate-away-and-back returns the player
+  // to the tab they were working in. It still resets to 'decide' on a
+  // deliberate phase switch (the effect below) — a phase change and a reload
+  // are different events and should not behave the same.
+  const activePhaseTab = activeTab as PhaseTab
+  const setActivePhaseTab = (t: PhaseTab) => setActiveTab(t)
   // WS-14: the active difficulty balance the engine + scoring read (config swap).
   const balance = getBalance(difficulty)
-  // Every phase opens on Decide. Keyed on `sel`, so this covers BOTH ways the
-  // phase changes — a manual ladder click and the narrated auto-run, which
-  // advances through the same setSel store action (useSimAutoRunPlayer). One
-  // interaction model, click-driven or AI-driven.
+  // Every phase CHANGE opens on Decide. Keyed on `sel`, so this covers BOTH
+  // ways the phase changes — a manual ladder click and the narrated auto-run,
+  // which advances through the same setSel store action (useSimAutoRunPlayer).
+  // One interaction model, click-driven or AI-driven.
+  //
+  // W5.5: it must NOT fire on mount. The effect used to run on every mount,
+  // which is why a reload (or leaving the route and coming back) always landed
+  // on Decide even when the player had been working in Resources. A phase
+  // switch and a reload are different events; only the first resets the tab.
+  const lastSelRef = useRef(sel)
   useEffect(() => {
+    if (lastSelRef.current === sel) return
+    lastSelRef.current = sel
     setActivePhaseTab('decide')
   }, [sel])
   const [report, setReport] = useState<QuarterReportData | null>(null)
@@ -663,11 +702,35 @@ export function SimulationView() {
     ranSeedDeepLink.current = true
     const n = Number(seedParam)
     const isFreshRun = year === RUN_START.year && q === RUN_START.q
-    if (Number.isInteger(n) && n > 0 && isFreshRun) setSeed(n)
+    if (Number.isInteger(n) && n > 0 && isFreshRun) {
+      setSeed(n)
+      // W5.4: apply the rest of the scenario configuration the link carries, so
+      // "the same world" is actually the same world. Each value is validated
+      // against its own allowlist; anything unrecognised is ignored rather than
+      // written through. Only ever applied to a genuinely fresh run.
+      const d = searchParams.get('difficulty')
+      if (d && DIFF_ORDER.includes(d as DifficultyId)) setDifficulty(d as DifficultyId)
+      const sz = searchParams.get('size')
+      if (sz && SIZES.some((o) => o.id === sz)) setSize(sz)
+      const sec = searchParams.get('sector')
+      if (sec) setSector(sec)
+      const c = searchParams.get('country')
+      if (c && JURISDICTION_RULES[c]) setCountry(c)
+    }
     const next = new URLSearchParams(searchParams)
-    next.delete('seed')
+    for (const key of ['seed', 'difficulty', 'size', 'sector', 'country']) next.delete(key)
     setSearchParams(next, { replace: true })
-  }, [searchParams, setSearchParams, setSeed, year, q])
+  }, [
+    searchParams,
+    setSearchParams,
+    setSeed,
+    setDifficulty,
+    setSize,
+    setSector,
+    setCountry,
+    year,
+    q,
+  ])
 
   // While the Executive Overview walkthrough is playing (or on its end screen), the
   // maturity/objective scoreboard and the "did you beat Q-Day?" win ceremony are
@@ -1024,10 +1087,23 @@ export function SimulationView() {
   // run on the same deterministic seed (same quarter events, same AI progress) —
   // only the player's own choices differ. Read-only: never mutates this run.
   const copyChallenge = () => {
-    const url = `${window.location.origin}/simulation?seed=${seed}`
+    // W5.4: a seed alone does NOT reproduce the world — difficulty drives every
+    // event probability and the country drives the regulatory deadline, so two
+    // players on the same seed with different dials played different scenarios
+    // while the UI called it "the same world". The link now carries the
+    // scenario configuration; the recipient still starts from a clean baseline
+    // (no evidence, no documents — nothing personal travels in a link).
+    const params = new URLSearchParams({
+      seed: String(seed),
+      difficulty,
+      size,
+      sector,
+      country,
+    })
+    const url = `${window.location.origin}/simulation?${params.toString()}`
     navigator.clipboard
       .writeText(url)
-      .then(() => toast.success('Challenge link copied — same world, different choices.'))
+      .then(() => toast.success('Challenge link copied — same scenario and seed, clean baseline.'))
       .catch(() => toast.error('Could not copy the link — copy it from the address bar instead.'))
   }
   const onImportFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -1035,9 +1111,38 @@ export function SimulationView() {
     e.target.value = '' // allow re-importing the same file
     if (!file) return
     file.text().then((txt) => {
-      const ok = importSave(txt)
-      if (ok) toast.success('Simulation save imported.')
-      else toast.error('That file is not a valid simulation save.')
+      // W5.3: validate and PREVIEW before applying. A rejected import must
+      // leave the current run untouched and say what was wrong, rather than
+      // reporting a generic failure (or, as before, applying a malformed
+      // payload field by field).
+      let parsed: unknown
+      try {
+        parsed = JSON.parse(txt)
+      } catch {
+        toast.error('That file is not valid JSON.')
+        return
+      }
+      const result = validateSave(parsed)
+      if (!result.ok) {
+        toast.error(`Save not imported — ${result.errors.slice(0, 2).join('; ')}`)
+        return
+      }
+      // What the player is about to get back, and what this build cannot
+      // resolve (a resource the save references that no longer exists here).
+      const preview = previewSave(result.data, (id) => KNOWN_RESOURCE_IDS.has(id))
+      if (!importSave(txt)) {
+        toast.error('Save not imported — the run was left unchanged.')
+        return
+      }
+      const missing = preview.missingDependencies.length
+      toast.success(
+        `Restored ${preview.scenario} · ${preview.at} · ${preview.difficulty} — ` +
+          `${preview.evidenceCount} evidence record${preview.evidenceCount === 1 ? '' : 's'}` +
+          (preview.demonstrationCount > 0
+            ? ` (${preview.demonstrationCount} from demonstrations, not your own work)`
+            : '') +
+          (missing > 0 ? ` · ${missing} unresolved dependenc${missing === 1 ? 'y' : 'ies'}` : '')
+      )
     })
   }
   const docTypes = useMemo(() => new Set((docs ?? []).map((d) => d.type)), [docs])
@@ -1643,7 +1748,12 @@ export function SimulationView() {
   // organization (single source of truth). With no completed assessment there is
   // nothing to scope the run from, so we show a prompt instead of the console.
   // The page identity (header + Exit to hub) stays; the dials/board/KPIs do not.
-  if (!assessSnap) {
+  // W5.3 — an imported/restored run stands on its own: the save carries the
+  // scenario the assessment would otherwise supply, and it may hold real
+  // progress. Gating it behind a fresh assessment made a shared or restored run
+  // unopenable in a clean browser.
+  const hasRestoredRun = evidence.length > 0 || Object.keys(attempts).length > 0
+  if (!assessSnap && !hasRestoredRun) {
     return (
       <div className="fixed inset-0 flex flex-col bg-background text-foreground">
         <header className="flex shrink-0 flex-wrap items-center gap-3 bg-foreground px-4 py-2 text-background">
@@ -1725,6 +1835,25 @@ export function SimulationView() {
               >
                 ▶ Watch the full migration (sample org)
               </Button>
+              {/* W5.3 — an imported run must be reachable BEFORE this gate.
+                  A save carries its own scenario (size/sector/country), so
+                  requiring a fresh assessment first made a shared or restored
+                  run unopenable in a clean browser. */}
+              <Button
+                variant="outline"
+                onClick={() => importFileRef.current?.click()}
+                className="h-auto w-full whitespace-normal py-2.5 text-[13px]"
+              >
+                Import a saved run
+              </Button>
+              <input
+                ref={importFileRef}
+                type="file"
+                accept="application/json,.json"
+                onChange={onImportFile}
+                className="hidden"
+                aria-hidden="true"
+              />
               <Button
                 variant="outline"
                 onClick={loadSampleOrg}
@@ -4748,8 +4877,8 @@ export function SimulationView() {
         )}
         {pendingConfirm === 'reset' && (
           <SimConfirmDialog
-            title="Reset the simulation?"
-            description="This clears the simulation's Learn-module and activity progress. Your assessment is kept."
+            title="Reset the run?"
+            description="Clears this run: decisions and attempts, quarters and budget, run evidence, and the simulation-tracked module progress and documents it created. KEPT: your assessment, your own Learn progress and documents from outside the simulation, and your lifetime achievements. This starts a clean practice replay — it does not erase your learning history."
             confirmLabel="Reset run"
             onCancel={() => setPendingConfirm(null)}
             onConfirm={() => {

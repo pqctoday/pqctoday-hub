@@ -191,6 +191,8 @@ export interface SimulationData {
   attempts: Record<string, unknown>
   /** W4.6 — whether the optional cyber-insurance hypothetical is switched on. */
   insuranceAssumed: boolean
+  /** W5.5 — the selected phase tab, so a reload returns where the player was. */
+  activeTab: string
   /** W5 — year each objective was first achieved. Omitted before v18, which
    *  silently zeroed the on-time badges and the run grade on any import. */
   objectiveAchievedYears: Record<string, number>
