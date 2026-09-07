@@ -726,6 +726,10 @@ export function generateKeyFindings(
       findings.push(
         `${vulnCount} quantum-vulnerable algorithm${vulnCount > 1 ? 's' : ''} span${vulnCount === 1 ? 's' : ''} your dependency graph — migration must be sequenced from trust roots (PKI/HSM) to leaf services.`
       )
+    } else if (p === 'grc') {
+      findings.push(
+        `${vulnCount} quantum-vulnerable algorithm${vulnCount > 1 ? 's' : ''} need${vulnCount === 1 ? 's' : ''} a documented remediation record — each is a line item for the risk register, not just a technical count.`
+      )
     } else {
       findings.push(
         `Your organization uses ${vulnCount} quantum-vulnerable algorithm${vulnCount > 1 ? 's' : ''} that ${vulnCount > 1 ? 'require' : 'requires'} migration to post-quantum alternatives.`
@@ -743,6 +747,10 @@ export function generateKeyFindings(
     } else if (p === 'developer') {
       findings.push(
         `Data-at-rest encryption uses quantum-vulnerable algorithms with ${hndlRiskWindow.riskWindowYears} years of exposure beyond estimated CRQC arrival${suffix}.`
+      )
+    } else if (p === 'grc') {
+      findings.push(
+        `Record this as a documented risk: data retention extends ${hndlRiskWindow.riskWindowYears} years beyond ${deadlinePhrase(hndlRiskWindow)}${suffix} — it needs a named owner and a review date, not just a flag.`
       )
     } else {
       findings.push(
@@ -772,6 +780,10 @@ export function generateKeyFindings(
       findings.push(
         `${urgentCompliance.length} compliance framework${urgentCompliance.length > 1 ? 's' : ''} (${names}) mandate${urgentCompliance.length === 1 ? 's' : ''} PQC adoption — check framework-specific algorithm requirements for your stack.`
       )
+    } else if (p === 'grc') {
+      findings.push(
+        `${urgentCompliance.length} compliance deadline${urgentCompliance.length > 1 ? 's' : ''} (${names}) need${urgentCompliance.length === 1 ? 's' : ''} to be traced to source and recorded as obligations — treat each as evidence-required, not assumed-met.`
+      )
     } else {
       findings.push(
         `${urgentCompliance.length} compliance framework${urgentCompliance.length > 1 ? 's' : ''} (${names}) ${urgentCompliance.length > 1 ? 'have' : 'has'} near-term PQC migration deadlines.`
@@ -789,6 +801,10 @@ export function generateKeyFindings(
       findings.push(
         `No PQC migration started — begin with quick-win algorithm swaps in non-critical services to build experience.`
       )
+    } else if (p === 'grc') {
+      findings.push(
+        `Migration has not started — record that finding plainly in the register; treatment planning should begin with a documented baseline, not an assumption of readiness.`
+      )
     } else {
       findings.push(
         `PQC migration has not yet started. Beginning with a cryptographic inventory and pilot project would significantly reduce your risk exposure.`
@@ -798,6 +814,10 @@ export function generateKeyFindings(
     if (p === 'executive') {
       findings.push(
         `Migration planning is underway — ensure budget and staffing are allocated for the first phase of implementation.`
+      )
+    } else if (p === 'grc') {
+      findings.push(
+        `Migration planning is underway but not yet evidenced — establish the record now so progress can be verified later, not asserted.`
       )
     } else {
       findings.push(

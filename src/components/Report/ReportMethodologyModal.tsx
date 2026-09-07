@@ -218,7 +218,10 @@ export function ReportMethodologyModal({ isOpen, onClose }: ReportMethodologyMod
                         technical questions (crypto algorithms, agility, infrastructure) apply an
                         additional reduction because executives are not expected to know these
                         details. The wizard also auto-suggests &ldquo;I don&apos;t know&rdquo; on
-                        these steps.
+                        these steps. This adjustment is Executive-only &mdash; the{' '}
+                        <span className="font-medium text-foreground">GRC persona</span> uses the
+                        standard unknown-answer scoring with no reduction and no auto-suggestion,
+                        since a compliance assessment should not assume technical details away.
                       </p>
                       <p className="text-xs text-muted-foreground leading-relaxed mt-2">
                         Each &ldquo;I don&apos;t know&rdquo; also generates a specific{' '}
@@ -245,6 +248,11 @@ export function ReportMethodologyModal({ isOpen, onClose }: ReportMethodologyMod
                         <li>
                           <span className="font-medium text-foreground">Executive</span> &mdash;
                           business/risk language, budget and competitive framing, no algorithm names
+                        </li>
+                        <li>
+                          <span className="font-medium text-foreground">GRC</span> &mdash;
+                          obligations traced to source, evidence gaps named explicitly as gaps (not
+                          noncompliance), standard scoring with no unknown-answer softening
                         </li>
                         <li>
                           <span className="font-medium text-foreground">Developer</span> &mdash;
