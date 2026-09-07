@@ -1070,6 +1070,36 @@
       "contentType": "text/html",
       "sha256": "fc4eeaf12f2992a5d900c5b659b1cdb411188a1cee5f0d7c7d37a96467223fba",
       "verifiedAt": "2026-09-06"
+    },
+    {
+      "vendorId": "VND-277",
+      "refId": "VND-277",
+      "file": "VND-277.html",
+      "url": "https://gelecegiyazanlar.turkcell.com.tr/blog/kuantum-bilgisayarlar-ve-kriptografi",
+      "sha256": "afc1621b8d2cd4e81c14f465bf3e85e20ff4b35c5724336da04f2ed10dbf4c05",
+      "bytes": 56251,
+      "downloadedAt": "2026-09-07T20:24:46.701291+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "vendorId": "VND-283",
+      "refId": "VND-283",
+      "file": "VND-283.html",
+      "url": "https://www.holdings.toppan.com/ja/news/2026/04/newsrelease260409_1.html",
+      "sha256": "9fe527738ce76326630cc51d756774258b09f714ca5b1401aab2a7304f156265",
+      "bytes": 73194,
+      "downloadedAt": "2026-09-07T20:24:46.701301+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "vendorId": "VND-284",
+      "refId": "VND-284",
+      "file": "VND-284.html",
+      "url": "https://corporate-blog.global.fujitsu.com/fgb/2025-09-16/01/",
+      "sha256": "488803c2c1f53b61329645b52ab133c8c2eebe699895fc132819fead8cf55fe6",
+      "bytes": 429304,
+      "downloadedAt": "2026-09-07T20:24:46.701305+00:00",
+      "recoveredBy": "codex url research + lineage gates"
     }
   ],
   "archivedEntries": [

@@ -19666,6 +19666,96 @@
       "status": "downloaded",
       "priority": "spotcheck",
       "docType": "brief"
+    },
+    {
+      "softwareName": "mysql-enterprise-encryption",
+      "refId": "mysql-enterprise-encryption",
+      "file": "mysql-enterprise-encryption-443a92bb.html",
+      "url": "https://dev.mysql.com/doc/refman/26.7/en/enterprise-encryption-usage.html",
+      "sha256": "52f55c1987e0c44b82057fae48af731463fc15b4b9bdf8e893d85b58491144e4",
+      "bytes": 99304,
+      "downloadedAt": "2026-09-07T20:06:27.690088+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "arm-confidential-compute-architecture-cca",
+      "refId": "arm-confidential-compute-architecture-cca",
+      "file": "arm-confidential-compute-architecture-cca-2e9bc3d0.pdf",
+      "url": "https://documentation-service.arm.com/static/65ba6de532ae5f7841c4254f",
+      "sha256": "3528ab7dcad8f31ab96da45becf86b85c8d8983fd0238e2d5520e5c719c4f12e",
+      "bytes": 593815,
+      "downloadedAt": "2026-09-07T20:06:27.690427+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "arm-trustzone",
+      "refId": "arm-trustzone",
+      "file": "arm-trustzone-16543c76.pdf",
+      "url": "https://documentation-service.arm.com/static/5f212796500e883ab8e74531",
+      "sha256": "9878aae9a78aae74f501428aab141e5f47db8cd06b526ef9568633685301c4a7",
+      "bytes": 701377,
+      "downloadedAt": "2026-09-07T20:06:27.690580+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "palo-alto-cortex-xdr",
+      "refId": "palo-alto-cortex-xdr",
+      "file": "palo-alto-cortex-xdr-59507690.pdf",
+      "url": "https://start.paloaltonetworks.com/rs/531-OCS-018/images/cortex-xdr.pdf",
+      "sha256": "ea00f3247988531265ada8fa4fcc5eaf1e980c194229798c8ed6945112ef8cf5",
+      "bytes": 773313,
+      "downloadedAt": "2026-09-07T20:06:27.690598+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "mimecast-cloud-integrated",
+      "refId": "mimecast-cloud-integrated",
+      "file": "mimecast-cloud-integrated-2774513f.pdf",
+      "url": "https://assets.mimecast.com/api/public/content/6903f192007945d1a024e4c5090463a5?download=false&v=75ba178c",
+      "sha256": "e33be5b12b2a81502739e18257f834ff95b95f7ccfd5c839c245e8e84f15fa49",
+      "bytes": 128769,
+      "downloadedAt": "2026-09-07T20:06:27.690606+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "broadcom-symantec-ses",
+      "refId": "broadcom-symantec-ses",
+      "file": "broadcom-symantec-ses-5e9746ff.pdf",
+      "url": "https://docs.broadcom.com/doc/endpoint-security-en",
+      "sha256": "eb6db0b0dfba28b109c5a18ee50400e99a676863ecf49e24b381469607e8c5eb",
+      "bytes": 628409,
+      "downloadedAt": "2026-09-07T20:06:27.690611+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "ivanti-neurons-for-mdm",
+      "refId": "ivanti-neurons-for-mdm",
+      "file": "ivanti-neurons-for-mdm-2cf37cc0.pdf",
+      "url": "https://www.ivanti.com/resources/library/ivi/2627/8258527a5ae6/?ext=pdf",
+      "sha256": "18a7f4faf881235c69868a3c0d1b3788dc9a67bb49e93e137f63495022ca5cf6",
+      "bytes": 908909,
+      "downloadedAt": "2026-09-07T20:06:27.690615+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "cardano-crypto-praos",
+      "refId": "cardano-crypto-praos",
+      "file": "cardano-crypto-praos-1ebafc61.html",
+      "url": "https://input-output-hk.github.io/cardano-haskell-packages/package/cardano-crypto-praos-2.1.2.0/",
+      "sha256": "0dd5237232e7e0e5e17803c3ab55363627166380f373ff469122e7b0820573e2",
+      "bytes": 3250,
+      "downloadedAt": "2026-09-07T20:06:27.690623+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "softwareName": "input-output-hk-kes",
+      "refId": "input-output-hk-kes",
+      "file": "input-output-hk-kes-d116e03e.html",
+      "url": "https://github.com/input-output-hk/kes/blob/master/README.md",
+      "sha256": "906079b66a2a0b7725a9c186a779e1c456f8c7c692c89c1f797adac28e21017a",
+      "bytes": 267554,
+      "downloadedAt": "2026-09-07T20:06:27.690627+00:00",
+      "recoveredBy": "codex url research + lineage gates"
     }
   ],
   "total": 1892,

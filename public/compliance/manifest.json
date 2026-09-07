@@ -1991,6 +1991,24 @@
       "sizeBytes": 285290,
       "contentType": "text/html",
       "sha256": "7726d610973f588801c15f298b29eb22062f3310b7abee43e1eed0e00b52242a"
+    },
+    {
+      "refId": "NIS2",
+      "file": "NIS2.html",
+      "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj",
+      "sha256": "f91bcb4f92d6692532c67b36e0ac3e1d6e52e5c435501f0b69eb575f6f9a225d",
+      "bytes": 970285,
+      "downloadedAt": "2026-09-07T20:24:46.694439+00:00",
+      "recoveredBy": "codex url research + lineage gates"
+    },
+    {
+      "refId": "TH-PDPA",
+      "file": "TH-PDPA.pdf",
+      "url": "https://www.mdes.go.th/law/detail/3577-Personal-Data-Protection-Act-B-E--2562--2019-",
+      "sha256": "98c91c9992007b2586062a1e28b1ab10a7330acab1476a33a152ccc926bea53d",
+      "bytes": 506138,
+      "downloadedAt": "2026-09-07T20:24:46.694592+00:00",
+      "recoveredBy": "codex url research + lineage gates"
     }
   ],
   "blocked": {
