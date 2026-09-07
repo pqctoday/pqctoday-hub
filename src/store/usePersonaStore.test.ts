@@ -71,3 +71,82 @@ describe('usePersonaStore migrate() — version 10 adds hasSkippedPersonalizatio
     expect(migrate(undefined, 0).hasSkippedPersonalization).toBe(false)
   })
 })
+
+describe('usePersonaStore migrate() — version 11 adds hasAcknowledgedExecutiveGrcSplit', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- accessing internal persist options
+  const migrate = (usePersonaStore.persist.getOptions() as any).migrate
+
+  it('fromVersion < 11: a legacy executive store has something to acknowledge', () => {
+    const legacyState = { selectedPersona: 'executive', hasSeenPersonaPicker: true }
+    const migrated = migrate(legacyState, 10)
+    expect(migrated.hasAcknowledgedExecutiveGrcSplit).toBe(false)
+    // Pre-existing fields untouched.
+    expect(migrated.selectedPersona).toBe('executive')
+  })
+
+  it('fromVersion < 11: a non-executive persona has nothing to acknowledge', () => {
+    const legacyState = { selectedPersona: 'developer' }
+    const migrated = migrate(legacyState, 10)
+    expect(migrated.hasAcknowledgedExecutiveGrcSplit).toBe(true)
+  })
+
+  it('fromVersion < 11: no persona selected yet has nothing to acknowledge', () => {
+    const migrated = migrate({ selectedPersona: null }, 10)
+    expect(migrated.hasAcknowledgedExecutiveGrcSplit).toBe(true)
+  })
+
+  it('fromVersion < 11: respects an already-boolean fixture value instead of recomputing it', () => {
+    // A real pre-v11 store never has this key — this is the escape hatch a
+    // test fixture uses to seed a settled, already-acknowledged 'executive'
+    // store without also bumping its seeded version (see e2e specs that seed
+    // 'executive' at pre-v11 versions).
+    const alreadyAcknowledged = migrate(
+      { selectedPersona: 'executive', hasAcknowledgedExecutiveGrcSplit: true },
+      0
+    )
+    expect(alreadyAcknowledged.hasAcknowledgedExecutiveGrcSplit).toBe(true)
+
+    const explicitlyUnacknowledged = migrate(
+      { selectedPersona: 'developer', hasAcknowledgedExecutiveGrcSplit: false },
+      0
+    )
+    expect(explicitlyUnacknowledged.hasAcknowledgedExecutiveGrcSplit).toBe(false)
+  })
+
+  it('is a no-op on an already-current (v11) persisted state', () => {
+    const currentState = { hasAcknowledgedExecutiveGrcSplit: false, selectedPersona: 'executive' }
+    const migrated = migrate(currentState, 11)
+    expect(migrated.hasAcknowledgedExecutiveGrcSplit).toBe(false)
+  })
+
+  it('handles a null/undefined persisted state without throwing', () => {
+    expect(() => migrate(undefined, 0)).not.toThrow()
+    expect(migrate(undefined, 0).hasAcknowledgedExecutiveGrcSplit).toBe(true)
+  })
+})
+
+describe('usePersonaStore — acknowledgeExecutiveGrcSplit (notice actions)', () => {
+  beforeEach(() => {
+    usePersonaStore.setState({
+      selectedPersona: 'executive',
+      hasAcknowledgedExecutiveGrcSplit: false,
+    })
+  })
+
+  it('clearPreferences resets the flag back to true', () => {
+    usePersonaStore.getState().clearPreferences()
+    expect(usePersonaStore.getState().hasAcknowledgedExecutiveGrcSplit).toBe(true)
+  })
+
+  it('sets the flag true without changing the selected persona', () => {
+    usePersonaStore.getState().acknowledgeExecutiveGrcSplit()
+    const state = usePersonaStore.getState()
+    expect(state.hasAcknowledgedExecutiveGrcSplit).toBe(true)
+    expect(state.selectedPersona).toBe('executive')
+  })
+
+  it('setPersona to grc does not itself acknowledge the notice', () => {
+    usePersonaStore.getState().setPersona('grc')
+    expect(usePersonaStore.getState().hasAcknowledgedExecutiveGrcSplit).toBe(false)
+  })
+})

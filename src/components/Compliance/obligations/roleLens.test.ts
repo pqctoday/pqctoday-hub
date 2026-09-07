@@ -9,6 +9,7 @@ const ROWS = buildObligations(EU_FINANCE)
 const MANDATORY = groupObligations(ROWS).find((g) => g.tier === 'mandatory')!.rows
 const ALL_ROLES: PersonaId[] = [
   'executive',
+  'grc',
   'architect',
   'developer',
   'ops',
@@ -43,6 +44,12 @@ describe('applyRoleOrder', () => {
     if (firstUndated !== -1) {
       expect(ordered.slice(firstUndated).every((r) => r.milestones.length === 0)).toBe(true)
     }
+  })
+
+  it('leads GRC with the least-evidenced rows (source-review gaps, not noncompliance)', () => {
+    const ordered = applyRoleOrder(MANDATORY, 'grc')
+    const counts = ordered.map((r) => r.requirementCount)
+    expect(counts).toEqual([...counts].sort((a, b) => a - b))
   })
 
   it('leads ops with the nearest stated date', () => {
@@ -86,6 +93,17 @@ describe('roleNoteFor and roleFramingFor', () => {
     const anssi = ROWS.find((r) => r.framework.id === 'ANSSI')!
     const note = roleNoteFor(anssi, 'architect')
     expect(note).toContain(String(anssi.requirementCount))
+  })
+
+  it('frames a GRC gap as a source-review gap, never as noncompliance', () => {
+    const zeroReq = ROWS.find((r) => r.requirementCount === 0)
+    if (zeroReq) {
+      const note = roleNoteFor(zeroReq, 'grc')
+      expect(note).toMatch(/not extracted|review the source/i)
+      expect(note).not.toMatch(/noncompliant|fails|violation/i)
+    }
+    const withReq = ROWS.find((r) => r.requirementCount > 0)!
+    expect(roleNoteFor(withReq, 'grc')).toContain(String(withReq.requirementCount))
   })
 
   it('returns null rather than filler when a role has nothing to add', () => {
