@@ -12187,6 +12187,156 @@
       "sizeBytes": 369216,
       "contentType": "text/html",
       "sha256": "801b041aa973d558d068ad48f7b2b19cb0a2378abfaeddb3b403d6ff72eb4816"
+    },
+    {
+      "refId": "Mathematics-of-Isogeny-Based-Cryptography",
+      "title": "Mathematics of Isogeny Based Cryptography",
+      "url": "https://arxiv.org/abs/1711.04062",
+      "status": "downloaded",
+      "filename": "Mathematics-of-Isogeny-Based-Cryptography.html",
+      "sizeBytes": 40405,
+      "contentType": "text/html",
+      "sha256": "db503e7e13f3194557fe1618d86dd5e66289a11034b417bff4abea2dc6dfe3d6"
+    },
+    {
+      "refId": "A-look-at-the-latest-post-quantum-signature-standardization",
+      "title": "A look at the latest post-quantum signature standardization candidates | Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/another-look-at-pq-signatures/",
+      "status": "downloaded",
+      "filename": "A-look-at-the-latest-post-quantum-signature-standardization.html",
+      "sizeBytes": 567935,
+      "contentType": "text/html",
+      "sha256": "56873ec04cabf35fb6aa31a9d6c10a39ca10b9bc64ea8c9e97865829d7a3ff75"
+    },
+    {
+      "refId": "draft-becker-cnsa2-smime-profile",
+      "title": "draft-becker-cnsa2-smime-profile",
+      "url": "https://datatracker.ietf.org/doc/draft-becker-cnsa2-smime-profile/",
+      "status": "downloaded",
+      "filename": "draft-becker-cnsa2-smime-profile.html",
+      "sizeBytes": 66377,
+      "contentType": "text/html",
+      "sha256": "e28952c14a60cf787a2dd42f022b3bbdec5ae83c4e2e602526c9843fa5a2300b"
+    },
+    {
+      "refId": "Zemlyanika-Module-LWE-based-KEM-with-the-power-of-two-modulu",
+      "title": "Zemlyanika \u2014 Module-LWE based KEM with the power-of-two modulus, explicit rejection and revisited decapsulation failures",
+      "url": "https://eprint.iacr.org/2025/746",
+      "status": "downloaded",
+      "filename": "Zemlyanika-Module-LWE-based-KEM-with-the-power-of-two-modulu.html",
+      "sizeBytes": 16781,
+      "contentType": "text/html",
+      "sha256": "a3b88b56a0f3fa2e5c09e9ec5e0f6b2b987254b1311096506ed2df833239ae18"
+    },
+    {
+      "refId": "Lattice-based-Signature-Schemes-for-Bitcoin",
+      "title": "Lattice-based Signature Schemes for Bitcoin",
+      "url": "https://eprint.iacr.org/2026/1628",
+      "status": "downloaded",
+      "filename": "Lattice-based-Signature-Schemes-for-Bitcoin.html",
+      "sizeBytes": 17288,
+      "contentType": "text/html",
+      "sha256": "94e9adcda5a3eb4b3cc9e6b83e3027d9ce21cd74e7ca49887f2188088db31783"
+    },
+    {
+      "refId": "shrincs-bip-SHRINCS-md-at-main-SHRINCS-shrincs-bip-GitHub",
+      "title": "shrincs-bip/SHRINCS.md at main \u00b7 SHRINCS/shrincs-bip \u00b7 GitHub",
+      "url": "https://github.com/SHRINCS/shrincs-bip/blob/main/SHRINCS.md",
+      "status": "downloaded",
+      "filename": "shrincs-bip-SHRINCS-md-at-main-SHRINCS-shrincs-bip-GitHub.html",
+      "sizeBytes": 1633676,
+      "contentType": "text/html",
+      "sha256": "ff0882975e0c37b45ed9ec02ea4e6ff84ff457c77569ee3a199698097d595b04"
+    },
+    {
+      "refId": "specs-archive-dev-cryptographic-specs-falcon-deterministic-p",
+      "title": "specs/_archive/dev/cryptographic-specs/falcon-deterministic.pdf at master \u00b7 algorandfoundation/specs \u00b7 GitHub",
+      "url": "https://github.com/algorandfoundation/specs/blob/master/_archive/dev/cryptographic-specs/falcon-deterministic.pdf",
+      "status": "downloaded",
+      "filename": "specs-archive-dev-cryptographic-specs-falcon-deterministic-p.html",
+      "sizeBytes": 234965,
+      "contentType": "text/html",
+      "sha256": "9af39048173b8fe2de171e772ec105d7c693808c98b1628818a8f3d35373caaf"
+    },
+    {
+      "refId": "Hypericum-a-post-quantum-digital-signature-for-standardizati",
+      "title": "Hypericum: a post-quantum digital signature for standardization in Russia | Journal of Computer Virology and Hacking Techniques | Springer Nature Link",
+      "url": "https://link.springer.com/article/10.1007/s11416-024-00520-6",
+      "status": "downloaded",
+      "filename": "Hypericum-a-post-quantum-digital-signature-for-standardizati.html",
+      "sizeBytes": 2462195,
+      "contentType": "text/html",
+      "sha256": "26067c51f4c14051bd94f3b7f376575ae9ce8bbd3216db55b68f8ec443d52767"
+    },
+    {
+      "refId": "tc26-Kodieum-Kryptonit-PQ-Mechanism",
+      "title": "\u0412 \u0420\u043e\u0441\u0441\u0438\u0438 \u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u0430\u043d \u043a\u0440\u0438\u043f\u0442\u043e\u0433\u0440\u0430\u0444\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u043c\u0435\u0445\u0430\u043d\u0438\u0437\u043c, \u0441\u043f\u043e\u0441\u043e\u0431\u043d\u044b\u0439 \u0432\u044b\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0442\u044c \u0430\u0442\u0430\u043a\u0438 \u043a\u0432\u0430\u043d\u0442\u043e\u0432\u044b\u0445 \u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u043e\u0432.",
+      "url": "https://tc26.ru/news/novosti-kriptografii/v-rossii-razrabotan-kriptograficheskiy-mekhanizm-sposobnyy-vyderzhivat-ataki-kvantovykh-kompyuterov.html",
+      "status": "downloaded",
+      "filename": "tc26-Kodieum-Kryptonit-PQ-Mechanism.html",
+      "sizeBytes": 46198,
+      "contentType": "text/html",
+      "sha256": "97fb6401551a099ece0649fd5a29c7463a94d2e05b3ff2156fa7111e63be712d"
+    },
+    {
+      "refId": "Verifying-and-optimizing-post-quantum-cryptography-at-Amazon",
+      "title": "Verifying and optimizing post-quantum cryptography at Amazon - Amazon Science",
+      "url": "https://www.amazon.science/blog/verifying-and-optimizing-post-quantum-cryptography-at-amazon",
+      "status": "downloaded",
+      "filename": "Verifying-and-optimizing-post-quantum-cryptography-at-Amazon.html",
+      "sizeBytes": 313354,
+      "contentType": "text/html",
+      "sha256": "bd927118a22029fc03c772c12c05228ced3c5e6d27cd7a4e9e0d0400a8de7a21"
+    },
+    {
+      "refId": "Quantumglow-Will-Solana-s-Performance-Survive-Quantum-Comput",
+      "title": "Quantumglow: Will Solana's Performance Survive Quantum Computing? - Anza",
+      "url": "https://www.anza.xyz/blog/quantumglow-will-solana%E2%80%99s-performance-survive-quantum-computing",
+      "status": "downloaded",
+      "filename": "Quantumglow-Will-Solana-s-Performance-Survive-Quantum-Comput.html",
+      "sizeBytes": 277912,
+      "contentType": "text/html",
+      "sha256": "230f57dd71815c577c78a173fc8b142b6303f63db0b504254d10e1fae3aaca96"
+    },
+    {
+      "refId": "BIP-361-Post-Quantum-Migration-and-Legacy-Signature-Sunset",
+      "title": "BIP-361: Post Quantum Migration and Legacy Signature Sunset",
+      "url": "https://www.bip361.org/",
+      "status": "downloaded",
+      "filename": "BIP-361-Post-Quantum-Migration-and-Legacy-Signature-Sunset.html",
+      "sizeBytes": 22141,
+      "contentType": "text/html",
+      "sha256": "2a89dae812319e9d7d1c6c16c6a39606df007a750a5fce169130213be203b4c2"
+    },
+    {
+      "refId": "Institute-of-Commercial-Cryptography-Standards",
+      "title": "Institute of Commercial Cryptography Standards",
+      "url": "https://www.niccs.org.cn/en/",
+      "status": "downloaded",
+      "filename": "Institute-of-Commercial-Cryptography-Standards.html",
+      "sizeBytes": 62738,
+      "contentType": "text/html",
+      "sha256": "4ebf4cd8290e319380d17d5feaa01a2f4774f235acd37208decde636a6b4a949"
+    },
+    {
+      "refId": "What-Are-NIST-PQC-Standards-Palo-Alto-Networks",
+      "title": "What Are NIST PQC Standards? - Palo Alto Networks",
+      "url": "https://www.paloaltonetworks.com/cyberpedia/pqc-standards",
+      "status": "downloaded",
+      "filename": "What-Are-NIST-PQC-Standards-Palo-Alto-Networks.html",
+      "sizeBytes": 712350,
+      "contentType": "text/html",
+      "sha256": "2d8732bab100a20b535e98d74d99aa80c662974873767a5ece758d2cb8f4c79f"
+    },
+    {
+      "refId": "ZIP-2005-Ironwood-Quantum-Recoverability",
+      "title": "ZIP 2005: Ironwood Quantum Recoverability",
+      "url": "https://zips.z.cash/zip-2005",
+      "status": "downloaded",
+      "filename": "ZIP-2005-Ironwood-Quantum-Recoverability.html",
+      "sizeBytes": 191637,
+      "contentType": "text/html",
+      "sha256": "95fe50407cd437fc9f8b70d8ce778ab749b8eaafa48e174663462560ee4b0e4d"
     }
   ],
   "generated": "2026-07-30T00:36:07.104551+00:00",
