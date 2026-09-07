@@ -9,12 +9,22 @@ import type { PersonaId } from '@/data/learningPersonas'
 import type { CSWP39Step } from '../cswp39Data'
 import type { Tone } from './tones'
 
-/** Which personas own each agility step (drives the role-lens highlight). */
+/**
+ * Which personas own each agility step (drives the role-lens highlight).
+ *
+ * `grc` added 2026-09-07 (Executive/GRC split) to govern/inventory/
+ * identify-gaps/prioritise — matching its own BC_ZONE_EMPHASIS_BY_PERSONA
+ * entry in personaConfig.ts (governance + risk-management zones, audit
+ * checklist/policy/vendor scorecard/risk register/treatment plan) and its
+ * `grc-governance-inventory` learning checkpoint. Not added to `implement`:
+ * GRC governs, tracks and verifies — it doesn't hands-on implement, the
+ * same reasoning that excludes it from the engineering-workbench surfaces.
+ */
 export const STEP_OWNERS: Record<CSWP39Step['id'], PersonaId[]> = {
-  govern: ['executive', 'architect'],
-  inventory: ['ops', 'architect'],
-  'identify-gaps': ['ops', 'developer', 'researcher'],
-  prioritise: ['executive', 'architect', 'researcher'],
+  govern: ['executive', 'grc', 'architect'],
+  inventory: ['ops', 'grc', 'architect'],
+  'identify-gaps': ['ops', 'grc', 'developer', 'researcher'],
+  prioritise: ['executive', 'grc', 'architect', 'researcher'],
   implement: ['developer', 'ops', 'architect'],
 }
 
