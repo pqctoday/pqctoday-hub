@@ -74,8 +74,27 @@ export interface TreeStep {
 
 /** A framework Activity (e.g. "1.2 Deploy Cryptographic Discovery") + its leaves. */
 export interface TreeActivity {
-  /** Framework activity id, verbatim — e.g. '1.2', '4.5–4.6'. */
+  /** Framework activity id, verbatim — e.g. '1.2', '4.5–4.6'.
+   *
+   *  For a SIMULATOR ADAPTATION (see `adaptationOf`) this is a derived id of
+   *  the form `<sourceId>-<slug>` (e.g. '3.4-recurring'). It is deliberately
+   *  NOT a framework activity number: the framework defines exactly 3.1–3.4
+   *  for Phase 3 and 6.1–6.5 for Phase 6, and inventing a "3.5"/"6.6" to carry
+   *  a higher maturity band would misrepresent the source. */
   id: string
+  /**
+   * Set when this activity is a simulator-authored exercise rather than one of
+   * the framework's numbered activities, naming the SOURCE activity whose
+   * later operating outcome it represents.
+   *
+   * The framework's higher maturity indicators mostly describe an existing
+   * activity maturing over time — P3 L3 ("QRA updated quarterly") and L4
+   * ("automated re-scoring when CBOM changes or regulatory deadlines shift")
+   * are activity 3.4 recurring and becoming event-driven, not new activities.
+   * Modelling them this way is what lets the full L1–L4 ladder exist without
+   * fabricating framework content.
+   */
+  adaptationOf?: string
   /** WP2.6: the decision-card face for this activity's correct choice, phrased
    *  as a strategy statement (e.g. "Make the business case with real cost and
    *  urgency data before pitching leadership") rather than a task label like

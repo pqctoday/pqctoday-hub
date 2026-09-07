@@ -193,19 +193,19 @@ const INDICATORS = {
     1: 'Partial manual inventory of obvious systems (web servers, VPN); CMDB-only asset register; no continuous discovery',
     2: 'Risk-driven scoping complete; automated discovery deployed on Priority A systems; ≥70% Tier-1 coverage; inventory is queryable; classical vulnerabilities being remediated; multiple asset data sources cross-referenced',
     3: '≥90% coverage; continuous discovery in CI/CD and passive monitoring; integrated with CMDB, SBOM, BIA, and certificate management; change management integration live; crypto champions designated; alerting framework operational',
-    4: 'Real-time cryptographic posture monitoring with tiered alerting; automated drift detection; coverage spans IT, OT, cloud, and third-party; discovery effectiveness metrics tracked and reported',
+    4: 'Real-time cryptographic posture monitoring with tiered alerting; automated drift detection; coverage spans IT, OT, cloud, and third-party; discovery effectiveness metrics tracked and reported; discovery gap register trending toward zero',
   },
   p2: {
     1: 'Partial CBOM in spreadsheet form covering known systems; no standard format',
     2: 'CycloneDX CBOM operational for Layers 1–2; queryable; SBOM linkage established for key applications',
     3: 'CBOM covers Layers 1–3; integrated into CI/CD; freshness governance enforced; change management integration live',
-    4: 'CBOM is a real-time operational asset; auto-updated on deployment; Layer 4 gaps systematically managed through vendor governance',
+    4: 'CBOM is a real-time operational asset; auto-updated on deployment; Layer 4 gaps systematically managed through vendor governance; CBOM drives automated compliance reporting',
   },
   p3: {
     1: 'Informal awareness of which systems are "probably vulnerable"; no structured scoring',
     2: 'Formal risk scoring model applied to Tier-1 CBOM entries; prioritized migration backlog exists; QRA document produced',
     3: 'QRA updated quarterly; all CBOM entries scored and tiered; migration sequencing drives Phase 5 execution; legal risk dimension assessed',
-    4: 'Continuous risk posture management; automated re-scoring when CBOM changes or regulatory deadlines shift; QRA integrated into enterprise risk register',
+    4: 'Continuous risk posture management; automated re-scoring when CBOM changes or regulatory deadlines shift; QRA integrated into enterprise risk register and audit cycle',
   },
   p4: {
     1: 'Informal plan exists (spreadsheet, no governance); single-year horizon',
@@ -1606,6 +1606,9 @@ for (const phase of Object.keys(FRAMEWORK)) {
       .filter((a) => a.level === level)
       .map((a) => ({
         id: a.id,
+        // Simulator adaptation: names the SOURCE framework activity whose later
+        // operating outcome this exercise represents. Never a new activity id.
+        adaptationOf: a.adaptationOf ?? undefined,
         title: a.title,
         decision: a.decision ?? undefined,
         do: a.do,
