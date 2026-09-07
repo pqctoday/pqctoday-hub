@@ -71,7 +71,8 @@ export const ROLE_OPTIONS: readonly RoleOption[] = [
   { id: 'developer', label: 'Developer' },
   { id: 'architect', label: 'Security Architect' },
   { id: 'ops', label: 'IT Ops / DevOps' },
-  { id: 'executive', label: 'Executive / GRC' },
+  { id: 'executive', label: 'Executive / Business Leader' },
+  { id: 'grc', label: 'GRC / Risk & Compliance' },
   { id: 'researcher', label: 'Researcher' },
   { id: 'curious', label: 'Curious Explorer' },
 ]
@@ -82,7 +83,8 @@ export function roleLabel(id: PersonaId | null): string {
 
 /** Short persona chip labels for the tool-detail "Recommended for" row. */
 export const PERSONA_CHIP_LABEL: Record<PersonaId, string> = {
-  executive: 'Executive / GRC',
+  executive: 'Executive / Business Leader',
+  grc: 'GRC / Risk & Compliance',
   developer: 'Developer',
   architect: 'Security Architect',
   researcher: 'Researcher',

@@ -69,7 +69,7 @@ describe('getBeltTierLabel', () => {
     expect(getBeltTierLabel('curious', '')).toBeNull()
   })
 
-  it('covers all six personas — no role falls back to a generic belt name', () => {
+  it('covers every persona — no role falls back to a generic belt name', () => {
     expect(Object.keys(PERSONA_BELT_TIER_LABELS).sort()).toEqual(Object.keys(PERSONAS).sort())
   })
 })
@@ -91,9 +91,16 @@ describe('isComplianceFrameworkEmphasized', () => {
     expect(isComplianceFrameworkEmphasized('executive', 'FIPS')).toBe(false)
   })
 
-  it('exposes a non-empty emphasis set for every persona', () => {
+  it('exposes a non-empty emphasis set for every persona except GRC', () => {
+    // grc is a deliberate, documented exception (executive-grc-split-plan.md
+    // §5): "applicability should derive from scope, not from the job title" —
+    // an empty list means no framework gets a soft-emphasis ring, not a gap.
     for (const [persona, set] of Object.entries(PERSONA_COMPLIANCE_FRAMEWORK_EMPHASIS)) {
       expect(set, `${persona} has no emphasis`).toBeDefined()
+      if (persona === 'grc') {
+        expect((set ?? []).length).toBe(0)
+        continue
+      }
       expect((set ?? []).length).toBeGreaterThan(0)
     }
   })
@@ -104,10 +111,15 @@ describe('PERSONA_SIM_PRACTICE_PHASES ↔ ROLE_CROSSWALK drift guard', () => {
   // the persona's owned phases (see the doc comment above
   // PERSONA_SIM_PRACTICE_PHASES). Executive's exec-tour walks p1/p2/p3 content
   // for board-oversight framing even though crypto-architect drives them
-  // in-sim. Any OTHER persona/phase combo beyond owned phases is drift, not a
-  // deliberate exception, and this test fails to catch it.
+  // in-sim. The 2026-09-07 Executive/GRC split moved qrpm/vendor-lead/
+  // pmo-analyst off executive onto grc, shrinking executive's owned set to
+  // exec-sponsor's p0 alone — p4/p7/verify-close/foundations are therefore
+  // also now beyond-ownership exceptions here, even though the tour (and this
+  // persona's practice-phase list) didn't change. Any OTHER persona/phase
+  // combo beyond owned phases is drift, not a deliberate exception, and this
+  // test fails to catch it.
   const ALLOWED_EXTRAS: Partial<Record<PersonaId, PhaseId[]>> = {
-    executive: ['p1', 'p2', 'p3'],
+    executive: ['p1', 'p2', 'p3', 'p4', 'p7', 'verify-close', 'foundations'],
   }
 
   function ownedPhases(persona: PersonaId): Set<PhaseId> {

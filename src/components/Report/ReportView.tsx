@@ -12,6 +12,7 @@ import { computeAssessment } from '../../hooks/assessmentUtils'
 import { computeAssessmentAsync } from '../../hooks/assessment/orchestrator'
 import type { AssessmentResult } from '../../hooks/assessmentTypes'
 import type { PersonaId } from '../../data/learningPersonas'
+import { isPersonaId } from '../../data/personaIds'
 import {
   WorkshopOperationLog,
   type LogEntry,
@@ -69,17 +70,9 @@ const VALID_COMPLIANCE = new Set(AVAILABLE_COMPLIANCE)
 const VALID_USE_CASES = new Set(AVAILABLE_USE_CASES)
 const VALID_INFRA = new Set(AVAILABLE_INFRASTRUCTURE)
 const VALID_COUNTRIES = new Set(Object.values(REGION_COUNTRIES_MAP).flat())
-const VALID_PERSONAS = new Set<string>([
-  'executive',
-  'developer',
-  'architect',
-  'researcher',
-  'ops',
-  'curious',
-])
 
 function toValidPersona(persona: string | undefined): PersonaId | null {
-  return persona && VALID_PERSONAS.has(persona) ? (persona as PersonaId) : null
+  return persona && isPersonaId(persona) ? persona : null
 }
 
 /**

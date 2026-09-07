@@ -174,6 +174,7 @@ export const DOSSIER_DEFS: DossierDef[] = [
 
 const PERSONA_LABEL: Record<PersonaId, string> = {
   executive: 'Executive',
+  grc: 'GRC',
   architect: 'Architect',
   ops: 'Ops',
   developer: 'Developer',

@@ -15,6 +15,7 @@ const PERSONA_DEFAULT_TIER: Record<string, NiceProficiencyTier> = {
   developer: 'practitioner',
   architect: 'practitioner',
   researcher: 'expert',
+  grc: 'practitioner',
 }
 
 export function defaultTierForPersona(personaId: PersonaId | null): NiceProficiencyTier {
@@ -56,6 +57,15 @@ interface PersonaState {
   algorithmsTabsVisited: string[]
   /** Whether the user has completed the Executive Overview walkthrough (the guided tour). */
   execOverviewSeen: boolean
+  /**
+   * True once the user has seen (and dismissed, kept Executive, or switched to
+   * GRC from) the one-time Executive/GRC split notice — see `migrate` v11 and
+   * `acknowledgeExecutiveGrcSplit` below. Fresh stores start `true` (nothing to
+   * acknowledge); only pre-v11 stores whose selected persona was `executive`
+   * migrate in as `false` so the notice shows exactly once for legacy Executive
+   * users, never for anyone who never touched the old combined role.
+   */
+  hasAcknowledgedExecutiveGrcSplit: boolean
   setPersona: (persona: PersonaId | null) => void
   clearPersona: () => void
   markPickerSeen: () => void
@@ -73,6 +83,8 @@ interface PersonaState {
   dismissCuriousGuide: () => void
   markAlgorithmsTabVisited: (tab: string) => void
   setExecOverviewSeen: (seen: boolean) => void
+  /** Marks the Executive/GRC split notice as seen — see `hasAcknowledgedExecutiveGrcSplit`. */
+  acknowledgeExecutiveGrcSplit: () => void
   /** Backwards-compat alias: true → 'unlocked', false → 'gated' */
   setAdvancedViewsUnlocked: (unlocked: boolean) => void
   clearPreferences: () => void
@@ -95,6 +107,7 @@ export const usePersonaStore = create<PersonaState>()(
       curiousGuideDismissed: false,
       algorithmsTabsVisited: [],
       execOverviewSeen: false,
+      hasAcknowledgedExecutiveGrcSplit: true,
 
       setPersona: (persona) =>
         set((state) => ({
@@ -144,6 +157,8 @@ export const usePersonaStore = create<PersonaState>()(
 
       setExecOverviewSeen: (seen) => set({ execOverviewSeen: seen }),
 
+      acknowledgeExecutiveGrcSplit: () => set({ hasAcknowledgedExecutiveGrcSplit: true }),
+
       setAdvancedViewsUnlocked: (unlocked) => set({ viewAccess: unlocked ? 'unlocked' : 'gated' }),
 
       clearPreferences: () =>
@@ -160,12 +175,13 @@ export const usePersonaStore = create<PersonaState>()(
           niceTierOverridden: false,
           curiousGuideDismissed: false,
           algorithmsTabsVisited: [],
+          hasAcknowledgedExecutiveGrcSplit: true,
         }),
     }),
     {
       name: 'pqc-learning-persona',
       storage: createJSONStorage(() => localStorage),
-      version: 10,
+      version: 11,
       migrate: (persisted: unknown, fromVersion: number) => {
         const s = (persisted ?? {}) as Record<string, unknown>
         if (fromVersion < 1) {
@@ -218,6 +234,14 @@ export const usePersonaStore = create<PersonaState>()(
           // from "never picked one yet" — default false preserves existing
           // Role Home behavior for every already-persisted user.
           s.hasSkippedPersonalization = s.hasSkippedPersonalization ?? false
+        }
+        if (fromVersion < 11) {
+          // Executive/GRC split (2026-09-07): only a pre-v11 store whose
+          // selected persona was 'executive' has anything to acknowledge — the
+          // combined role they picked no longer exists as-is. Everyone else
+          // (other personas, or no persona chosen yet) gets `true` so the
+          // one-time notice never shows for someone it doesn't apply to.
+          s.hasAcknowledgedExecutiveGrcSplit = s.selectedPersona !== 'executive'
         }
         return s
       },

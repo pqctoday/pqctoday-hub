@@ -873,6 +873,11 @@ export const PERSONA_FAQ_LEAD: Record<PersonaId, string[]> = {
     'When does NIST plan to deprecate classical algorithms?',
     'How do I build a PQC business case for the board?',
   ],
+  grc: [
+    'What does the Compliance Tracker show?',
+    'What governance framework supports PQC migration?',
+    'How do I assess vendor PQC readiness?',
+  ],
   developer: [
     'What PQC libraries should developers use?',
     'How does ML-KEM change the TLS 1.3 handshake?',

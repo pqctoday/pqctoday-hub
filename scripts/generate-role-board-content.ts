@@ -75,7 +75,15 @@ interface ContentRow {
   deprecated_reason?: string
 }
 
-const ROLES = ['executive', 'developer', 'architect', 'ops', 'researcher', 'curious'] as const
+const ROLES = [
+  'executive',
+  'grc',
+  'developer',
+  'architect',
+  'ops',
+  'researcher',
+  'curious',
+] as const
 const REQUIRED_GRID_CARDS = 3
 const REQUIRED_VARIANTS_PER_ROLE = 6
 
