@@ -318,8 +318,20 @@ describe('SimulationView (Mission Control)', () => {
       }
       // Option A: the AI advances progress only via real tree `auto` keys — there is
       // no separate progression counter to drift out of sync with the board.
+      // Keys are `${phaseId}::${step.to}`; validate both halves against the real
+      // trees rather than a shape regex, which silently excluded hyphenated phase
+      // IDs such as `verify-close`.
       const { auto } = useSimulationStore.getState()
-      for (const k of auto) expect(k).toMatch(/^[a-z0-9]+::.+/)
+      for (const k of auto) {
+        const sep = k.indexOf('::')
+        expect(sep).toBeGreaterThan(0)
+        const phaseId = k.slice(0, sep)
+        const to = k.slice(sep + 2)
+        const tree = SIM_TREES[phaseId as keyof typeof SIM_TREES]
+        expect(tree, `unknown phase id in auto key: ${k}`).toBeDefined()
+        const steps = flattenTree(tree!).map((s) => s.to)
+        expect(steps, `auto key does not reference a real step: ${k}`).toContain(to)
+      }
     }
   )
 
