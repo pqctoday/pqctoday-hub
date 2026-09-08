@@ -38,6 +38,7 @@ const seedPersona = async (page: Page, persona: PersonaId | null) => {
           JSON.stringify({
             state: {
               selectedPersona: p,
+              hasAcknowledgedExecutiveGrcSplit: true,
               selectedRegion: 'global',
               experienceLevel: p === 'curious' ? 'curious' : null,
               viewAccess: 'preview',

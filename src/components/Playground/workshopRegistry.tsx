@@ -615,7 +615,7 @@ export const WORKSHOP_TOOLS: WorkshopTool[] = [
     ],
     difficulty: 'beginner',
     requires: [],
-    recommendedPersonas: ['architect', 'ops', 'executive'],
+    recommendedPersonas: ['architect', 'ops', 'executive', 'grc'],
     hasOutput: false,
   },
   {
@@ -663,7 +663,7 @@ export const WORKSHOP_TOOLS: WorkshopTool[] = [
     ],
     difficulty: 'intermediate',
     requires: [],
-    recommendedPersonas: ['architect', 'ops', 'executive'],
+    recommendedPersonas: ['architect', 'ops', 'executive', 'grc'],
     hasOutput: false,
   },
   {
@@ -1168,7 +1168,7 @@ const SANDBOX_TRACK_PERSONAS: Record<SandboxTrackId, PersonaId[]> = {
   // closest fit for casual exploration.
   'protocol-simulation': ['developer', 'architect', 'researcher', 'curious'],
   infrastructure: ['architect', 'ops', 'developer'],
-  'supply-chain': ['architect', 'ops', 'executive'],
+  'supply-chain': ['architect', 'ops', 'executive', 'grc'],
   'secrets-kms': ['ops', 'architect', 'developer'],
   web: ['developer', 'architect', 'ops'],
   applications: ['developer', 'architect', 'researcher'],

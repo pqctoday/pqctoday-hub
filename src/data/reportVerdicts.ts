@@ -27,6 +27,7 @@ export interface ReportVerdict {
 /** Short role tag per persona — the only static part of the verdict now. */
 const PERSONA_TAG: Record<PersonaId, string> = {
   executive: 'Executive view',
+  grc: 'GRC view',
   architect: 'Architect view',
   developer: 'Developer view',
   researcher: 'Researcher view',

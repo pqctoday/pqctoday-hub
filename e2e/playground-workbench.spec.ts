@@ -18,7 +18,10 @@ import { test, expect } from '@playwright/test'
 function seedPersona(p: string) {
   window.localStorage.setItem(
     'pqc-learning-persona',
-    JSON.stringify({ state: { selectedPersona: p }, version: 8 })
+    JSON.stringify({
+      state: { selectedPersona: p, hasAcknowledgedExecutiveGrcSplit: true },
+      version: 8,
+    })
   )
 }
 

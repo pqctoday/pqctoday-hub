@@ -164,7 +164,7 @@ describe('inferPersonaFromAssessment — role targeting', () => {
     ).toBe('researcher')
   })
 
-  it('routes an early-stage, low-infra profile to executive', () => {
+  it('infers no persona for an early-stage, low-infra profile (2026-09-07 split: ambiguous between executive and grc, so neither is guessed)', () => {
     expect(
       inferPersonaFromAssessment(
         complete({
@@ -174,6 +174,6 @@ describe('inferPersonaFromAssessment — role targeting', () => {
           infrastructure: ['cloud'],
         })
       )
-    ).toBe('executive')
+    ).toBe(null)
   })
 })

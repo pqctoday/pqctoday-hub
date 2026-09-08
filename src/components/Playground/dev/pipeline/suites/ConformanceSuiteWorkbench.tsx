@@ -55,7 +55,7 @@ export const ConformanceSuiteWorkbench = () => {
 
   const code = useMemo(() => emitConformanceSuite(selection, engineMode), [selection, engineMode])
 
-  if (role === 'curious' || role === 'executive') return null
+  if (role === 'curious' || role === 'executive' || role === 'grc') return null
 
   const runCode = async () => {
     setCodeRunning(true)

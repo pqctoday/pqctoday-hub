@@ -43,6 +43,7 @@ test.skip('executive persona narrows /migrate first-paint and reset link works',
       JSON.stringify({
         state: {
           selectedPersona: 'executive',
+          hasAcknowledgedExecutiveGrcSplit: true,
           selectedRegion: 'global',
           selectedIndustry: null,
           selectedIndustries: [],

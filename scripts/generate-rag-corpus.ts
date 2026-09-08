@@ -2746,7 +2746,8 @@ const PLAYGROUND_SANDBOX_TOOLS = WORKSHOP_TOOLS.filter((t) =>
 )
 
 const PLAYGROUND_PERSONA_LABELS: Record<string, string> = {
-  executive: 'Executive / GRC',
+  executive: 'Executive / Business Leader',
+  grc: 'GRC / Risk & Compliance',
   developer: 'Developer / Engineer',
   architect: 'Security Architect',
   researcher: 'Researcher / Academic',

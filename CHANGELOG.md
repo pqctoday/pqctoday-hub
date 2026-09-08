@@ -16,8 +16,8 @@ first time (don't ship dev-speak and reformat later):
   what they can now do, see, or trust — not the mechanism. Bold the entry with a
   plain-language title: `- **What changed, in plain words** [view:/page]: …`.
 - **Keep the `[view:/page]` and `[persona:id]` tags** — they drive the page's
-  filters and "For me" view. Valid persona ids: `executive`, `developer`,
-  `architect`, `researcher`, `ops`, `curious`. Tag every entry with the
+  filters and "For me" view. Valid persona ids: `executive`, `grc`,
+  `developer`, `architect`, `researcher`, `ops`, `curious`. Tag every entry with the
   surface(s) it affects. `persona:ops` in particular is under-used relative to
   how often ops-relevant work actually ships (07-19 audit finding) — tag it
   explicitly whenever an entry touches deployment, certificate lifecycle, TLS
@@ -28,6 +28,24 @@ first time (don't ship dev-speak and reformat later):
   cares about (page names, feature names, what was broken, counts).
 - **One entry = one user-visible change.** If it has no user-visible effect,
   it probably doesn't need a changelog entry.
+
+## [4.82.0] - 2026-09-07
+
+The combined "Executive/GRC" role is now two roles: **Executive / Business Leader** for funding, sponsorship and oversight, and **GRC / Risk & Compliance** for tracing obligations to their source, assessing gaps, and recording evidence. If you were an Executive before this release, nothing changes automatically — a one-time notice lets you keep Executive or switch to GRC, and your saved progress, reports and business-tool work carry over either way.
+
+### Added
+
+- **GRC / Risk & Compliance is a new, seventh role** [view:/] [persona:grc]: its own Essentials path (8 modules, ~250 min) and full learning path, six new home-board scenarios (applicability, risk register, controls, vendor assurance, evidence, closure), a dedicated business-tools start sequence (compliance checklist → risk register → treatment plan → vendor evidence → audit checklist → verify closure), and a reading lens on the Compliance obligations register that leads with rows the hub hasn't yet extracted requirements from — framed as a source-review gap, never as evidence the organization is out of compliance.
+- **A one-time notice for existing Executive users explains the split** [view:/] [persona:executive]: it names both roles, lets you keep Executive or switch to GRC in one click, and never reappears once dismissed. Declining or switching changes nothing else — region, industry, progress and saved work are untouched.
+
+### Changed
+
+- **Executive is now narrower and faster to start** [view:/learn] [persona:executive]: its Essentials path drops from a broader mix to 5 modules (~130 min) focused on funding, business case, and governance — the deeper compliance/risk/evidence modules moved to GRC's own path. Executive's full learning path and existing report/assessment behavior are unchanged.
+- **Shared reports and business tools now recognize GRC** [view:/report] [view:/business] [persona:executive] [persona:grc]: a shared or example report link now renders correctly on mobile for every role (previously mobile-only visitors could see "No Report Yet" even with a valid link), and the Business Center's "start here" sequence and recommended tools are now role-specific for both Executive and GRC.
+
+### Fixed
+
+- **The mobile Compliance view now honors a direct `?tab=` link** [view:/compliance] [persona:grc] [persona:executive]: following a link straight to a specific Compliance section (such as GRC's obligations register) previously landed on the default section instead of the one the link named.
 
 ## [4.81.0] - 2026-09-07
 

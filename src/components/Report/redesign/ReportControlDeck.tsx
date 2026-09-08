@@ -13,6 +13,7 @@ import type { PersonaId } from '@/data/learningPersonas'
 
 const PERSONAS: { id: PersonaId; label: string }[] = [
   { id: 'executive', label: 'Executive' },
+  { id: 'grc', label: 'GRC' },
   { id: 'architect', label: 'Architect' },
   { id: 'developer', label: 'Developer' },
   { id: 'researcher', label: 'Researcher' },

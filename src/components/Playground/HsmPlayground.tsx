@@ -323,7 +323,7 @@ export const HsmPlayground = () => {
     if (
       loc.tab === 'build' &&
       (loc.dtab === 'acvp' || loc.dtab === 'conformance') &&
-      (role === 'curious' || role === 'executive')
+      (role === 'curious' || role === 'executive' || role === 'grc')
     ) {
       // ACVP and Conformance are engineering-workbench suites, gated for
       // curious/executive (matches the ExecutiveRedirectBanner) — don't
@@ -407,7 +407,7 @@ export const HsmPlayground = () => {
   useEffect(() => {
     if (
       (devSubTab === 'acvp' || devSubTab === 'conformance') &&
-      (role === 'curious' || role === 'executive')
+      (role === 'curious' || role === 'executive' || role === 'grc')
     ) {
       setDevSubTab(DEFAULT_DEV_SUB_TAB)
     }
@@ -445,7 +445,10 @@ export const HsmPlayground = () => {
   const goTo = (loc: HsmLocation) => {
     if (loc.rail) setRail(loc.rail)
     if (loc.itab) setInspectView(loc.itab)
-    if (loc.dtab && !((role === 'curious' || role === 'executive') && loc.dtab !== 'standard'))
+    if (
+      loc.dtab &&
+      !((role === 'curious' || role === 'executive' || role === 'grc') && loc.dtab !== 'standard')
+    )
       setDevSubTab(loc.dtab)
     handleTabChange(loc.tab)
   }
@@ -764,11 +767,11 @@ export const HsmPlayground = () => {
 
   return (
     <Card className="p-3 md:p-6 min-h-[60vh] md:min-h-[85vh] flex flex-col">
-      {role === 'executive' && (
+      {(role === 'executive' || role === 'grc') && (
         <ExecutiveRedirectBanner
           className="mb-4 shrink-0"
           title="PKCS#11 HSM Playground is a hands-on engineering workbench."
-          subtitle="This surface runs real cryptographic operations against a simulated hardware security module — useful for your engineering team, not for board-level PQC decisions. For executive context:"
+          subtitle="This surface runs real cryptographic operations against a simulated hardware security module — useful for your engineering team, not for board-level or governance decisions. For that context:"
           ctas={[
             { label: 'Command Center →', to: '/business' },
             { label: 'Compliance landscape →', to: '/compliance' },
@@ -807,7 +810,7 @@ export const HsmPlayground = () => {
             {/* Engine mode selector — an engineering-workbench control, gated
                 for curious/executive same as the ACVP suite; they run on the
                 'rust' default without needing to choose. */}
-            {role !== 'curious' && role !== 'executive' ? (
+            {role !== 'curious' && role !== 'executive' && role !== 'grc' ? (
               <div className="flex items-center gap-2 sm:gap-4 bg-muted/50 px-2 sm:px-3 py-1.5 rounded-full shadow-inner">
                 <span className="text-xs font-semibold text-muted-foreground mr-1 hidden sm:inline">
                   Engine:

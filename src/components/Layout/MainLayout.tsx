@@ -53,6 +53,7 @@ import { PersonaSwitchModal } from '../Persona/PersonaSwitchModal'
 import { PageActionStrip } from '../common/PageActionStrip'
 import { usePageActionsStore } from '../../store/usePageActionsStore'
 import { PreviewBanner } from '../common/PreviewBanner'
+import { ExecutiveGrcSplitNotice } from '../common/ExecutiveGrcSplitNotice'
 import { useWorkshopUrlAutostart } from '../../hooks/useWorkshopUrlAutostart'
 import { ScrollFadeContainer } from '../ui/ScrollFadeContainer'
 import { useIsBelowLgViewport } from '../../hooks/useIsBelowLgViewport'
@@ -1432,6 +1433,13 @@ export const MainLayout = () => {
               >
                 {/* Offline mode info banner */}
                 <AirplaneModeBanner />
+
+                {/* One-time legacy-Executive notice (2026-09-07 split) — see
+                    the component's own doc comment for the acknowledgement
+                    rule. Renders in both desktop and mobile (this branch
+                    covers both, excluding only the curious-mobile takeover
+                    and full-bleed routes, neither of which executive uses). */}
+                <ExecutiveGrcSplitNotice />
 
                 {/* Migration planning workflow progress banner */}
                 <WorkflowBanner />

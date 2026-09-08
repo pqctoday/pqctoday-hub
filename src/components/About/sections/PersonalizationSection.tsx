@@ -27,6 +27,7 @@ import { usePersonaStore } from '@/store/usePersonaStore'
 
 const PERSONA_ORDER: PersonaId[] = [
   'executive',
+  'grc',
   'developer',
   'architect',
   'researcher',

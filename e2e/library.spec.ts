@@ -38,6 +38,7 @@ async function seedPersona(page: Page, persona: Persona): Promise<void> {
       JSON.stringify({
         state: {
           selectedPersona: p,
+          hasAcknowledgedExecutiveGrcSplit: true,
           selectedRegion: 'global',
           experienceLevel: 'expert',
           viewAccess: 'unlocked',

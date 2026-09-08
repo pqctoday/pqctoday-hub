@@ -52,8 +52,9 @@ export function MobileHeader({ persona, onOpenPageActions, onOpenRoleSwitch }: M
   const crumb = groupId ? FOR_YOU_GROUP_LABELS[groupId] : undefined
   // Handoff: "13px person icon plus the SHORT role label" — PERSONAS has no
   // dedicated short-label field, so this derives one from the real label
-  // (first word: "Executive / GRC" -> "Executive") rather than inventing new
-  // copy. First-run smoke test (2026-08-23): the full label alongside Search/
+  // (first word: "Executive / Business Leader" -> "Executive", "GRC / Risk &
+  // Compliance" -> "GRC") rather than inventing new copy. First-run smoke
+  // test (2026-08-23): the full label alongside Search/
   // Share/Guide/⋯ in one 402px row squeezed the page title down to two
   // characters — this is a real layout fix, not cosmetic polish.
   const fullRoleLabel = persona ? (PERSONAS[persona]?.label ?? 'Everyone') : 'Everyone'

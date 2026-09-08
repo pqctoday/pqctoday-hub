@@ -40,6 +40,7 @@ const ROOT = join(__dirname, '..')
 
 const VALID_PERSONAS = new Set([
   'executive',
+  'grc',
   'developer',
   'architect',
   'researcher',
@@ -123,7 +124,7 @@ if (json) {
       process.stdout.write(`  CHANGELOG.md:${o.line}\n    ${o.text}…\n    → ${o.reason}\n\n`)
     }
     process.stdout.write(
-      '  Valid ids: executive, developer, architect, researcher, ops, curious.\n' +
+      '  Valid ids: executive, grc, developer, architect, researcher, ops, curious.\n' +
         '  Tag every role the change actually affects — several tags on one entry is normal.\n\n'
     )
   }

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import type { Cswp39StepId } from '@/data/cswp39ZoneData'
+import type { PersonaId } from '@/data/personaIds'
 
 export interface AssessmentInput {
   industry: string
@@ -48,7 +49,7 @@ export interface AssessmentInput {
   /** Sub-categories per infrastructure layer (e.g., { Cloud: ['AWS KMS', 'Azure Key Vault'] }). */
   infrastructureSubCategories?: Record<string, string[]>
   /** Active persona at assessment time — drives narrative framing and scoring adjustments. */
-  persona?: 'executive' | 'developer' | 'architect' | 'researcher' | 'ops' | 'curious'
+  persona?: PersonaId
 }
 
 export interface AlgorithmMigration {

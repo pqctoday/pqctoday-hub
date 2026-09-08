@@ -318,8 +318,11 @@ describe('SimulationView (Mission Control)', () => {
       }
       // Option A: the AI advances progress only via real tree `auto` keys — there is
       // no separate progression counter to drift out of sync with the board.
+      // Phase ids can be hyphenated (e.g. 'verify-close', frameworkPhases.ts) —
+      // the old [a-z0-9]+ class never matched those, so this failed deterministically
+      // once the AI autoplay reached that phase, not just on an unlucky seed.
       const { auto } = useSimulationStore.getState()
-      for (const k of auto) expect(k).toMatch(/^[a-z0-9]+::.+/)
+      for (const k of auto) expect(k).toMatch(/^[a-z0-9-]+::.+/)
     }
   )
 
