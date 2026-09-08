@@ -93,6 +93,28 @@ const PERSONA_LENSES: Record<PersonaId, PersonaLens> = {
       twoHopEnabled: false,
     },
   },
+  // GRC (2026-09-07 split): the complete obligations/requirements experience,
+  // not executive's downsampled browsing caps (executive-grc-split-plan.md
+  // §5's compliance section) — generous tier caps and two-hop derived results
+  // so tracing an obligation to its source document is actually possible here.
+  grc: {
+    sections: ['frameworks', 'library', 'threats', 'timeline'],
+    tierCaps: { mandatory: 20, recognized: 15, 'cross-border': 10, advisory: 10 },
+    libraryCategories: [
+      'Government & Policy',
+      'Compliance & Certification',
+      'Migration Guidance',
+      'International Frameworks',
+    ],
+    framing:
+      'Every applicable obligation and its supporting evidence, ordered by tier — nothing downsampled for brevity.',
+    trustPathConfig: {
+      allowedRelationships: ALL_NON_RELATED,
+      confidenceThreshold: 55,
+      maxDerivedResults: 15,
+      twoHopEnabled: true,
+    },
+  },
   architect: {
     sections: ['library', 'frameworks', 'threats', 'timeline'],
     tierCaps: { mandatory: 15, recognized: 12, 'cross-border': 10, advisory: 20 },

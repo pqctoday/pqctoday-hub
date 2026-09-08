@@ -168,6 +168,12 @@ export function toWireTree(node: KmipNode, table: CodepointTable): TtlvNode {
       }
     case 'TextString':
       return { tag, type: 'TextString', value: String(v) }
+    case 'Identifier':
+      return { tag, type: 'Identifier', value: String(v) }
+    case 'Reference':
+      return { tag, type: 'Reference', value: String(v) }
+    case 'NameReference':
+      return { tag, type: 'NameReference', value: String(v) }
     case 'ByteString':
       return { tag, type: 'ByteString', value: String(v).toLowerCase() }
     case 'DateTime':

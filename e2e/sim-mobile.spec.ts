@@ -52,7 +52,10 @@ const seedUnlockedAssessment = async (page: Page) => {
     // for parity with how a real unlocked visitor would arrive.
     localStorage.setItem(
       'pqc-learning-persona',
-      JSON.stringify({ state: { selectedPersona: 'executive' }, version: 10 })
+      JSON.stringify({
+        state: { selectedPersona: 'executive', hasAcknowledgedExecutiveGrcSplit: true },
+        version: 10,
+      })
     )
     localStorage.setItem(
       'pqc-assessment-form',

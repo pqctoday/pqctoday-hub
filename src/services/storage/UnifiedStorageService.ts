@@ -2,7 +2,8 @@
 import { saveAs } from 'file-saver'
 import { useModuleStore } from '@/store/useModuleStore'
 import { useAssessmentStore } from '@/store/useAssessmentStore'
-import { usePersonaStore } from '@/store/usePersonaStore'
+import { usePersonaStore, defaultTierForPersona } from '@/store/usePersonaStore'
+import { isPersonaId } from '@/data/personaIds'
 import { useThemeStore } from '@/store/useThemeStore'
 import { useVersionStore } from '@/store/useVersionStore'
 import { useTLSStore } from '@/store/tls-learning.store'
@@ -119,6 +120,9 @@ function getPersonaData(): PersonaData {
     suppressSuggestion: state.suppressSuggestion,
     experienceLevel: state.experienceLevel,
     viewAccess: state.viewAccess,
+    niceTier: state.niceTier,
+    niceTierOverridden: state.niceTierOverridden,
+    hasAcknowledgedExecutiveGrcSplit: state.hasAcknowledgedExecutiveGrcSplit,
   }
 }
 
@@ -344,8 +348,30 @@ export class UnifiedStorageService {
 
     // 3. Persona (no deps — but assessment reads it)
     if (stores.persona) {
+      // Unknown/renamed persona ids (e.g. a snapshot from a build that used a
+      // since-removed id) become null rather than a guessed role.
+      const restoredPersona = isPersonaId(stores.persona.selectedPersona)
+        ? stores.persona.selectedPersona
+        : null
+      // A present, valid override wins; otherwise derive from the restored
+      // persona. This also backfills niceTier for a pre-2026-09-07 snapshot
+      // that never captured it at all.
+      const overridden = stores.persona.niceTierOverridden === true
+      const restoredTier =
+        overridden &&
+        (stores.persona.niceTier === 'awareness' ||
+          stores.persona.niceTier === 'practitioner' ||
+          stores.persona.niceTier === 'expert')
+          ? stores.persona.niceTier
+          : defaultTierForPersona(restoredPersona)
+      // A snapshot predating this field has nothing to acknowledge yet — apply
+      // the same legacy-Executive rule the store's own v11 migration uses.
+      const restoredSplitAck =
+        typeof stores.persona.hasAcknowledgedExecutiveGrcSplit === 'boolean'
+          ? stores.persona.hasAcknowledgedExecutiveGrcSplit
+          : restoredPersona !== 'executive'
       usePersonaStore.setState({
-        selectedPersona: stores.persona.selectedPersona ?? null,
+        selectedPersona: restoredPersona,
         hasSeenPersonaPicker: stores.persona.hasSeenPersonaPicker ?? false,
         selectedRegion: stores.persona.selectedRegion ?? 'global',
         selectedIndustry: stores.persona.selectedIndustry ?? null,
@@ -355,6 +381,9 @@ export class UnifiedStorageService {
         suppressSuggestion: stores.persona.suppressSuggestion ?? false,
         experienceLevel: stores.persona.experienceLevel ?? null,
         viewAccess: stores.persona.viewAccess ?? 'unlocked',
+        niceTier: restoredTier,
+        niceTierOverridden: overridden,
+        hasAcknowledgedExecutiveGrcSplit: restoredSplitAck,
       })
     }
 

@@ -56,6 +56,7 @@ type StepKey = keyof typeof STEPS
 
 const ORDER: Record<PersonaId, StepKey[]> = {
   executive: ['business', 'migrate', 'simulation'],
+  grc: ['business', 'migrate', 'simulation'],
   ops: ['migrate', 'business', 'simulation'],
   architect: ['migrate', 'simulation', 'business'],
   developer: ['migrate', 'simulation', 'business'],

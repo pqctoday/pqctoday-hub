@@ -57,6 +57,7 @@ async function seedArtifact(page: Page): Promise<void> {
       JSON.stringify({
         state: {
           selectedPersona: 'executive',
+          hasAcknowledgedExecutiveGrcSplit: true,
           hasSeenPersonaPicker: true,
           selectedRegion: 'americas',
           selectedIndustry: 'Finance & Banking',

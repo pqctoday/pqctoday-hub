@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /**
  * GENERATED — do not edit by hand.
- * Source: src/data/role_board_content_09032026.csv
+ * Source: src/data/role_board_content_09072026.csv
  * Regenerate: npm run generate:role-board-content
  */
 import type { PersonaJourneyBoard, RoleBoardVariant } from '../personaConfig'
@@ -21,7 +21,7 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
       workshopIds: [],
       businessToolIds: ['program-charter'],
       board: {
-        heroEyebrow: 'Executive / GRC · the decision that unlocks budget and names an owner',
+        heroEyebrow: 'Executive · the decision that unlocks budget and names an owner',
 
         headline: 'Answer the board in an afternoon, not a quarter.',
         sub: 'Six questions about your estate. You get a defensible risk position, the regulatory dates that already bind you, and a board pack you can present on Thursday.',
@@ -31,7 +31,7 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
         ctaSecondaryHref: '/business/tools/program-charter',
         proofChips: [
           'Every regulatory date links to its source',
-          '1013 documents, trust-tiered',
+          '1028 documents, trust-tiered',
           'Regulatory data verified 29 Aug 2026',
         ],
         sideCard: {
@@ -69,18 +69,10 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
           { title: string; body: string; href?: string },
           { title: string; body: string; href?: string },
         ],
-        trackTitle: 'Then, if you want the background: 3 hours 20, not 16½.',
+        trackTitle: 'Then, if you want the background: 2 hours 10, not 16½.',
         trackNote:
-          "Seven essentials against the full 24-module path plus the quiz, 985 minutes in all. The path already inserts real actions like Run Risk Assessment and Explore Business Tools right where they're relevant.",
-        trackChips: [
-          'PQC 101',
-          'Quantum impact',
-          'Quantum threats',
-          'Risk management',
-          'Business case',
-          'Governance',
-          'Compliance strategy',
-        ],
+          "Five essentials against the full 24-module path plus the quiz, 985 minutes in all. The path already inserts real actions like Run Risk Assessment and Explore Business Tools right where they're relevant.",
+        trackChips: ['PQC 101', 'Quantum impact', 'Risk management', 'Business case', 'Governance'],
         capstoneChip: { label: 'Board-Ready' },
       },
     },
@@ -95,7 +87,7 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
       workshopIds: [],
       businessToolIds: ['compliance-timeline'],
       board: {
-        heroEyebrow: 'Executive / GRC · the dates you did not choose',
+        heroEyebrow: 'Executive · the dates you did not choose',
 
         headline: 'The dates were set without you.',
         sub: 'CNSA 2.0 carries fixed PQC years; NIS2 and DORA carry compliance dates that reach the same systems, though not PQC-specific ones. Which of them reach your estate, in what order, and what the threat data says about the year after that.',
@@ -144,17 +136,9 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
           { title: string; body: string; href?: string },
           { title: string; body: string; href?: string },
         ],
-        trackTitle: 'Then, if you want the background: 3 hours 20, not 16½.',
+        trackTitle: 'Then, if you want the background: 2 hours 10, not 16½.',
 
-        trackChips: [
-          'PQC 101',
-          'Quantum impact',
-          'Quantum threats',
-          'Risk management',
-          'Business case',
-          'Governance',
-          'Compliance strategy',
-        ],
+        trackChips: ['PQC 101', 'Quantum impact', 'Risk management', 'Business case', 'Governance'],
         capstoneChip: { label: 'Board-Ready' },
       },
     },
@@ -169,7 +153,7 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
       workshopIds: [],
       businessToolIds: ['risk-register'],
       board: {
-        heroEyebrow: 'Executive / GRC · risk position · the dates that already bind you',
+        heroEyebrow: 'Executive · risk position · the dates that already bind you',
 
         headline: 'Know what you are actually exposed to.',
         sub: 'The same six questions, scored. You get a risk position you can defend line by line, with each regulatory deadline attached to the finding it threatens rather than filed in an appendix.',
@@ -178,7 +162,7 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
         ctaSecondary: 'Build the risk register',
         ctaSecondaryHref: '/business/tools/risk-register',
         proofChips: [
-          '1013 documents, trust-tiered',
+          '1028 documents, trust-tiered',
           'Regulatory data verified 29 Aug 2026',
           'Organised around the NIST CSWP.39 zones',
         ],
@@ -217,17 +201,9 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
           { title: string; body: string; href?: string },
           { title: string; body: string; href?: string },
         ],
-        trackTitle: 'Then, if you want the background: 3 hours 20, not 16½.',
+        trackTitle: 'Then, if you want the background: 2 hours 10, not 16½.',
 
-        trackChips: [
-          'PQC 101',
-          'Quantum impact',
-          'Quantum threats',
-          'Risk management',
-          'Business case',
-          'Governance',
-          'Compliance strategy',
-        ],
+        trackChips: ['PQC 101', 'Quantum impact', 'Risk management', 'Business case', 'Governance'],
         capstoneChip: { label: 'Board-Ready' },
       },
     },
@@ -242,7 +218,7 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
       workshopIds: [],
       businessToolIds: ['roadmap-builder'],
       board: {
-        heroEyebrow: 'Executive / GRC · sequenced plan · owners · KPIs',
+        heroEyebrow: 'Executive · sequenced plan · owners · KPIs',
 
         headline: 'Show a plan your regulator will accept.',
         sub: 'A sequenced roadmap with named owners, measurable KPIs and a policy draft — built from the same six answers, so your plan and your risk position cannot quietly disagree.',
@@ -290,17 +266,9 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
           { title: string; body: string; href?: string },
           { title: string; body: string; href?: string },
         ],
-        trackTitle: 'Then, if you want the background: 3 hours 20, not 16½.',
+        trackTitle: 'Then, if you want the background: 2 hours 10, not 16½.',
 
-        trackChips: [
-          'PQC 101',
-          'Quantum impact',
-          'Quantum threats',
-          'Risk management',
-          'Business case',
-          'Governance',
-          'Compliance strategy',
-        ],
+        trackChips: ['PQC 101', 'Quantum impact', 'Risk management', 'Business case', 'Governance'],
         capstoneChip: { label: 'Board-Ready' },
       },
     },
@@ -315,7 +283,7 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
       workshopIds: [],
       businessToolIds: ['stakeholder-comms'],
       board: {
-        heroEyebrow: 'Executive / GRC · the question your CFO will ask',
+        heroEyebrow: 'Executive · the question your CFO will ask',
 
         headline: 'Where did these numbers come from?',
         sub: 'Every figure in your board pack traces to a dated, tiered source. The corrections are public, the people behind the standards are named, and the patent filings show who is actually building this rather than announcing it.',
@@ -324,7 +292,7 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
         ctaSecondary: 'See who is behind the standards',
         ctaSecondaryHref: '/leaders',
         proofChips: [
-          '1013 documents, trust-tiered',
+          '1028 documents, trust-tiered',
           'Every correction logged and dated',
           'Authoritative / Core / Supporting / Contextual source tiers',
         ],
@@ -370,17 +338,9 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
           { title: string; body: string; href?: string },
           { title: string; body: string; href?: string },
         ],
-        trackTitle: 'Then, if you want the background: 3 hours 20, not 16½.',
+        trackTitle: 'Then, if you want the background: 2 hours 10, not 16½.',
 
-        trackChips: [
-          'PQC 101',
-          'Quantum impact',
-          'Quantum threats',
-          'Risk management',
-          'Business case',
-          'Governance',
-          'Compliance strategy',
-        ],
+        trackChips: ['PQC 101', 'Quantum impact', 'Risk management', 'Business case', 'Governance'],
         capstoneChip: { label: 'Board-Ready' },
       },
     },
@@ -396,7 +356,7 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
       workshopIds: [],
       businessToolIds: ['board-pitch'],
       board: {
-        heroEyebrow: 'Executive / GRC · due diligence · nothing taken on trust',
+        heroEyebrow: 'Executive · due diligence · nothing taken on trust',
 
         headline: 'See the whole programme before you fund it.',
         sub: 'Nine phases played through end to end — discovery, CBOM, risk scoring, roadmap, pilots, closure. One sitting to know what you are being asked to sign off on.',
@@ -445,18 +405,437 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
           { title: string; body: string; href?: string },
           { title: string; body: string; href?: string },
         ],
-        trackTitle: 'Then, if you want the background: 3 hours 20, not 16½.',
+        trackTitle: 'Then, if you want the background: 2 hours 10, not 16½.',
+
+        trackChips: ['PQC 101', 'Quantum impact', 'Risk management', 'Business case', 'Governance'],
+        capstoneChip: { label: 'Board-Ready' },
+      },
+    },
+  ],
+  grc: [
+    {
+      id: 'applicability',
+      order: 1,
+      chipLabel: 'Establish what applies',
+      chipDescription: 'Scope the obligations register before you build anything on top of it.',
+      phaseId: 'p0',
+      cswp39Zone: 'governance',
+      moduleIds: ['pqc-grc', 'compliance-strategy'],
+      workshopIds: [],
+      businessToolIds: [],
+      board: {
+        heroEyebrow: 'GRC · scope before controls',
+
+        headline: 'Know what applies before you build anything on top of it.',
+        sub: 'The obligations register lists every instrument that matches your country and sector, source-review gaps ranked first — not assumptions dressed as compliance.',
+        ctaPrimary: 'Open the obligations register',
+        ctaPrimaryHref: '/compliance?tab=obligations',
+        ctaSecondary: 'Run the comprehensive assessment',
+        ctaSecondaryHref: '/assess?mode=comprehensive',
+        proofChips: ['1028 documents, trust-tiered', 'Regulatory data verified 29 Aug 2026'],
+        sideCard: {
+          title: 'Where your register stands',
+          tone: 'warn' as 'bad' | 'warn' | 'info' | 'accent',
+          provenance: 'illustrative' as 'sourced' | 'illustrative' | 'guidance',
+          rows: [
+            { label: 'Report sections generated', value: '17' },
+            { label: 'Governance artifacts attached', value: 'three' },
+          ],
+          punchline: 'A register you can hand to an auditor, not a guess.',
+          footnote:
+            'Illustrative until you complete the comprehensive assessment — the register reflects your own answers from that point on.',
+        },
+        gridTitle: 'What you walk out with',
+        gridSub: 'Your own scope, not a sample estate',
+        gridCards: [
+          {
+            title: "See what's already proven",
+            body: 'Product compliance records, per framework and per certification — check what a vendor or your own program has already established before you assume a gap.',
+            href: '/compliance?tab=records',
+          },
+          {
+            title: 'See who else is doing this work',
+            body: 'The community directory lists standards-body participants and practitioners working the same problem publicly — real context for how peers have scoped it.',
+            href: '/leaders',
+          },
+          {
+            title: 'See the threat behind the mandate',
+            body: 'The threat landscape explains WHY a framework exists — the sector-specific risk it was written to address, not just its name.',
+            href: '/threats',
+          },
+        ] as [
+          { title: string; body: string; href?: string },
+          { title: string; body: string; href?: string },
+          { title: string; body: string; href?: string },
+        ],
+        trackTitle: 'Then, the background: 4 hours 10, not 9¼.',
+        trackNote:
+          "Eight essentials against the full 16-module path plus the quiz, 560 minutes in all. The path already inserts real checkpoints like Review Compliance Obligations, Record a Risk Treatment and Complete a Verification Artifact right where they're relevant.",
+        trackChips: [
+          'PQC 101',
+          'Risk management',
+          'Data & asset sensitivity',
+          'PQC GRC',
+          'Compliance strategy',
+          'Governance',
+          'Vendor risk',
+          'Verification & closure',
+        ],
+        capstoneChip: { label: 'Assurance-Ready' },
+      },
+    },
+    {
+      id: 'risk-register',
+      order: 2,
+      chipLabel: 'Record exposure and treatment',
+      chipDescription: 'Turn a risk into an owner, an impact and a documented decision.',
+      phaseId: 'p3',
+      cswp39Zone: 'risk-management',
+      moduleIds: ['pqc-risk-management', 'data-asset-sensitivity'],
+      workshopIds: [],
+      businessToolIds: ['risk-register'],
+      board: {
+        heroEyebrow: 'GRC · exposure · owner · treatment',
+
+        headline: 'Turn exposure into a decision someone owns.',
+        sub: 'The same assessment inputs, read for treatment rather than a headline score — an exposure, its owner, and the decision you made about it.',
+        ctaPrimary: 'Build the risk register',
+        ctaPrimaryHref: '/business/tools/risk-register',
+        ctaSecondary: 'See a finished example report',
+        ctaSecondaryHref: '/report?example=1',
+        proofChips: ['1028 documents, trust-tiered', 'Organised around the NIST CSWP.39 zones'],
+        sideCard: {
+          title: 'What the register is built from',
+          tone: 'warn' as 'bad' | 'warn' | 'info' | 'accent',
+          provenance: 'illustrative' as 'sourced' | 'illustrative' | 'guidance',
+          rows: [
+            { label: 'Report sections generated', value: '17' },
+            { label: 'Risk-management artifacts attached', value: 'two' },
+          ],
+          punchline: 'A register with an owner against each risk, not a number in a slide.',
+          footnote:
+            'Illustrative until you complete the comprehensive assessment — the register reflects your own answers from that point on.',
+        },
+        gridTitle: 'What the register gives you',
+        gridSub: 'Generated from your own inputs, not a sample estate',
+        gridCards: [
+          {
+            title: 'Score it first',
+            body: "The comprehensive assessment produces the risk score, data sensitivity and migration-status inputs the register's own fields are built from — you are not re-typing what you already answered.",
+            href: '/assess?mode=comprehensive',
+          },
+          {
+            title: 'Then assign the treatment',
+            body: 'Once a risk is named and owned, the treatment plan tool turns it into a documented decision — accept, mitigate, transfer or avoid — with a named owner.',
+            href: '/business/tools/risk-treatment-plan',
+          },
+          {
+            title: 'Attach a date to the risk',
+            body: 'A risk register without dates just states an opinion. The regulatory timeline shows which mandates already have a stated date — attach those to the risks they actually create.',
+            href: '/timeline',
+          },
+        ] as [
+          { title: string; body: string; href?: string },
+          { title: string; body: string; href?: string },
+          { title: string; body: string; href?: string },
+        ],
+        trackTitle: 'Then, the background: 4 hours 10, not 9¼.',
 
         trackChips: [
           'PQC 101',
-          'Quantum impact',
-          'Quantum threats',
           'Risk management',
-          'Business case',
-          'Governance',
+          'Data & asset sensitivity',
+          'PQC GRC',
           'Compliance strategy',
+          'Governance',
+          'Vendor risk',
+          'Verification & closure',
         ],
-        capstoneChip: { label: 'Board-Ready' },
+        capstoneChip: { label: 'Assurance-Ready' },
+      },
+    },
+    {
+      id: 'controls',
+      order: 3,
+      chipLabel: 'Build a control checklist',
+      chipDescription:
+        'Scope what applies into a checklist with an owner and an evidence link on every row.',
+      phaseId: 'p4',
+      cswp39Zone: 'governance',
+      moduleIds: ['compliance-strategy', 'pqc-governance'],
+      workshopIds: [],
+      businessToolIds: ['compliance-checklist'],
+      board: {
+        heroEyebrow: 'GRC · a checklist that closes',
+
+        headline: 'Build a checklist that actually closes.',
+        sub: 'Scope what applies into tracked items with an owner and an evidence link on every row — not a policy document nobody re-opens.',
+        ctaPrimary: 'Scope the compliance checklist',
+        ctaPrimaryHref: '/business/tools/compliance-checklist',
+        ctaSecondary: 'Review what applies first',
+        ctaSecondaryHref: '/compliance?tab=obligations',
+        proofChips: [
+          'Regulatory data verified 29 Aug 2026',
+          'Organised around the NIST CSWP.39 zones',
+        ],
+        sideCard: {
+          title: 'What the checklist is built from',
+          tone: 'info' as 'bad' | 'warn' | 'info' | 'accent',
+          provenance: 'guidance' as 'sourced' | 'illustrative' | 'guidance',
+          rows: [
+            { label: 'Essentials in your path', value: 'eight' },
+            { label: 'Library categories emphasised', value: 'four' },
+          ],
+          punchline: 'A checklist someone can actually close, item by item.',
+        },
+        gridTitle: 'What the checklist gives you',
+        gridSub: 'Scoped to what actually applies to you',
+        gridCards: [
+          {
+            title: 'Open the Command Center on governance',
+            body: 'The governance zone features exactly what a checklist needs downstream: the audit checklist, the policy draft and the vendor scorecard, in one dashboard.',
+            href: '/business?zone=governance',
+          },
+          {
+            title: 'Backed by planning material',
+            body: 'The library filtered to migration-planning documents, each carrying a source tier and a verification date — the citations behind a checklist item, not just its title.',
+            href: '/library?purpose=planning',
+          },
+          {
+            title: 'Verify a claim yourself, if you want to go deeper',
+            body: 'Some checklist items are things you can test rather than just track — the Playground runs the real algorithms in your browser, not a diagram of them.',
+            href: '/playground',
+          },
+        ] as [
+          { title: string; body: string; href?: string },
+          { title: string; body: string; href?: string },
+          { title: string; body: string; href?: string },
+        ],
+        trackTitle: 'Then, the background: 4 hours 10, not 9¼.',
+
+        trackChips: [
+          'PQC 101',
+          'Risk management',
+          'Data & asset sensitivity',
+          'PQC GRC',
+          'Compliance strategy',
+          'Governance',
+          'Vendor risk',
+          'Verification & closure',
+        ],
+        capstoneChip: { label: 'Assurance-Ready' },
+      },
+    },
+    {
+      id: 'vendor-assurance',
+      order: 4,
+      chipLabel: 'Check vendor evidence',
+      chipDescription: "A supplier's PQC claims scored against what they can actually prove.",
+      phaseId: 'p7',
+      cswp39Zone: 'governance',
+      moduleIds: ['vendor-risk'],
+      workshopIds: [],
+      businessToolIds: ['vendor-scorecard'],
+      board: {
+        heroEyebrow: 'GRC · claim versus proof',
+
+        headline: 'Score the claim against the proof.',
+        sub: 'Algorithm support, FIPS validation, CBOM availability and crypto-agility commitments — one scorecard per vendor, built from what they can actually show.',
+        ctaPrimary: 'Open the vendor scorecard',
+        ctaPrimaryHref: '/business/tools/vendor-scorecard',
+        ctaSecondary: 'Browse the migration catalog',
+        ctaSecondaryHref: '/migrate',
+        proofChips: ['1028 documents, trust-tiered', 'Six-dimension vendor scorecard'],
+        sideCard: {
+          title: 'What the scorecard checks',
+          tone: 'warn' as 'bad' | 'warn' | 'info' | 'accent',
+          provenance: 'illustrative' as 'sourced' | 'illustrative' | 'guidance',
+          rows: [
+            { label: 'Report sections generated', value: '17' },
+            { label: 'Governance artifacts attached', value: 'three' },
+          ],
+          punchline: 'A score built from what the vendor can prove, not what they claim.',
+        },
+        gridTitle: 'What the scorecard gives you',
+        gridSub: 'Six dimensions, one per claim that needs proof',
+        gridCards: [
+          {
+            title: "Check what they've actually shipped",
+            body: "The migration catalog's vendor-risk view says what each product supports today, with the proof date on the row — a claim without a date is a claim, not evidence.",
+            href: '/migrate?tab=vendorrisk',
+          },
+          {
+            title: 'Check the algorithm claim itself',
+            body: 'A vendor\'s "PQC-ready" claim should map to a specific certified algorithm — the Transition Guide shows which classical algorithms have certified PQC replacements today.',
+            href: '/algorithms?tab=transition&highlight=ML-KEM-768',
+          },
+          {
+            title: 'Check IP exposure alongside readiness',
+            body: 'Vendor risk is not only crypto readiness — the patents corpus tracks licensing claims over specific PQC implementations, relevant if a "compliant" implementation rests on contested IP.',
+            href: '/patents',
+          },
+        ] as [
+          { title: string; body: string; href?: string },
+          { title: string; body: string; href?: string },
+          { title: string; body: string; href?: string },
+        ],
+        trackTitle: 'Then, the background: 4 hours 10, not 9¼.',
+
+        trackChips: [
+          'PQC 101',
+          'Risk management',
+          'Data & asset sensitivity',
+          'PQC GRC',
+          'Compliance strategy',
+          'Governance',
+          'Vendor risk',
+          'Verification & closure',
+        ],
+        capstoneChip: { label: 'Assurance-Ready' },
+      },
+    },
+    {
+      id: 'evidence',
+      order: 5,
+      chipLabel: 'Check evidence completeness',
+      chipDescription:
+        'What your crypto inventory can already prove, and what still needs a source.',
+      phaseId: 'p1',
+      cswp39Zone: 'assets',
+      moduleIds: ['crypto-registry', 'cbom'],
+      workshopIds: [],
+      businessToolIds: ['audit-checklist'],
+      board: {
+        heroEyebrow: 'GRC · evidence, not assumption',
+
+        headline: 'Know what you can already prove.',
+        sub: 'Cryptographic inventory, source citations and requirement extraction — read as evidence completeness, not as a pass/fail audit.',
+        ctaPrimary: 'Open the audit checklist',
+        ctaPrimaryHref: '/business/tools/audit-checklist',
+        ctaSecondary: 'Run the comprehensive assessment',
+        ctaSecondaryHref: '/assess?mode=comprehensive',
+        proofChips: ['1028 documents, trust-tiered', 'Regulatory data verified 29 Aug 2026'],
+        sideCard: {
+          title: "What's already documented",
+          tone: 'info' as 'bad' | 'warn' | 'info' | 'accent',
+          provenance: 'guidance' as 'sourced' | 'illustrative' | 'guidance',
+          rows: [
+            { label: 'Essentials in your path', value: 'eight' },
+            { label: 'Governance artifacts attached', value: 'three' },
+          ],
+          punchline: 'What you can already prove — and what still needs a source, named as a gap.',
+          footnote:
+            'Illustrative until you complete the comprehensive assessment — the register reflects your own answers from that point on.',
+        },
+        gridTitle: 'What evidence completeness gives you',
+        gridSub: 'A gap list, not a grade',
+        gridCards: [
+          {
+            title: 'Not sure this is the board you need?',
+            body: 'Every topic on this site, organised for someone who has not decided where to start.',
+            href: '/explore',
+          },
+          {
+            title: 'Check the certification record',
+            body: 'Product compliance records, per framework and per certification — the record an auditor checks against, not the marketing page.',
+            href: '/compliance?tab=records',
+          },
+          {
+            title: 'Check whether a gap has already closed',
+            body: 'The revisions feed logs every correction to the compliance, vendor and migration data — a source that looked unextracted last week may already be fixed.',
+            href: '/revisions',
+          },
+        ] as [
+          { title: string; body: string; href?: string },
+          { title: string; body: string; href?: string },
+          { title: string; body: string; href?: string },
+        ],
+        trackTitle: 'Then, the background: 4 hours 10, not 9¼.',
+
+        trackChips: [
+          'PQC 101',
+          'Risk management',
+          'Data & asset sensitivity',
+          'PQC GRC',
+          'Compliance strategy',
+          'Governance',
+          'Vendor risk',
+          'Verification & closure',
+        ],
+        capstoneChip: { label: 'Assurance-Ready' },
+      },
+    },
+    {
+      id: 'closure',
+      order: 6,
+      chipLabel: 'Define exit criteria',
+      chipDescription:
+        'What "done" means for this migration, and how you check it before you say so.',
+      phaseId: 'verify-close',
+      cswp39Zone: 'risk-management',
+      moduleIds: ['verification-closure'],
+      workshopIds: [],
+      businessToolIds: ['migration-verification'],
+      board: {
+        heroEyebrow: 'GRC · closure needs a record',
+
+        headline: 'Define what "done" means before you say it.',
+        sub: 'Exit criteria, a decommissioning schedule, and a record you can point an auditor to — not a sense that the migration is probably over.',
+        ctaPrimary: 'Verify the migration',
+        ctaPrimaryHref: '/business/tools/migration-verification',
+        ctaSecondary: 'See a finished example report',
+        ctaSecondaryHref: '/report?example=1',
+        proofChips: [
+          'Organised around the NIST CSWP.39 zones',
+          'Regulatory data verified 29 Aug 2026',
+        ],
+        sideCard: {
+          title: 'What closure requires',
+          tone: 'accent' as 'bad' | 'warn' | 'info' | 'accent',
+          provenance: 'illustrative' as 'sourced' | 'illustrative' | 'guidance',
+          rows: [
+            { label: 'Report sections generated', value: '17' },
+            { label: 'Risk-management artifacts attached', value: 'two' },
+          ],
+          punchline:
+            "A closure record an auditor can follow, not a sense that you're probably done.",
+        },
+        gridTitle: 'What closure gives you',
+        gridSub: 'A record, not a feeling',
+        gridCards: [
+          {
+            title: 'Start from the recommended actions',
+            body: "The comprehensive assessment's recommended actions are what closure verifies against — you are checking the plan was executed, not inventing new criteria at the end.",
+            href: '/assess?mode=comprehensive',
+          },
+          {
+            title: 'Verify it yourself',
+            body: "OpenSSL Studio runs the same commands you would put in a change record, against a real OpenSSL build — closure evidence you produced yourself, not a vendor's word for it.",
+            href: '/playground/openssl-studio',
+          },
+          {
+            title: 'Walk the closure phase yourself',
+            body: 'The simulation lets you run the verify-and-close phase of a migration program and see what evidence a closure gate actually demands.',
+            href: '/simulation?phase=verify-close',
+          },
+        ] as [
+          { title: string; body: string; href?: string },
+          { title: string; body: string; href?: string },
+          { title: string; body: string; href?: string },
+        ],
+        trackTitle: 'Then, the background: 4 hours 10, not 9¼.',
+
+        trackChips: [
+          'PQC 101',
+          'Risk management',
+          'Data & asset sensitivity',
+          'PQC GRC',
+          'Compliance strategy',
+          'Governance',
+          'Vendor risk',
+          'Verification & closure',
+        ],
+        capstoneChip: { label: 'Assurance-Ready' },
       },
     },
   ],
@@ -2091,7 +2470,7 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
         proofChips: [
           'Every source dated and tiered',
           'Authoritative / Core / Supporting / Contextual source tiers',
-          '1013 documents, trust-tiered',
+          '1028 documents, trust-tiered',
           'Drift guards fail the build on silent data change',
         ],
         sideCard: {
@@ -2431,7 +2810,7 @@ export const PERSONA_JOURNEY_BOARD_VARIANTS: Record<PersonaId, RoleBoardVariant[
         ],
         trackTitle: 'Six modules, 205 minutes — and yes, that is still a lot.',
         trackNote:
-          'Worth saying plainly: at 205 minutes this is longer than the executive track (200 min), which is not what you would expect. Take it in pieces — your progress is saved between visits.',
+          'Worth saying plainly: at 205 minutes this is longer than the executive track (130 min), which is not what you would expect. Take it in pieces — your progress is saved between visits.',
         trackChips: [
           'PQC 101',
           'PQC candidates',

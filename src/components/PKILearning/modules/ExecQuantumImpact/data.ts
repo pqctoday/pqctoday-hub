@@ -3,7 +3,7 @@ import type { RoleGuideData } from '../../common/roleGuide/types'
 
 export const EXEC_GUIDE_DATA: RoleGuideData = {
   roleId: 'executive',
-  roleLabel: 'Executive / GRC',
+  roleLabel: 'Executive / Business Leader',
   tagline:
     'Your governance decisions today determine whether your organization is quantum-ready or quantum-vulnerable.',
 

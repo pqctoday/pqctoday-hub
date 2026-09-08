@@ -2818,6 +2818,52 @@ source: public/vendor-roadmaps/
 - **Extraction Timestamp**: 2026-07-07T20:41:12
 
 
+## VND-018 — Google LLC
+
+- **Vendor ID**: VND-018
+- **Vendor Name**: Google LLC
+- **Roadmap Title**: Google's timeline for PQC migration
+- **Roadmap URL**: https://blog.google/innovation-and-ai/technology/safety-security/cryptography-migration-timeline/
+- **Publish Date**: Unknown
+- **Local File**: vendor-roadmaps/VND-018_Google_LLC.html
+- **CSV Coverage Notes**: None
+- **PQC Algorithms Announced**: ML-DSA
+- **Target Migration Dates**: 2029
+- **Products / Services Covered**: Android 17; Google Chrome; Cloud
+- **Compliance Frameworks**: NIST
+- **Hybrid Mode Support**: None detected
+- **Current GA Status**: GA
+- **Customer Action Required**: Follow suit to prioritize PQC migration for authentication services
+- **Key Commitments & Quotes**: "We’re setting a timeline for post-quantum cryptography migration to 2029."; "Android 17 is integrating PQC digital signature protection using ML-DSA"; "provide the clarity and urgency needed to accelerate digital transitions"
+- **Coverage Verification**: CONSISTENT — The document provides a high-level timeline and product mentions but lacks the specific technical details implied by "Not specified" in the notes, making the lack of detail consistent.
+- **Extraction Quality**: MEDIUM
+- **Source Document**: VND-018_Google_LLC.html (360.0 KB)
+- **Extraction Timestamp**: 2026-09-07T11:01:13
+
+
+## VND-032 — Red Hat Inc.
+
+- **Vendor ID**: VND-032
+- **Vendor Name**: Red Hat Inc.
+- **Roadmap Title**: What's new in post-quantum cryptography in RHEL 10.1
+- **Roadmap URL**: https://www.redhat.com/en/blog/whats-new-post-quantum-cryptography-rhel-101
+- **Publish Date**: Unknown
+- **Local File**: vendor-roadmaps/VND-032_Red_Hat_Inc.html
+- **CSV Coverage Notes**: None
+- **PQC Algorithms Announced**: ML-KEM; ML-DSA
+- **Target Migration Dates**: None detected
+- **Products / Services Covered**: RHEL 10.1; OpenSSL; GnuTLS; NSS; Go; Sequoia-PGP
+- **Compliance Frameworks**: NIST; European Cyber Resilience Act
+- **Hybrid Mode Support**: Yes, hybrid PQC key exchange in TLS and hybrid post-quantum signatures (ML-DSA-87 + Ed448) for RPM packages.
+- **Current GA Status**: GA
+- **Customer Action Required**: Start testing hybrid PQC key exchange in TLS deployments; make plans for dual classic/PQC TLS certificate servers; roll out PQC key exchange; test dual classic/PQC TLS certificate setups.
+- **Key Commitments & Quotes**: "post-quantum cryptography with Module-Lattice-Based Key Encapsulation Mechanism (ML-KEM) and ML-DSA in TLS is generally available and fully supported"; "RHEL 10.1 now includes this implementation"; "RHEL is the first and currently only major Linux distribution to achieve this milestone"
+- **Coverage Verification**: CONSISTENT, the document details specific PQC features in RHEL 10.1, confirming the roadmap title.
+- **Extraction Quality**: HIGH
+- **Source Document**: VND-032_Red_Hat_Inc.html (358.3 KB)
+- **Extraction Timestamp**: 2026-09-07T11:01:48
+
+
 ## VND-553 — Tencent
 
 - **Vendor ID**: VND-553

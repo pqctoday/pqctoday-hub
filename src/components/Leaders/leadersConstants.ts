@@ -146,6 +146,16 @@ export const PERSONA_LEADER_GUIDANCE: Record<string, LeaderGuidance[]> = {
       why: 'Organisations already mid-migration. Their published experience is the closest thing to a cost estimate you can cite.',
     },
   ],
+  grc: [
+    {
+      category: 'Government',
+      why: 'The regulators whose statements become your obligations register — track them at the source, not secondhand.',
+    },
+    {
+      category: 'Standards',
+      why: 'The bodies whose drafts decide what a control checklist item actually cites once it moves from draft to adopted.',
+    },
+  ],
   developer: [
     {
       category: 'Open Source Maintainer',

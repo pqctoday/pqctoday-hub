@@ -281,17 +281,17 @@ export function SbomSection() {
                     </div>
                   </li>
                   <li className="flex justify-between items-start gap-2 flex-wrap text-sm border-b border-border pb-1">
-                    <span className="text-muted-foreground">@noble/hashes</span>
+                    <span className="text-muted-foreground"></span>
                     <div className="flex flex-col items-end shrink-0">
                       <span className="text-xs text-muted-foreground/40 font-mono">MIT</span>
-                      <span className="text-xs text-muted-foreground">v2.2.0</span>
+                      <span className="text-xs text-muted-foreground">v2.4.0</span>
                     </div>
                   </li>
                   <li className="flex justify-between items-start gap-2 flex-wrap text-sm border-b border-border pb-1">
-                    <span className="text-muted-foreground">@noble/curves</span>
+                    <span className="text-muted-foreground"></span>
                     <div className="flex flex-col items-end shrink-0">
                       <span className="text-xs text-muted-foreground/40 font-mono">MIT</span>
-                      <span className="text-xs text-muted-foreground">v2.2.0</span>
+                      <span className="text-xs text-muted-foreground">v2.4.0</span>
                     </div>
                   </li>
                   <li className="flex justify-between items-start gap-2 flex-wrap text-sm border-b border-border pb-1">
@@ -311,24 +311,24 @@ export function SbomSection() {
                     </div>
                   </li>
                   <li className="flex justify-between items-start gap-2 flex-wrap text-sm border-b border-border pb-1">
-                    <span className="text-muted-foreground">@scure/bip32</span>
+                    <span className="text-muted-foreground"></span>
                     <div className="flex flex-col items-end shrink-0">
                       <span className="text-xs text-muted-foreground/40 font-mono">MIT</span>
-                      <span className="text-xs text-muted-foreground">v2.2.0</span>
+                      <span className="text-xs text-muted-foreground">v2.4.0</span>
                     </div>
                   </li>
                   <li className="flex justify-between items-start gap-2 flex-wrap text-sm border-b border-border pb-1">
-                    <span className="text-muted-foreground">@scure/bip39</span>
+                    <span className="text-muted-foreground"></span>
                     <div className="flex flex-col items-end shrink-0">
                       <span className="text-xs text-muted-foreground/40 font-mono">MIT</span>
-                      <span className="text-xs text-muted-foreground">v2.2.0</span>
+                      <span className="text-xs text-muted-foreground">v2.4.0</span>
                     </div>
                   </li>
                   <li className="flex justify-between items-start gap-2 flex-wrap text-sm border-b border-border pb-1">
-                    <span className="text-muted-foreground">@scure/base</span>
+                    <span className="text-muted-foreground"></span>
                     <div className="flex flex-col items-end shrink-0">
                       <span className="text-xs text-muted-foreground/40 font-mono">MIT</span>
-                      <span className="text-xs text-muted-foreground">v2.2.0</span>
+                      <span className="text-xs text-muted-foreground">v2.4.0</span>
                     </div>
                   </li>
                   <li className="flex justify-between items-start gap-2 flex-wrap text-sm border-b border-border pb-1">

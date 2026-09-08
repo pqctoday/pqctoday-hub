@@ -36,6 +36,7 @@ test('executive persona (no industry picked) narrows /threats and reset works', 
       JSON.stringify({
         state: {
           selectedPersona: 'executive',
+          hasAcknowledgedExecutiveGrcSplit: true,
           selectedRegion: 'global',
           // selectedIndustry intentionally null + selectedIndustries empty so
           // the persona-default kicks in.

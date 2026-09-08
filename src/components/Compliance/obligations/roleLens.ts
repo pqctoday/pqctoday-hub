@@ -53,6 +53,20 @@ const ROLE_READINGS: Record<PersonaId, RoleReading> = {
     },
   },
 
+  grc: {
+    // Source-review gaps first, not a noncompliance signal — see file header
+    // and the split plan's roleLens.ts decision: a low/zero requirementCount
+    // means the hub hasn't extracted requirements from that row's source yet,
+    // not that the organization fails to meet it. Ties fall through to the
+    // model's own within-tier order (dated first, then alphabetical).
+    framing: 'Source-review gaps first — rows the hub has not yet extracted requirements from.',
+    rank: (row) => row.requirementCount,
+    note: (row) =>
+      row.requirementCount > 0
+        ? `${row.requirementCount} extracted requirement${row.requirementCount === 1 ? '' : 's'} from ${row.requirementSources.length} cited source${row.requirementSources.length === 1 ? '' : 's'}`
+        : 'No requirements extracted yet — review the source directly before recording a treatment decision',
+  },
+
   architect: {
     framing: 'Technical standards first — what you have to build against.',
     rank: (row) => (isTechnicalStandard(row) ? -Number.MAX_SAFE_INTEGER : -row.requirementCount),

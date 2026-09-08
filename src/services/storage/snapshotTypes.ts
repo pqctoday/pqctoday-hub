@@ -4,6 +4,7 @@ import type { TLSConfig, TLSRunRecord } from '@/store/tls-learning.store'
 import type { VirtualFile, StructuredLogEntry } from '@/components/OpenSSLStudio/store'
 import type { Region, ExperienceLevel } from '@/store/usePersonaStore'
 import type { PersonaId } from '@/data/learningPersonas'
+import type { NiceProficiencyTier } from '@/data/niceFramework'
 import type {
   AssessmentMode,
   AssessmentSnapshot,
@@ -73,6 +74,11 @@ export interface AssessmentData {
 
 /**
  * Persisted slice of usePersonaStore.
+ *
+ * `niceTier`/`niceTierOverridden`/`hasAcknowledgedExecutiveGrcSplit` are
+ * optional so an older snapshot (pre-2026-09-07) restores cleanly without
+ * them — `UnifiedStorageService.restoreSnapshot` derives safe defaults for a
+ * snapshot that predates these fields rather than requiring a version bump.
  */
 export interface PersonaData {
   selectedPersona: PersonaId | null
@@ -83,6 +89,9 @@ export interface PersonaData {
   suppressSuggestion: boolean
   experienceLevel: ExperienceLevel | null
   viewAccess: 'gated' | 'preview' | 'unlocked'
+  niceTier?: NiceProficiencyTier
+  niceTierOverridden?: boolean
+  hasAcknowledgedExecutiveGrcSplit?: boolean
 }
 
 /**

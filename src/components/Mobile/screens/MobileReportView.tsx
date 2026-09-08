@@ -11,6 +11,17 @@ import { ReportUpgradeNudge } from '@/components/Report/redesign/ReportUpgradeNu
 import { REPORT_SECTION_ORDER, REPORT_SECTION_LABELS } from '@/data/reportSectionToCswp39'
 import { EXAMPLE_REPORT_URL } from '@/data/exampleReport'
 import { riskConfig as RISK_TIER } from '@/data/riskConfig'
+import type { SharedReportView } from '@/hooks/useResolvedSharedReport'
+
+interface MobileReportViewProps {
+  /** Resolved once in `ReportView.tsx` (via `useResolvedSharedReport`) and
+   *  passed down so mobile renders the identical shared/example report a
+   *  desktop reader on the same `?share=`/`?example=1` link would see,
+   *  instead of always falling back to the viewer's own live assessment
+   *  (2026-09-07 fix — this screen previously had no shared/example
+   *  resolution at all). `undefined`/`null` means "no shared link active." */
+  sharedView?: SharedReportView | null
+}
 
 /**
  * Mobile Report (handoff Phase 8 — Workflow set, design handoff §12).
@@ -33,10 +44,17 @@ import { riskConfig as RISK_TIER } from '@/data/riskConfig'
  * full section-by-section reader. Real risk score/tier, the real Quick-vs-
  * Comprehensive distinction and its exact real banner copy, "Do this first"
  * and "Recommended Actions" both real, and all 17 real section names as an
- * index — full section bodies stated as a laptop-only cut. Share is NOT
- * rendered on this screen (2026-08-27 remediation): it lives only in
+ * index — full section bodies stated as a laptop-only cut. The Share BUTTON
+ * is NOT rendered on this screen (2026-08-27 remediation): it lives only in
  * MobileHeader's top bar, which reads the same self-contained `?share=` deep
  * link ReportView.tsx already registers via usePageActionsStore.
+ *
+ * RECEIVING a shared/example link, by contrast, IS this screen's job
+ * (2026-09-07 fix): `sharedView` is resolved once in `ReportView.tsx` (via
+ * `useResolvedSharedReport`, shared with desktop) and passed down as a prop
+ * — before this fix, this screen only ever read the viewer's own live
+ * assessment store, so opening a `?share=`/`?example=1` link on a phone
+ * always landed on "No Report Yet" regardless of what the link promised.
  *
  * Reuses real desktop logic/components verbatim (Rule 2): computeAssessment
  * (the same pure scoring pipeline ReportView.tsx calls — desktop's async
@@ -48,16 +66,21 @@ import { riskConfig as RISK_TIER } from '@/data/riskConfig'
  * real order). 2 ESLint exceptions (TopThreeActions, ReportUpgradeNudge —
  * genuinely reusable components, not desktop views).
  */
-export function MobileReportView() {
+export function MobileReportView({ sharedView }: MobileReportViewProps = {}) {
   const store = useAssessmentStore()
-  const selectedPersona = usePersonaStore((s) => s.selectedPersona)
+  const livePersona = usePersonaStore((s) => s.selectedPersona)
 
-  const result = useMemo(() => {
+  const ownResult = useMemo(() => {
     if (store.assessmentStatus !== 'complete') return null
     const input = store.getInput()
     return input ? computeAssessment(input) : null
     // eslint-disable-next-line react-hooks/exhaustive-deps -- input is re-read fresh each recompute; only the completion transition needs to retrigger this
   }, [store.assessmentStatus])
+
+  // A shared/example link renders its own ephemeral result, never the
+  // viewer's own live one — same precedence as desktop's ReportView.
+  const result = sharedView ? sharedView.result : ownResult
+  const selectedPersona = sharedView ? sharedView.persona : livePersona
 
   if (!result) {
     const isCurious = selectedPersona === 'curious'
@@ -93,7 +116,12 @@ export function MobileReportView() {
   }
 
   const isComprehensive = result.assessmentProfile?.mode === 'comprehensive'
-  const dataSensitivity = store.dataSensitivity ?? []
+  // Read sensitivity from the RESOLVED result's own profile, not the live
+  // store — for a shared/example view that must reflect the sender's data,
+  // never the viewer's own unrelated assessment inputs.
+  const dataSensitivity = sharedView
+    ? (result.assessmentProfile?.sensitivityLevels ?? [])
+    : (store.dataSensitivity ?? [])
   const showHndlWarning =
     !isComprehensive &&
     !result.hndlRiskWindow &&

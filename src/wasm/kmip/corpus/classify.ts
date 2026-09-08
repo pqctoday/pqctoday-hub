@@ -15,10 +15,17 @@ export type SkipReason = {
 
 /** OASIS tests exercising cryptographic mechanisms the softhsmrustv3
  * PKCS#11 backend does NOT implement by policy (deprecated, intentionally
- * out of scope — see kmip/DEPRECATED.md). */
+ * out of scope — see kmip/DEPRECATED.md).
+ *
+ * BL-M-12-30 / BL-M-13-30 (Transparent DSA key Register) were removed here
+ * 2026-09-08, mirroring dispatcher_replay.py's own `_DEPRECATED_ALGO_TESTS`:
+ * this hub port still carried the pre-G4 classification after the engine
+ * side moved on. DSA is accepted for STORAGE ONLY as of hsm's G4 decision —
+ * `KmipAlgorithm::to_pkcs11_mech` returns `None` for every DSA operation, so
+ * no key can be generated, signed, or verified with — but both mandatory
+ * tests only Register and Get, which now genuinely pass rather than being
+ * skipped before they could even try. */
 const DEPRECATED_ALGO_TESTS: Record<string, string> = {
-  'BL-M-12-30.xml': 'DSA — deprecated (NIST SP 800-186 §5.4)',
-  'BL-M-13-30.xml': 'DSA — deprecated (NIST SP 800-186 §5.4)',
   'SKFF-M-4-30.xml': '3DES — deprecated (NIST SP 800-131A r2 §1.2.1)',
   'SKFF-M-8-30.xml': '3DES — deprecated (NIST SP 800-131A r2 §1.2.1)',
   'SKFF-M-12-30.xml': '3DES — deprecated (NIST SP 800-131A r2 §1.2.1)',

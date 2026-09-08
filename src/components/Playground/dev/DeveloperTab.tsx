@@ -48,7 +48,7 @@ export const DeveloperTab = ({ activeSubTab, onSubTabChange }: DeveloperTabProps
   // gating the content here too means a stale/hand-crafted `dtab=acvp` deep
   // link can never render the panel even for the one render before that
   // effect fires.
-  const showWorkbenchTabs = role !== 'curious' && role !== 'executive'
+  const showWorkbenchTabs = role !== 'curious' && role !== 'executive' && role !== 'grc'
 
   return (
     <Tabs value={activeSubTab} onValueChange={(v) => onSubTabChange(v as TestSuite)}>

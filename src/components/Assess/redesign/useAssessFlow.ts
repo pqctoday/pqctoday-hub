@@ -126,7 +126,9 @@ export function useAssessFlow({
   // Persona / proficiency auto-suggest of "I'm not sure" — mirror of the legacy
   // AssessWizard effect, rebound to the redesign's active step key. Only fills a
   // step the user hasn't answered, preserving the auto-prefill for new/curious
-  // and executive personas.
+  // and executive personas. Deliberately NOT extended to GRC (2026-09-07 split,
+  // plan §D) — GRC's comprehensive assessment mode should never auto-fill
+  // "I don't know" on the user's behalf.
   useEffect(() => {
     const s = useAssessmentStore.getState()
     const stepKey = activeKey

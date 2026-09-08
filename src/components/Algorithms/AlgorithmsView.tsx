@@ -39,6 +39,7 @@ const ALGO_PERSONA_HINTS: Record<PersonaId, string> = {
     "Filter by 'Certified' status and compare key/signature sizes — performance varies 10× across families.",
   architect:
     'Use the Transition tab to find your classical algorithms and their recommended PQC replacements.',
+  grc: 'Use the Transition tab to see certified replacements for your classical algorithms — certified status alone does not establish compliance; confirm applicability against your obligations register.',
   researcher:
     'Switch to the Detailed tab for full parameter sets, attack vectors, and cross-family security comparisons.',
   ops: 'Filter Status = Certified and look for Production deployment chips on Protocol Support — these are the algorithms safe to deploy in OpenSSL, nginx and HSMs today.',

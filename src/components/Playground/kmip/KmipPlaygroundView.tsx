@@ -358,7 +358,7 @@ export function KmipPlaygroundView() {
   // A persona switch (or a stale ?tab=dev link) can land a gated persona on
   // the hidden Dev tab — fall back to Learn rather than an empty shell. Dev
   // is persona-gated only, never Expert-gated (D5).
-  const devHidden = role === 'curious' || role === 'executive'
+  const devHidden = role === 'curious' || role === 'executive' || role === 'grc'
   useEffect(() => {
     if (devHidden && plane === 'dev') setPlane('learn')
   }, [devHidden, plane])

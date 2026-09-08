@@ -403,7 +403,8 @@ const Step4WhoNeedsToAct: React.FC = () => {
 }
 
 const PERSONA_LABELS: Record<string, string> = {
-  executive: 'Executive / GRC',
+  executive: 'Executive / Business Leader',
+  grc: 'GRC / Risk & Compliance',
   developer: 'Developer / Engineer',
   architect: 'Security Architect',
   researcher: 'Researcher / Academic',

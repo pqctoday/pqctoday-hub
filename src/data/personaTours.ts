@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /**
- * Four short role tours — B+ remediation 4.2 (2026-08-10).
+ * Short role tours — B+ remediation 4.2 (2026-08-10); GRC's added 2026-09-07.
  *
  * Onboarding carried exactly one role out of six properly. Executive has a real
  * eight-phase guided tour (`EXEC_TOUR_STAGES` in the simulation) and curious has
  * a four-step guide (`CuriousGuide`); developer, architect, researcher and ops
  * got the same generic feature deck as an anonymous visitor, plus a disclaimer.
+ * GRC — new as of the 2026-09-07 Executive/GRC split — had no tour at all
+ * until it was added here, for the same reason.
  *
  * These are deliberately SHORT — four steps, each pointing at a surface that
  * already exists, ending somewhere the reader has done something rather than
@@ -38,6 +40,43 @@ export interface PersonaTour {
 }
 
 export const PERSONA_TOURS: Partial<Record<PersonaId, PersonaTour>> = {
+  // "Obligations to evidence, in four stops." Added 2026-09-07 alongside the
+  // Executive/GRC split — GRC is a brand-new persona with no tour of its own
+  // yet, same gap the other four filled in B+ remediation 4.2.
+  grc: {
+    promise: 'Four steps to a checklist and a risk register you can actually defend.',
+    steps: [
+      {
+        title: 'Start from what actually applies',
+        description:
+          'The obligations register lists every instrument that matches your country and sector, ordered by what still needs source review — not by assumption.',
+        route: '/compliance?tab=obligations',
+        cta: 'Open the obligations register',
+      },
+      {
+        title: 'Turn it into tracked work',
+        description:
+          'The Command Center holds the compliance checklist, risk register and vendor scorecard tools — scope what applies into something with an owner and a due date.',
+        route: '/business',
+        cta: 'Open the Command Center',
+      },
+      {
+        title: 'Check the evidence, not the claim',
+        description:
+          'The migrate catalog says what each product actually supports and what that claim rests on — with the proof date in the row. A vendor claim without evidence stays unresolved.',
+        route: '/migrate',
+        cta: 'Open Migrate',
+      },
+      {
+        title: 'Produce a record an auditor can follow',
+        description:
+          'The assessment and its report are the evidence trail — inputs, score, and the compliance impacts they drive all stay attached to one artifact.',
+        route: '/assess',
+        cta: 'Run the assessment',
+      },
+    ],
+  },
+
   // "A five-minute first real crypto operation, ending in the Playground."
   developer: {
     promise: 'Five minutes, ending with you having run real post-quantum crypto in this browser.',
