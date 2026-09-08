@@ -228,7 +228,7 @@ function emitOpStep(
       break
     case 'activate': {
       const uid = renderRef(step.params.uid)
-      lines.push(`${rv} = c.submit('Activate', leaf('UniqueIdentifier', 'TextString', ${uid}))`)
+      lines.push(`${rv} = c.submit('Activate', leaf('UniqueIdentifier', 'Identifier', ${uid}))`)
       lines.push(...raiseUnless('Activate'))
       lines.push(`print(f'  activated {${uid}}')`)
       break
@@ -242,7 +242,7 @@ function emitOpStep(
       const dataHexExpr = messageMode === 'hex' ? pyStr(text) : `${pyBytes(text)}.hex()`
       lines.push(
         `${rv} = c.submit('Sign',`,
-        `    leaf('UniqueIdentifier', 'TextString', ${priv}),`,
+        `    leaf('UniqueIdentifier', 'Identifier', ${priv}),`,
         `    struct('CryptographicParameters',`,
         `        leaf('CryptographicAlgorithm', 'Enumeration', ${pyStr(spec.algorithm)})),`,
         `    leaf('Data', 'ByteString', ${dataHexExpr}))`
@@ -253,7 +253,7 @@ function emitOpStep(
     }
     case 'encapsulate': {
       const pub = renderRef(step.params.pubUid)
-      lines.push(`${rv} = c.submit('Encapsulate', leaf('UniqueIdentifier', 'TextString', ${pub}))`)
+      lines.push(`${rv} = c.submit('Encapsulate', leaf('UniqueIdentifier', 'Identifier', ${pub}))`)
       lines.push(`${ctVar(step.id)} = ${rv}.get('Data')`)
       lines.push(`${uidVar(step.id)} = ${rv}.get('UniqueIdentifier')`)
       lines.push(...raiseUnless('Encapsulate'))
@@ -265,7 +265,7 @@ function emitOpStep(
       const ct = renderRef(step.params.ciphertext)
       lines.push(
         `${rv} = c.submit('Decapsulate',`,
-        `    leaf('UniqueIdentifier', 'TextString', ${priv}),`,
+        `    leaf('UniqueIdentifier', 'Identifier', ${priv}),`,
         `    leaf('Data', 'ByteString', ${ct}))`
       )
       lines.push(`${uidVar(step.id)} = ${rv}.get('UniqueIdentifier')`)
@@ -279,7 +279,7 @@ function emitOpStep(
       // real way to read its actual bytes back (KeyMaterial), same as any
       // other managed object.
       const uid = renderRef(step.params.uid)
-      lines.push(`${rv} = c.submit('Get', leaf('UniqueIdentifier', 'TextString', ${uid}))`)
+      lines.push(`${rv} = c.submit('Get', leaf('UniqueIdentifier', 'Identifier', ${uid}))`)
       lines.push(...raiseUnless('Get'))
       lines.push(`print(f'  key material {len(${rv}.get("KeyMaterial") or "") // 2} bytes')`)
       break
@@ -287,7 +287,7 @@ function emitOpStep(
     case 'getAttributes': {
       const uid = renderRef(step.params.uid)
       lines.push(
-        `${rv} = c.submit('GetAttributes', leaf('UniqueIdentifier', 'TextString', ${uid}))`
+        `${rv} = c.submit('GetAttributes', leaf('UniqueIdentifier', 'Identifier', ${uid}))`
       )
       lines.push(...raiseUnless('GetAttributes'))
       lines.push(
@@ -304,7 +304,7 @@ function emitOpStep(
       const uid = renderRef(step.params.uid)
       lines.push(
         `${rv} = c.submit('Revoke',`,
-        `    leaf('UniqueIdentifier', 'TextString', ${uid}),`,
+        `    leaf('UniqueIdentifier', 'Identifier', ${uid}),`,
         `    struct('RevocationReason', leaf('RevocationReasonCode', 'Enumeration', 'Unspecified')))`
       )
       lines.push(...raiseUnless('Revoke'))
@@ -313,7 +313,7 @@ function emitOpStep(
     }
     case 'destroy': {
       const uid = renderRef(step.params.uid)
-      lines.push(`${rv} = c.submit('Destroy', leaf('UniqueIdentifier', 'TextString', ${uid}))`)
+      lines.push(`${rv} = c.submit('Destroy', leaf('UniqueIdentifier', 'Identifier', ${uid}))`)
       lines.push(...raiseUnless('Destroy'))
       lines.push(`print(f'  destroyed {${uid}}')`)
       break
