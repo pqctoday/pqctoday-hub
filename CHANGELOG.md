@@ -29,6 +29,18 @@ first time (don't ship dev-speak and reformat later):
 - **One entry = one user-visible change.** If it has no user-visible effect,
   it probably doesn't need a changelog entry.
 
+## [4.82.1] - 2026-09-08
+
+### Fixed
+
+- **Several KMIP Control Plane operations now work correctly** [view:/playground] [persona:developer] [persona:architect]: splitting a key into shares, certifying a key by its ID without a separate Register step, and deriving a key from a base secret previously failed with a confusing "missing data" error. The real cause was a wire-format mismatch — a recent spec-conformance update changed how the engine expects key identifiers to be encoded, and the playground hadn't been updated to match.
+- **The KMIP Control Plane's conformance/corpus-replay check now passes** [view:/playground] [persona:developer]: the in-browser OASIS conformance replay (Dev tab) was failing nearly every test after a recent engine update tightened a test-only operation to production-server rules with no way for the browser engine to opt back in. Restored.
+- **The PKCS#11 HSM Playground reflects the latest engine fixes, on both engines** [view:/playground] [persona:developer] [persona:ops]: four PKCS#11 v3.2 conformance defects (key-export provenance, non-storage object handling, EdDSA key import, and a class of unreachable HMAC mechanisms) are now fixed in both the Rust and C++ engines, including Dual Parity mode.
+
+### Data
+
+- **Cloudflare's post-quantum algorithm data is restored** [view:/migrate] [persona:architect] [persona:researcher]: a duplicate vendor-roadmap entry had silently overwritten Cloudflare's record, dropping its listed algorithms (ML-KEM, ML-DSA). Restored to the fuller, correct record.
+
 ## [4.82.0] - 2026-09-07
 
 The combined "Executive/GRC" role is now two roles: **Executive / Business Leader** for funding, sponsorship and oversight, and **GRC / Risk & Compliance** for tracing obligations to their source, assessing gaps, and recording evidence. If you were an Executive before this release, nothing changes automatically — a one-time notice lets you keep Executive or switch to GRC, and your saved progress, reports and business-tool work carry over either way.
