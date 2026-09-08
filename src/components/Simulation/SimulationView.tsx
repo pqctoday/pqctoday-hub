@@ -231,9 +231,17 @@ const SIZES = (['small', 'mid', 'large', 'global'] as const).map((id) => ({
   label: id[0].toUpperCase() + id.slice(1),
   hint: SIZE_HINTS[id],
 }))
-const SEATS: { id: PersonaId; label: string }[] = (Object.keys(personaToRoles) as PersonaId[])
+const SEATS: { id: PersonaId; label: string; fullLabel: string }[] = (
+  Object.keys(personaToRoles) as PersonaId[]
+)
   .filter((p) => personaToRoles[p].length > 0)
-  .map((id) => ({ id, label: id === 'ops' ? 'Operations' : PERSONAS[id].label.split(' ')[0] }))
+  .map((id) => ({
+    id,
+    // Visible pill text stays abbreviated to fit the header.
+    label: id === 'ops' ? 'Operations' : PERSONAS[id].label.split(' ')[0],
+    // W6.6: the full role, for the accessible name.
+    fullLabel: PERSONAS[id].label,
+  }))
 
 // difficulty cycle order for the MODE dial (WS-14)
 const DIFF_ORDER: DifficultyId[] = ['easy', 'realistic', 'hard']
@@ -579,7 +587,14 @@ export function SimulationView() {
     setScenarioEmbed(null)
     setArchitectureEmbed(null)
   }
+  // W6.6 — the element that opened the embed, so focus can go back to it when
+  // the pane closes. Without this, "Back to board" dropped focus to <body> and a
+  // keyboard or screen-reader user lost their place in the step list entirely.
+  const embedOpenerRef = useRef<HTMLElement | null>(null)
   const openStep = (s: TreeStep) => {
+    if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
+      embedOpenerRef.current = document.activeElement
+    }
     // Embedded steps render inline without a URL/route change, so they're
     // invisible to the pathname-based pageview tracker (AnalyticsTracker in
     // App.tsx) — log them explicitly instead.
@@ -659,6 +674,15 @@ export function SimulationView() {
     // so the next reload lands on the board the player chose to return to.
     setOpenStepRef(null)
     clearAllEmbeds()
+    // W6.6 — return focus where it came from. Deferred a frame so the board has
+    // re-rendered and the target is back in the document.
+    const opener = embedOpenerRef.current
+    embedOpenerRef.current = null
+    if (opener) {
+      requestAnimationFrame(() => {
+        if (opener.isConnected) opener.focus()
+      })
+    }
   }
   // Live auto-run playthrough (Play 0→7) — drives the real sim like manual play:
   // opens each tool inline for a peek, then returns to the board so its sections
@@ -2833,6 +2857,7 @@ export function SimulationView() {
             <Dial
               label="Seat"
               value={seatOpt.label}
+              valueLabel={seatOpt.fullLabel}
               hint={isOrphanSeatPersona ? 'no role for your persona' : 'rest = AI team'}
               title={
                 isOrphanSeatPersona

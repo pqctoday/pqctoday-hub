@@ -21,8 +21,12 @@ import {
   autoRunIntroQueue,
   autoRunPhaseQueue,
   completeStepGenuine,
+  estimatedMinutes,
+  gatingStepsForPhaseLevel,
   type AutoRunQueueItem,
 } from './simAutoRun'
+import { PHASE_ORDER } from '@/data/frameworkPhases'
+import { SIM_TREES } from '@/simulation'
 import { countryNameFor, getScenario, type SimScenario } from './scenarioConfig'
 import { EXEC_TOUR_REVEAL_TYPES } from './execTourConfig'
 import type { ExecutiveDocumentType } from '@/services/storage/types'
@@ -208,10 +212,22 @@ const PASS_META: Record<number, { name: string; goal: string }> = {
 export interface PassIntro {
   level: number
   name: string
+  /** The objective — what this chapter is for. */
   summary: string
+  /**
+   * W7.2/W7.3 — estimated effort, MEASURED from this pass's own steps with the
+   * same estimator every play mode reports with, rather than an advertised
+   * duration nobody checked.
+   */
+  effortMinutes: number
+  /** W7.2 — what completing this chapter actually produces. */
+  evidence: string
+  /** W7.2 — a short reflection prompt, so a chapter ends by asking the learner
+   *  to account for what changed rather than simply advancing. */
+  reflection: string
 }
 
-function passIntroFor(level: number, scenario: SimScenario): PassIntro {
+export function passIntroFor(level: number, scenario: SimScenario): PassIntro {
   const meta = PASS_META[level] ?? { name: `Pass ${level}`, goal: '' }
   const crit = scenario.objectives.find((o) => o.id === 'critical')?.byYear
   const anchor =
@@ -222,7 +238,38 @@ function passIntroFor(level: number, scenario: SimScenario): PassIntro {
         : level === 4
           ? ` Full migration complete by ${scenario.programEndYear}.`
           : ''
-  return { level, name: `Pass ${level} — ${meta.name}`, summary: meta.goal + anchor }
+  // W7.2 — effort and evidence derived from the pass's REAL steps.
+  const steps = PHASE_ORDER.filter((phase) => !!SIM_TREES[phase]).flatMap((phase) =>
+    gatingStepsForPhaseLevel(phase, level)
+  )
+  const kinds = new Set(steps.map((st) => st.kind))
+  const parts: string[] = []
+  if (kinds.has('activity')) parts.push('documents you produce')
+  if (kinds.has('learn')) parts.push('comprehension checks')
+  if (kinds.has('workshop')) parts.push('hands-on practice results')
+  if (kinds.has('recurrence')) parts.push('evidence of the activity operated again over time')
+  if (kinds.has('reference')) parts.push('reviewed source material')
+  return {
+    level,
+    name: `Pass ${level} — ${meta.name}`,
+    summary: meta.goal + anchor,
+    effortMinutes: estimatedMinutes(steps),
+    evidence: parts.length ? parts.join(', ') : 'no recorded evidence',
+    reflection: PASS_REFLECTION[level] ?? 'What changed in the programme during this chapter?',
+  }
+}
+
+/** Test seam for the chapter metadata (W7.2). */
+export const passIntroForTest = passIntroFor
+
+/** W7.2 — one reflection per chapter. Deliberately asks the learner to ACCOUNT
+ *  for a change, not to rate their confidence: a chapter that ends with "next"
+ *  teaches sequence, not reasoning. */
+const PASS_REFLECTION: Record<number, string> = {
+  1: 'Which part of the estate turned out to be exposed in a way you would not have guessed at the start?',
+  2: 'Who now owns this programme, and what did they have to accept to fund it?',
+  3: 'Which asset moved up the priority order in this chapter, and what evidence moved it?',
+  4: 'What would have to change in the scenario for this plan to stop being the right one?',
 }
 
 // ── Voice selection (avoid robotic novelty voices; prefer natural ones). ───────
