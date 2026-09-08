@@ -9,14 +9,16 @@
  *
  * Checkpoint category lists are read directly off PERSONAS.grc.pathItems
  * rather than duplicated here, so this test can never drift from the real
- * curriculum. Individual thin categories (crypto-registry, sbom, cbom,
- * crypto-agility — see grc-quiz-tagging-draft.md's "coverage gaps" section)
- * are deliberately NOT asserted on their own: the product only ever queries
- * the pooled checkpoint/Essentials set, and those pools are comfortable even
- * where one contributing category is thin. The informational test below
- * makes that per-category thinness visible without failing the gate — per
- * the plan, closing it needs newly authored questions (step 5), not more
- * tagging of existing rows.
+ * curriculum.
+ *
+ * crypto-registry, sbom, cbom and crypto-agility were individually below the
+ * 2-per-mode floor at first tagging (grc-quiz-tagging-draft.md's "coverage
+ * gaps" section) — the first three had zero Executive-tagged candidates to
+ * retag at all, so no amount of tagging could have closed them. Closed
+ * 2026-09-08 by authoring 8 new scenario questions (plan §4 point 5:
+ * Executive/GRC scenario framing, grounded in facts already established by
+ * sibling rows in the same category, no new claims). The per-category test
+ * below now asserts the floor directly instead of only reporting it.
  */
 import { describe, it, expect } from 'vitest'
 import { quizQuestions } from './quizDataLoader'
@@ -64,26 +66,18 @@ describe('GRC quiz eligibility — Essentials pool', () => {
   })
 })
 
-describe('GRC quiz eligibility — per-category coverage (informational)', () => {
-  it('reports eligible-question counts for every GRC full-path category', () => {
-    const allCategories = new Set(
+describe('GRC quiz eligibility — every individual category', () => {
+  const allCategories = [
+    ...new Set(
       PERSONAS[GRC].pathItems
         .filter((p) => p.type === 'checkpoint')
         .flatMap((p) => (p.type === 'checkpoint' ? p.categories : []))
-    )
-    const thin: string[] = []
-    for (const cat of allCategories) {
-      const { quick, full } = countByMode([cat])
-      if (quick < 2 || full < 2) thin.push(`${cat} (quick=${quick}, full=${full})`)
-    }
-    console.log(
-      thin.length
-        ? `GRC per-category coverage gaps (pooled checkpoint totals are still healthy): ${thin.join(', ')}`
-        : 'Every individual GRC category already clears 2/mode on its own.'
-    )
-    // Informational only — the checkpoint-pool tests above are the real gate.
-    // A per-category gap here is a known, documented content gap (plan step
-    // 5: author new questions), not a regression to fix by retagging.
-    expect(allCategories.size).toBeGreaterThan(0)
+    ),
+  ]
+
+  it.each(allCategories)('%s has at least 2 eligible questions per mode on its own', (cat) => {
+    const { quick, full } = countByMode([cat])
+    expect(quick, `${cat}: quick-mode pool`).toBeGreaterThanOrEqual(2)
+    expect(full, `${cat}: full-mode pool`).toBeGreaterThanOrEqual(2)
   })
 })
