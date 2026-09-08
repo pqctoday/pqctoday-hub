@@ -14,7 +14,7 @@ import { estimatedMinutes, gatingStepsForPhaseLevel } from './simAutoRun'
 import { PHASE_ORDER } from '@/data/frameworkPhases'
 import { SIM_TREES } from '@/simulation'
 
-const scenario = getScenario('US', 'financial', 'mid')
+const scenario = getScenario('US')
 
 describe('resumable chapters (W7.2)', () => {
   it('every pass carries an objective, an effort figure, evidence and a reflection', () => {
