@@ -113,6 +113,7 @@ import { SIM_MISSIONS } from '@/data/simMissions'
 import { SECTORS } from '@/data/moscaClock'
 import { deriveSimClock } from './hooks/useSimClock'
 import { JURISDICTION_RULES, checkChoice } from '@/data/jurisdiction'
+import { deadlineScopeFor } from '@/data/moscaClock'
 import { JURISDICTION_AUTHORITY_NOTE } from '@/data/jurisdictionsData'
 import { useArchetypeChangeNotice } from '@/hooks/useArchetypeChangeNotice'
 import { useIsMobileShell } from '@/hooks/useIsMobileShell'
@@ -2884,7 +2885,10 @@ export function SimulationView() {
                     `Years to the planning anchor (${horizonYear}) — the EARLIER of two different things, shown apart because they mean different things:` +
                     ` • Threat horizon ${threatHorizonYear} — this scenario's illustrative CRQC planning estimate. Not a published date, and not moved by any regulation.` +
                     (regulatoryDueYear !== null
-                      ? ` • Regulatory due date ${regulatoryDueYear} — a dated obligation for this jurisdiction. A legal deadline, not a forecast.`
+                      ? ` • Regulatory due date ${regulatoryDueYear} — a dated obligation, not a forecast.` +
+                        (deadlineScopeFor(country)
+                          ? ` Scope: ${deadlineScopeFor(country)!.appliesTo} (${deadlineScopeFor(country)!.force}, ${deadlineScopeFor(country)!.authority}).`
+                          : ' Scope not recorded for this jurisdiction — do not assume it binds this organisation.')
                       : ' • Regulatory due date: none on file for this jurisdiction — which is not the same as having no deadline.') +
                     ` Currently binding: the ${bindingHorizon === 'regulatory' ? 'regulatory due date' : 'threat horizon'}.` +
                     ' Mosca: migrate when shelf life (X) + migration time (Y) exceeds the time remaining (Z).'
@@ -5155,6 +5159,12 @@ export function SimulationView() {
             achievedYear: objectiveAchievedYears[o.id],
           }))}
           maturity={scoreboard.maturity}
+          seat={seat}
+          learnerShare={
+            evidence.length
+              ? evidence.filter((e) => e.origin === 'learner').length / evidence.length
+              : 1
+          }
           claimsFullFrameworkMaturity={claimsFullFrameworkMaturity}
           programEndYear={getScenario(country).programEndYear}
           score={computeRunScore({
