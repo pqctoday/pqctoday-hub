@@ -128,7 +128,11 @@ import {
   type TreeStep,
   type TreeActivity,
 } from '@/simulation'
-import { topBandLevel, normalizeLevel, phaseReadinessFraction } from '@/simulation/maturityScale'
+import {
+  topBandLevel,
+  frameworkLevel,
+  scenarioCompletionFraction,
+} from '@/simulation/maturityScale'
 import { pickBriefCheckQuestion } from '@/simulation/briefCheck'
 import { useSandboxAvailable } from '@/components/Playground/useSandboxAvailable'
 import { computeReadiness } from '@/simulation/readiness'
@@ -186,6 +190,16 @@ import { ArchitecturePanel } from './ArchitecturePanel'
 import { ARCHITECTURES, edgeState } from '@/data/simArchitecture'
 import { TrapInsightsPanel } from './TrapInsightsPanel'
 import { useSimulationStore, RUN_START } from '@/store/useSimulationStore'
+import { FRAMEWORK_COVERAGE, hasCompleteCoverage } from '@/simulation/frameworkCoverage'
+import { validateSave, previewSave } from '@/simulation/saveSchema'
+import {
+  documentApplicability,
+  evidenceId,
+  hasEvidence,
+  runFingerprint,
+  type EvidenceKind,
+  type EvidenceStatus,
+} from '@/simulation/evidence'
 import { computeRunScore } from '@/simulation/runScore'
 import { useModuleStore } from '@/store/useModuleStore'
 import { usePersonaStore } from '@/store/usePersonaStore'
@@ -199,7 +213,7 @@ import { SimRunComplete } from './SimRunComplete'
 import { SimConfirmDialog } from './SimConfirmDialog'
 import { QuizGateModal } from './QuizGateModal'
 import toast from 'react-hot-toast'
-import { pickQuizQuestion, questionsForModule } from '@/simulation/quizSelection'
+import { pickQuizQuestion, gateCoverageFor } from '@/simulation/quizSelection'
 import type { QuizQuestion } from '@/components/PKILearning/modules/Quiz/types'
 import pqctodayLogo from '@/assets/pqctoday-logo.png'
 
@@ -250,6 +264,29 @@ const SIM_TRACKED = (() => {
         }
   }
   return { modules, artifacts }
+})()
+
+/** W5.3 — every resource id the trees in THIS build can resolve. An imported
+ *  run may reference a module/workshop/reference that has since been renamed or
+ *  removed; the import preview names those rather than silently restoring a run
+ *  whose evidence points at nothing. */
+const KNOWN_RESOURCE_IDS = (() => {
+  const ids = new Set<string>()
+  for (const tree of Object.values(SIM_TREES)) {
+    for (const step of tree ? flattenTree(tree) : []) {
+      for (const id of [
+        step.moduleId,
+        step.refId,
+        step.workshopId,
+        step.catalogId,
+        step.scenarioId,
+        step.artifactType,
+      ]) {
+        if (id) ids.add(id)
+      }
+    }
+  }
+  return ids
 })()
 const TIER_CHIP: Record<SensitivityTier, string> = {
   critical: 'bg-destructive/15 text-destructive',
@@ -322,7 +359,6 @@ export function SimulationView() {
   // co-rendered. Replaces both the GUIDED/Expert mode split and the old rail's
   // "Show N more" disclosure boolean. Local state, deliberately not persisted:
   // it always resets to 'decide' on a phase switch, so there is nothing to keep.
-  const [activePhaseTab, setActivePhaseTab] = useState<PhaseTab>('decide')
   const {
     size,
     country,
@@ -354,6 +390,15 @@ export function SimulationView() {
     auto,
     autoCompleteSteps,
     clearAuto,
+    evidence,
+    recordEvidence,
+    insuranceAssumed,
+    setInsuranceAssumed,
+    activeTab,
+    setActiveTab,
+    attempts,
+    recordAttempt,
+    clearAttempt,
     exportSave,
     importSave,
     difficulty,
@@ -375,13 +420,27 @@ export function SimulationView() {
     recordSimRunCompletion,
     setSeed,
   } = useSimulationStore()
+  // W5.5: store-backed so a reload / navigate-away-and-back returns the player
+  // to the tab they were working in. It still resets to 'decide' on a
+  // deliberate phase switch (the effect below) — a phase change and a reload
+  // are different events and should not behave the same.
+  const activePhaseTab = activeTab as PhaseTab
+  const setActivePhaseTab = (t: PhaseTab) => setActiveTab(t)
   // WS-14: the active difficulty balance the engine + scoring read (config swap).
   const balance = getBalance(difficulty)
-  // Every phase opens on Decide. Keyed on `sel`, so this covers BOTH ways the
-  // phase changes — a manual ladder click and the narrated auto-run, which
-  // advances through the same setSel store action (useSimAutoRunPlayer). One
-  // interaction model, click-driven or AI-driven.
+  // Every phase CHANGE opens on Decide. Keyed on `sel`, so this covers BOTH
+  // ways the phase changes — a manual ladder click and the narrated auto-run,
+  // which advances through the same setSel store action (useSimAutoRunPlayer).
+  // One interaction model, click-driven or AI-driven.
+  //
+  // W5.5: it must NOT fire on mount. The effect used to run on every mount,
+  // which is why a reload (or leaving the route and coming back) always landed
+  // on Decide even when the player had been working in Resources. A phase
+  // switch and a reload are different events; only the first resets the tab.
+  const lastSelRef = useRef(sel)
   useEffect(() => {
+    if (lastSelRef.current === sel) return
+    lastSelRef.current = sel
     setActivePhaseTab('decide')
   }, [sel])
   const [report, setReport] = useState<QuarterReportData | null>(null)
@@ -643,11 +702,35 @@ export function SimulationView() {
     ranSeedDeepLink.current = true
     const n = Number(seedParam)
     const isFreshRun = year === RUN_START.year && q === RUN_START.q
-    if (Number.isInteger(n) && n > 0 && isFreshRun) setSeed(n)
+    if (Number.isInteger(n) && n > 0 && isFreshRun) {
+      setSeed(n)
+      // W5.4: apply the rest of the scenario configuration the link carries, so
+      // "the same world" is actually the same world. Each value is validated
+      // against its own allowlist; anything unrecognised is ignored rather than
+      // written through. Only ever applied to a genuinely fresh run.
+      const d = searchParams.get('difficulty')
+      if (d && DIFF_ORDER.includes(d as DifficultyId)) setDifficulty(d as DifficultyId)
+      const sz = searchParams.get('size')
+      if (sz && SIZES.some((o) => o.id === sz)) setSize(sz)
+      const sec = searchParams.get('sector')
+      if (sec) setSector(sec)
+      const c = searchParams.get('country')
+      if (c && JURISDICTION_RULES[c]) setCountry(c)
+    }
     const next = new URLSearchParams(searchParams)
-    next.delete('seed')
+    for (const key of ['seed', 'difficulty', 'size', 'sector', 'country']) next.delete(key)
     setSearchParams(next, { replace: true })
-  }, [searchParams, setSearchParams, setSeed, year, q])
+  }, [
+    searchParams,
+    setSearchParams,
+    setSeed,
+    setDifficulty,
+    setSize,
+    setSector,
+    setCountry,
+    year,
+    q,
+  ])
 
   // While the Executive Overview walkthrough is playing (or on its end screen), the
   // maturity/objective scoreboard and the "did you beat Q-Day?" win ceremony are
@@ -1004,10 +1087,23 @@ export function SimulationView() {
   // run on the same deterministic seed (same quarter events, same AI progress) —
   // only the player's own choices differ. Read-only: never mutates this run.
   const copyChallenge = () => {
-    const url = `${window.location.origin}/simulation?seed=${seed}`
+    // W5.4: a seed alone does NOT reproduce the world — difficulty drives every
+    // event probability and the country drives the regulatory deadline, so two
+    // players on the same seed with different dials played different scenarios
+    // while the UI called it "the same world". The link now carries the
+    // scenario configuration; the recipient still starts from a clean baseline
+    // (no evidence, no documents — nothing personal travels in a link).
+    const params = new URLSearchParams({
+      seed: String(seed),
+      difficulty,
+      size,
+      sector,
+      country,
+    })
+    const url = `${window.location.origin}/simulation?${params.toString()}`
     navigator.clipboard
       .writeText(url)
-      .then(() => toast.success('Challenge link copied — same world, different choices.'))
+      .then(() => toast.success('Challenge link copied — same scenario and seed, clean baseline.'))
       .catch(() => toast.error('Could not copy the link — copy it from the address bar instead.'))
   }
   const onImportFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -1015,13 +1111,50 @@ export function SimulationView() {
     e.target.value = '' // allow re-importing the same file
     if (!file) return
     file.text().then((txt) => {
-      const ok = importSave(txt)
-      if (ok) toast.success('Simulation save imported.')
-      else toast.error('That file is not a valid simulation save.')
+      // W5.3: validate and PREVIEW before applying. A rejected import must
+      // leave the current run untouched and say what was wrong, rather than
+      // reporting a generic failure (or, as before, applying a malformed
+      // payload field by field).
+      let parsed: unknown
+      try {
+        parsed = JSON.parse(txt)
+      } catch {
+        toast.error('That file is not valid JSON.')
+        return
+      }
+      const result = validateSave(parsed)
+      if (!result.ok) {
+        toast.error(`Save not imported — ${result.errors.slice(0, 2).join('; ')}`)
+        return
+      }
+      // What the player is about to get back, and what this build cannot
+      // resolve (a resource the save references that no longer exists here).
+      const preview = previewSave(result.data, (id) => KNOWN_RESOURCE_IDS.has(id))
+      if (!importSave(txt)) {
+        toast.error('Save not imported — the run was left unchanged.')
+        return
+      }
+      const missing = preview.missingDependencies.length
+      toast.success(
+        `Restored ${preview.scenario} · ${preview.at} · ${preview.difficulty} — ` +
+          `${preview.evidenceCount} evidence record${preview.evidenceCount === 1 ? '' : 's'}` +
+          (preview.demonstrationCount > 0
+            ? ` (${preview.demonstrationCount} from demonstrations, not your own work)`
+            : '') +
+          (missing > 0 ? ` · ${missing} unresolved dependenc${missing === 1 ? 'y' : 'ies'}` : '')
+      )
     })
   }
   const docTypes = useMemo(() => new Set((docs ?? []).map((d) => d.type)), [docs])
-  const moduleDone = (id?: string) => !!id && moduleProgress[id]?.status === 'completed'
+  const runFp = runFingerprint(size, country, sector)
+  // W1: a learn step clears on the learner's own shared completion OR on this
+  // run's evidence — which is where a narrated demonstration is recorded. The
+  // two stay separate: the run advances without the shared curriculum being
+  // marked complete on the learner's behalf.
+  const moduleDone = (id?: string) =>
+    !!id &&
+    (moduleProgress[id]?.status === 'completed' ||
+      hasEvidence(evidence, { resourceId: id, kind: 'learn' }))
   // W7 (decision Q4 = shared, by design): activity completion is keyed by artifact
   // TYPE, not by which step produced it. So a doc of type T (e.g. a crypto-cbom)
   // satisfies EVERY step that produces T — confirming the P3 Transition tab (which
@@ -1030,8 +1163,43 @@ export function SimulationView() {
   // is intentional: a CBOM / architecture is ONE real deliverable — producing it
   // once legitimately satisfies the framework's "you have a CBOM" gate wherever it
   // recurs, rather than forcing the player to rebuild the same artifact per phase.
-  const artifactDone = (t?: ExecutiveDocumentType) => !!t && docTypes.has(t)
+  //
+  // W1.4: reuse stays legitimate, but TYPE alone is no longer the whole test —
+  // the document must also belong to this run's world (or predate the run).
+  const artifactDone = (t?: ExecutiveDocumentType) => {
+    if (!t) return false
+    const app = documentApplicability({
+      type: t,
+      docs: docs ?? [],
+      records: evidence,
+      fingerprint: runFp,
+    })
+    return app.present && app.matchesWorld
+  }
   const refDone = (id?: string) => !!id && visitedRefs.includes(id)
+  // W1.5: the learner's own work, recorded in the RUN. A Simulation check
+  // records comprehension of what the sim asked; it deliberately does NOT mark
+  // the shared Learn module complete on the learner's behalf, because one
+  // question is not the module's whole curriculum.
+  const recordLearnerEvidence = (
+    kind: EvidenceKind,
+    resourceId: string,
+    status: EvidenceStatus,
+    phase: string = sel
+  ) => {
+    const runId = `run-${seed}`
+    recordEvidence({
+      id: evidenceId(runId, phase, kind, resourceId),
+      runId,
+      phase: phase as PhaseId,
+      resourceId,
+      kind,
+      origin: 'learner',
+      status,
+      fingerprint: runFp,
+      createdAt: Date.now(),
+    })
+  }
   const autoKey = (phase: string, to: string) => `${phase}::${to}`
   // WS-04: how many migratable edges this run's architecture actually has — caps
   // an `architecture` step's minDecisions so a fixed threshold can never exceed
@@ -1099,24 +1267,34 @@ export function SimulationView() {
   // only to p3, which can't exceed L2.)
   const MAX_LEVEL = MATURITY_LEVEL_NAMES.length - 1 // levels run 0..4
   const topBandOf = (p: string): number => topBandLevel(SIM_TREES[p as PhaseId], MAX_LEVEL)
-  // A phase's achieved level rescaled onto the 0..MAX_LEVEL ladder relative to its
-  // own top band, so a fully-cleared short phase counts as maxed.
-  const normalizedLevelOf = (p: string): number =>
-    normalizeLevel(levelOf(p), topBandOf(p), MAX_LEVEL)
+  // W2.3 — FRAMEWORK maturity is the source's own 0..4 ladder, never rescaled
+  // against whatever this simulator happens to ship. A phase whose ladder stops
+  // at L2 reports 2. Rescaling it to 4 reported P3 L2 as fully mature and hid
+  // the framework's own L3/L4 criteria entirely.
+  const frameworkLevelOf = (p: string): number => frameworkLevel(levelOf(p), MAX_LEVEL)
+  // W2 — the framework cells this simulation cannot take the player through for
+  // the phase on screen. Shown in Progress so the gap is stated, not hidden.
+  const phaseUnsupported = FRAMEWORK_COVERAGE.filter(
+    (c) => c.phase === sel && c.status === 'unsupported'
+  )
 
   // DERIVED program maturity (0–5) — read-only. A completed assessment makes the
   // program "Aware" (Level 1); Levels 2–5 are EARNED from the sim, each domain
   // taking the weakest of its mapped phases' earned levels (normalized per-phase so
   // a phase at its own top band counts as maxed). Overall = the weakest domain.
-  const maturity = deriveMaturity(!!assessSnap, (p) => normalizedLevelOf(p))
+  const maturity = deriveMaturity(!!assessSnap, (p) => frameworkLevelOf(p))
 
   // T3.1 — sim-local readiness trend: the assessed org-readiness baseline vs the
   // projection earned by clearing framework maturity in-game. Sim-local only.
-  const maturityFrac =
-    LIFECYCLE.reduce((s, p) => s + phaseReadinessFraction(levelOf(p), topBandOf(p)), 0) /
+  // SCENARIO COMPLETION (not maturity): the share of the exercises this
+  // simulation actually offers that the player has finished.
+  const scenarioCompletionFrac =
+    LIFECYCLE.reduce((s, p) => s + scenarioCompletionFraction(levelOf(p), topBandOf(p)), 0) /
     LIFECYCLE.length
   const readinessTrend =
-    assessKpis != null ? projectReadiness(assessKpis.organizationalReadiness, maturityFrac) : null
+    assessKpis != null
+      ? projectReadiness(assessKpis.organizationalReadiness, scenarioCompletionFrac)
+      : null
 
   // setup-dial-derived facts
   const sizeOpt = SIZES.find((s) => s.id === size) ?? SIZES[1]
@@ -1150,7 +1328,16 @@ export function SimulationView() {
   const archetypeNotice = useArchetypeChangeNotice(assessProfile?.country)
 
   // Mosca clock (turn-aware: fractional year + CRQC shift) — derived in useSimClock (PR6).
-  const { clock, currentYear, horizonYear, simShelfLifeYears, simMigrationYears } = deriveSimClock({
+  const {
+    clock,
+    currentYear,
+    horizonYear,
+    threatHorizonYear,
+    regulatoryDueYear,
+    bindingHorizon,
+    simShelfLifeYears,
+    simMigrationYears,
+  } = deriveSimClock({
     year,
     q,
     country,
@@ -1174,7 +1361,17 @@ export function SimulationView() {
   // The run is COMPLETE only when every phase reaches its own top band (full maturity) — not
   // merely the L2 win bar. In the breadth-first climb, all-cleared-to-L2 happens at pass 2, so
   // the run-end ceremony must wait for the top-band pass (pass 4 ≈ 2035), not fire at pass 2.
-  const fullyMature = LIFECYCLE.every((p) => levelOf(p) >= topBandOf(p))
+  // Every phase cleared to the top of what this simulation SHIPS. That is
+  // scenario completion — the run is over — and deliberately NOT a claim of
+  // framework maturity, which stays incomplete while any source cell has no
+  // supported evidence path (see frameworkCoverage.ts).
+  const scenarioComplete = LIFECYCLE.every((p) => levelOf(p) >= topBandOf(p))
+  // A run can complete every exercise the simulation offers (scenarioComplete)
+  // without the simulation covering every framework criterion. Only the second
+  // condition licenses a "full framework maturity" claim, and it is false while
+  // any source cell lacks a supported evidence path.
+  const claimsFullFrameworkMaturity = scenarioComplete && hasCompleteCoverage()
+
   // WP2.7 — ceremony-stacking guard: a "Play This Phase" run that happens to
   // clear the LAST phase needed for full maturity would otherwise open BOTH
   // this phase's end screen AND the run-complete ceremony at once (two
@@ -1184,7 +1381,7 @@ export function SimulationView() {
   // true this render; the player sees the run ceremony instead.
   useEffect(() => {
     if (isPhaseMode(autoRunPlayer.mode) && autoRunPlayer.done) {
-      if (!phaseRunCelebratedRef.current && !fullyMature) {
+      if (!phaseRunCelebratedRef.current && !scenarioComplete) {
         phaseRunCelebratedRef.current = true
         setPhaseRunDoneOpen(true)
       }
@@ -1192,18 +1389,20 @@ export function SimulationView() {
       phaseRunCelebratedRef.current = false
       setPhaseRunDoneOpen(false)
     }
-  }, [autoRunPlayer.mode, autoRunPlayer.done, fullyMature])
+  }, [autoRunPlayer.mode, autoRunPlayer.done, scenarioComplete])
   // Transformation status — the board headline (3 objectives + 4 tracks + dynamic HNDL
   // exposure), scenario-driven. Replaces the static, unwinnable Mosca "over by N years" gauge.
   const txStatus = transformationStatus({
     scenario: getScenario(country),
     // Continuous (avg normalized fraction × MAX) so the headline climbs SMOOTHLY rather than
     // sitting frozen at the weakest-domain integer until the slowest phase crosses a level.
-    programMaturity: maturityFrac * MAX_LEVEL,
+    // W2.3: the framework ladder, averaged — NOT scenario completion stretched
+    // to 0..4, which reported a shortened ladder as full program maturity.
+    programMaturity: LIFECYCLE.reduce((sum, p) => sum + frameworkLevelOf(p), 0) / LIFECYCLE.length,
     p0Level: levelOf('p0'),
     // Grounded: the share of vulnerable edges actually migrated (both gates), not raw P5 progress.
     migrationFraction: readiness.vulnerable ? readiness.migrated / readiness.vulnerable : 0,
-    allAtTopBand: fullyMature,
+    allAtTopBand: scenarioComplete,
     currentYear: year,
   })
   // WP2.2: the ONE program-progress object every UI surface (ribbon, the
@@ -1214,7 +1413,7 @@ export function SimulationView() {
     lifecyclePhases: LIFECYCLE,
     levelOf,
     winLevel: PHASE_WIN_LEVEL,
-    fullyMature,
+    fullyMature: scenarioComplete,
     txStatus,
   })
 
@@ -1229,7 +1428,7 @@ export function SimulationView() {
   // own score card — computed once so both read the same number.
   const objectivesOnTime = scoreboard.objectives.filter((o) => o.onTime === 'done').length
   useEffect(() => {
-    if (!fullyMature || runCompleteSeen) return
+    if (!scenarioComplete || runCompleteSeen) return
     const id = setTimeout(() => {
       setRunCompleteOpen(true)
       markRunComplete()
@@ -1237,7 +1436,7 @@ export function SimulationView() {
     }, 0)
     return () => clearTimeout(id)
   }, [
-    fullyMature,
+    scenarioComplete,
     runCompleteSeen,
     markRunComplete,
     recordSimRunCompletion,
@@ -1278,9 +1477,15 @@ export function SimulationView() {
   const exposure = exposeAssets(portfolioFor(sector, sizeKey), threat.hndl.score, threat.tnfl.score)
   const assets = exposure.rows
   const exposedValueM = exposure.totalM
-  const insurancePolicyM = insuranceCoverage(sizeKey, exposure.rows)
-  const premiumM = insurancePremium(insurancePolicyM)
-  const uninsuredM = Math.max(0, Math.round((exposedValueM - insurancePolicyM) * 10) / 10)
+  // W4.6 — the insurance hypothetical is OPT-IN. Off by default, the scenario
+  // makes no coverage assumption at all: quantum-exposed value stands on its
+  // own rather than being silently reduced by a policy the player never bought
+  // and whose limits/exclusions were never stated.
+  const insurancePolicyM = insuranceAssumed ? insuranceCoverage(sizeKey, exposure.rows) : 0
+  const premiumM = insuranceAssumed ? insurancePremium(insurancePolicyM) : 0
+  const uninsuredM = insuranceAssumed
+    ? Math.max(0, Math.round((exposedValueM - insurancePolicyM) * 10) / 10)
+    : exposedValueM
 
   // ---- budget: starts at €0, earned by executing P0 activities + P0 maturity ----
   const p0Tree = SIM_TREES.p0
@@ -1410,6 +1615,12 @@ export function SimulationView() {
     )
     .filter((m) => isGatingStep(m.step))
   const nextMove = firstOpenIdx < 0 ? null : (stepMeta[firstOpenIdx] ?? null)
+  // W3: the attempt already recorded for this exact step (run/phase/activity/
+  // step), so a reload or rerender re-renders the decision the player made
+  // rather than reopening it.
+  const nextMoveAttempt = nextMove
+    ? attempts[`${sel}:${nextMove.act.id}:${nextMove.step.to}`]
+    : undefined
   // Assess recommendation matching the current next-move's learn module (badge only)
   const nextMoveRec =
     nextMove?.step.kind === 'learn' && nextMove.step.moduleId
@@ -1495,7 +1706,7 @@ export function SimulationView() {
     over: clock.over,
     // Wave 5 (WP5.1) — additive: the same live values the ribbon/ceremony
     // already compute, captured at commit time for the /report section.
-    compliancePct: readiness.compliancePct,
+    alignmentPct: readiness.alignmentPct,
     objectives: scoreboard.objectives.map((o) => ({
       id: o.id,
       label: o.label,
@@ -1507,7 +1718,7 @@ export function SimulationView() {
       quartersUsed: (year - RUN_START.year) * 4 + (q - RUN_START.q),
       difficulty,
       trapsThisRun,
-      compliancePct: readiness.compliancePct,
+      alignmentPct: readiness.alignmentPct,
       objectivesOnTime,
       objectivesTotal: scoreboard.objectives.length,
     }),
@@ -1537,7 +1748,12 @@ export function SimulationView() {
   // organization (single source of truth). With no completed assessment there is
   // nothing to scope the run from, so we show a prompt instead of the console.
   // The page identity (header + Exit to hub) stays; the dials/board/KPIs do not.
-  if (!assessSnap) {
+  // W5.3 — an imported/restored run stands on its own: the save carries the
+  // scenario the assessment would otherwise supply, and it may hold real
+  // progress. Gating it behind a fresh assessment made a shared or restored run
+  // unopenable in a clean browser.
+  const hasRestoredRun = evidence.length > 0 || Object.keys(attempts).length > 0
+  if (!assessSnap && !hasRestoredRun) {
     return (
       <div className="fixed inset-0 flex flex-col bg-background text-foreground">
         <header className="flex shrink-0 flex-wrap items-center gap-3 bg-foreground px-4 py-2 text-background">
@@ -1619,6 +1835,25 @@ export function SimulationView() {
               >
                 ▶ Watch the full migration (sample org)
               </Button>
+              {/* W5.3 — an imported run must be reachable BEFORE this gate.
+                  A save carries its own scenario (size/sector/country), so
+                  requiring a fresh assessment first made a shared or restored
+                  run unopenable in a clean browser. */}
+              <Button
+                variant="outline"
+                onClick={() => importFileRef.current?.click()}
+                className="h-auto w-full whitespace-normal py-2.5 text-[13px]"
+              >
+                Import a saved run
+              </Button>
+              <input
+                ref={importFileRef}
+                type="file"
+                accept="application/json,.json"
+                onChange={onImportFile}
+                className="hidden"
+                aria-hidden="true"
+              />
               <Button
                 variant="outline"
                 onClick={loadSampleOrg}
@@ -1756,7 +1991,9 @@ export function SimulationView() {
                       if (q) {
                         setQuizGate({ moduleId, title: step.label, question: q })
                       } else {
-                        updateModuleProgress(moduleId, { status: 'completed' })
+                        // No check exists for this module: record it as read,
+                        // self-reported. Never claim it was comprehension-checked.
+                        recordLearnerEvidence('learn', moduleId, 'viewed')
                       }
                     }}
                     className="mt-2 h-auto w-full rounded-md border border-success/50 bg-success/10 px-3 py-2 text-[11px] font-bold text-success hover:bg-success/20"
@@ -1892,6 +2129,10 @@ export function SimulationView() {
             assessRec={nextMoveRec}
             onTrapPicked={incrementTrapsThisRun}
             allowRetry={balance.decisions.freeRetryOnWrongPick}
+            runSeed={seed}
+            attempt={nextMoveAttempt}
+            onDecide={recordAttempt}
+            onClearAttempt={clearAttempt}
             // WS-1: mirrors the desktop DecisionSection instance exactly (incl.
             // the p5 edge-decision rollback) — this used to hard-code p0/p1's
             // formula only, which was correct while mobile play was p0/p1-only
@@ -1937,7 +2178,7 @@ export function SimulationView() {
               moduleTitle={quizGate.title}
               onCancel={() => setQuizGate(null)}
               onPass={() => {
-                updateModuleProgress(quizGate.moduleId, { status: 'completed' })
+                recordLearnerEvidence('learn', quizGate.moduleId, 'comprehension-checked')
                 setQuizGate(null)
               }}
             />
@@ -2142,7 +2383,9 @@ export function SimulationView() {
               { label: 'Program complete', value: scoreboard.complete ? 'Yes ✓' : 'Not yet' },
               {
                 label: 'Quantum-exposed value',
-                value: `€${Math.round(exposedValueM)}M (€${Math.round(uninsuredM)}M uninsured)`,
+                value: insuranceAssumed
+                  ? `€${Math.round(exposedValueM)}M (€${Math.round(uninsuredM)}M uninsured)`
+                  : `€${Math.round(exposedValueM)}M exposed (illustrative)`,
               },
               { label: 'Years to act (Mosca)', value: `${clock.yearsToHorizon.toFixed(1)}y` },
               {
@@ -2502,7 +2745,15 @@ export function SimulationView() {
                     between 2026-08-02 and 2026-08-09 (the build died at gate:precache),
                     which is why a week passed before it surfaced. */}
                 <PlanningBadge
-                  tip={`Years to Q-Day — horizon ≈ ${horizonYear} · X+Y>Z. The Q-Day horizon is an illustrative planning anchor, not a published date.`}
+                  tip={
+                    `Years to the planning anchor (${horizonYear}) — the EARLIER of two different things, shown apart because they mean different things:` +
+                    ` • Threat horizon ${threatHorizonYear} — this scenario's illustrative CRQC planning estimate. Not a published date, and not moved by any regulation.` +
+                    (regulatoryDueYear !== null
+                      ? ` • Regulatory due date ${regulatoryDueYear} — a dated obligation for this jurisdiction. A legal deadline, not a forecast.`
+                      : ' • Regulatory due date: none on file for this jurisdiction — which is not the same as having no deadline.') +
+                    ` Currently binding: the ${bindingHorizon === 'regulatory' ? 'regulatory due date' : 'threat horizon'}.` +
+                    ' Mosca: migrate when shelf life (X) + migration time (Y) exceeds the time remaining (Z).'
+                  }
                   // a11y: same fix as the shelf-life badge above.
                   className="border-background/40 bg-background/10 text-background decoration-background/60 hover:bg-background/20"
                 />
@@ -2777,15 +3028,16 @@ export function SimulationView() {
               {learnEmbed &&
                 (() => {
                   const done = moduleDone(learnEmbed.moduleId)
-                  const hasGate = questionsForModule(learnEmbed.moduleId).length > 0
+                  const coverage = gateCoverageFor(learnEmbed.moduleId)
+                  const hasGate = coverage.state === 'checked'
                   return (
                     <span className="flex shrink-0 items-center gap-1.5">
-                      {done && !hasGate && (
+                      {!hasGate && (
                         <span
                           className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted-foreground"
-                          title="No quiz question exists yet for this module — completion is self-reported, not comprehension-checked."
+                          title="No comprehension check exists for this module yet — marking it done is self-reported, not checked."
                         >
-                          self-attested
+                          check unavailable
                         </span>
                       )}
                       <Button
@@ -2804,7 +3056,7 @@ export function SimulationView() {
                               question: q,
                             })
                           } else {
-                            updateModuleProgress(learnEmbed.moduleId, { status: 'completed' })
+                            recordLearnerEvidence('learn', learnEmbed.moduleId, 'viewed')
                           }
                         }}
                         aria-pressed={done}
@@ -3088,7 +3340,7 @@ export function SimulationView() {
                       {LIFECYCLE.map((p) => {
                         const fp = FRAMEWORK_PHASES[p]
                         const lv = levelOf(p)
-                        const dlv = normalizedLevelOf(p) // 0–4 against the phase's own top band
+                        const dlv = frameworkLevelOf(p) // 0–4 on the framework's own ladder
                         const isCleared = lv >= PHASE_WIN_LEVEL
                         const current = p === sel
                         const owner = Object.values(ROLE_CROSSWALK).some(
@@ -3355,6 +3607,10 @@ export function SimulationView() {
                         assessRec={nextMoveRec}
                         onTrapPicked={incrementTrapsThisRun}
                         allowRetry={balance.decisions.freeRetryOnWrongPick}
+                        runSeed={seed}
+                        attempt={nextMoveAttempt}
+                        onDecide={recordAttempt}
+                        onClearAttempt={clearAttempt}
                         wrongPickCostQuarters={sel === 'p1' || sel === 'p5' ? 2 : 1}
                         onWrongPick={(label) => {
                           // WP4.4 — uniform stakes: 1 quarter of rework everywhere, 2 on
@@ -3460,6 +3716,26 @@ export function SimulationView() {
                             )}{' '}
                             <span className="italic">(rises as you complete phases)</span>
                           </p>
+                          {/* W2 — publish the supported scope. A band the
+                              simulation does not implement stays VISIBLE as
+                              unsupported instead of silently vanishing from the
+                              ladder, which is what let a shortened ladder read
+                              as full maturity. */}
+                          {phaseUnsupported.length > 0 && (
+                            <p className="mb-2 rounded-md border border-border bg-muted/40 px-2 py-1.5 text-sim-micro leading-snug text-muted-foreground">
+                              <span className="font-bold text-foreground">
+                                Not practised in this simulation:
+                              </span>{' '}
+                              {phaseUnsupported
+                                .map((c) => `L${c.level} — ${c.criterion}`)
+                                .join(' · ')}{' '}
+                              <span className="italic">
+                                These are real framework criteria (v2.1, p.
+                                {phaseUnsupported[0]!.sourcePage}); the simulation has no exercise
+                                for them yet, so this phase cannot demonstrate them.
+                              </span>
+                            </p>
+                          )}
                           {/* ANY-ORDER WITHIN THE ACTIVE LEVEL: the in-progress band (the first
                     not-yet-earned band, in ascending order) expands its steps as
                     individually-openable controls — the player can open/complete ALL of
@@ -4103,48 +4379,84 @@ export function SimulationView() {
                             </div>
                           )}
 
-                          {/* Cyber insurance — policy limit vs the quantum-exposed value */}
+                          {/* Cyber insurance — an OPTIONAL hypothetical (W4.6) */}
                           <div className="mt-3 border-t border-border pt-2.5">
-                            <span className="mb-1 block text-sim-micro font-semibold text-muted-foreground">
-                              Cyber insurance
-                            </span>
-                            <div className="flex items-baseline justify-between">
-                              <span className="text-[19px] font-extrabold text-foreground">
-                                €{insurancePolicyM}M
+                            <div className="mb-1 flex items-center justify-between gap-2">
+                              <span className="block text-sim-micro font-semibold text-muted-foreground">
+                                Cyber insurance{' '}
+                                <span className="font-normal">· optional assumption</span>
                               </span>
-                              <span className="font-mono text-sim-micro text-muted-foreground">
-                                covers critical + high
-                              </span>
-                            </div>
-                            <div className="mt-0.5 flex items-center justify-between font-mono text-sim-micro">
-                              <span className="text-muted-foreground">Annual premium · 0.15%</span>
-                              <span className="font-bold text-foreground">
-                                {premiumM >= 1
-                                  ? `€${premiumM}M`
-                                  : `€${Math.round(premiumM * 1000)}k`}
-                                /yr
-                              </span>
-                            </div>
-                            <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
-                              <div
-                                className={
-                                  uninsuredM > 0 ? 'h-full bg-warning' : 'h-full bg-success'
-                                }
-                                style={{
-                                  width: `${exposedValueM > 0 ? Math.min(100, (Math.min(insurancePolicyM, exposedValueM) / exposedValueM) * 100) : 100}%`,
-                                }}
-                              />
-                            </div>
-                            <div className="mt-1.5 flex items-center justify-between font-mono text-sim-micro">
-                              <span className="text-muted-foreground">
-                                Uninsured quantum exposure
-                              </span>
-                              <span
-                                className={`font-bold ${uninsuredM > 0 ? 'text-destructive' : 'text-success'}`}
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                aria-pressed={insuranceAssumed}
+                                onClick={() => setInsuranceAssumed(!insuranceAssumed)}
+                                className="h-auto rounded-md border border-border px-2 py-0.5 font-mono text-sim-micro font-bold text-foreground"
                               >
-                                €{uninsuredM}M
-                              </span>
+                                {insuranceAssumed ? 'on' : 'off'}
+                              </Button>
                             </div>
+                            {!insuranceAssumed && (
+                              <p className="text-sim-micro leading-snug text-muted-foreground">
+                                No policy is assumed, so none of the exposure above is treated as
+                                covered. Switch this on to model a hypothetical policy — it does not
+                                reduce quantum risk, it only transfers part of the modelled
+                                financial loss.
+                              </p>
+                            )}
+                            {insuranceAssumed && (
+                              <p className="mb-1.5 text-sim-micro leading-snug text-muted-foreground">
+                                Hypothetical policy. Assumes a size-based limit raised to cover
+                                critical + high tier value, a 0.15% annual premium, and no
+                                exclusions. Real cyber policies commonly exclude unremediated known
+                                vulnerabilities and may not pay out on harvested data decrypted
+                                years later — model this as a planning input, not protection you
+                                have.
+                              </p>
+                            )}
+                            {insuranceAssumed && (
+                              <>
+                                <div className="flex items-baseline justify-between">
+                                  <span className="text-[19px] font-extrabold text-foreground">
+                                    €{insurancePolicyM}M
+                                  </span>
+                                  <span className="font-mono text-sim-micro text-muted-foreground">
+                                    covers critical + high
+                                  </span>
+                                </div>
+                                <div className="mt-0.5 flex items-center justify-between font-mono text-sim-micro">
+                                  <span className="text-muted-foreground">
+                                    Annual premium · 0.15%
+                                  </span>
+                                  <span className="font-bold text-foreground">
+                                    {premiumM >= 1
+                                      ? `€${premiumM}M`
+                                      : `€${Math.round(premiumM * 1000)}k`}
+                                    /yr
+                                  </span>
+                                </div>
+                                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
+                                  <div
+                                    className={
+                                      uninsuredM > 0 ? 'h-full bg-warning' : 'h-full bg-success'
+                                    }
+                                    style={{
+                                      width: `${exposedValueM > 0 ? Math.min(100, (Math.min(insurancePolicyM, exposedValueM) / exposedValueM) * 100) : 100}%`,
+                                    }}
+                                  />
+                                </div>
+                                <div className="mt-1.5 flex items-center justify-between font-mono text-sim-micro">
+                                  <span className="text-muted-foreground">
+                                    Uninsured quantum exposure
+                                  </span>
+                                  <span
+                                    className={`font-bold ${uninsuredM > 0 ? 'text-destructive' : 'text-success'}`}
+                                  >
+                                    €{uninsuredM}M
+                                  </span>
+                                </div>
+                              </>
+                            )}
                           </div>
                         </div>
 
@@ -4555,7 +4867,7 @@ export function SimulationView() {
             moduleTitle={quizGate.title}
             onCancel={() => setQuizGate(null)}
             onPass={() => {
-              updateModuleProgress(quizGate.moduleId, { status: 'completed' })
+              recordLearnerEvidence('learn', quizGate.moduleId, 'comprehension-checked')
               setQuizGate(null)
             }}
           />
@@ -4565,8 +4877,8 @@ export function SimulationView() {
         )}
         {pendingConfirm === 'reset' && (
           <SimConfirmDialog
-            title="Reset the simulation?"
-            description="This clears the simulation's Learn-module and activity progress. Your assessment is kept."
+            title="Reset the run?"
+            description="Clears this run: decisions and attempts, quarters and budget, run evidence, and the simulation-tracked module progress and documents it created. KEPT: your assessment, your own Learn progress and documents from outside the simulation, and your lifetime achievements. This starts a clean practice replay — it does not erase your learning history."
             confirmLabel="Reset run"
             onCancel={() => setPendingConfirm(null)}
             onConfirm={() => {
@@ -4674,12 +4986,13 @@ export function SimulationView() {
             achievedYear: objectiveAchievedYears[o.id],
           }))}
           maturity={scoreboard.maturity}
+          claimsFullFrameworkMaturity={claimsFullFrameworkMaturity}
           programEndYear={getScenario(country).programEndYear}
           score={computeRunScore({
             quartersUsed: (year - RUN_START.year) * 4 + (q - RUN_START.q),
             difficulty,
             trapsThisRun,
-            compliancePct: readiness.compliancePct,
+            alignmentPct: readiness.alignmentPct,
             objectivesOnTime,
             objectivesTotal: scoreboard.objectives.length,
           })}

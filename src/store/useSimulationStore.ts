@@ -14,8 +14,19 @@ import type { SimulationData } from '@/services/storage/snapshotTypes'
 import type { DifficultyId } from '@/data/simBalance'
 import { newSeed } from '@/simulation/rng'
 import type { QuarterEffects } from '@/simulation/quarterEngine'
+import { upsertEvidence, type SimEvidenceRecord } from '@/simulation/evidence'
+import { validateSave, SAVE_SCHEMA_VERSION, SAVE_KIND } from '@/simulation/saveSchema'
 
 const DIFFICULTIES: DifficultyId[] = ['easy', 'realistic', 'hard']
+
+/** A decision the player has already submitted for one tree step. */
+export interface DecisionAttempt {
+  /** Index of the option chosen, in the order the player actually saw. */
+  index: number
+  correct: boolean
+  /** Quarter stamp when it was answered, for the run debrief. */
+  at: string
+}
 
 export interface SimulationState {
   size: string
@@ -85,6 +96,27 @@ export interface SimulationState {
   catalogCompleted: string[]
   /** Tree step keys (`${phase}::${to}`) delegated to / auto-done by the AI team. */
   auto: string[]
+  /** W5.5 — the selected phase tab (Decide/Progress/Resources/Signals).
+   *  Run-local navigation state, persisted: it used to be component state, so a
+   *  reload or a navigate-away-and-back always dropped the player back on
+   *  Decide even if they were working in Resources. Still resets to 'decide' on
+   *  a deliberate phase switch, which is a different thing from a reload. */
+  activeTab: string
+  /** W4.6 — whether the OPTIONAL cyber-insurance hypothetical is switched on.
+   *  Default false: the scenario used to compute a policy limit automatically
+   *  and subtract it from quantum exposure, which read as coverage the player
+   *  had established rather than an assumption the model made for them. */
+  insuranceAssumed: boolean
+  /** W3 — one decision, one attempt. Keyed by run/phase/activity/step rather
+   *  than by the displayed step counter, so the same move cannot be answered
+   *  twice (a repeat click used to re-charge the setback) and a reload does not
+   *  reopen a decision the player already made. */
+  attempts: Record<string, DecisionAttempt>
+  /** W1 — run-scoped evidence: what was touched, how far the learner got, and
+   *  who produced it. Kept HERE rather than in the shared Learn/document stores
+   *  so a narrated demonstration can never be mistaken for the learner's own
+   *  curriculum progress. Cleared by RESET; travels in a run export. */
+  evidence: SimEvidenceRecord[]
   /** Deterministic run seed — same seed + same turn reproduces a quarter. */
   seed: number
   /** Difficulty preset selecting the active SIM_BALANCE (WS-14). */
@@ -187,6 +219,18 @@ export interface SimulationState {
   autoCompleteSteps: (keys: string[]) => void
   /** Cancel auto-completion for a phase (remove its `${phase}::` keys). */
   clearAuto: (phase: string) => void
+  /** W5.5 — select the phase tab. */
+  setActiveTab: (tab: string) => void
+  /** W4.6 — toggle the optional cyber-insurance hypothetical. */
+  setInsuranceAssumed: (on: boolean) => void
+  /** W3 — record the player's single attempt at one decision step. */
+  recordAttempt: (key: string, index: number, correct: boolean) => void
+  /** W3 — clear an attempt so it can be retried (Easy's advertised free retry). */
+  clearAttempt: (key: string) => void
+  /** W1 — file a run-scoped evidence record. Upserts by id, keeping the
+   *  strongest status seen and never letting a demonstration overwrite
+   *  learner-authored provenance. */
+  recordEvidence: (record: SimEvidenceRecord) => void
   /** Select a difficulty preset (WS-14). */
   setDifficulty: (d: DifficultyId) => void
   /** Wave 4 (WP4.6) — set the run's deterministic seed. Callers gate this to a
@@ -221,19 +265,14 @@ const SEED = {
   year: 2026,
   q: 1,
   crqcShift: 0,
-  events: [
-    {
-      sev: 'danger',
-      t: 'Q3 2026',
-      txt: 'Harvest-now capture suspected on classical TLS — patient records exposed',
-    },
-    {
-      sev: 'success',
-      t: 'Q2 2026',
-      txt: 'CycloneDX CBOM published for Layers 1–2 — Phase 2 cleared',
-    },
-    { sev: 'info', t: 'Q2 2026', txt: 'Your TLS stack ships hardware-accelerated ML-DSA' },
-  ] as SimEvent[],
+  // W4.8: a run starts with an EMPTY history. This used to seed three
+  // hand-authored events — dated Q2/Q3 2026 in a run that begins at Q1 2026,
+  // including a healthcare-worded breach line that shipped in financial-sector
+  // samples and a "Phase 2 cleared" achievement the player had not earned.
+  // Exported saves carried all of it as though it had happened. Real events are
+  // drawn per quarter from simEvents.ts, which already fills sector/country/
+  // authority from the actual run state.
+  events: [] as SimEvent[],
   mobilePlayOpen: false,
   autoRunResumeIndex: 0,
   autoRunLastMode: null as string | null,
@@ -245,6 +284,10 @@ const SEED = {
   picks: [] as string[],
   catalogCompleted: [] as string[],
   auto: [] as string[],
+  evidence: [] as SimEvidenceRecord[],
+  attempts: {} as Record<string, DecisionAttempt>,
+  insuranceAssumed: false,
+  activeTab: 'decide',
   seed: 0, // replaced with a fresh seed on create / reset / migrate
   difficulty: 'realistic' as DifficultyId,
   securedBudgetM: 0,
@@ -256,8 +299,7 @@ const SEED = {
  *  used calculation) don't hardcode a copy of SEED.year/q that could drift. */
 export const RUN_START = { year: SEED.year, q: SEED.q }
 
-const STORE_VERSION = 17
-const SAVE_KIND = 'pqc-simulation-save'
+const STORE_VERSION = SAVE_SCHEMA_VERSION
 
 const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null
 
@@ -304,6 +346,16 @@ export function migrateSimulationState(persisted: unknown) {
     picks: Array.isArray(s.picks) ? (s.picks as string[]) : [],
     catalogCompleted: Array.isArray(s.catalogCompleted) ? (s.catalogCompleted as string[]) : [],
     auto: Array.isArray(s.auto) ? (s.auto as string[]) : [],
+    // W1 (v18): evidence carries provenance, and pre-v18 runs never recorded
+    // any. We deliberately do NOT synthesise records for the old markers: who
+    // completed a historic step (the learner, or a narrated autorun) was never
+    // stored, and inventing an origin would be exactly the false-confidence
+    // problem this field exists to remove. The old markers are preserved above
+    // and keep working; evidence accrues from here on.
+    evidence: Array.isArray(s.evidence) ? (s.evidence as SimEvidenceRecord[]) : [],
+    attempts: isRecord(s.attempts) ? (s.attempts as Record<string, DecisionAttempt>) : {},
+    insuranceAssumed: typeof s.insuranceAssumed === 'boolean' ? s.insuranceAssumed : false,
+    activeTab: typeof s.activeTab === 'string' ? s.activeTab : 'decide',
     seed: typeof s.seed === 'number' ? (s.seed as number) : newSeed(),
     difficulty: asDifficulty(s.difficulty),
     tourSeen: typeof s.tourSeen === 'boolean' ? s.tourSeen : false,
@@ -355,6 +407,13 @@ const saveSlice = (s: SimulationState): SimulationData => ({
   securedBudgetM: s.securedBudgetM,
   spentBudgetM: s.spentBudgetM,
   trapsThisRun: s.trapsThisRun,
+  evidence: s.evidence,
+  attempts: s.attempts,
+  insuranceAssumed: s.insuranceAssumed,
+  activeTab: s.activeTab,
+  // W5: the run's results depend on this — omitting it made every export
+  // silently lose the on-time objective record it is graded against.
+  objectiveAchievedYears: s.objectiveAchievedYears,
 })
 
 function fromSave(s: Record<string, unknown>) {
@@ -384,6 +443,13 @@ function fromSave(s: Record<string, unknown>) {
     securedBudgetM: typeof s.securedBudgetM === 'number' ? (s.securedBudgetM as number) : 0,
     spentBudgetM: typeof s.spentBudgetM === 'number' ? (s.spentBudgetM as number) : 0,
     trapsThisRun: typeof s.trapsThisRun === 'number' ? (s.trapsThisRun as number) : 0,
+    evidence: Array.isArray(s.evidence) ? (s.evidence as SimEvidenceRecord[]) : [],
+    attempts: isRecord(s.attempts) ? (s.attempts as Record<string, DecisionAttempt>) : {},
+    insuranceAssumed: typeof s.insuranceAssumed === 'boolean' ? s.insuranceAssumed : false,
+    activeTab: typeof s.activeTab === 'string' ? s.activeTab : 'decide',
+    objectiveAchievedYears: isRecord(s.objectiveAchievedYears)
+      ? (s.objectiveAchievedYears as Record<string, number>)
+      : {},
   }
 }
 
@@ -497,6 +563,29 @@ export const useSimulationStore = create<SimulationState>()(
         set((s) => ({ auto: Array.from(new Set([...s.auto, ...keys])) })),
       clearAuto: (phase) =>
         set((s) => ({ auto: s.auto.filter((k) => !k.startsWith(`${phase}::`)) })),
+      setActiveTab: (activeTab) => set({ activeTab }),
+      setInsuranceAssumed: (insuranceAssumed) => set({ insuranceAssumed }),
+      recordAttempt: (key, index, correct) =>
+        set((s) =>
+          // First answer wins: a repeat submission is ignored outright rather
+          // than re-charging the consequence.
+          s.attempts[key]
+            ? s
+            : {
+                attempts: {
+                  ...s.attempts,
+                  [key]: { index, correct, at: `Q${s.q} ${s.year}` },
+                },
+              }
+        ),
+      clearAttempt: (key) =>
+        set((s) => {
+          if (!s.attempts[key]) return s
+          const attempts = { ...s.attempts }
+          delete attempts[key]
+          return { attempts }
+        }),
+      recordEvidence: (record) => set((s) => ({ evidence: upsertEvidence(s.evidence, record) })),
       setSecuredBudget: (m) => set({ securedBudgetM: m }),
       spendBudget: (m) => set((s) => ({ spentBudgetM: Math.max(0, s.spentBudgetM + m) })),
       creditBudget: (m) => set((s) => ({ spentBudgetM: Math.max(0, s.spentBudgetM - m) })),
@@ -529,12 +618,14 @@ export const useSimulationStore = create<SimulationState>()(
           null,
           2
         ),
+      // W5: validate the WHOLE payload before touching the run. A rejected
+      // import leaves the current run exactly as it was; the errors are
+      // available via validateSave for callers that want to show them.
       importSave: (json) => {
         try {
-          const parsed = JSON.parse(json) as unknown
-          if (!isRecord(parsed) || parsed.kind !== SAVE_KIND || !isRecord(parsed.state))
-            return false
-          set(fromSave(parsed.state))
+          const result = validateSave(JSON.parse(json) as unknown)
+          if (!result.ok) return false
+          set(fromSave(result.data as unknown as Record<string, unknown>))
           return true
         } catch {
           return false

@@ -23,13 +23,23 @@ function renderCeremony(props: Partial<SimRunCompleteProps> = {}) {
 describe('SimRunComplete (run-end ceremony)', () => {
   beforeEach(() => clearTrapTally())
 
+  it('claims full maturity ONLY when the framework is fully covered', () => {
+    renderCeremony({ claimsFullFrameworkMaturity: true })
+    expect(screen.getByText(/operating at full maturity through 2035/i)).toBeInTheDocument()
+    expect(screen.queryByText(/not full framework maturity/i)).not.toBeInTheDocument()
+  })
+
   it('celebrates the three objectives + maturity when all are met', () => {
     renderCeremony()
     expect(screen.getByRole('dialog', { name: /migration program complete/i })).toBeInTheDocument()
     expect(screen.getByText(/Program maturity 4 \/ 4/i)).toBeInTheDocument()
     expect(screen.getByText('Critical assets protected')).toBeInTheDocument()
     expect(screen.getByText('Migration completed')).toBeInTheDocument()
-    expect(screen.getByText(/operating at full maturity through 2035/i)).toBeInTheDocument()
+    // W2.3: finishing every exercise the simulation offers is SCENARIO
+    // completion. While the simulation does not cover every framework
+    // criterion, the ceremony must not claim full framework maturity.
+    expect(screen.getByText(/not full framework maturity/i)).toBeInTheDocument()
+    expect(screen.queryByText(/operating at full maturity through 2035/i)).not.toBeInTheDocument()
   })
 
   it('shows the actual achievement year (on-time when achieved by the target)', () => {
@@ -125,7 +135,8 @@ describe('SimRunComplete (run-end ceremony)', () => {
         parQuarters: 20,
         paceScore: 100,
         trapScore: 90,
-        complianceScore: 100,
+        alignmentScore: 100,
+        scoredComponents: 4,
         onTimeScore: 90,
       },
     })
@@ -144,7 +155,8 @@ describe('SimRunComplete (run-end ceremony)', () => {
         parQuarters: 24,
         paceScore: 20,
         trapScore: 30,
-        complianceScore: 50,
+        alignmentScore: 50,
+        scoredComponents: 4,
         onTimeScore: 60,
       },
     })

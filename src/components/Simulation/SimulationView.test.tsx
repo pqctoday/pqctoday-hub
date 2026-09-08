@@ -318,11 +318,29 @@ describe('SimulationView (Mission Control)', () => {
       }
       // Option A: the AI advances progress only via real tree `auto` keys — there is
       // no separate progression counter to drift out of sync with the board.
-      // Phase ids can be hyphenated (e.g. 'verify-close', frameworkPhases.ts) —
-      // the old [a-z0-9]+ class never matched those, so this failed deterministically
-      // once the AI autoplay reached that phase, not just on an unlucky seed.
+      // Keys are `${phaseId}::${step.to}`. Phase ids can be hyphenated (e.g.
+      // 'verify-close', frameworkPhases.ts) — the original [a-z0-9]+ class never
+      // matched those, so this failed deterministically once the AI autoplay
+      // reached that phase, not just on an unlucky seed.
+      //
+      // Merge note (2026-09-08): main fixed that by widening the regex to
+      // /^[a-z0-9-]+::.+/. This branch replaces the shape check entirely and
+      // validates BOTH halves against the real trees, which is what W0.4 asked
+      // for ("validate against known phase IDs, including verify-close. Retain
+      // the assertion's requirement for a valid step reference"). A widened
+      // regex still passes for a phase id that does not exist and a step that
+      // was renamed; this does not. Strictly stronger, so it supersedes.
       const { auto } = useSimulationStore.getState()
-      for (const k of auto) expect(k).toMatch(/^[a-z0-9-]+::.+/)
+      for (const k of auto) {
+        const sep = k.indexOf('::')
+        expect(sep).toBeGreaterThan(0)
+        const phaseId = k.slice(0, sep)
+        const to = k.slice(sep + 2)
+        const tree = SIM_TREES[phaseId as keyof typeof SIM_TREES]
+        expect(tree, `unknown phase id in auto key: ${k}`).toBeDefined()
+        const steps = flattenTree(tree!).map((s) => s.to)
+        expect(steps, `auto key does not reference a real step: ${k}`).toContain(to)
+      }
     }
   )
 
@@ -663,18 +681,41 @@ describe('SimulationView — mobile-ux-layer Brief+check kinds (WS-2/WS-3)', () 
     mockUseIsMobileShell.mockReturnValue(false)
   })
 
-  /** Picks whichever option resolves "Right call" (tries A/B/C — content is
-   *  real framework data, not asserted against directly here). */
+  /** Every label a CORRECT decision card can carry: an activity's `decision`
+   *  phrasing, or the step's own label when it has none. Wrong cards are drawn
+   *  from SIM_MOVES/pitfalls, so their labels never appear in this set. */
+  const correctCardLabels = new Set<string>(
+    Object.values(SIM_TREES).flatMap((tree) =>
+      tree
+        ? tree.levels.flatMap((b) =>
+            b.activities.flatMap((a) => [
+              ...(a.decision ? [a.decision] : []),
+              ...a.steps.map((st) => st.label),
+            ])
+          )
+        : []
+    )
+  )
+
+  /** Picks the correct option in ONE attempt.
+   *
+   *  This used to click A, then B, then C until "Right call" appeared, which
+   *  only worked while a decision could be re-answered without consequence.
+   *  Decisions are now single-attempt (W3), so the first click is the answer —
+   *  the helper resolves which option is correct from the real trees rather
+   *  than by trial and error, and never leaks that into the rendered DOM. */
   const pickRightCall = (mobileBoard: HTMLElement) => {
-    for (const letter of ['A', 'B', 'C']) {
-      const btn = within(mobileBoard).queryByRole('button', {
-        name: new RegExp(`^Option ${letter}:`),
-      })
-      if (!btn) continue
+    const options = within(mobileBoard).queryAllByRole('button', { name: /^Option [A-Z]:/ })
+    for (const btn of options) {
+      const label = (btn.getAttribute('aria-label') ?? '').replace(/^Option [A-Z]: /, '')
+      if (!correctCardLabels.has(label)) continue
       fireEvent.click(btn)
       if (within(mobileBoard).queryByText('Right call', { exact: false })) return
+      throw new Error(
+        `clicked the resolved correct option but it did not read Right call: ${label}`
+      )
     }
-    throw new Error('no option resolved Right call')
+    throw new Error('no option matched a known correct decision label')
   }
 
   /** Answers whatever quiz dialog is open (module gate or Brief check) by

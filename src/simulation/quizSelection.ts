@@ -4,9 +4,15 @@
  * quiz-gated "Mark complete" flow. Reuses the REAL quiz bank that already
  * powers /learn/quiz (src/data/quizDataLoader.ts, 1005 questions) — no new
  * question authoring, no separate quiz system. `QuizQuestion.category`
- * already shares its vocabulary with Learn module ids (e.g. 'crypto-agility',
- * 'hybrid-crypto', 'quantum-threats'), so filtering by category === moduleId
- * finds the questions written for that exact module.
+ * mostly shares its vocabulary with Learn module ids (e.g. 'crypto-agility',
+ * 'hybrid-crypto', 'quantum-threats').
+ *
+ * W1.6: "mostly" is the bug. Matching on `category === moduleId` alone left
+ * `pki-workshop` (whose questions live under `pki-infrastructure`) with zero
+ * eligible questions, and the caller then marked the module complete with no
+ * check at all. Resolution now goes through an EXPLICIT alias map, and a
+ * module with genuinely no coverage reports `unavailable` so the UI can say so
+ * rather than silently granting completion.
  *
  * Filtered to single-answer types (multiple-choice, true-false) — this is a
  * quick comprehension check, not the full quiz experience multi-select math
@@ -31,12 +37,46 @@ export function hashString(s: string): number {
   return h >>> 0
 }
 
-/** All gate-eligible questions for a Learn module (category === moduleId,
- *  single-answer types only). Empty when the module has no quiz coverage. */
+/**
+ * Learn module id → quiz-bank category, for the modules where the two
+ * vocabularies genuinely differ. Keep this EXPLICIT: a silent fallback is what
+ * produced an ungated "check" in the first place.
+ *
+ * Measured 2026-09-07 against pqcquiz_08172026_r2.csv: of the 43 unique Learn
+ * modules the trees gate on, `pki-workshop` was the only one with no matching
+ * category. Its questions are authored under `pki-infrastructure`.
+ */
+export const MODULE_QUIZ_CATEGORY: Readonly<Record<string, string>> = {
+  'pki-workshop': 'pki-infrastructure',
+}
+
+/** The bank category a module's questions actually live under. */
+export const quizCategoryFor = (moduleId: string): string =>
+  MODULE_QUIZ_CATEGORY[moduleId] ?? moduleId
+
+/** All gate-eligible questions for a Learn module (single-answer types only).
+ *  Empty when the module genuinely has no quiz coverage. */
 export function questionsForModule(moduleId: string): QuizQuestion[] {
+  const category = quizCategoryFor(moduleId)
   return quizQuestions.filter(
-    (q) => q.category === moduleId && (q.type === 'multiple-choice' || q.type === 'true-false')
+    (q) => q.category === category && (q.type === 'multiple-choice' || q.type === 'true-false')
   )
+}
+
+/** Whether a module can be comprehension-checked, stated explicitly. A module
+ *  with no bank coverage must be surfaced as "check unavailable" — never
+ *  completed silently. */
+export interface GateCoverage {
+  state: 'checked' | 'unavailable'
+  /** The category consulted (after alias resolution). */
+  category: string
+  questionCount: number
+}
+
+export function gateCoverageFor(moduleId: string): GateCoverage {
+  const category = quizCategoryFor(moduleId)
+  const questionCount = questionsForModule(moduleId).length
+  return { state: questionCount > 0 ? 'checked' : 'unavailable', category, questionCount }
 }
 
 /**

@@ -8,6 +8,12 @@
  * compliance (readiness.ts's compliancePct), and how many transformation
  * objectives landed on schedule (transformationStatus.ts's objectives).
  *
+ * W4: the alignment component is NULLABLE. When nothing was evaluated (no
+ * decisions made, or no jurisdiction rule on file) it is dropped from the
+ * average rather than counted as a perfect 100 — scoring an unevaluated run as
+ * fully aligned is the same "absence of evidence reads as success" defect the
+ * readiness meter had.
+ *
  * Pure function — no React, no store reads. The caller supplies every input.
  */
 import { PAR_QUARTERS, type DifficultyId } from '@/data/simBalance'
@@ -20,8 +26,8 @@ export interface RunScoreInput {
   difficulty: DifficultyId
   /** Traps picked THIS run (store's trapsThisRun, reset on reset()). */
   trapsThisRun: number
-  /** readiness.ts's compliancePct (0–100). */
-  compliancePct: number
+  /** readiness.ts's alignmentPct (0–100), or null when nothing was evaluated. */
+  alignmentPct: number | null
   objectivesOnTime: number
   objectivesTotal: number
 }
@@ -32,8 +38,11 @@ export interface RunScoreBreakdown {
   parQuarters: number
   paceScore: number
   trapScore: number
-  complianceScore: number
+  /** null when strategy alignment was never evaluated this run. */
+  alignmentScore: number | null
   onTimeScore: number
+  /** Which components the overall score was actually averaged over. */
+  scoredComponents: number
 }
 
 const clamp0to100 = (n: number) => Math.max(0, Math.min(100, n))
@@ -71,16 +80,18 @@ export function computeRunScore(input: RunScoreInput): RunScoreBreakdown {
   const parQuarters = PAR_QUARTERS[input.difficulty]
   const pace = paceScore(input.quartersUsed, parQuarters)
   const trap = trapScore(input.trapsThisRun)
-  const compliance = clamp0to100(input.compliancePct)
+  const alignment = input.alignmentPct === null ? null : clamp0to100(input.alignmentPct)
   const onTime = onTimeScore(input.objectivesOnTime, input.objectivesTotal)
-  const overall = Math.round((pace + trap + compliance + onTime) / 4)
+  const parts = alignment === null ? [pace, trap, onTime] : [pace, trap, alignment, onTime]
+  const overall = Math.round(parts.reduce((a, b) => a + b, 0) / parts.length)
   return {
     grade: gradeOf(overall),
     overall,
     parQuarters,
     paceScore: pace,
     trapScore: trap,
-    complianceScore: compliance,
+    alignmentScore: alignment,
     onTimeScore: onTime,
+    scoredComponents: parts.length,
   }
 }

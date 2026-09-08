@@ -136,12 +136,12 @@ export function SimulationOutcomesSection({ defaultOpen = false }: { defaultOpen
                 </span>
                 <span className="text-xl font-bold text-foreground">{r.readinessPct}%</span>
               </div>
-              {r.compliancePct != null && (
+              {r.alignmentPct != null && (
                 <div className="min-w-[8rem] rounded-lg border border-border bg-muted/30 px-4 py-3">
                   <span className="block text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                    Compliance
+                    Strategy alignment
                   </span>
-                  <span className="text-xl font-bold text-foreground">{r.compliancePct}%</span>
+                  <span className="text-xl font-bold text-foreground">{r.alignmentPct}%</span>
                 </div>
               )}
               <div className="min-w-[8rem] rounded-lg border border-border bg-muted/30 px-4 py-3">
@@ -193,7 +193,7 @@ export function SimulationOutcomesSection({ defaultOpen = false }: { defaultOpen
                 <span className="text-2xl font-black leading-none">{r.score.grade}</span>
                 <span className="text-xs">
                   pace {r.score.paceScore} · discipline {r.score.trapScore} · compliance{' '}
-                  {r.score.complianceScore} · on-time {r.score.onTimeScore}
+                  {r.score.alignmentScore ?? 'n/e'} · on-time {r.score.onTimeScore}
                 </span>
               </div>
             </section>

@@ -9,7 +9,7 @@ describe('computeRunScore', () => {
       quartersUsed: PAR_QUARTERS.realistic,
       difficulty: 'realistic',
       trapsThisRun: 0,
-      compliancePct: 100,
+      alignmentPct: 100,
       objectivesOnTime: 4,
       objectivesTotal: 4,
     })
@@ -17,7 +17,7 @@ describe('computeRunScore', () => {
     expect(s.overall).toBe(100)
     expect(s.paceScore).toBe(100)
     expect(s.trapScore).toBe(100)
-    expect(s.complianceScore).toBe(100)
+    expect(s.alignmentScore).toBe(100)
     expect(s.onTimeScore).toBe(100)
   })
 
@@ -26,7 +26,7 @@ describe('computeRunScore', () => {
       quartersUsed: PAR_QUARTERS.realistic - 4,
       difficulty: 'realistic',
       trapsThisRun: 0,
-      compliancePct: 100,
+      alignmentPct: 100,
       objectivesOnTime: 1,
       objectivesTotal: 1,
     })
@@ -38,7 +38,7 @@ describe('computeRunScore', () => {
       quartersUsed: PAR_QUARTERS.realistic + 4,
       difficulty: 'realistic',
       trapsThisRun: 0,
-      compliancePct: 100,
+      alignmentPct: 100,
       objectivesOnTime: 1,
       objectivesTotal: 1,
     })
@@ -55,7 +55,7 @@ describe('computeRunScore', () => {
       quartersUsed: PAR_QUARTERS.hard + 20,
       difficulty: 'hard',
       trapsThisRun: 8,
-      compliancePct: 40,
+      alignmentPct: 40,
       objectivesOnTime: 0,
       objectivesTotal: 4,
     })
@@ -63,7 +63,7 @@ describe('computeRunScore', () => {
       quartersUsed: PAR_QUARTERS.hard,
       difficulty: 'hard',
       trapsThisRun: 0,
-      compliancePct: 100,
+      alignmentPct: 100,
       objectivesOnTime: 4,
       objectivesTotal: 4,
     })
@@ -88,7 +88,7 @@ function baseInput(overrides: Partial<Parameters<typeof computeRunScore>[0]> = {
     quartersUsed: PAR_QUARTERS.realistic,
     difficulty: 'realistic' as const,
     trapsThisRun: 0,
-    compliancePct: 100,
+    alignmentPct: 100,
     objectivesOnTime: 1,
     objectivesTotal: 1,
     ...overrides,

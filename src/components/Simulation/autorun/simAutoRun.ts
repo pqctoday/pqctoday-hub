@@ -32,6 +32,15 @@ import { demoDocFor, ORG, type DemoSector } from './demoDocs'
 import { REAL_DOC_GENERATORS } from './realToolDocs'
 import { ARCHITECTURES, edgeState, edgeKey } from '@/data/simArchitecture'
 import { jurisdictionFor } from '@/data/jurisdiction'
+import {
+  documentApplicability,
+  evidenceId,
+  hasEvidence,
+  runFingerprint,
+  type EvidenceKind,
+  type EvidenceOrigin,
+  type EvidenceStatus,
+} from '@/simulation/evidence'
 
 /** Runtime membership check for `DemoSector` — `ORG` is keyed by every sector
  *  the demo-content system knows about, so this can't drift from the type. */
@@ -75,10 +84,26 @@ const hasTree = (phase: PhaseId): boolean => Boolean(treeFor(phase))
  *  same six predicates the sim builds in `SimulationView`. */
 export function liveCompletionContext(): StepCompletionContext {
   return {
-    // eslint-disable-next-line security/detect-object-injection
-    isModuleComplete: (id) => useModuleStore.getState().modules[id]?.status === 'completed',
-    hasArtifact: (t) =>
-      (useModuleStore.getState().artifacts.executiveDocuments ?? []).some((d) => d.type === t),
+    // W1: a learn step is satisfied by the learner's own global completion OR by
+    // this run's evidence (which is where a narrated demonstration now lands).
+    // The two are kept apart on purpose — the run advances, the shared
+    // curriculum does not.
+    isModuleComplete: (id) =>
+      // eslint-disable-next-line security/detect-object-injection
+      useModuleStore.getState().modules[id]?.status === 'completed' ||
+      hasEvidence(useSimulationStore.getState().evidence, { resourceId: id, kind: 'learn' }),
+    // W1.4: a document of the right TYPE is no longer enough on its own — it
+    // must also belong to this run's world (or predate the run entirely).
+    hasArtifact: (t) => {
+      const sim = useSimulationStore.getState()
+      const app = documentApplicability({
+        type: t,
+        docs: useModuleStore.getState().artifacts.executiveDocuments ?? [],
+        records: sim.evidence,
+        fingerprint: runFingerprint(sim.size, sim.country, sim.sector),
+      })
+      return app.present && app.matchesWorld
+    },
     isRefVisited: (id) => useSimulationStore.getState().visitedRefs.includes(id),
     isWorkshopComplete: (id) => useSimulationStore.getState().visitedWorkshops.includes(id),
     isCatalogStepDone: (id) => useSimulationStore.getState().catalogCompleted.includes(id),
@@ -144,39 +169,84 @@ export function levelOfPhase(
  * (sandbox-lab) steps are intentionally skipped — they are non-gating and require
  * a live sandbox. Returns true if an action was taken.
  */
-export function completeStepGenuine(step: TreeStep, sector?: string): boolean {
+/** File a run-scoped evidence record for a step the auto-run just performed.
+ *  Provenance is explicit so the board can show a demonstration as a worked
+ *  example rather than as the learner's own achievement. */
+function recordStepEvidence(
+  step: TreeStep,
+  kind: EvidenceKind,
+  resourceId: string,
+  phase: PhaseId,
+  origin: EvidenceOrigin,
+  status: EvidenceStatus
+): void {
+  const sim = useSimulationStore.getState()
+  const runId = `run-${sim.seed}`
+  sim.recordEvidence({
+    id: evidenceId(runId, phase, kind, resourceId),
+    runId,
+    phase,
+    resourceId,
+    kind,
+    origin,
+    status,
+    fingerprint: runFingerprint(sim.size, sim.country, sim.sector),
+    createdAt: Date.now(),
+    artifactType: step.artifactType,
+  })
+}
+
+export function completeStepGenuine(
+  step: TreeStep,
+  sector?: string,
+  opts: { phase?: PhaseId; origin?: EvidenceOrigin } = {}
+): boolean {
   const sim = useSimulationStore.getState()
   const mod = useModuleStore.getState()
+  const phase = opts.phase ?? sim.sel
+  const origin = opts.origin ?? 'narrated-example'
   switch (step.kind) {
     case 'learn':
       if (!step.moduleId) return false
-      mod.updateModuleProgress(step.moduleId, { status: 'completed' })
+      // W1.3: a narrated demonstration is NOT the learner's own study. This used
+      // to write global Learn completion (`updateModuleProgress(..., completed)`),
+      // which finished modules in the shared curriculum with zero recorded time
+      // and no quiz score. The run now records what actually happened — a worked
+      // example was shown — and the sim's own completion context reads that.
+      recordStepEvidence(step, 'learn', step.moduleId, phase, origin, 'viewed')
       return true
     case 'reference':
       if (!step.refId) return false
       sim.markRefVisited(step.refId)
+      recordStepEvidence(step, 'reference', step.refId, phase, origin, 'viewed')
       return true
     case 'workshop':
       if (!step.workshopId) return false
       sim.markWorkshopVisited(step.workshopId)
+      recordStepEvidence(step, 'workshop', step.workshopId, phase, origin, 'practiced')
       return true
     case 'catalog':
       if (!step.catalogId) return false
       sim.markCatalogStepDone(step.catalogId)
+      recordStepEvidence(step, 'catalog', step.catalogId, phase, origin, 'practiced')
       return true
     case 'activity': {
       if (!step.artifactType) return false
       const activeSector = sector ?? useSimulationStore.getState().sector
       const doc = docFor(step.artifactType, activeSector)
       if (!doc) return false
+      // Dedupe is on moduleId+type, and this always files under the
+      // 'sim-autorun' moduleId — so a document the LEARNER authored (any other
+      // moduleId) is never replaced by a generated example.
       mod.addExecutiveDocument({
         id: `sim-autorun-${step.artifactType}`,
         moduleId: 'sim-autorun',
         type: step.artifactType,
-        title: doc.title,
+        title: `${doc.title} (worked example)`,
         data: doc.data,
         createdAt: Date.now(),
       })
+      recordStepEvidence(step, 'artifact', step.artifactType, phase, origin, 'practiced')
       return true
     }
     case 'scenario':

@@ -1,35 +1,59 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /**
- * Per-phase-relative maturity scaling.
+ * Two different measures, kept apart on purpose.
  *
- * The framework caps several phases below L4 BY DESIGN — no framework activity sits
- * at the higher levels (e.g. p3 tops at L2, p6 at L3), so their trees ship fewer
- * bands. Scoring those phases on a fixed 0..4 scale made a fully-cleared phase read
- * as partial forever (the readiness bar could never fill; program maturity stayed
- * frozen at L2 because the risk domain maps only to p3). These pure helpers rescale
- * a phase's achieved level against its OWN top band so "all bands cleared" = maxed,
- * whether the ladder is 2, 3, or 4 long.
+ * FRAMEWORK MATURITY is the source's own 0–4 ladder. It is never rescaled. A
+ * phase whose simulator ladder stops at L2 has earned L2 — not "the top of what
+ * we shipped, therefore 4".
+ *
+ * SCENARIO COMPLETION is how much of what this simulation actually offers the
+ * player has finished. It is legitimate and useful (a fully-cleared short phase
+ * IS 100% of that phase's available exercises), but it is a completion
+ * percentage, not a maturity level, and must never be displayed as one.
+ *
+ * The defect this replaces: `normalizeLevel` stretched a short ladder onto 0–4
+ * and the result was fed into PROGRAM MATURITY. P3 ships bands L1–L2, so a
+ * player at P3 L2 was reported at framework level 4 — the framework's own L3
+ * ("QRA updated quarterly… legal risk dimension assessed") and L4 ("continuous
+ * risk posture management… integrated into enterprise risk register and audit
+ * cycle") were simply skipped, and the comment claiming the framework caps
+ * these phases was wrong: the framework has L1–L4 indicators for every phase,
+ * the IMPLEMENTATION has a shorter activity ladder.
  */
 import type { PhaseTree } from './types'
 
 /** The highest maturity band a phase's tree actually ships (its top level), or
- *  `fallback` when the phase has no tree. */
+ *  `fallback` when the phase has no tree. This is a fact about the SIMULATOR,
+ *  not about the framework. */
 export function topBandLevel(tree: PhaseTree | undefined, fallback: number): number {
   const levels = tree?.levels
   return levels && levels.length ? Math.max(...levels.map((b) => b.level)) : fallback
 }
 
-/** Rescale an achieved `level` onto the 0..`maxLevel` ladder relative to the phase's
- *  own `top` band. Clamped and rounded to an integer (safe to index level names). */
-export function normalizeLevel(level: number, top: number, maxLevel: number): number {
-  if (top <= 0) return 0
-  return Math.round((Math.min(level, top) / top) * maxLevel)
-}
-
-/** A phase's contribution (0..1) to an aggregate readiness fraction: its achieved
- *  level over its own top band. A fully-cleared phase contributes 1 regardless of
- *  how many bands it has. */
-export function phaseReadinessFraction(level: number, top: number): number {
+/**
+ * SCENARIO COMPLETION for one phase (0..1): achieved level over the phase's own
+ * top band. A fully-cleared phase contributes 1 regardless of how many bands it
+ * ships. Name it as completion wherever it is shown — never as maturity.
+ */
+export function scenarioCompletionFraction(level: number, top: number): number {
   if (top <= 0) return 0
   return Math.min(1, level / top)
+}
+
+/**
+ * FRAMEWORK MATURITY for one phase, on the source's fixed 0..maxLevel ladder.
+ * Clamped, never stretched: an unimplemented band is a band NOT earned, so the
+ * number stays below the ceiling and the gap stays visible.
+ */
+export function frameworkLevel(level: number, maxLevel: number): number {
+  return Math.max(0, Math.min(maxLevel, Math.round(level)))
+}
+
+/**
+ * Is this phase's ladder shorter than the framework's? True whenever the
+ * simulator cannot take a player to the source's top band, which is exactly
+ * when a maturity claim has to be qualified.
+ */
+export function hasShortenedLadder(tree: PhaseTree | undefined, maxLevel: number): boolean {
+  return topBandLevel(tree, maxLevel) < maxLevel
 }

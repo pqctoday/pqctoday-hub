@@ -14,14 +14,16 @@
  * vendor-dependent, or touching a product with no PQC story) permanently hold
  * readiness below 100% — the intended supply-chain pressure.
  *
- * Compliance is a SEPARATE meter: a `pure` choice where the jurisdiction requires
- * `hybrid` still counts as migrated (it is quantum-safe) but lowers compliance.
+ * Strategy alignment is a SEPARATE meter: a `pure` choice where the jurisdiction
+ * requires `hybrid` still counts as migrated (it is quantum-safe) but lowers
+ * alignment. It reports what it actually evaluated — an unknown jurisdiction or
+ * a run with no decisions yields `null`, never a perfect score.
  *
  * Pure function (no React); the caller supplies the P5 completion fraction, the
  * persisted per-edge decisions, and the org's country.
  */
 import { ARCHITECTURES, edgeState, edgeKey } from '@/data/simArchitecture'
-import { checkChoice } from '@/data/jurisdiction'
+import { checkChoice, jurisdictionFor } from '@/data/jurisdiction'
 
 /** Migration strategy persisted per edge (a migrated edge carries hybrid|pure). */
 export type EdgeChoice = 'hybrid' | 'pure'
@@ -37,8 +39,26 @@ export interface Readiness {
   migratable: number
   /** Activity gate: how many migratable edges P5 progress has unlocked so far. */
   unlocked: number
-  /** 0–100 — compliant decisions ÷ decisions made (separate from readiness). */
-  compliancePct: number
+  /**
+   * W4 — SCENARIO STRATEGY ALIGNMENT, 0–100: of the decisions actually
+   * evaluated against a jurisdiction rule, how many align with it.
+   *
+   * `null` when nothing was evaluated (no decisions made, or no rule on file
+   * for the country). It used to be a plain number that read 100 in exactly
+   * that case, so a run that had decided nothing displayed a perfect meter.
+   * Absence of evidence is not alignment — callers must render `null` as
+   * "not evaluated", never as a score.
+   *
+   * This is not a compliance determination: it compares a choice against one
+   * country-level stance, with no sector, system-scope or effective-date view.
+   */
+  alignmentPct: number | null
+  /** Decisions that were actually assessed against a rule. */
+  evaluated: number
+  /** Migratable edges with no decision yet — the meter's blind spot. */
+  unevaluated: number
+  /** Whether a rule exists for this run's country at all. */
+  jurisdictionState: 'known' | 'unknown'
 }
 
 /**
@@ -71,14 +91,14 @@ export function computeReadiness(
   const migrated = Math.min(decidedEdges.length, unlocked)
   const pct = vuln.length ? Math.round((migrated / vuln.length) * 100) : 100
 
-  // Compliance meter — a non-compliant (failing) choice still counts migrated above,
-  // but lowers this separate score.
-  const compliant = decidedEdges.filter(
-    (e) => checkChoice(country, edgeDecisions[edgeKey(e)]).level !== 'fail'
-  ).length
-  const compliancePct = decidedEdges.length
-    ? Math.round((compliant / decidedEdges.length) * 100)
-    : 100
+  // Alignment meter — a misaligned choice still counts as migrated above (it is
+  // still quantum-safe), but lowers this separate score. Only decisions that a
+  // rule actually assessed are counted; an unknown jurisdiction evaluates
+  // nothing and therefore scores nothing.
+  const verdicts = decidedEdges.map((e) => checkChoice(country, edgeDecisions[edgeKey(e)]))
+  const assessed = verdicts.filter((v) => v.evaluated)
+  const aligned = assessed.filter((v) => v.level !== 'fail').length
+  const alignmentPct = assessed.length ? Math.round((aligned / assessed.length) * 100) : null
 
   return {
     pct,
@@ -86,6 +106,9 @@ export function computeReadiness(
     vulnerable: vuln.length,
     migratable: migratableEdges.length,
     unlocked,
-    compliancePct,
+    alignmentPct,
+    evaluated: assessed.length,
+    unevaluated: Math.max(0, migratableEdges.length - assessed.length),
+    jurisdictionState: jurisdictionFor(country) ? 'known' : 'unknown',
   }
 }

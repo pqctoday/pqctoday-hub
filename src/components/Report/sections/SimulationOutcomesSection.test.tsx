@@ -35,7 +35,7 @@ const FULL_INPUT: SimRoadmapInput = {
   ...LEGACY_INPUT,
   clearedCount: 9,
   readinessPct: 92,
-  compliancePct: 88,
+  alignmentPct: 88,
   objectives: [
     {
       id: 'governance',
@@ -59,7 +59,8 @@ const FULL_INPUT: SimRoadmapInput = {
     parQuarters: 20,
     paceScore: 100,
     trapScore: 90,
-    complianceScore: 88,
+    alignmentScore: 88,
+    scoredComponents: 4,
     onTimeScore: 100,
   },
   verifyCloseCleared: true,

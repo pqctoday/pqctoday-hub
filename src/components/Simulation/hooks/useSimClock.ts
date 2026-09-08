@@ -42,8 +42,29 @@ export interface SimClock {
   clock: SimMoscaClock
   /** Fractional current year (quarter-aware). */
   currentYear: number
-  /** CRQC/deadline horizon year (the earlier of CRQC estimate and country deadline). */
+  /**
+   * The PLANNING ANCHOR the Mosca inequality is solved against: the earlier of
+   * the threat horizon and the regulatory due date. It is a scheduling input,
+   * NOT a prediction — the two components below are the things that mean
+   * something on their own, and must be shown separately wherever this is.
+   */
   horizonYear: number
+  /**
+   * W4.4 — the cryptanalytic THREAT horizon: the scenario's CRQC planning
+   * estimate, pulled forward by in-run events. A regulatory deadline never
+   * moves this number; changing a country's due date must not look like a
+   * changed prediction about when a CRQC arrives.
+   */
+  threatHorizonYear: number
+  /**
+   * W4.4 — the REGULATORY due date for this jurisdiction, when one is on file.
+   * null when the country has no dated obligation in the scenario's table: a
+   * compliance date is a legal fact about a jurisdiction, not a forecast, and
+   * its absence is not the same as "no deadline until CRQC".
+   */
+  regulatoryDueYear: number | null
+  /** Which of the two actually binds the schedule. */
+  bindingHorizon: 'threat' | 'regulatory'
   /** Shelf-life (X) used — from the assessment when present, else the sector table. */
   simShelfLifeYears: number
   /** Migration time (Y) used — from the assessment when present, else the size table. */
@@ -54,10 +75,13 @@ export interface SimClock {
 export function deriveSimClock(input: SimClockInput): SimClock {
   const { year, q, country, sector, size, crqcShift, assessMosca } = input
 
-  const horizonYear = Math.min(
-    SIM_CRQC_YEAR - crqcShift,
-    COUNTRY_DEADLINE_YEAR[country] ?? SIM_CRQC_YEAR
-  )
+  // W4.4 — kept apart, then combined only for the schedule.
+  const threatHorizonYear = SIM_CRQC_YEAR - crqcShift
+  const regulatoryDueYear = COUNTRY_DEADLINE_YEAR[country] ?? null
+  const horizonYear =
+    regulatoryDueYear !== null ? Math.min(threatHorizonYear, regulatoryDueYear) : threatHorizonYear
+  const bindingHorizon: 'threat' | 'regulatory' =
+    regulatoryDueYear !== null && regulatoryDueYear < threatHorizonYear ? 'regulatory' : 'threat'
   const currentYear = year + (q - 1) * 0.25
   // Mosca X/Y from the assessment when present, else the sim's sector/size tables.
   const simShelfLifeYears = assessMosca?.shelfLifeYears ?? shelfLifeFor(sector)
@@ -72,5 +96,14 @@ export function deriveSimClock(input: SimClockInput): SimClock {
     currentYear,
   })
 
-  return { clock, currentYear, horizonYear, simShelfLifeYears, simMigrationYears }
+  return {
+    clock,
+    currentYear,
+    horizonYear,
+    threatHorizonYear,
+    regulatoryDueYear,
+    bindingHorizon,
+    simShelfLifeYears,
+    simMigrationYears,
+  }
 }

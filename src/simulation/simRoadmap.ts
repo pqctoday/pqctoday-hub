@@ -28,7 +28,7 @@ export interface SimRoadmapInput {
    * than requiring a re-commit). Sourced from the same live state the ceremony
    * and ribbon already compute — no new derivation.
    */
-  compliancePct?: number
+  alignmentPct?: number | null
   objectives?: SimRunCompleteObjective[]
   score?: RunScoreBreakdown
   verifyCloseCleared?: boolean
