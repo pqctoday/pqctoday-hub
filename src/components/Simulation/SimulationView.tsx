@@ -267,6 +267,25 @@ const SIM_TRACKED = (() => {
   return { modules, artifacts }
 })()
 
+/** W6.4 — what each phone headline figure actually measures. Shown under the
+ *  number itself, because a figure a learner cannot interrogate is a figure
+ *  they can only take on trust. */
+const MOBILE_SIGNAL_NOTES: Record<string, string> = {
+  'Migration phases (L2 floor)':
+    'Phases whose activities have reached the framework’s Level 2 "done well enough to proceed" bar.',
+  'Program maturity':
+    'The weakest domain across the framework’s own 0–4 ladder — not a percentage of what this simulation happens to offer.',
+  'Program complete':
+    'Every phase cleared to the top band this simulation ships. That is scenario completion, not certified organisational maturity.',
+  'Quantum-exposed value':
+    'Illustrative: modelled from the assessment catalogue at a default org scale, not measured for your organisation.',
+  'Years to act (Mosca)':
+    'Shelf life (X) + migration time (Y) against time remaining (Z). The horizon is a planning anchor, not a published date.',
+  'Budget secured':
+    'Earned by completing Phase 0 activities — a scenario figure, not real funding.',
+  Turn: 'The run’s current reporting period. Recurring criteria need it to advance.',
+}
+
 /** W5.3 — every resource id the trees in THIS build can resolve. An imported
  *  run may reference a module/workshop/reference that has since been renamed or
  *  removed; the import preview names those rather than silently restoring a run
@@ -1803,15 +1822,15 @@ export function SimulationView() {
         <div className="flex min-h-0 flex-1 items-center justify-center p-6">
           <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
             <span className="font-mono text-sim-micro font-bold uppercase tracking-[0.14em] text-primary">
-              Simulation locked
+              Choose how to start
             </span>
             <h1 className="mt-2 text-xl font-extrabold text-foreground">
-              Run your PQC assessment to start the simulation
+              Practise on a sample organization, or run it on your own
             </h1>
             <p className="mt-3 text-[13px] leading-relaxed text-muted-foreground">
               See how much of your business is exposed to the quantum threat today — and the cost
-              and sequence of closing it. The simulation runs on your assessed organization: your
-              sector, size and jurisdiction come from your assessment.
+              and sequence of closing it. Start immediately on a sample organization, or run it on
+              your own: with an assessment, the sector, size and jurisdiction come from yours.
             </p>
             <div className="mt-6 flex flex-col items-stretch gap-2.5 sm:flex-row sm:justify-center">
               <Link
@@ -2374,6 +2393,112 @@ export function SimulationView() {
               })}
             </div>
           )}
+          {/* W6.4 — compact phone PROGRESS. The phone shell had no Progress
+              view at all, so a player could not see which maturity bands they
+              had earned, what evidence was behind them, or what the phase gate
+              actually required. This is the compact form the plan asks for,
+              not the whole desktop layout. */}
+          {isMobileShell && (
+            <details className="w-full max-w-[320px] rounded-lg border border-border bg-card text-left">
+              <summary className="cursor-pointer px-3 py-2 text-xs font-bold text-foreground">
+                Progress · {FRAMEWORK_PHASES[sel]?.name ?? sel} — L{levelOf(sel)} of {MAX_LEVEL}
+              </summary>
+              <div className="space-y-1.5 border-t border-border px-3 py-2">
+                {SIM_TREES[sel]?.gate && (
+                  <p className="text-sim-micro leading-snug text-muted-foreground">
+                    <span className="font-bold text-foreground">
+                      Gate {SIM_TREES[sel]!.gate!.id}:
+                    </span>{' '}
+                    {SIM_TREES[sel]!.gate!.criterion}
+                  </p>
+                )}
+                {(SIM_TREES[sel]?.levels ?? []).map((band) => {
+                  const earned = levelOf(sel) >= band.level
+                  const bandSteps = band.activities
+                    .flatMap((a) => a.steps)
+                    .filter((st) => isGatingStep(st))
+                  const done = bandSteps.filter((st) => stepDone(st, sel)).length
+                  return (
+                    <div
+                      key={band.level}
+                      className="flex items-start justify-between gap-2 rounded-md bg-muted/50 px-2 py-1.5"
+                    >
+                      <span className="text-sim-micro leading-snug text-muted-foreground">
+                        <span className="font-bold text-foreground">
+                          L{band.level} {MATURITY_LEVEL_NAMES[band.level]}
+                        </span>{' '}
+                        — {band.indicator}
+                      </span>
+                      <span
+                        className={`shrink-0 font-mono text-sim-micro font-bold ${earned ? 'text-success' : 'text-muted-foreground'}`}
+                      >
+                        {earned ? '✓' : `${done}/${bandSteps.length}`}
+                      </span>
+                    </div>
+                  )
+                })}
+                <p className="text-sim-micro leading-snug text-muted-foreground">
+                  Evidence recorded this run:{' '}
+                  <span className="font-bold text-foreground">
+                    {evidence.filter((e) => e.phase === sel).length}
+                  </span>
+                  {evidence.some((e) => e.phase === sel && e.origin !== 'learner') && (
+                    <> — some from demonstrations, not your own work.</>
+                  )}
+                </p>
+              </div>
+            </details>
+          )}
+          {/* W6.4 — compact phone RESOURCES. Each entry says WHY this phase
+              opens it and what evidence it can produce, which the desktop
+              Resources tab did not state either. Large editors are marked as
+              desktop work rather than opened into a shell that cannot run
+              them (W6.5 handoff). */}
+          {isMobileShell && (
+            <details className="w-full max-w-[320px] rounded-lg border border-border bg-card text-left">
+              <summary className="cursor-pointer px-3 py-2 text-xs font-bold text-foreground">
+                Resources for this phase
+              </summary>
+              <div className="space-y-1.5 border-t border-border px-3 py-2">
+                {(SIM_TREES[sel] ? flattenTree(SIM_TREES[sel]!) : [])
+                  .filter((st) => isGatingStep(st))
+                  .slice(0, 8)
+                  .map((st, i) => {
+                    const done = stepDone(st, sel)
+                    const desktopOnly = st.kind === 'activity' || st.kind === 'architecture'
+                    return (
+                      <div
+                        key={`${st.to}-${i}`}
+                        className="rounded-md bg-muted/50 px-2 py-1.5 text-sim-micro leading-snug"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <span className="font-bold text-foreground">{st.label}</span>
+                          <span
+                            className={`shrink-0 font-mono ${done ? 'text-success' : 'text-muted-foreground'}`}
+                          >
+                            {done ? 'done' : desktopOnly ? 'desktop' : 'open'}
+                          </span>
+                        </div>
+                        <div className="text-muted-foreground">
+                          {desktopOnly
+                            ? 'Produces an artifact — continue this task on desktop; your run travels with you.'
+                            : 'Opens in the hub; returns you here.'}
+                        </div>
+                        {!desktopOnly && (
+                          <Link
+                            to={st.to}
+                            onClick={() => markSimResume()}
+                            className="font-bold text-primary underline decoration-dotted underline-offset-2"
+                          >
+                            Open →
+                          </Link>
+                        )}
+                      </div>
+                    )
+                  })}
+              </div>
+            </details>
+          )}
           <dl className="w-full max-w-[320px] space-y-2 text-left">
             {[
               {
@@ -2401,12 +2526,18 @@ export function SimulationView() {
               // run was on until they tapped into a phase's Decide header.
               { label: 'Turn', value: `Q${q} ${year}` },
             ].map((row) => (
-              <div
-                key={row.label}
-                className="flex items-center justify-between gap-3 rounded-lg border border-border bg-card px-3 py-2"
-              >
-                <dt className="text-xs text-muted-foreground">{row.label}</dt>
-                <dd className="text-sm font-semibold text-foreground">{row.value}</dd>
+              <div key={row.label} className="rounded-lg border border-border bg-card px-3 py-2">
+                <div className="flex items-center justify-between gap-3">
+                  <dt className="text-xs text-muted-foreground">{row.label}</dt>
+                  <dd className="text-sm font-semibold text-foreground">{row.value}</dd>
+                </div>
+                {/* W6.4: every headline number says what it is derived from.
+                    The phone showed bare figures with no way to find out. */}
+                {MOBILE_SIGNAL_NOTES[row.label] && (
+                  <p className="mt-1 text-sim-micro leading-snug text-muted-foreground">
+                    {MOBILE_SIGNAL_NOTES[row.label]}
+                  </p>
+                )}
               </div>
             ))}
           </dl>
@@ -3153,6 +3284,35 @@ export function SimulationView() {
                 2) GUTTERS — max-width + px so embeds don't run edge-to-edge on wide
                    screens (they have no page container in the sim). */}
               <div className="mx-auto w-full max-w-[1800px] px-4 md:px-6 lg:px-8">
+                {/* W6.1/W6.2 — explicit simulation context. An embedded hub
+                    resource is a general tool: it does not know which run
+                    opened it, which organisation the run is about, or what the
+                    phase wanted from it. State all of that here rather than
+                    mutating the user's real profile stores to fake it. */}
+                <div className="mb-3 rounded-lg border border-primary/30 bg-primary/5 px-3 py-2">
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sim-micro">
+                    <span className="font-mono font-bold uppercase tracking-wide text-primary">
+                      Simulation context
+                    </span>
+                    <span className="text-muted-foreground">
+                      <span className="font-bold text-foreground">
+                        {assessSnap ? 'Your assessed organization' : 'Sample organization'}
+                      </span>{' '}
+                      · {sizeOpt.label} · {sector} · {country} · seat: {seatOpt.label}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sim-micro leading-snug text-muted-foreground">
+                    <span className="font-bold text-foreground">
+                      {FRAMEWORK_PHASES[sel]?.name ?? sel} opened this
+                    </span>{' '}
+                    {SIM_TREES[sel]?.gate
+                      ? `to work toward gate ${SIM_TREES[sel]!.gate!.id}: ${SIM_TREES[sel]!.gate!.criterion}.`
+                      : 'as part of this phase.'}{' '}
+                    This tool is the hub&rsquo;s own view and does not read the run&rsquo;s profile,
+                    so any filters it asks for are its own &mdash; the run&rsquo;s profile is stated
+                    above. Close with &ldquo;Back to board&rdquo; to return to this phase.
+                  </p>
+                </div>
                 {assessEmbed ? (
                   // Re-run / refine the assessment in-sim — the REDESIGNED /assess
                   // surface (track chooser + two-pane wizard), embedded headless.
@@ -3398,7 +3558,12 @@ export function SimulationView() {
                               </div>
                               <div className="flex gap-1.5 font-mono text-sim-micro text-muted-foreground">
                                 <span>
-                                  {isCleared ? 'cleared' : current ? 'active' : 'locked'} ·{' '}
+                                  {/* W6.6: every phase is selectable — the rail
+                                      is navigation, not a maturity gate. This
+                                      said "locked", which described neither the
+                                      navigation (open) nor the gate (earned by
+                                      evidence, not by phase order). */}
+                                  {isCleared ? 'cleared' : current ? 'active' : 'not started'} ·{' '}
                                   {MATURITY_LEVEL_NAMES[dlv]}
                                 </span>
                                 {owner && <span className="font-bold text-primary">· you</span>}
