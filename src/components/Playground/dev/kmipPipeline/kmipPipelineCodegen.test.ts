@@ -128,7 +128,7 @@ describe('tryParsePipelineFromEditedCode — reverse-parsing the Code tab back t
       },
     ]
     const generated = emitKmipPipeline(steps, {})
-    expect(generated).toContain("leaf('UniqueIdentifier', 'TextString', 'some-uid-1')")
+    expect(generated).toContain("leaf('UniqueIdentifier', 'Identifier', 'some-uid-1')")
     const edited = generated.replace("'some-uid-1'", "'some-uid-2'")
     const result = tryParsePipelineFromEditedCode(edited, steps)
     expect(result.ok).toBe(true)

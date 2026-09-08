@@ -93,7 +93,10 @@ export interface OpTemplate {
   headerBuild?: (values: Record<string, string>) => KmipNode[]
 }
 
-const uidLeaf = (uid: string) => leaf('UniqueIdentifier', 'TextString', uid)
+// §4.68/§11.25 — a Unique Identifier wires as `Identifier` (0x0C), not
+// `TextString` (0x07); the engine strictly refuses the legacy encoding
+// since hsm@43ed10e9.
+const uidLeaf = (uid: string) => leaf('UniqueIdentifier', 'Identifier', uid)
 
 /** Empty-string field → "omitted", for an underlying builder's optional arg. */
 const orUndef = (s: string | undefined): string | undefined => (s ? s : undefined)
@@ -307,7 +310,7 @@ export const locate = (
   const filters: KmipNode[] = []
   if (algorithm) filters.push(leaf('CryptographicAlgorithm', 'Enumeration', algorithm))
   if (length !== undefined) filters.push(leaf('CryptographicLength', 'Integer', length))
-  if (uid) filters.push(leaf('UniqueIdentifier', 'TextString', uid))
+  if (uid) filters.push(leaf('UniqueIdentifier', 'Identifier', uid))
   // §6.1.32 — Attributes is REQUIRED, even with no filters: "the Attributes
   // structure MAY be empty indicating all objects should match." Omitting
   // it outright (the pre-2026-07-17 behavior) was non-conformant.
@@ -830,7 +833,7 @@ export const createSplitKey = (
  * refused with the exact shortfall named, never garbage. */
 export const joinSplitKey = (uids: string[]): KmipNode[] => [
   leaf('ObjectType', 'Enumeration', 'SymmetricKey'),
-  ...uids.map((u) => leaf('UniqueIdentifier', 'TextString', u)),
+  ...uids.map((u) => leaf('UniqueIdentifier', 'Identifier', u)),
 ]
 
 /** §6.1.42 Obtain Lease — grant/renew a lease on a managed object. */

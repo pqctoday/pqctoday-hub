@@ -48,8 +48,12 @@ describe('OASIS corpus replay (real wasm engine)', () => {
   })
 
   it('a deprecated-algorithm test is SKIP_DEPRECATED without even parsing', async () => {
-    const xml = readCorpusFile('oasis/mandatory/BL-M-12-30.xml')
-    const result = await runCorpusTest('BL-M-12-30.xml', xml, table, freshSlot())
+    // BL-M-12-30 (Transparent DSA key Register) used to be this example —
+    // it no longer is, since hsm's G4 decision (2026-09-07) accepts DSA
+    // for storage only and that transcript now genuinely passes. SKFF-M-4
+    // (3DES) remains a real, permanent policy skip.
+    const xml = readCorpusFile('oasis/mandatory/SKFF-M-4-30.xml')
+    const result = await runCorpusTest('SKFF-M-4-30.xml', xml, table, freshSlot())
     expect(result.status).toBe('SKIP_DEPRECATED')
   })
 
@@ -107,10 +111,13 @@ describe('OASIS corpus replay (real wasm engine)', () => {
           }
         }
       }
-      // The engine-0.13.x native baseline (conformance/REPLAY_REPORT.md,
-      // 2026-07-09) is an exact 97 PASS / 5 SKIP_DEPRECATED / 0 everything
-      // else on the 102-file OASIS corpus. This in-browser replay now
-      // matches it exactly — full parity, 0 SKIP_TRANSPORT. Until
+      // The native baseline (conformance/REPLAY_REPORT.md) is an exact
+      // 99 PASS / 3 SKIP_DEPRECATED / 0 everything else on the 102-file
+      // OASIS corpus, since hsm's G4 decision (2026-09-07) accepts DSA for
+      // storage only — BL-M-12-30/BL-M-13-30 now Register and Get a
+      // Transparent DSA key for real rather than being skipped, dropping
+      // the deprecated count from 5 to 3 (DES/3DES only). This in-browser
+      // replay matches it exactly — full parity, 0 SKIP_TRANSPORT. Until
       // 2026-07-17 the 3 MSGENC-* (Message-Encoding profile) tests were
       // SKIP_TRANSPORT: `MaximumResponseSize` (§9.10) enforcement lived
       // inline in the native TLS listener, wrapping `dispatch()` rather
@@ -136,8 +143,8 @@ describe('OASIS corpus replay (real wasm engine)', () => {
       // 0 FAIL / 0 ERROR is enforced strictly; that is the one thing that
       // must never regress.
       expect(failures, failures.join('\n')).toEqual([])
-      expect(counts.PASS ?? 0).toBe(97)
-      expect(counts.SKIP_DEPRECATED ?? 0).toBe(5)
+      expect(counts.PASS ?? 0).toBe(99)
+      expect(counts.SKIP_DEPRECATED ?? 0).toBe(3)
       expect(counts.SKIP_TRANSPORT ?? 0).toBe(0)
       expect(counts.SKIP_OP ?? 0).toBe(0)
       expect(counts.FAIL ?? 0).toBe(0)

@@ -12,8 +12,13 @@
 // mirrors the Python split between `_ttlv.py`'s friendly `TtlvNode` (what
 // callers build) and the raw wire bytes `encode_node` emits.
 
-/** The 11 TTLV item types (KMIP 3.0 §9.1.1) — the same set `decode_ttlv`'s
- * JSON tree and `_ttlv.py`'s `TTLV_TYPE` both use. */
+/** The 14 TTLV item types (KMIP 3.0 §11.25) — the same set `decode_ttlv`'s
+ * JSON tree and `_ttlv.py`'s `TTLV_TYPE` both use. `Identifier`, `Reference`
+ * and `NameReference` (0x0C/0x0D/0x0E) were added alongside the engine's
+ * hsm@43ed10e9 — a Unique Identifier now wires as `Identifier` per §4.68;
+ * §4.35 links wire as `Reference`, except Group Link which is
+ * `NameReference` (late-binding). All three encode UTF-8 and pad exactly
+ * like Text String — only the type byte differs. */
 export type TtlvTypeName =
   | 'Structure'
   | 'Integer'
@@ -26,6 +31,9 @@ export type TtlvTypeName =
   | 'DateTime'
   | 'Interval'
   | 'DateTimeExtended'
+  | 'Identifier'
+  | 'Reference'
+  | 'NameReference'
 
 /** One friendly TTLV node — tag/type by name, not by codepoint. `value` is
  * absent on a `Structure` (use `children` instead). */
