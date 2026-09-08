@@ -32,6 +32,7 @@ import { demoDocFor, ORG, type DemoSector } from './demoDocs'
 import { REAL_DOC_GENERATORS } from './realToolDocs'
 import { ARCHITECTURES, edgeState, edgeKey } from '@/data/simArchitecture'
 import { jurisdictionFor } from '@/data/jurisdiction'
+import { readRunMetric } from '@/simulation/runMetrics'
 import {
   distinctRunQuarters,
   documentApplicability,
@@ -113,6 +114,28 @@ export function liveCompletionContext(): StepCompletionContext {
     edgeDecisionCapacity: () => architectureEdgeCapacity(),
     recurrenceCount: (type) =>
       distinctRunQuarters(useSimulationStore.getState().evidence, type).length,
+    metricValue: (metricId) => {
+      const st = useSimulationStore.getState()
+      // Budget is a pure function of P0 work completed (target cancels out of
+      // the ratio), so the headless run measures the same condition the board
+      // does. Measure steps are excluded from their own denominator.
+      const p0Work = (SIM_TREES.p0 ? flattenTree(SIM_TREES.p0) : []).filter(
+        (x) => x.kind !== 'measure' && isGatingStep(x)
+      )
+      // Non-measure steps only, so this cannot recurse back into itself.
+      const inner = liveCompletionContext()
+      const p0Done = p0Work.filter((x) => isStepComplete(x, inner)).length
+      return readRunMetric(metricId, {
+        budgetSecuredM: p0Work.length ? p0Done / p0Work.length : 0,
+        budgetTargetM: 1,
+        assetsAccounted: p0Done,
+        assetsTotal: p0Work.length || 1,
+        edgeDecisions: Object.keys(st.edgeDecisions ?? {}).length,
+        evidenceTotal: st.evidence.length,
+        evidenceByLearner: st.evidence.filter((e) => e.origin === 'learner').length,
+        quartersElapsed: (st.year - 2026) * 4 + (st.q - 1),
+      })
+    },
   }
 }
 

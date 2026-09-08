@@ -27,6 +27,7 @@ export type StepKind =
   | 'scenario'
   | 'architecture'
   | 'recurrence'
+  | 'measure'
 
 /** A concrete, real-hub-backed leaf step. Completion is read from hub state. */
 export interface TreeStep {
@@ -73,6 +74,15 @@ export interface TreeStep {
   /** How many reporting periods (quarters) must pass after the prerequisite
    *  was first recorded before this step can clear. */
   recurrenceQuarters?: number
+  /** measure (W2.5): the criterion states a MEASURABLE operating condition —
+   *  "Year 1 budget secured", "≥70% Tier-1 coverage", "2+ production pilots".
+   *  Producing a document does not evidence any of those. A measure step reads
+   *  a real value out of the run and clears only when it crosses the threshold
+   *  the framework states, so the band evidences the condition rather than the
+   *  existence of an artifact about it. */
+  metricId?: string
+  /** The threshold the metric must reach, in the metric's own units. */
+  minValue?: number
   /** True for a step sourced from an activity's `deepDive` array. Stamped
    *  automatically by `flattenTree` (never hand-authored) so `isGatingStep`
    *  excludes it, same as `scenario` — this is what keeps deep-dive content

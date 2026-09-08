@@ -203,6 +203,7 @@ describe('standard completion convention (C0)', () => {
     edgeDecisionCount: () => 999,
     edgeDecisionCapacity: () => 999,
     recurrenceCount: () => 999,
+    metricValue: () => 999,
   }
   const incomplete: StepCompletionContext = {
     isModuleComplete: () => false,
@@ -214,6 +215,7 @@ describe('standard completion convention (C0)', () => {
     edgeDecisionCount: () => 0,
     edgeDecisionCapacity: () => 999,
     recurrenceCount: () => 0,
+    metricValue: () => 0,
   }
 
   // A representative step for EVERY StepKind — typed as a Record<StepKind, …> so
@@ -238,6 +240,8 @@ describe('standard completion convention (C0)', () => {
       recurrenceOf: anArtifactType,
       recurrenceQuarters: 1,
     }),
+    // W2.5: a measured operating condition, not a document about one.
+    measure: step({ kind: 'measure', metricId: 'budget-secured-pct', minValue: 50 }),
   }
   // catalog: isStepComplete delegates to isCatalogStepDone(id) — override needed
   const completedWithPicks: StepCompletionContext = { ...completed, isCatalogStepDone: () => true }

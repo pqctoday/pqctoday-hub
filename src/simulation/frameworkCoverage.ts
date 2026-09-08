@@ -128,15 +128,16 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     activityIds: ['0.2', '0.3', '0.4'],
     adaptedTaskIds: [],
     evidence: 'Produce a program charter naming the QRPM and a Year-1 budget structure.',
-    status: 'proxy',
-    note: 'Artifact presence clears the band; the charter content is not assessed.',
+    status: 'outcome',
+    note: 'W2.5: the criterion is "Charter approved; QRPM appointed; Year 1 budget SECURED" — producing a charter document evidences none of those. A measure step now grades the run\'s actual secured-budget percentage against a 60% threshold, so the band evidences the funding condition rather than the existence of paperwork about it.',
   }),
   cell('p0', 3, {
     activityIds: ['0.5'],
     adaptedTaskIds: [],
     evidence:
       'Complete an initial scoping assessment and commit multi-year funding with a standing SteerCo.',
-    status: 'proxy',
+    status: 'outcome',
+    note: 'W2.5: "Multi-year budget COMMITTED" is a funding state, not a scoping document. Graded against secured budget at 90%. The measure step is excluded from its own denominator, so the condition cannot be satisfied by the act of measuring it.',
   }),
   cell('p0', 4, {
     activityIds: ['0.3-board-cycle'],

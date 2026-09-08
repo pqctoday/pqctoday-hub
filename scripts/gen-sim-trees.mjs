@@ -199,6 +199,25 @@ const REC = (recurrenceOf, quarters, label) => {
   }
 }
 
+// M() — a MEASURE step (W2.5). Most L2-L4 indicators state an operating
+// CONDITION ("Year 1 budget secured", "≥70% Tier-1 coverage", "2+ production
+// pilots"), and producing a document about a condition is not reaching it. A
+// measure step reads a real run value and clears only at the threshold the
+// criterion itself states — so the THRESHOLD lives here, next to the band it
+// came from, and a reader can check it against the quoted indicator.
+const KNOWN_METRICS = new Set([
+  'budget-secured-pct',
+  'inventory-coverage-pct',
+  'migration-decisions',
+  'evidence-records',
+  'learner-evidence-records',
+  'reporting-periods-elapsed',
+])
+const M = (metricId, minValue, label) => {
+  if (!KNOWN_METRICS.has(metricId)) throw new Error(`unknown run metric ${metricId}`)
+  return { kind: 'measure', label, to: '/simulation', metricId, minValue }
+}
+
 // ---- per-phase Maturity Indicators (verbatim, Applied Quantum v2.1) ---------
 const INDICATORS = {
   p0: {
@@ -379,6 +398,11 @@ const FRAMEWORK = {
         A('program-charter', 'Produce the Program Charter'),
         A('board-deck', 'Pitch the board for the mandate'),
         A('kpi-dashboard', 'Set the board KPI pack (Coverage/Trust/Inventory/Vendors/Agility)'),
+        M(
+          'budget-secured-pct',
+          60,
+          'Secure Year 1 funding — the criterion is budget SECURED, not a charter written'
+        ),
       ],
     },
     {
@@ -393,6 +417,11 @@ const FRAMEWORK = {
         L('data-asset-sensitivity', 'Learn: Data & Asset Sensitivity'),
         R('assess-engine', 'Run the scoping assessment engine'),
         A('initial-scoping', 'Produce the scoping & asset assessment'),
+        M(
+          'budget-secured-pct',
+          90,
+          'Commit the multi-year budget — L3 requires committed funding, not a scoping document alone'
+        ),
       ],
     },
     {

@@ -8,6 +8,7 @@ import { SIM_TREES, flattenTree, achievedTreeLevel, isGatingStep, type TreeStep 
 import { SANDBOX_SCENARIOS } from '@/data/sandboxScenarios'
 import { MODULE_CATALOG } from '@/components/PKILearning/moduleData'
 import { ARTIFACT_TYPE_TO_TOOL_ID } from '@/components/BusinessCenter/businessToolsRegistry'
+import { isKnownMetric } from './runMetrics'
 import { WORKSHOP_TOOL_COMPONENTS } from '@/components/Simulation/resourceContract'
 import { PHASE_MATURITY } from '@/data/phaseMaturity'
 import { FRAMEWORK_VERSION, PHASE_ORDER } from '@/data/frameworkPhases'
@@ -98,6 +99,18 @@ describe('SIM_TREES — coverage & shape', () => {
               expect(
                 s.to === '/simulation',
                 `${phase}/${act.id}: architecture link ${s.to} should be '/simulation'`
+              ).toBe(true)
+            } else if (s.kind === 'measure') {
+              // W2.5: a measure step names a KNOWN metric and a threshold. An
+              // unknown metric would fail closed at runtime, but it should fail
+              // loudly here instead of shipping an uncompletable band.
+              expect(
+                s.metricId && isKnownMetric(s.metricId),
+                `${phase}/${act.id}: measure step needs a known metricId (got ${s.metricId})`
+              ).toBeTruthy()
+              expect(
+                typeof s.minValue === 'number' && s.minValue > 0,
+                `${phase}/${act.id}: measure step needs a positive minValue`
               ).toBe(true)
             } else if (s.kind === 'recurrence') {
               // W2.4: a recurrence step names the artifact it re-operates and

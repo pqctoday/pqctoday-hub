@@ -192,6 +192,7 @@ import { ARCHITECTURES, edgeState } from '@/data/simArchitecture'
 import { TrapInsightsPanel } from './TrapInsightsPanel'
 import { useSimulationStore, RUN_START } from '@/store/useSimulationStore'
 import { FRAMEWORK_COVERAGE, hasCompleteCoverage } from '@/simulation/frameworkCoverage'
+import { readRunMetric, type RunMetricInputs } from '@/simulation/runMetrics'
 import { validateSave, previewSave } from '@/simulation/saveSchema'
 import {
   distinctRunQuarters,
@@ -1284,6 +1285,8 @@ export function SimulationView() {
   // an `architecture` step's minDecisions so a fixed threshold can never exceed
   // what a smaller org size has to decide (see embedContract.ts).
   const arch = ARCHITECTURES[size as 'small' | 'mid' | 'large' | 'global']
+  // W2.5 — filled below, once the run's derived values exist.
+  const metricInputsRef = useRef<RunMetricInputs | null>(null)
   const edgeDecisionCapacity = arch.edges.filter(
     (e) => e.vulnerable && edgeState(arch, e) === 'migratable'
   ).length
@@ -1308,6 +1311,13 @@ export function SimulationView() {
     edgeDecisionCapacity: () => edgeDecisionCapacity,
     // W2.4: recurrence is measured in the RUN's reporting periods.
     recurrenceCount: (type) => distinctRunQuarters(evidence, type).length,
+    // W2.5: a criterion stating a measurable condition is evidenced by the
+    // condition, not by a document about it. Read through a ref because the
+    // inputs (budget, assets) are derived further down this component — a
+    // direct closure over them is a temporal-dead-zone error the moment a
+    // completion check runs during the same render pass.
+    metricValue: (metricId) =>
+      metricInputsRef.current ? readRunMetric(metricId, metricInputsRef.current) : null,
   }
   const stepDone = (s: TreeStep, phase: string) =>
     auto.includes(autoKey(phase, s.to)) || isStepComplete(s, stepCompletionCtx)
@@ -1571,9 +1581,13 @@ export function SimulationView() {
   // ---- budget: starts at €0, earned by executing P0 activities + P0 maturity ----
   const p0Tree = SIM_TREES.p0
   const p0Steps = p0Tree ? flattenTree(p0Tree) : []
-  const p0Done = p0Steps.filter((s) => stepDone(s, 'p0')).length
+  // W2.5: budget is earned by doing the WORK, so the measure step that GRADES
+  // the budget is excluded from its own denominator — otherwise the condition
+  // depends on a step whose completion depends on the condition.
+  const p0WorkSteps = p0Steps.filter((s) => s.kind !== 'measure')
+  const p0Done = p0WorkSteps.filter((s) => stepDone(s, 'p0')).length
   const p0Level = levelOf('p0')
-  const p0Frac = p0Steps.length ? balance.budget.doneWeight * (p0Done / p0Steps.length) : 0
+  const p0Frac = p0WorkSteps.length ? balance.budget.doneWeight * (p0Done / p0WorkSteps.length) : 0
   // Difficulty budget lever (WS-14, PR4): Hard secures less per activity.
   const budgetTarget = Math.round(
     programBudgetTarget(sector, sizeKey) * balance.estate.budgetMultiplier
@@ -1588,6 +1602,17 @@ export function SimulationView() {
   // Available budget floors at 0 — incidents can draw the spent side past secured
   // without blocking anything; only the displayed/spendable figure floors.
   const availableBudgetM = Math.max(0, Math.round((budgetSecured - spentBudgetM) * 10) / 10)
+  // W2.5 — the measurable run conditions a `measure` step is graded against.
+  metricInputsRef.current = {
+    budgetSecuredM: budgetSecured,
+    budgetTargetM: budgetTarget,
+    assetsAccounted: assetsDiscovered ? assets.length : 0,
+    assetsTotal: assets.length,
+    edgeDecisions: Object.keys(edgeDecisions).length,
+    evidenceTotal: evidence.length,
+    evidenceByLearner: evidence.filter((e) => e.origin === 'learner').length,
+    quartersElapsed: (year - RUN_START.year) * 4 + (q - RUN_START.q),
+  }
 
   // active phase
   const phase = FRAMEWORK_PHASES[sel]

@@ -127,6 +127,7 @@ export const KIND_CHIP: Record<StepKind, string> = {
   scenario: 'bg-accent/15 text-accent',
   architecture: 'bg-success/15 text-success',
   recurrence: 'bg-warning/15 text-warning',
+  measure: 'bg-primary/15 text-primary',
 }
 
 export const BIZ_NAME = new Map(BUSINESS_TOOLS.map((t) => [t.id, t.name]))

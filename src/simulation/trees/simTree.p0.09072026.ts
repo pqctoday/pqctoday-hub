@@ -164,6 +164,14 @@ const TREE: PhaseTree = {
               to: '/business/tools/kpi-dashboard',
               artifactType: 'kpi-dashboard',
             },
+            {
+              kind: 'measure',
+              label:
+                'Secure Year 1 funding — the criterion is budget SECURED, not a charter written',
+              to: '/simulation',
+              metricId: 'budget-secured-pct',
+              minValue: 60,
+            },
           ],
         },
       ],
@@ -197,6 +205,14 @@ const TREE: PhaseTree = {
               label: 'Produce the scoping & asset assessment',
               to: '/business/tools/initial-scoping',
               artifactType: 'initial-scoping',
+            },
+            {
+              kind: 'measure',
+              label:
+                'Commit the multi-year budget — L3 requires committed funding, not a scoping document alone',
+              to: '/simulation',
+              metricId: 'budget-secured-pct',
+              minValue: 90,
             },
           ],
         },
