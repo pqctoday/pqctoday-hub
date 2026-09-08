@@ -289,11 +289,133 @@ test.describe('Executive/GRC split — 320px layout', () => {
   test('legacy notice has no page-level horizontal overflow at 320px', async ({ page }) => {
     await seedLegacyExecutive(page)
     await page.goto('/')
-    await expect(
-      page.getByRole('status', { name: 'Executive and GRC are now separate roles' })
-    ).toBeVisible({ timeout: 15000 })
+    const notice = page.getByRole('status', { name: 'Executive and GRC are now separate roles' })
+    await expect(notice).toBeVisible({ timeout: 15000 })
     const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth)
     const clientWidth = await page.evaluate(() => document.documentElement.clientWidth)
     expect(scrollWidth).toBeLessThanOrEqual(clientWidth + 1)
+
+    // No page-level overflow is not the same as "reads well" — an
+    // unconstrained flex row here once squeezed the message text into a
+    // near-single-character column (buttons kept their full width, so the
+    // row never overflowed the page) while visually unreadable. Assert the
+    // message actually gets a real content width, not just a legal one.
+    // Wait on the text locator itself before reading its box, not just the
+    // outer container — a stricter failure mode (never becomes visible at
+    // all) surfaces here as a clear timeout instead of a confusing 0-width
+    // read if something regresses the child's layout independently of the
+    // parent's.
+    const noticeText = notice.getByText(/Executive and GRC now have separate paths/)
+    await expect(noticeText).toBeVisible({ timeout: 15000 })
+    const textBox = await noticeText.boundingBox()
+    expect(textBox?.width ?? 0).toBeGreaterThan(200)
   })
+})
+
+// ── Quiz-taking, driven through the real UI (not just data-layer eligibility) ──
+// Plan §8's verification table lists "quizzes" as part of this spec's coverage;
+// the rest of the file only asserts module *counts*. This drives an actual
+// question: select an answer, submit, then use the app's own sanctioned
+// __e2e_quiz_dispatch test hook (QuizWizard.tsx, already used by
+// gamification.spec.ts) to fast-finish rather than clicking through an
+// unknown-length randomized pool.
+test.describe('Executive/GRC split — quiz-taking', () => {
+  for (const persona of ['executive', 'grc'] as const) {
+    test(`${persona} can start a quiz, answer a real question, and reach results`, async ({
+      page,
+    }) => {
+      await seedPersona(page, persona)
+      await page.goto('/learn/quiz')
+      await page.waitForSelector('[data-action="start-quiz-timed"]')
+      await page.click('[data-action="start-quiz-timed"]')
+
+      // Real interaction: the first question's own answer options, not a
+      // mock. The randomly-drawn first question can be single-answer
+      // (role="radio") or multi-select (plain buttons, no radio role —
+      // QuestionCard.tsx) — scope to the shared "Answer options" group
+      // rather than assuming one shape, so this doesn't flake on the draw.
+      const options = page.locator('[aria-label="Answer options"] button')
+      await expect(options.first()).toBeVisible({ timeout: 15000 })
+      await options.first().click()
+      await page.getByRole('button', { name: 'Check Answer' }).click()
+
+      // Fast-finish via the app's own e2e hook rather than clicking through
+      // a randomized-length pool — see gamification.spec.ts for precedent.
+      await page.waitForFunction(
+        () =>
+          typeof (window as unknown as { __e2e_quiz_dispatch?: unknown }).__e2e_quiz_dispatch !==
+          'undefined'
+      )
+      await page.evaluate(() => {
+        const dispatch = (
+          window as unknown as { __e2e_quiz_dispatch: { forceComplete: () => void } }
+        ).__e2e_quiz_dispatch
+        dispatch.forceComplete()
+      })
+      await expect(page.getByRole('heading', { name: 'Quiz Complete' })).toBeVisible({
+        timeout: 15000,
+      })
+    })
+  }
+
+  test('mobile: the quiz route renders without error for GRC', async ({ page }) => {
+    // Mobile's quiz UI is checkpoint-driven (MyPathView's capstone/checkpoint
+    // buttons), not the desktop intro+category-picker flow, and carries no
+    // __e2e_quiz_dispatch hook — so this checks the one thing that transfers
+    // regardless of entry point: navigating a GRC session to /learn/quiz on a
+    // phone viewport never crashes and always renders a real mobile screen.
+    await page.setViewportSize(MOBILE)
+    await seedPersona(page, 'grc')
+    await page.goto('/learn/quiz')
+    await expect(page.locator('body')).not.toBeEmpty()
+    await expect(page.getByText(/error|something went wrong/i)).toHaveCount(0)
+  })
+})
+
+// ── Cross-device handoff: real backup export → import round trip ──
+// Plan §7's acceptance table: "Export a backup with role and work... Restore
+// it and resume without changing identity or losing work; also test reverse
+// direction." personaSnapshot.test.ts covers this at the unit level; this
+// drives the actual UI (LandingView's BackupRestoreSection) both ways.
+test.describe('Executive/GRC split — backup export/import round trip', () => {
+  async function exportAndReimport(page: Page, persona: 'executive' | 'grc') {
+    await seedPersona(page, persona)
+    await page.goto('/')
+    // The section is inside a collapsed <details>; open it before its buttons
+    // are interactable.
+    await page.getByText('Backup & Restore progress').click()
+
+    const downloadPromise = page.waitForEvent('download')
+    await page.getByRole('button', { name: /Export backup/ }).click()
+    const download = await downloadPromise
+    const path = await download.path()
+    if (!path) throw new Error('export produced no download path')
+
+    // Reverse direction: wipe local state entirely, then restore from the
+    // exported file — proves the file alone carries identity, not the
+    // in-memory session that produced it.
+    await page.evaluate(() => localStorage.clear())
+    await page.reload()
+    await page.getByText('Backup & Restore progress').click()
+
+    const fileChooserPromise = page.waitForEvent('filechooser')
+    await page.getByRole('button', { name: /Import backup/ }).click()
+    const fileChooser = await fileChooserPromise
+    await fileChooser.setFiles(path)
+
+    await expect(page.getByText(/restored successfully/i)).toBeVisible({ timeout: 15000 })
+  }
+
+  for (const persona of ['executive', 'grc'] as const) {
+    test(`exporting and re-importing a ${persona} backup restores the same persona`, async ({
+      page,
+    }) => {
+      await exportAndReimport(page, persona)
+      // restoreSnapshot() reloads the page itself (LandingView's onchange
+      // handler) — wait for that reload before reading the restored state.
+      await page.waitForTimeout(1000)
+      const state = await readPersonaState(page)
+      expect(state?.selectedPersona).toBe(persona)
+    })
+  }
 })

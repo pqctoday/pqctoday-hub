@@ -41,16 +41,21 @@ export const ExecutiveGrcSplitNotice: React.FC = () => {
       role="status"
       aria-label="Executive and GRC are now separate roles"
     >
-      <div className="flex items-center justify-between gap-4">
-        <p className="text-sm text-foreground min-w-0">
+      <div className="flex items-center gap-4 flex-wrap sm:flex-nowrap">
+        <p className="text-sm text-foreground flex-1 min-w-0">
           Executive and GRC now have separate paths. Keep Executive for sponsorship and decisions,
           or switch to GRC for risk, controls and evidence.
         </p>
-        <div className="flex items-center gap-2 flex-shrink-0">
-          <Button variant="outline" size="sm" onClick={acknowledge}>
+        <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+          <Button variant="outline" size="sm" onClick={acknowledge} className="flex-1 sm:flex-none">
             Keep Executive
           </Button>
-          <Button variant="default" size="sm" onClick={handleSwitchToGrc}>
+          <Button
+            variant="default"
+            size="sm"
+            onClick={handleSwitchToGrc}
+            className="flex-1 sm:flex-none"
+          >
             Switch to GRC
           </Button>
           <Button
@@ -58,7 +63,7 @@ export const ExecutiveGrcSplitNotice: React.FC = () => {
             size="sm"
             onClick={acknowledge}
             aria-label="Dismiss"
-            className="text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground shrink-0"
           >
             <X size={14} />
           </Button>
