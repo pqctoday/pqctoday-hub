@@ -185,9 +185,9 @@ const SINGLE_PATH_MODULES = new Set([
 const MLS_EXEMPT_PERSONAS: PersonaId[] = ['developer', 'architect', 'researcher']
 
 describe('persona-path placement driftguard (WS8)', () => {
-  it('finds a non-trivial catalogue and all six personas (no vacuous pass)', () => {
+  it('finds a non-trivial catalogue and every persona (no vacuous pass)', () => {
     expect(learnModuleIds.length).toBeGreaterThan(50)
-    expect(personaEntries).toHaveLength(6)
+    expect(personaEntries).toHaveLength(7)
     expect(reachByModule.size).toBeGreaterThan(50)
   })
 

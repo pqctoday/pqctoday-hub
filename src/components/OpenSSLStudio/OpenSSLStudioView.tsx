@@ -207,12 +207,12 @@ export const OpenSSLStudioView: React.FC<OpenSSLStudioViewProps> = ({ embedded }
           </div>
         )}
 
-        {/* Executive redirect banner — this is a developer/operator tool, surface higher-level pages */}
-        {selectedPersona === 'executive' && (
+        {/* Executive/GRC redirect banner — this is a developer/operator tool, surface higher-level pages */}
+        {(selectedPersona === 'executive' || selectedPersona === 'grc') && (
           <ExecutiveRedirectBanner
             className="mb-4"
             title="OpenSSL Studio is a hands-on engineering tool."
-            subtitle="You can explore freely below, but for executive-level PQC context you may prefer:"
+            subtitle="You can explore freely below, but for board-level or governance PQC context you may prefer:"
             ctas={[
               { label: 'Compliance landscape →', to: '/compliance' },
               { label: 'Migration framework →', to: '/migrate' },

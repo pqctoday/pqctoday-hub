@@ -58,6 +58,12 @@ const ROLE_COPY: Record<PersonaId, RoleCopy> = {
     firstWin: 'First win — answer the board · 11 min',
     track: 'essentials',
   },
+  grc: {
+    urgency:
+      "Auditors want evidence, not intentions. Know what you can already prove — and what you can't yet.",
+    firstWin: 'First win — trace one obligation to its source · 10 min',
+    track: 'essentials',
+  },
   developer: {
     urgency: 'OpenSSL, BoringSSL and JOSE already ship PQC. Find what fits your stack.',
     firstWin: 'First win — run a real ML-KEM handshake · 5 min',
@@ -88,6 +94,7 @@ const ROLE_COPY: Record<PersonaId, RoleCopy> = {
 /** Card render order — matches the approved design layout. */
 const ROLE_ORDER: PersonaId[] = [
   'executive',
+  'grc',
   'developer',
   'architect',
   'ops',
@@ -167,7 +174,8 @@ interface SkipCardProps {
 
 /**
  * B4 (bplus-remediation-plan-08292026.md): "Show me everything" used to sit
- * below the 6 role cards as a plain outline `<Button>` in its own
+ * below the role cards (six at the time; seven since the 2026-09-07
+ * Executive/GRC split) as a plain outline `<Button>` in its own
  * border-separated footer — a legitimate, real escape hatch (every batch of
  * the B+ audit could reach it), but visually a fraction of a persona card's
  * weight, so "just skip" read as the unfavored path even though picking a

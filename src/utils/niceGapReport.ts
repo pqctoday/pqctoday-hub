@@ -113,15 +113,18 @@ function deriveCaSignals(input: AssessmentInput, result: AssessmentResult): CaSi
     targetTier: input.persona === 'executive' ? 'awareness' : 'practitioner',
   })
 
-  // CA-GOVCOMP: compliance requirements and executive persona
-  if (complianceCount > 0 || input.persona === 'executive') {
+  // CA-GOVCOMP: compliance requirements, executive persona, or GRC persona
+  // (2026-09-07 split — GRC's whole remit is governance & compliance).
+  if (complianceCount > 0 || input.persona === 'executive' || input.persona === 'grc') {
     signals.push({
       caId: 'CA-GOVCOMP',
       weight: 0.4 + (complianceCount >= 3 ? 0.4 : complianceCount >= 1 ? 0.2 : 0),
       rationale:
         complianceCount > 0
           ? `You selected ${complianceCount} compliance framework${complianceCount > 1 ? 's' : ''} (${input.complianceRequirements.slice(0, 2).join(', ')}${complianceCount > 2 ? '…' : ''}) — governance and policy competency is required to meet those mandates.`
-          : 'Executive leadership of a PQC program requires governance and compliance competency.',
+          : input.persona === 'grc'
+            ? 'A GRC role tracing obligations and evidence requires governance and compliance competency.'
+            : 'Executive leadership of a PQC program requires governance and compliance competency.',
       targetTier: 'awareness',
     })
   }
@@ -293,7 +296,11 @@ function buildWorkRoleRecommendations(
 
   // Boost roles that match persona
   const personaRoleBoost: Record<string, NiceWorkRoleId[]> = {
-    executive: ['is-security-manager', 'risk-manager'],
+    // 2026-09-07 split: qrpm/vendor-lead/pmo-analyst (the roles that carried
+    // 'risk-manager') moved from executive to grc in roleCrosswalk.ts —
+    // executive retains only exec-sponsor's 'is-security-manager'.
+    executive: ['is-security-manager'],
+    grc: ['risk-manager', 'is-security-manager', 'systems-security-analyst'],
     architect: ['security-architect', 'systems-security-analyst'],
     developer: ['security-developer', 'iam-specialist'],
     ops: ['system-administrator', 'network-security-specialist'],

@@ -221,7 +221,8 @@ function seedPersonaEvents(out: Omit<HistoryEvent, 'id'>[]) {
 
   if (personaState.selectedPersona) {
     const labels: Record<string, string> = {
-      executive: 'Executive / GRC',
+      executive: 'Executive / Business Leader',
+      grc: 'GRC / Risk & Compliance',
       developer: 'Developer / Engineer',
       architect: 'Security Architect',
       researcher: 'Researcher / Academic',

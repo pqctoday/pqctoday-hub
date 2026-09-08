@@ -16,8 +16,8 @@ first time (don't ship dev-speak and reformat later):
   what they can now do, see, or trust — not the mechanism. Bold the entry with a
   plain-language title: `- **What changed, in plain words** [view:/page]: …`.
 - **Keep the `[view:/page]` and `[persona:id]` tags** — they drive the page's
-  filters and "For me" view. Valid persona ids: `executive`, `developer`,
-  `architect`, `researcher`, `ops`, `curious`. Tag every entry with the
+  filters and "For me" view. Valid persona ids: `executive`, `grc`,
+  `developer`, `architect`, `researcher`, `ops`, `curious`. Tag every entry with the
   surface(s) it affects. `persona:ops` in particular is under-used relative to
   how often ops-relevant work actually ships (07-19 audit finding) — tag it
   explicitly whenever an entry touches deployment, certificate lifecycle, TLS
@@ -28,6 +28,36 @@ first time (don't ship dev-speak and reformat later):
   cares about (page names, feature names, what was broken, counts).
 - **One entry = one user-visible change.** If it has no user-visible effect,
   it probably doesn't need a changelog entry.
+
+## [4.82.1] - 2026-09-08
+
+### Fixed
+
+- **Several KMIP Control Plane operations now work correctly** [view:/playground] [persona:developer] [persona:architect]: splitting a key into shares, certifying a key by its ID without a separate Register step, and deriving a key from a base secret previously failed with a confusing "missing data" error. The real cause was a wire-format mismatch — a recent spec-conformance update changed how the engine expects key identifiers to be encoded, and the playground hadn't been updated to match.
+- **The KMIP Control Plane's conformance/corpus-replay check now passes** [view:/playground] [persona:developer]: the in-browser OASIS conformance replay (Dev tab) was failing nearly every test after a recent engine update tightened a test-only operation to production-server rules with no way for the browser engine to opt back in. Restored.
+- **The PKCS#11 HSM Playground reflects the latest engine fixes, on both engines** [view:/playground] [persona:developer] [persona:ops]: four PKCS#11 v3.2 conformance defects (key-export provenance, non-storage object handling, EdDSA key import, and a class of unreachable HMAC mechanisms) are now fixed in both the Rust and C++ engines, including Dual Parity mode.
+
+### Data
+
+- **Cloudflare's post-quantum algorithm data is restored** [view:/migrate] [persona:architect] [persona:researcher]: a duplicate vendor-roadmap entry had silently overwritten Cloudflare's record, dropping its listed algorithms (ML-KEM, ML-DSA). Restored to the fuller, correct record.
+
+## [4.82.0] - 2026-09-07
+
+The combined "Executive/GRC" role is now two roles: **Executive / Business Leader** for funding, sponsorship and oversight, and **GRC / Risk & Compliance** for tracing obligations to their source, assessing gaps, and recording evidence. If you were an Executive before this release, nothing changes automatically — a one-time notice lets you keep Executive or switch to GRC, and your saved progress, reports and business-tool work carry over either way.
+
+### Added
+
+- **GRC / Risk & Compliance is a new, seventh role** [view:/] [persona:grc]: its own Essentials path (8 modules, ~250 min) and full learning path, six new home-board scenarios (applicability, risk register, controls, vendor assurance, evidence, closure), a dedicated business-tools start sequence (compliance checklist → risk register → treatment plan → vendor evidence → audit checklist → verify closure), and a reading lens on the Compliance obligations register that leads with rows the hub hasn't yet extracted requirements from — framed as a source-review gap, never as evidence the organization is out of compliance.
+- **A one-time notice for existing Executive users explains the split** [view:/] [persona:executive]: it names both roles, lets you keep Executive or switch to GRC in one click, and never reappears once dismissed. Declining or switching changes nothing else — region, industry, progress and saved work are untouched.
+
+### Changed
+
+- **Executive is now narrower and faster to start** [view:/learn] [persona:executive]: its Essentials path drops from a broader mix to 5 modules (~130 min) focused on funding, business case, and governance — the deeper compliance/risk/evidence modules moved to GRC's own path. Executive's full learning path and existing report/assessment behavior are unchanged.
+- **Shared reports and business tools now recognize GRC** [view:/report] [view:/business] [persona:executive] [persona:grc]: a shared or example report link now renders correctly on mobile for every role (previously mobile-only visitors could see "No Report Yet" even with a valid link), and the Business Center's "start here" sequence and recommended tools are now role-specific for both Executive and GRC.
+
+### Fixed
+
+- **The mobile Compliance view now honors a direct `?tab=` link** [view:/compliance] [persona:grc] [persona:executive]: following a link straight to a specific Compliance section (such as GRC's obligations register) previously landed on the default section instead of the one the link named.
 
 ## [4.81.0] - 2026-09-07
 

@@ -318,9 +318,18 @@ describe('SimulationView (Mission Control)', () => {
       }
       // Option A: the AI advances progress only via real tree `auto` keys — there is
       // no separate progression counter to drift out of sync with the board.
-      // Keys are `${phaseId}::${step.to}`; validate both halves against the real
-      // trees rather than a shape regex, which silently excluded hyphenated phase
-      // IDs such as `verify-close`.
+      // Keys are `${phaseId}::${step.to}`. Phase ids can be hyphenated (e.g.
+      // 'verify-close', frameworkPhases.ts) — the original [a-z0-9]+ class never
+      // matched those, so this failed deterministically once the AI autoplay
+      // reached that phase, not just on an unlucky seed.
+      //
+      // Merge note (2026-09-08): main fixed that by widening the regex to
+      // /^[a-z0-9-]+::.+/. This branch replaces the shape check entirely and
+      // validates BOTH halves against the real trees, which is what W0.4 asked
+      // for ("validate against known phase IDs, including verify-close. Retain
+      // the assertion's requirement for a valid step reference"). A widened
+      // regex still passes for a phase id that does not exist and a step that
+      // was renamed; this does not. Strictly stronger, so it supersedes.
       const { auto } = useSimulationStore.getState()
       for (const k of auto) {
         const sep = k.indexOf('::')

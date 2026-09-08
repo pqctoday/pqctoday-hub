@@ -15,6 +15,7 @@ import { KPI_PERSONAS } from '@/data/kpiCatalog'
 
 const ICONS: Record<KpiPersonaId, React.ComponentType<{ size?: number; className?: string }>> = {
   executive: Briefcase,
+  grc: ShieldCheck,
   architect: ShieldCheck,
   ops: Server,
   researcher: GraduationCap,
@@ -23,6 +24,7 @@ const ICONS: Record<KpiPersonaId, React.ComponentType<{ size?: number; className
 
 const LABELS: Record<KpiPersonaId, string> = {
   executive: 'Executive',
+  grc: 'GRC',
   architect: 'Architect',
   ops: 'Ops',
   researcher: 'Researcher',

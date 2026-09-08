@@ -103,7 +103,7 @@ export const DRAFT_STAGE_LEVEL: Record<DraftStage, number> = {
 import type { PersonaId } from './learningPersonas'
 
 /** Persona granularity tiers for the Protocol Support heatmap palette.
- *  - `binary`  collapses to {RFC | everything else} — executive/ops/curious
+ *  - `binary`  collapses to {RFC | everything else} — executive/grc/ops/curious
  *  - `ternary` collapses to {RFC | WG+ | early} — developer/architect
  *  - `full`    keeps the graduated 0–7 palette — researcher (current behaviour)
  */
@@ -116,6 +116,7 @@ export type StageTier = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
 
 export const PERSONA_STAGE_GRANULARITY: Record<PersonaId, PersonaStageGranularity> = {
   executive: 'binary',
+  grc: 'binary',
   ops: 'binary',
   curious: 'binary',
   developer: 'ternary',

@@ -32,6 +32,7 @@ test.beforeEach(async ({ page }) => {
       JSON.stringify({
         state: {
           selectedPersona: 'executive',
+          hasAcknowledgedExecutiveGrcSplit: true,
           selectedRegion: 'apac',
           selectedIndustry: 'Government & Defense',
           selectedIndustries: ['Government & Defense'],

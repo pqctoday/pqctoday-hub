@@ -74,6 +74,12 @@ export function generateFollowUps(
           'How should I prioritize this in our migration roadmap?'
         )
         break
+      case 'grc':
+        followUps.push(
+          'What obligation or framework does this trace to?',
+          'What evidence would I need to show this is met?'
+        )
+        break
       case 'developer':
         followUps.push('Show me an implementation example', 'What libraries support this?')
         break

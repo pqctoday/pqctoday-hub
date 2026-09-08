@@ -25,12 +25,14 @@ describe('PERSONA_TOURS — B+ remediation 4.2', () => {
   const routes = routesFromApp()
   const toolIds = new Set(WORKSHOP_TOOLS.map((t) => t.id))
 
-  it('covers exactly the four roles that had no tour of their own', () => {
+  it('covers exactly the roles that had no tour of their own', () => {
     // executive has EXEC_TOUR_STAGES; curious has CuriousGuide. Giving either a
-    // second tour here would be two onboarding flows fighting each other.
+    // second tour here would be two onboarding flows fighting each other. grc
+    // is new as of the 2026-09-07 Executive/GRC split and had no tour at all.
     expect(Object.keys(PERSONA_TOURS).sort()).toEqual([
       'architect',
       'developer',
+      'grc',
       'ops',
       'researcher',
     ])

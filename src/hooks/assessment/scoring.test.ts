@@ -5,6 +5,7 @@ import {
   computeQuantumExposure,
   computeFrameworkRisk,
   computeOrganizationalReadiness,
+  computeMigrationComplexity,
 } from './scoring'
 import type { AssessmentInput, CategoryScores } from '../assessmentTypes'
 
@@ -253,5 +254,64 @@ describe('computeQuantumExposure — categories fallback', () => {
     const exposureWithSigs = computeQuantumExposure(inputWithSigs, 0)
     // Signatures + Key Exchange should push exposure higher than Symmetric + Hash alone
     expect(exposureWithSigs).toBeGreaterThan(exposure)
+  })
+})
+
+/**
+ * Executive/GRC split (2026-09-07, executive-grc-split-plan.md §D): "GRC uses
+ * standard behavior" is a scoring-engine claim, not just a copy decision — the
+ * only persona-conditional branches in this file are `isExec = input.persona
+ * === 'executive'` checks that soften three specific unknown-input penalties.
+ * Since 'grc' !== 'executive', GRC automatically gets the unsoftened path
+ * everywhere — these tests prove that rather than assume it.
+ */
+describe('scoring — GRC vs Executive (2026-09-07 split)', () => {
+  const fullySpecified: AssessmentInput = {
+    industry: 'Technology',
+    currentCrypto: ['RSA-2048'],
+    dataSensitivity: ['high'],
+    complianceRequirements: [],
+    migrationStatus: 'planning',
+    cryptoAgility: 'partially-abstracted',
+    infrastructure: ['Cloud'],
+    systemCount: '11-50',
+    teamSize: '11-50',
+    vendorDependency: 'mixed',
+  }
+
+  it('produces identical migrationComplexity and organizationalReadiness for fully specified inputs', () => {
+    const exec: AssessmentInput = { ...fullySpecified, persona: 'executive' }
+    const grc: AssessmentInput = { ...fullySpecified, persona: 'grc' }
+    expect(computeMigrationComplexity(grc)).toBe(computeMigrationComplexity(exec))
+    expect(computeOrganizationalReadiness(grc)).toBe(computeOrganizationalReadiness(exec))
+  })
+
+  it('does not soften an unknown crypto-agility answer for GRC the way it does for Executive', () => {
+    const base: AssessmentInput = { ...fullySpecified, cryptoAgility: 'unknown' }
+    const exec = computeMigrationComplexity({ ...base, persona: 'executive' })
+    const grc = computeMigrationComplexity({ ...base, persona: 'grc' })
+    const noPersona = computeMigrationComplexity({ ...base, persona: undefined })
+    expect(grc).toBe(noPersona) // GRC gets the standard, no-persona behavior
+    expect(grc).toBeGreaterThan(exec) // Executive's softened penalty reads as less complex
+  })
+
+  it('does not soften an unknown infrastructure answer for GRC the way it does for Executive', () => {
+    const base: AssessmentInput = {
+      ...fullySpecified,
+      infrastructure: undefined,
+      infrastructureUnknown: true,
+    }
+    const exec = computeMigrationComplexity({ ...base, persona: 'executive' })
+    const grc = computeMigrationComplexity({ ...base, persona: 'grc' })
+    expect(grc).toBeGreaterThan(exec)
+  })
+
+  it('does not soften an unknown migration-status readiness gap for GRC the way it does for Executive', () => {
+    const base: AssessmentInput = { ...fullySpecified, migrationStatus: 'unknown' }
+    const exec = computeOrganizationalReadiness({ ...base, persona: 'executive' })
+    const grc = computeOrganizationalReadiness({ ...base, persona: 'grc' })
+    // organizationalReadiness is higher-is-better; GRC's unsoftened gap should
+    // read as LESS ready than Executive's softened one.
+    expect(grc).toBeLessThan(exec)
   })
 })

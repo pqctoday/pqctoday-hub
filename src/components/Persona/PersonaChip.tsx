@@ -28,6 +28,7 @@ const PERSONA_ICONS: Record<string, React.ElementType> = {
 // Short display labels that fit the compact chip
 const SHORT_LABELS: Record<PersonaId, string> = {
   executive: 'Executive',
+  grc: 'GRC',
   developer: 'Developer',
   architect: 'Architect',
   ops: 'IT Ops',

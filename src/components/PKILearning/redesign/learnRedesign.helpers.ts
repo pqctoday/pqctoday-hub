@@ -13,14 +13,22 @@ import type { PersonaPathPhase } from '../usePersonaPathItems'
 export const PERSONA_ORDER: PersonaId[] = [
   'curious',
   'executive',
+  'grc',
   'developer',
   'architect',
   'ops',
   'researcher',
 ]
 
-/** Roles for which the workforce (NICE) lens is auto-surfaced (Decision 1). */
-export const NICE_AFFINITY_PERSONAS: ReadonlySet<PersonaId> = new Set(['executive', 'researcher'])
+/** Roles for which the workforce (NICE) lens is auto-surfaced (Decision 1).
+ *  `grc` added 2026-09-07 — its whole learning path maps onto risk-manager /
+ *  is-security-manager NICE work roles (see roleCrosswalk.ts), at least as
+ *  directly as executive's. */
+export const NICE_AFFINITY_PERSONAS: ReadonlySet<PersonaId> = new Set([
+  'executive',
+  'grc',
+  'researcher',
+])
 
 const PERSONA_ICONS: Record<LearningPersonaIcon, LucideIcon> = {
   Briefcase,

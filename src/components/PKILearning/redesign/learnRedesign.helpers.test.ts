@@ -146,10 +146,11 @@ describe('catalog-derived constants', () => {
     expect(TRACK_COUNT).toBe(9)
   })
 
-  it('lists all six personas with curious first, and NICE affinity for exec + researcher', () => {
-    expect(PERSONA_ORDER).toHaveLength(6)
+  it('lists every persona with curious first, and NICE affinity for exec + grc + researcher', () => {
+    expect(PERSONA_ORDER).toHaveLength(7)
     expect(PERSONA_ORDER[0]).toBe('curious')
     expect(NICE_AFFINITY_PERSONAS.has('executive')).toBe(true)
+    expect(NICE_AFFINITY_PERSONAS.has('grc')).toBe(true)
     expect(NICE_AFFINITY_PERSONAS.has('researcher')).toBe(true)
     expect(NICE_AFFINITY_PERSONAS.has('curious')).toBe(false)
   })

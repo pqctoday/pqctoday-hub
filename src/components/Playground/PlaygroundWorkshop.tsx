@@ -1443,11 +1443,11 @@ export const PlaygroundWorkshop = () => {
     // Overview
     mainBody = (
       <section>
-        {role === 'executive' && (
+        {(role === 'executive' || role === 'grc') && (
           <ExecutiveRedirectBanner
             className="mb-6"
             title="Crypto Lab is a hands-on engineering workbench."
-            subtitle="Crypto-agility — being able to swap algorithms on demand — is a board-level cost and risk decision, not just an implementation detail. You can explore freely below, but for executive-level PQC context you may prefer:"
+            subtitle="Crypto-agility — being able to swap algorithms on demand — is a board-level or governance cost and risk decision, not just an implementation detail. You can explore freely below, but for that context you may prefer:"
             ctas={[
               { label: 'Compliance landscape →', to: '/compliance' },
               { label: 'Migration framework →', to: '/migrate' },

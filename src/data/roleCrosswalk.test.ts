@@ -20,6 +20,7 @@ const ALL_ROLE_IDS: FrameworkRoleId[] = [
 
 const ALL_PERSONA_IDS: PersonaId[] = [
   'executive',
+  'grc',
   'developer',
   'architect',
   'researcher',
@@ -128,9 +129,11 @@ describe('personaToRoles', () => {
     expect(personaToRoles.curious).toEqual([])
   })
 
-  it('executive fans out to QRPM, Exec-Sponsor, Vendor-Lead and PMO-Analyst', () => {
-    expect([...personaToRoles.executive].sort()).toEqual(
-      ['qrpm', 'exec-sponsor', 'vendor-lead', 'pmo-analyst'].sort()
-    )
+  it('executive retains only Exec-Sponsor after the 2026-09-07 GRC split', () => {
+    expect([...personaToRoles.executive].sort()).toEqual(['exec-sponsor'])
+  })
+
+  it('grc fans out to QRPM, Vendor-Lead and PMO-Analyst', () => {
+    expect([...personaToRoles.grc].sort()).toEqual(['qrpm', 'vendor-lead', 'pmo-analyst'].sort())
   })
 })

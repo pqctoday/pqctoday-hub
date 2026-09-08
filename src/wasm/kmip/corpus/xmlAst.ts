@@ -12,15 +12,19 @@
 // `DOMParser` instead of Python's `xml.etree.ElementTree`.
 import type { KmipNode, TtlvTypeName } from '../ttlv/nodes'
 
-/** OASIS XML uses semantic type aliases that resolve to one of the 11 TTLV
+/** OASIS XML uses semantic type aliases that resolve to one of the 14 TTLV
  * primitives at wire encode time — mirrors `oasis_codec.py`'s
- * `XML_TYPE_ALIASES`. `Identifier` / `Reference` / `NameReference` are all
- * UID-shaped TextStrings per KMIP 3.0 §9.1.1. */
-const XML_TYPE_ALIASES: Record<string, TtlvTypeName> = {
-  Identifier: 'TextString',
-  Reference: 'TextString',
-  NameReference: 'TextString',
-}
+ * `XML_TYPE_ALIASES`, which is now empty: `Identifier` (0x0C) / `Reference`
+ * (0x0D) / `NameReference` (0x0E) are their own distinct KMIP 3.0 §11.25
+ * item types, not TextString. This alias table used to collapse all three
+ * to TextString — the exact bug the engine's own G1 remediation fixed on
+ * the Rust/Python side (see kmip/docs/CONFORMANCE_REPORT.md §8 G1); this
+ * hub port of the Python parser was never updated to match, so every
+ * placeholder-bound UniqueIdentifier/Link this parser encoded was silently
+ * downgraded to TextString and rejected by the now-strict engine (found
+ * 2026-09-07 diagnosing AX-M-1-30's "child count 3 != 2": one of two
+ * AddAttribute calls in the batch failed decode with exactly that error). */
+const XML_TYPE_ALIASES: Record<string, TtlvTypeName> = {}
 
 const TTLV_TYPES = new Set<string>([
   'Structure',
@@ -34,6 +38,9 @@ const TTLV_TYPES = new Set<string>([
   'DateTime',
   'Interval',
   'DateTimeExtended',
+  'Identifier',
+  'Reference',
+  'NameReference',
 ])
 
 function resolveType(raw: string | null): TtlvTypeName {

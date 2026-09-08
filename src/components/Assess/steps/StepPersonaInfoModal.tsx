@@ -33,7 +33,8 @@ interface StepPersonaInfoModalProps {
 }
 
 const PERSONA_META: { id: PersonaId; label: string; icon: LucideIcon }[] = [
-  { id: 'executive', label: 'Executive / GRC', icon: Briefcase },
+  { id: 'executive', label: 'Executive / Business Leader', icon: Briefcase },
+  { id: 'grc', label: 'GRC / Risk & Compliance', icon: ShieldCheck },
   { id: 'developer', label: 'Developer', icon: Code },
   { id: 'architect', label: 'Security Architect', icon: ShieldCheck },
   { id: 'researcher', label: 'Researcher', icon: GraduationCap },

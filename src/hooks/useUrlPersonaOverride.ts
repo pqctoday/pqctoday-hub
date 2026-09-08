@@ -3,19 +3,11 @@ import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 import { usePersonaStore } from '@/store/usePersonaStore'
 import { logPersonaSelected } from '@/utils/analytics'
-import type { PersonaId } from '@/data/learningPersonas'
-
-const VALID_PERSONAS: readonly PersonaId[] = [
-  'executive',
-  'developer',
-  'architect',
-  'researcher',
-  'ops',
-  'curious',
-]
+import { isPersonaId as isKnownPersonaId } from '@/data/personaIds'
+import type { PersonaId } from '@/data/personaIds'
 
 function isPersonaId(value: string | null): value is PersonaId {
-  return value !== null && (VALID_PERSONAS as readonly string[]).includes(value)
+  return value !== null && isKnownPersonaId(value)
 }
 
 /**

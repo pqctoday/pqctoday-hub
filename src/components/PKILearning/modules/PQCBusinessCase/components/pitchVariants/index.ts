@@ -7,7 +7,7 @@ import { buildDeveloperVariant } from './developer'
 import { buildArchitectVariant } from './architect'
 import { buildOpsVariant } from './ops'
 
-/** Personas with a dedicated pitch variant. Other personas (researcher, curious, null) fall back to executive framing. */
+/** Personas with a dedicated pitch variant. Other personas (grc, researcher, curious, null) fall back to executive framing — see PersonaPitchBanner.test.tsx's "treats researcher and curious personas as unsupported" case, which this joins rather than a split-caused regression. */
 export const SUPPORTED_PITCH_PERSONAS: PersonaId[] = ['executive', 'developer', 'architect', 'ops']
 
 export function isSupportedPitchPersona(persona: PersonaId | null): boolean {

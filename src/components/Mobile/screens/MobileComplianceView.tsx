@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router'
 import {
   ArrowRight,
   ChevronDown,
@@ -60,6 +61,21 @@ const SECTIONS: { id: Section; label: string }[] = [
   { id: 'cswp39', label: 'CSWP.39' },
 ]
 
+const SECTION_IDS = new Set<string>(SECTIONS.map((s) => s.id))
+
+/**
+ * Desktop's `?tab=` values include several this screen has no matching
+ * section for (landscape sub-tabs like 'compliance'/'standards'/'technical',
+ * 'foryou', 'progress'). Map the ones with a real narrow-mobile equivalent;
+ * an unmapped or unknown value falls through to the 'obligations' default
+ * rather than a blank section.
+ */
+function sectionFromTabParam(tab: string | null): Section | null {
+  if (!tab) return null
+  if (SECTION_IDS.has(tab)) return tab as Section
+  return null
+}
+
 const TIER_TONE: Record<ApplicabilityTier, string> = {
   mandatory: 'text-status-error',
   recognized: 'text-status-warning',
@@ -104,7 +120,27 @@ const TIER_TONE: Record<ApplicabilityTier, string> = {
  * real, not invented.
  */
 export function MobileComplianceView() {
-  const [section, setSection] = useState<Section>('obligations')
+  const [searchParams] = useSearchParams()
+  const tabParam = searchParams.get('tab')
+  // Lazy-initialize from `?tab=` (e.g. a GRC board's `/compliance?tab=records`
+  // link) so a deep link lands on the right section on first paint, not just
+  // the 'obligations' default.
+  const [section, setSection] = useState<Section>(
+    () => sectionFromTabParam(tabParam) ?? 'obligations'
+  )
+  // Adjust `section` when `?tab=` itself changes on the SAME mounted route
+  // (e.g. tapping a second board link without navigating away first) — a
+  // mount-only initializer would miss this, same class of gap the desktop
+  // ReportView hydration guard had. Deliberately setState-during-render (the
+  // React-recommended way to sync state from a changed prop/external value —
+  // see "You Might Not Need an Effect") rather than a `useEffect`, which
+  // would cascade an extra render on every mount.
+  const [lastTabParam, setLastTabParam] = useState(tabParam)
+  if (tabParam !== lastTabParam) {
+    setLastTabParam(tabParam)
+    const next = sectionFromTabParam(tabParam)
+    if (next) setSection(next)
+  }
   const [requirementsFrameworkId, setRequirementsFrameworkId] = useState<string | null>(null)
   const [expandedTier, setExpandedTier] = useState<Record<string, boolean>>({})
   const [openStep, setOpenStep] = useState<string | null>(null)

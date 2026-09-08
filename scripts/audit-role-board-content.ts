@@ -48,7 +48,15 @@ import { latestDatedCsv, ROLE_BOARD_CONTENT_RE, ROLE_BOARD_VARIANTS_RE } from '.
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const FRESHNESS_MAX_AGE_DAYS = 180
-const ROLES = ['executive', 'developer', 'architect', 'ops', 'researcher', 'curious'] as const
+const ROLES = [
+  'executive',
+  'grc',
+  'developer',
+  'architect',
+  'ops',
+  'researcher',
+  'curious',
+] as const
 
 interface ContentRow {
   role_id: string

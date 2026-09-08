@@ -164,7 +164,7 @@ export const NICE_COMPETENCY_AREAS: Record<NiceCompetencyAreaId, NiceCompetencyA
       { type: 'T', id: 'T1366', label: 'Identify supply-chain risks for critical system elements' },
     ],
     primaryWorkRoles: ['risk-manager', 'systems-security-analyst', 'is-security-manager'],
-    targetPersonas: ['executive', 'architect', 'ops', 'curious'],
+    targetPersonas: ['executive', 'grc', 'architect', 'ops', 'curious'],
   },
 
   'CA-SECPROG': {
@@ -231,7 +231,7 @@ export const NICE_COMPETENCY_AREAS: Record<NiceCompetencyAreaId, NiceCompetencyA
       },
     ],
     primaryWorkRoles: ['systems-security-analyst', 'security-architect', 'risk-manager'],
-    targetPersonas: ['executive', 'architect', 'developer', 'ops'],
+    targetPersonas: ['executive', 'grc', 'architect', 'developer', 'ops'],
   },
 
   'CA-SYSARCH': {
@@ -267,7 +267,7 @@ export const NICE_COMPETENCY_AREAS: Record<NiceCompetencyAreaId, NiceCompetencyA
       { type: 'T', id: 'T0116', label: 'Identify organizational policy stakeholders' },
     ],
     primaryWorkRoles: ['is-security-manager', 'risk-manager'],
-    targetPersonas: ['executive', 'architect', 'ops'],
+    targetPersonas: ['executive', 'grc', 'architect', 'ops'],
   },
 }
 

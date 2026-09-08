@@ -56,6 +56,7 @@ const PERSONA_ICONS = {
 const PERSONA_ORDER: PersonaId[] = [
   'curious',
   'executive',
+  'grc',
   'developer',
   'architect',
   'ops',

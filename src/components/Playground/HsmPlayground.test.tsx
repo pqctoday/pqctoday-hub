@@ -129,4 +129,19 @@ describe('HsmPlayground persona gating', () => {
     expect(screen.queryByRole('tab', { name: /^acvp$/i })).not.toBeInTheDocument()
     expect(screen.queryByRole('tab', { name: /^conformance$/i })).not.toBeInTheDocument()
   })
+
+  it('hides the ACVP sub-tab and engine selector for grc too, alongside the same advisory banner', () => {
+    // The Executive/GRC split (2026-09-07) left this gate checking only
+    // 'curious'/'executive' — grc is equally non-technical and belongs in
+    // the same excluded bucket, but was missed since a plain === chain isn't
+    // caught by tsc's exhaustiveness checking the way a Record<PersonaId,...>
+    // map is.
+    mockPersona = 'grc'
+    renderHsmPlayground()
+    expect(screen.queryByRole('radio', { name: /rust/i })).not.toBeInTheDocument()
+    expect(screen.getByText(/hands-on engineering workbench/i)).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('tab', { name: /^build$/i }))
+    expect(screen.queryByRole('tab', { name: /^acvp$/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('tab', { name: /^conformance$/i })).not.toBeInTheDocument()
+  })
 })

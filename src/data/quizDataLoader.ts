@@ -8,6 +8,7 @@ import type {
   QuizCategoryMeta,
 } from '@/components/PKILearning/modules/Quiz/types'
 import { loadLatestCSV, splitPipe } from './csvUtils'
+import { PERSONA_IDS } from './personaIds'
 
 // ─── Raw CSV row shape ───
 
@@ -537,7 +538,7 @@ export const quizCategories: QuizCategoryMeta[] = (
 export const quizPersonaCounts: Record<string, number> = {}
 export const quizPersonaQuestionIds: Record<string, Set<string>> = {}
 
-for (const persona of ['executive', 'developer', 'architect', 'researcher', 'ops', 'curious']) {
+for (const persona of PERSONA_IDS) {
   const matching = questions.filter((q) => q.personas.length === 0 || q.personas.includes(persona))
   quizPersonaCounts[persona] = matching.length
   quizPersonaQuestionIds[persona] = new Set(matching.map((q) => q.id))

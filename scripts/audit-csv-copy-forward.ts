@@ -287,6 +287,33 @@ const LIBRARY_UNTITLED_SLUG_BUG_FIXED_09072026 =
   'filename all updated together) before any other row could reference the ' +
   'broken id.'
 
+/** trusted_sources_: two independent sub-processes (four hours apart, same
+ *  session) each registered PQConnect under a different id — pqconnect
+ *  (richer record: Region, description, Migrate_CSV=Yes, url_authoritative,
+ *  referenced by 18 other CSVs) and pqconnect-project (sparser, referenced
+ *  by 6). Merged into the richer pqconnect id and the migrate-catalog/
+ *  vendors references re-pointed; pqconnect-project contributed nothing
+ *  unique, so nothing was lost by folding it in. */
+const PQCONNECT_DUPLICATE_MERGED_09072026 =
+  'pqconnect-project was a duplicate of pqconnect (same real-world source, ' +
+  'registered independently by two sub-processes four hours apart). Merged ' +
+  'into pqconnect — the richer record (Region, description, Migrate_CSV=Yes, ' +
+  'url_authoritative, referenced by 18 CSVs vs 6) — and all references ' +
+  're-pointed. Commit 9e476a74d.'
+
+/** role_board_content_: the 09072026 GRC persona split (Work Packages A-C,
+ *  commit 2c36f0cd6) moved compliance/governance-focused content off
+ *  Executive's mandate track_chip strip onto the new GRC persona's own
+ *  board — "Compliance strategy" is now GRC track_chip slot 4; "Quantum
+ *  threats" was folded into GRC's restructured track. Not a content loss,
+ *  a persona re-scope: Executive's track_chip strip shrank from 7 chips to
+ *  5 by design, verified against GRC's own board content. */
+const EXECUTIVE_TRACKCHIP_MOVED_TO_GRC_09072026 =
+  'Executive mandate track_chip lost 2 of 7 chips ("Quantum threats" at ' +
+  'slot 2, "Compliance strategy" at slot 6) to the GRC persona split (commit ' +
+  '2c36f0cd6) — GRC now owns compliance/governance content on its own board ' +
+  '("Compliance strategy" is GRC track_chip slot 4). A re-scope, not a loss.'
+
 export const RECORDED_REMOVALS: RecordedRemoval[] = [
   {
     family: 'migrate_vendor_roadmap_',
@@ -304,6 +331,30 @@ export const RECORDED_REMOVALS: RecordedRemoval[] = [
     family: 'library_',
     key: 'untitled',
     reason: LIBRARY_UNTITLED_SLUG_BUG_FIXED_09072026,
+    recorded: '2026-09-07',
+  },
+  {
+    family: 'trusted_sources_',
+    key: 'pqconnect-project',
+    reason: PQCONNECT_DUPLICATE_MERGED_09072026,
+    recorded: '2026-09-07',
+  },
+  {
+    family: 'pqc_authoritative_sources_reference_',
+    key: 'pqconnect-project',
+    reason: PQCONNECT_DUPLICATE_MERGED_09072026,
+    recorded: '2026-09-07',
+  },
+  {
+    family: 'role_board_content_',
+    key: 'executive | mandate | track_chip | 2',
+    reason: EXECUTIVE_TRACKCHIP_MOVED_TO_GRC_09072026,
+    recorded: '2026-09-07',
+  },
+  {
+    family: 'role_board_content_',
+    key: 'executive | mandate | track_chip | 6',
+    reason: EXECUTIVE_TRACKCHIP_MOVED_TO_GRC_09072026,
     recorded: '2026-09-07',
   },
   {

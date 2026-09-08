@@ -17,6 +17,7 @@ import type { SortOption } from '@/components/Library/SortControl'
 /** Display order of the six personas in the Role Lens segmented control. */
 export const LIBRARY_PERSONAS: { id: PersonaId; label: string }[] = [
   { id: 'executive', label: 'Executive' },
+  { id: 'grc', label: 'GRC' },
   { id: 'developer', label: 'Developer' },
   { id: 'architect', label: 'Architect' },
   { id: 'researcher', label: 'Researcher' },
@@ -35,6 +36,7 @@ export const LIBRARY_PERSONAS: { id: PersonaId; label: string }[] = [
  * decision to differentiate again doesn't have to rebuild this shape. */
 export const LIBRARY_DEFAULT_SORT_BY_PERSONA: Record<PersonaId, SortOption> = {
   executive: 'published',
+  grc: 'published',
   developer: 'published',
   architect: 'published',
   researcher: 'published',
