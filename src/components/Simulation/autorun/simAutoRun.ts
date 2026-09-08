@@ -591,6 +591,48 @@ export function estimatedMinutes(steps: TreeStep[]): number {
  *  required + deep-dive. Used by the Play This Phase card (no auto-run queue
  *  needed for v1, which just deep-links to the board at that phase; this is
  *  purely for the card's live duration estimate as the phase dropdown changes). */
+/**
+ * W7.1 — the short introductory journey.
+ *
+ * The shortest existing way in was the ~45-minute overview, which the audit
+ * found is too much to ask before a learner knows whether any of this concerns
+ * them. This is the five-beat version the plan asks for: explain the threat,
+ * inspect one asset, choose a next step, see the consequence, and hear what it
+ * meant.
+ *
+ * It is CURATED from real tree steps (never invented content) and, per W7.3,
+ * BOUNDED BY MEASURED effort rather than by a promised duration: steps are
+ * admitted only while `estimatedMinutes` of the queue stays within the budget,
+ * so the figure shown to a learner is derived from the same estimator the other
+ * modes use rather than being an advertised number nobody checked.
+ */
+export const INTRO_BUDGET_MINUTES = 10
+
+export function autoRunIntroQueue(budgetMinutes = INTRO_BUDGET_MINUTES): AutoRunQueueItem[] {
+  const items: AutoRunQueueItem[] = []
+  const seen = new Set<string>()
+  // Beat order: the threat first (p0 frames why), then the estate (p1 shows
+  // what is exposed). Only light, readable kinds — an artifact builder is not
+  // a first ten minutes.
+  const LIGHT: StepKind[] = ['learn', 'reference']
+  for (const phase of ['p0', 'p1'] as PhaseId[]) {
+    for (let level = 1; level <= 2; level++) {
+      for (const step of gatingStepsForPhaseLevel(phase, level)) {
+        if (!LIGHT.includes(step.kind)) continue
+        const key = stepDedupeKey(step)
+        if (key !== null) {
+          if (seen.has(key)) continue
+          seen.add(key)
+        }
+        const next = [...items, { phase, step, level }]
+        if (estimatedMinutes(next.map((i) => i.step)) > budgetMinutes) return items
+        items.push({ phase, step, level })
+      }
+    }
+  }
+  return items
+}
+
 export function stepsForPhase(phase: PhaseId, includeDeepDive: boolean): TreeStep[] {
   const tree = treeFor(phase)
   if (!tree) return []

@@ -417,6 +417,8 @@ export function SimulationView() {
     setInsuranceAssumed,
     activeTab,
     setActiveTab,
+    openStepRef,
+    setOpenStepRef,
     attempts,
     recordAttempt,
     clearAttempt,
@@ -582,6 +584,9 @@ export function SimulationView() {
     // invisible to the pathname-based pageview tracker (AnalyticsTracker in
     // App.tsx) — log them explicitly instead.
     logEvent('Simulation', 'Embed Open', `${s.kind}:${s.label}`)
+    // W5.5: remember WHICH resource is open, so a reload returns to the
+    // resource and not merely to the tab that listed it.
+    setOpenStepRef(s)
     if (s.kind === 'learn' && s.moduleId && isEmbeddableModule(s.moduleId)) {
       clearAllEmbeds()
       const lqIdx = s.to.indexOf('?')
@@ -649,11 +654,39 @@ export function SimulationView() {
     // a step is never silently done just by being viewed. AI delegation (`auto`)
     // still bulk-completes via its own button + the quarter engine.
   }
-  const closeEmbed = clearAllEmbeds
+  const closeEmbed = () => {
+    // A deliberate "Back to board" is not a resume point — forget the resource
+    // so the next reload lands on the board the player chose to return to.
+    setOpenStepRef(null)
+    clearAllEmbeds()
+  }
   // Live auto-run playthrough (Play 0→7) — drives the real sim like manual play:
   // opens each tool inline for a peek, then returns to the board so its sections
   // tick off in view; the clock advances Q1 2026 → Q1 2035.
   const autoRunPlayer = useSimAutoRunPlayer({ openStep, closeEmbed })
+
+  // W5.5 — RESUME THE RESOURCE. The tab already survives a reload; this restores
+  // what was open inside it. Runs once on mount, re-opening through `openStep`
+  // itself rather than a second copy of its branching, so a resumed resource is
+  // opened exactly the way clicking it would. Only a step that still exists in
+  // the current phase's tree is restored — a save referencing a resource this
+  // build no longer ships is dropped rather than reopened as a broken pane.
+  const restoredResourceRef = useRef(false)
+  useEffect(() => {
+    if (restoredResourceRef.current) return
+    // Wait for the persisted store to rehydrate. Zustand's persist middleware
+    // restores asynchronously, so on the very first mount this is still null —
+    // latching the ref on mount meant the resume never fired at all (caught in
+    // the browser; the unit tests set the store synchronously and passed).
+    if (!openStepRef) return
+    restoredResourceRef.current = true
+    // Replay the stored step directly. Re-deriving it from the trees cannot
+    // work: the Resources tab builds steps from the phase RESOURCE MAP, which
+    // surfaces resources no tree contains (e.g. /learn/quantum-threats).
+    const step = openStepRef as unknown as TreeStep
+    if (canEmbedStep(step)) openStep(step)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openStepRef])
 
   // Deep link: /simulation?run=<mode> auto-starts a run directly, skipping the
   // PLAY modal entirely — a URL is a pre-committed choice already made by

@@ -18,6 +18,7 @@ import {
   autoRunQueue,
   autoRunDeepQueue,
   autoRunWalkthroughQueue,
+  autoRunIntroQueue,
   autoRunPhaseQueue,
   completeStepGenuine,
   type AutoRunQueueItem,
@@ -56,12 +57,10 @@ export interface ScenarioIntro {
  *  Dive) that additionally walks the deep-dive (optional, non-gating) content —
  *  see `simulation-unified-play-mechanism-plan-07052026.md`. */
 export type RunMode =
-  | 'climb'
-  | 'climb-deep'
-  | 'walkthrough'
-  | 'walkthrough-deep'
-  | 'phase'
-  | 'phase-deep'
+  /** W7.1 — the ~10-minute introductory journey. Tour-family: linear, no
+   *  resume, and deliberately the shortest way to find out whether any of this
+   *  concerns you. */
+  'intro' | 'climb' | 'climb-deep' | 'walkthrough' | 'walkthrough-deep' | 'phase' | 'phase-deep'
 
 /** True for either walkthrough variant — the tour family (frozen clock, no
  *  resume, single linear pass), as opposed to the climb family. Exported: the
@@ -69,7 +68,7 @@ export type RunMode =
  *  and concept-peek gating, which predate the "-deep" variants and only checked
  *  `=== 'walkthrough'`. */
 export const isWalkthroughMode = (m: RunMode): boolean =>
-  m === 'walkthrough' || m === 'walkthrough-deep'
+  m === 'walkthrough' || m === 'walkthrough-deep' || m === 'intro'
 
 /** True for either Play-This-Phase variant — a single-phase run. Like
  *  walkthrough, it never participates in the shared climb resume playhead
@@ -661,13 +660,16 @@ export function useSimAutoRunPlayer({
       // suppresses the tour for the DURATION of an active run via `running`, without
       // burning the persisted `tourSeen` flag — so it's offered once the run completes.
       const deep = includesDeepDive(runMode)
-      const q = isWalkthroughMode(runMode)
-        ? autoRunWalkthroughQueue(deep)
-        : isPhaseMode(runMode)
-          ? autoRunPhaseQueue(opts?.phase ?? useSimulationStore.getState().sel, deep)
-          : deep
-            ? autoRunDeepQueue()
-            : autoRunQueue()
+      const q =
+        runMode === 'intro'
+          ? autoRunIntroQueue()
+          : isWalkthroughMode(runMode)
+            ? autoRunWalkthroughQueue(deep)
+            : isPhaseMode(runMode)
+              ? autoRunPhaseQueue(opts?.phase ?? useSimulationStore.getState().sel, deep)
+              : deep
+                ? autoRunDeepQueue()
+                : autoRunQueue()
       queueRef.current = q
       // RESUME from the remembered playhead — the queue index where the last run was
       // interrupted (saved by stop(), cleared on completion + by Reset). Completion can
