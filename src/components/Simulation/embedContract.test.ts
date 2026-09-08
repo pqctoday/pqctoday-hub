@@ -202,6 +202,7 @@ describe('standard completion convention (C0)', () => {
     isScenarioComplete: () => true,
     edgeDecisionCount: () => 999,
     edgeDecisionCapacity: () => 999,
+    recurrenceCount: () => 999,
   }
   const incomplete: StepCompletionContext = {
     isModuleComplete: () => false,
@@ -212,6 +213,7 @@ describe('standard completion convention (C0)', () => {
     isScenarioComplete: () => false,
     edgeDecisionCount: () => 0,
     edgeDecisionCapacity: () => 999,
+    recurrenceCount: () => 0,
   }
 
   // A representative step for EVERY StepKind — typed as a Record<StepKind, …> so
@@ -228,6 +230,14 @@ describe('standard completion convention (C0)', () => {
     catalog: step({ kind: 'catalog', to: '/migrate', catalogId: 'discovery' }),
     scenario: step({ kind: 'scenario', scenarioId: A_SCENARIO_ID }),
     architecture: step({ kind: 'architecture', minDecisions: 1 }),
+    // W2.4: recurrence needs the prerequisite operated in a LATER reporting
+    // period — one document, or one visit, can never satisfy it.
+    recurrence: step({
+      kind: 'recurrence',
+      artifactType: anArtifactType,
+      recurrenceOf: anArtifactType,
+      recurrenceQuarters: 1,
+    }),
   }
   // catalog: isStepComplete delegates to isCatalogStepDone(id) — override needed
   const completedWithPicks: StepCompletionContext = { ...completed, isCatalogStepDone: () => true }

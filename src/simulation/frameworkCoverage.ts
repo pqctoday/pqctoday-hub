@@ -139,12 +139,12 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     status: 'proxy',
   }),
   cell('p0', 4, {
-    activityIds: [],
-    adaptedTaskIds: [],
+    activityIds: ['0.3-board-cycle'],
+    adaptedTaskIds: ['0.3-board-cycle'],
     evidence:
-      'Advance a scenario reporting period; reconcile charter/funding with an enterprise-risk entry and a board update, recording owner, review date, decision, and follow-up.',
-    status: 'unsupported',
-    note: 'Recurring board reporting and enterprise-risk integration have no runtime band.',
+      'Advance a reporting period and take the board update again, so quantum risk sits in the enterprise risk register with an owner, review date and follow-up.',
+    status: 'outcome',
+    note: 'Adaptation of activity 0.3. Clears only when the board update is recorded in a LATER reporting period — a single briefing cannot satisfy a recurring cadence.',
   }),
 
   // ── P1 Discovery & Inventory ────────────────────────────────────────────
@@ -170,12 +170,12 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     note: 'The ≥90% coverage figure in the criterion is not measured by the exercise.',
   }),
   cell('p1', 4, {
-    activityIds: [],
-    adaptedTaskIds: [],
+    activityIds: ['1.6-drift-cycle'],
+    adaptedTaskIds: ['1.6-drift-cycle'],
     evidence:
-      'Inject an asset/configuration change; identify discovery drift, update the inventory, and calculate known coverage and remaining gaps.',
-    status: 'unsupported',
-    note: 'Real-time posture, drift detection and measured gap reduction have no runtime band.',
+      'Re-run discovery after the estate changes, then account for the drift: what appeared, what changed, and how much is still unknown.',
+    status: 'outcome',
+    note: 'Adaptation of activity 1.6, gated on re-running the vulnerability watch in a later reporting period.',
   }),
 
   // ── P2 CBOM ─────────────────────────────────────────────────────────────
@@ -198,12 +198,12 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     status: 'proxy',
   }),
   cell('p2', 4, {
-    activityIds: [],
-    adaptedTaskIds: [],
+    activityIds: ['2.3-cbom-refresh'],
+    adaptedTaskIds: ['2.3-cbom-refresh'],
     evidence:
-      'Inject a deployment/vendor update; update the linked CBOM, report freshness, and flag unresolved supplier evidence.',
-    status: 'unsupported',
-    note: 'Deployment-driven updates, vendor gap management and compliance reporting have no runtime band.',
+      'Re-issue the CBOM after a deployment or vendor change and report its freshness plus unresolved supplier evidence.',
+    status: 'outcome',
+    note: 'Adaptation of activity 2.3. A CBOM produced once cannot clear it; the refresh must land in a later reporting period.',
   }),
 
   // ── P3 Risk Scoring ─────────────────────────────────────────────────────
@@ -220,20 +220,20 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     status: 'proxy',
   }),
   cell('p3', 3, {
-    activityIds: [],
-    adaptedTaskIds: [],
+    activityIds: ['3.4-qra-recurring'],
+    adaptedTaskIds: ['3.4-qra-recurring'],
     evidence:
-      'Refresh the QRA after a quarter using expanded inventory and legal/retention inputs, and explain what changed in the priorities.',
-    status: 'unsupported',
-    note: 'Recurrence is an OUTCOME of activity 3.4 over time, not a new numbered activity. Do not mint "3.5".',
+      'Refresh the QRA against the expanded inventory with the legal/retention dimension, and explain which priorities changed.',
+    status: 'outcome',
+    note: 'Adaptation of activity 3.4 operating quarterly. Deliberately NOT a new activity 3.5 — the framework defines only 3.1-3.4.',
   }),
   cell('p3', 4, {
-    activityIds: [],
-    adaptedTaskIds: [],
+    activityIds: ['3.2-event-rescore'],
+    adaptedTaskIds: ['3.2-event-rescore'],
     evidence:
-      'Inject an event that changes exposure or applicability; rescore affected assets and propagate the change into enterprise risk and review evidence.',
-    status: 'unsupported',
-    note: 'Event-driven rescoring is an OUTCOME of activities 3.2–3.4. Do not mint "3.6".',
+      'After an event changes exposure or applicability, re-score the affected assets and carry the change into enterprise risk and review evidence.',
+    status: 'outcome',
+    note: 'Adaptation of activity 3.2 becoming event-driven, requiring two later reporting periods. Deliberately NOT a new activity 3.6.',
   }),
 
   // ── P4 Roadmap & Governance ─────────────────────────────────────────────
@@ -296,12 +296,12 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
 
   // ── P6 Infrastructure & Performance ─────────────────────────────────────
   cell('p6', 1, {
-    activityIds: [],
-    adaptedTaskIds: [],
+    activityIds: ['6.1-infra-awareness'],
+    adaptedTaskIds: ['6.1-infra-awareness'],
     evidence:
-      'Identify affected PKI/HSM/network components and explain their infrastructure constraints before entering advanced work.',
-    status: 'unsupported',
-    note: 'The tree opens at L2, so a learner cannot practise initial infrastructure awareness.',
+      'Identify the PKI, HSM/KMS and network components the migration touches and state the constraint each imposes, before any plan exists.',
+    status: 'proxy',
+    note: 'Adaptation of activity 6.1. The source criterion IS awareness with no concrete plans, so reference-level evidence is the right bar here — it is the one new band that is honestly a proxy.',
   }),
   cell('p6', 2, {
     activityIds: ['6.1', '6.2', '6.3'],
@@ -318,12 +318,12 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     status: 'proxy',
   }),
   cell('p6', 4, {
-    activityIds: [],
-    adaptedTaskIds: [],
+    activityIds: ['6.5-capacity-cycle'],
+    adaptedTaskIds: ['6.5-capacity-cycle'],
     evidence:
-      'Compare load/capacity evidence against thresholds; inject monitoring drift and require a corrective action and remeasurement.',
-    status: 'unsupported',
-    note: 'Production-scale capacity validation and continuous monitoring have no runtime band.',
+      'Re-validate the capacity plan against measured load in a later period and treat monitoring drift as a corrective action to be re-measured.',
+    status: 'outcome',
+    note: 'Adaptation of activity 6.5, pairing a later-period re-validation with the HSM capacity workshop.',
   }),
 
   // ── P7 Vendor & Supply Chain ────────────────────────────────────────────
@@ -347,12 +347,12 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     status: 'proxy',
   }),
   cell('p7', 4, {
-    activityIds: ['7.7'],
-    adaptedTaskIds: [],
+    activityIds: ['7.7', '7.5-vendor-governance-cycle'],
+    adaptedTaskIds: ['7.5-vendor-governance-cycle'],
     evidence:
-      'Evaluate supplier delivery evidence, unresolved bridges, open-source dependencies, and the next recurring governance review.',
-    status: 'proxy',
-    note: 'A band exists but is cleared by the cloud shared-responsibility activity; the criterion requires VERIFIED delivery and bridges eliminated.',
+      'Re-score the vendor portfolio in a later period: commitments met, bridging patterns retired, open-source dependencies tracked, next review scheduled.',
+    status: 'outcome',
+    note: 'The cloud shared-responsibility activity (7.7) is now joined by a recurring re-score adapting activity 7.5, so the band requires verified delivery over time rather than one artifact.',
   }),
 ]
 

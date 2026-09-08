@@ -33,6 +33,7 @@ import { REAL_DOC_GENERATORS } from './realToolDocs'
 import { ARCHITECTURES, edgeState, edgeKey } from '@/data/simArchitecture'
 import { jurisdictionFor } from '@/data/jurisdiction'
 import {
+  distinctRunQuarters,
   documentApplicability,
   evidenceId,
   hasEvidence,
@@ -110,6 +111,8 @@ export function liveCompletionContext(): StepCompletionContext {
     isScenarioComplete: (id) => useSimulationStore.getState().visitedScenarios.includes(id),
     edgeDecisionCount: () => Object.keys(useSimulationStore.getState().edgeDecisions).length,
     edgeDecisionCapacity: () => architectureEdgeCapacity(),
+    recurrenceCount: (type) =>
+      distinctRunQuarters(useSimulationStore.getState().evidence, type).length,
   }
 }
 
@@ -182,8 +185,9 @@ function recordStepEvidence(
 ): void {
   const sim = useSimulationStore.getState()
   const runId = `run-${sim.seed}`
+  const runQuarter = `Q${sim.q} ${sim.year}`
   sim.recordEvidence({
-    id: evidenceId(runId, phase, kind, resourceId),
+    id: evidenceId(runId, phase, kind, resourceId, kind === 'artifact' ? runQuarter : undefined),
     runId,
     phase,
     resourceId,
@@ -192,6 +196,7 @@ function recordStepEvidence(
     status,
     fingerprint: runFingerprint(sim.size, sim.country, sim.sector),
     createdAt: Date.now(),
+    runQuarter,
     artifactType: step.artifactType,
   })
 }
@@ -247,6 +252,32 @@ export function completeStepGenuine(
         createdAt: Date.now(),
       })
       recordStepEvidence(step, 'artifact', step.artifactType, phase, origin, 'practiced')
+      return true
+    }
+    case 'recurrence': {
+      // W2.4: this criterion is an existing activity OPERATED AGAIN over time,
+      // so it cannot be faked by filing one document. The narrated run does the
+      // honest thing — it records the artifact, genuinely advances the run's
+      // reporting period, and records it again. The clock really moves; the
+      // evidence really lands in two distinct periods.
+      if (!step.recurrenceOf) return false
+      const needed = 1 + (step.recurrenceQuarters ?? 1)
+      for (let i = 0; i < needed; i++) {
+        const now = useSimulationStore.getState()
+        recordStepEvidence(
+          { ...step, artifactType: step.recurrenceOf },
+          'artifact',
+          step.recurrenceOf,
+          phase,
+          origin,
+          'criterion-met'
+        )
+        if (i === needed - 1) break
+        // Advance one reporting period, exactly as the exercise asks.
+        const q = now.q === 4 ? 1 : now.q + 1
+        const year = now.q === 4 ? now.year + 1 : now.year
+        now.applyQuarter({ crqcShift: now.crqcShift, year, q, newEvents: [] })
+      }
       return true
     }
     case 'scenario':

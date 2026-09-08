@@ -193,6 +193,7 @@ import { useSimulationStore, RUN_START } from '@/store/useSimulationStore'
 import { FRAMEWORK_COVERAGE, hasCompleteCoverage } from '@/simulation/frameworkCoverage'
 import { validateSave, previewSave } from '@/simulation/saveSchema'
 import {
+  distinctRunQuarters,
   documentApplicability,
   evidenceId,
   hasEvidence,
@@ -1198,6 +1199,7 @@ export function SimulationView() {
       status,
       fingerprint: runFp,
       createdAt: Date.now(),
+      runQuarter: `Q${q} ${year}`,
     })
   }
   const autoKey = (phase: string, to: string) => `${phase}::${to}`
@@ -1227,6 +1229,8 @@ export function SimulationView() {
     // WS-04: cumulative edge-decision count/capacity for `architecture` steps.
     edgeDecisionCount: () => Object.keys(edgeDecisions).length,
     edgeDecisionCapacity: () => edgeDecisionCapacity,
+    // W2.4: recurrence is measured in the RUN's reporting periods.
+    recurrenceCount: (type) => distinctRunQuarters(evidence, type).length,
   }
   const stepDone = (s: TreeStep, phase: string) =>
     auto.includes(autoKey(phase, s.to)) || isStepComplete(s, stepCompletionCtx)

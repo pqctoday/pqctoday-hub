@@ -181,6 +181,24 @@ const E = (minDecisions, label) => ({
   minDecisions,
 })
 
+// REC() — a RECURRENCE step (W2.4). The framework's higher maturity indicators
+// mostly describe an EXISTING activity operated again over time ("QRA updated
+// quarterly", "auto-updated on deployment", "reported to board quarterly").
+// Those cannot be satisfied by opening a page or filing one document, so this
+// step clears only when its prerequisite artifact has been recorded in
+// `quarters + 1` DISTINCT reporting periods of the run. `artifactType` is
+// deliberately NOT set: this is not an activity step and must not satisfy one.
+const REC = (recurrenceOf, quarters, label) => {
+  if (!ART_TOOL[recurrenceOf]) throw new Error(`no tool for artifact ${recurrenceOf}`)
+  return {
+    kind: 'recurrence',
+    label,
+    to: `/business/tools/${ART_TOOL[recurrenceOf]}`,
+    recurrenceOf,
+    recurrenceQuarters: quarters,
+  }
+}
+
 // ---- per-phase Maturity Indicators (verbatim, Applied Quantum v2.1) ---------
 const INDICATORS = {
   p0: {
@@ -377,6 +395,23 @@ const FRAMEWORK = {
         A('initial-scoping', 'Produce the scoping & asset assessment'),
       ],
     },
+    {
+      level: 4,
+      id: '0.3-board-cycle',
+      adaptationOf: '0.3',
+      title: 'Operate the governance cadence: recurring board reporting',
+      decision:
+        'Report quantum risk to the board on the same cadence as other strategic risks — a one-off briefing is not governance.',
+      do: 'Advance a reporting period and take the board update again, so quantum risk is carried in the enterprise risk register with an owner, a review date and a follow-up rather than being raised once.',
+      output: 'Recurring board update + enterprise-risk entry',
+      steps: [
+        REC('board-deck', 1, 'Report to the board again in a later quarter (recurring cadence)'),
+        R(
+          'report',
+          'Reference: your program report — the record the board decision is minuted against'
+        ),
+      ],
+    },
   ],
   p1: [
     {
@@ -519,6 +554,24 @@ const FRAMEWORK = {
         L('platform-eng-pqc', 'Deep dive — Learn: Platform Engineering & PQC'),
       ],
     },
+    {
+      level: 4,
+      id: '1.6-drift-cycle',
+      adaptationOf: '1.6',
+      title: 'Operate continuous discovery: drift detection over time',
+      decision:
+        'Re-run discovery after the estate changes and measure what moved — coverage you measured once is already out of date.',
+      do: 'Advance a reporting period, re-run the vulnerability watch, and account for the drift: what appeared, what changed, and how much of the estate is still unknown.',
+      output: 'Drift report + updated coverage and gap register',
+      steps: [
+        REC(
+          'crypto-vulnerability-watch',
+          1,
+          'Re-run the crypto vulnerability watch in a later quarter (drift detection)'
+        ),
+        R('migrate', 'Reference: the product estate the re-run inventory is measured against'),
+      ],
+    },
   ],
   p2: [
     {
@@ -600,6 +653,20 @@ const FRAMEWORK = {
           'soc-implementation-pqc',
           'Learn: involve the SOC — posture-registry integration and CBOM exfiltration monitoring'
         ),
+      ],
+    },
+    {
+      level: 4,
+      id: '2.3-cbom-refresh',
+      adaptationOf: '2.3',
+      title: 'Operate the CBOM: refreshed on deployment',
+      decision:
+        'A CBOM is a live operational asset — if it is not refreshed when something ships, it is documentation, not inventory.',
+      do: 'Advance a reporting period, re-issue the CBOM after a deployment or vendor change, and report its freshness plus any supplier evidence still unresolved.',
+      output: 'Refreshed CBOM + freshness and supplier-gap report',
+      steps: [
+        REC('crypto-cbom', 1, 'Re-issue the CBOM in a later quarter (auto-update on deployment)'),
+        R('migrate', 'Reference: the deployment/vendor changes the refresh must account for'),
       ],
     },
   ],
@@ -691,6 +758,41 @@ const FRAMEWORK = {
           'report',
           'View your auto-assembled QRA — heatmap, backlog, gap analysis, compliance mapping — on the Report page'
         ),
+      ],
+    },
+    {
+      level: 3,
+      id: '3.4-qra-recurring',
+      adaptationOf: '3.4',
+      title: 'Operate the QRA: quarterly refresh across the inventory',
+      decision:
+        'Re-score on a cadence using the expanded inventory and the legal/retention view — a QRA produced once describes an estate you no longer have.',
+      do: 'Advance a reporting period and refresh the QRA against the wider inventory, adding the legal/data-retention dimension, then explain which priorities changed and why.',
+      output: 'Refreshed QRA with changed priorities explained',
+      steps: [
+        REC('risk-register', 1, 'Refresh the risk register in a later quarter (quarterly QRA)'),
+        L(
+          'data-asset-sensitivity',
+          'Learn: legal and data-retention horizon — the L3 risk dimension'
+        ),
+      ],
+    },
+    {
+      level: 4,
+      id: '3.2-event-rescore',
+      adaptationOf: '3.2',
+      title: 'Operate risk posture: event-driven re-scoring',
+      decision:
+        'Re-score when the world changes — a new deadline or a changed exposure should move the backlog without waiting for the next quarter.',
+      do: 'After an event changes exposure or applicability, re-score the affected assets and carry the change into the enterprise risk and review evidence.',
+      output: 'Event-driven re-score + enterprise-risk propagation',
+      steps: [
+        REC(
+          'risk-treatment-plan',
+          2,
+          'Re-issue the risk treatment plan after a later event (event-driven re-scoring)'
+        ),
+        R('timeline', 'Reference: the regulatory clock whose movement triggers a re-score'),
       ],
     },
   ],
@@ -1079,6 +1181,44 @@ const FRAMEWORK = {
       // an open design question for a properly scoped follow-up, not a
       // Wave-0 string fix.
     },
+    {
+      level: 1,
+      id: '6.1-infra-awareness',
+      adaptationOf: '6.1',
+      title: 'Recognise the infrastructure constraints before planning',
+      decision:
+        'Understand what PQC does to PKI, HSMs and the network path before committing to any modernization plan.',
+      do: 'Identify which PKI, HSM/KMS and network components the migration touches, and explain the constraint each one imposes — larger keys and signatures, hardware support, middlebox behaviour. Awareness only: no plans yet.',
+      output: 'Stated infrastructure constraints',
+      steps: [
+        R(
+          'algorithms-transition',
+          'Reference: classical → PQC transition — what changes in keys, signatures and certificates'
+        ),
+        R(
+          'algorithms-detailed',
+          'Reference: detailed algorithm comparison — the size and performance constraints infrastructure has to absorb'
+        ),
+      ],
+    },
+    {
+      level: 4,
+      id: '6.5-capacity-cycle',
+      adaptationOf: '6.5',
+      title: 'Operate infrastructure at production scale: capacity and monitoring',
+      decision:
+        'Validate capacity against real thresholds and keep measuring — a baseline taken once will not catch drift.',
+      do: 'Advance a reporting period, re-run the capacity plan against the measured load, and treat any monitoring drift as a corrective action to be re-measured rather than noted.',
+      output: 'Re-validated capacity plan + corrective action',
+      steps: [
+        REC(
+          'infra-modernization-plan',
+          1,
+          'Re-validate the infrastructure plan in a later quarter (production-scale capacity)'
+        ),
+        W('hsm-capacity', 'Practice: HSM capacity — measure headroom against the threshold'),
+      ],
+    },
   ],
   p7: [
     {
@@ -1173,6 +1313,24 @@ const FRAMEWORK = {
       do: 'Define the provider/customer migration boundary and govern SaaS by sensitivity.',
       output: 'Cloud responsibility & SaaS governance',
       steps: [A('cloud-responsibility-matrix', 'Map the cloud responsibility split')],
+    },
+    {
+      level: 4,
+      id: '7.5-vendor-governance-cycle',
+      adaptationOf: '7.5',
+      title: 'Operate vendor governance as a permanent function',
+      decision:
+        'Verify what suppliers actually delivered and keep the review running — a signed commitment is not delivered PQC.',
+      do: 'Advance a reporting period and re-score the vendor portfolio: which commitments were met, which bridging patterns can now be retired, what open-source dependencies are tracked, and when the next review falls.',
+      output: 'Re-scored vendor portfolio + next governance review',
+      steps: [
+        REC(
+          'vendor-scorecard',
+          1,
+          'Re-score vendors in a later quarter (permanent BAU governance)'
+        ),
+        R('compliance', 'Reference: supplier certification evidence behind a delivery claim'),
+      ],
     },
   ],
   foundations: [

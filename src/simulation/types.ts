@@ -26,6 +26,7 @@ export type StepKind =
   | 'catalog'
   | 'scenario'
   | 'architecture'
+  | 'recurrence'
 
 /** A concrete, real-hub-backed leaf step. Completion is read from hub state. */
 export interface TreeStep {
@@ -62,6 +63,16 @@ export interface TreeStep {
    *  by the same growing decision count, the same way other kinds share one
    *  underlying resource. */
   minDecisions?: number
+  /** recurrence (W2.4): the maturity criterion this step represents is an
+   *  EXISTING activity operated again over time — "QRA updated quarterly",
+   *  "roadmap ... with quarterly updates", "auto-updated on deployment". It
+   *  cannot be satisfied by opening a page, so completion requires the
+   *  prerequisite artifact to exist AND the run to have reached a later
+   *  reporting period than the one it was first recorded in. */
+  recurrenceOf?: ExecutiveDocumentType
+  /** How many reporting periods (quarters) must pass after the prerequisite
+   *  was first recorded before this step can clear. */
+  recurrenceQuarters?: number
   /** True for a step sourced from an activity's `deepDive` array. Stamped
    *  automatically by `flattenTree` (never hand-authored) so `isGatingStep`
    *  excludes it, same as `scenario` — this is what keeps deep-dive content
