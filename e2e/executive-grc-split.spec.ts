@@ -300,9 +300,14 @@ test.describe('Executive/GRC split — 320px layout', () => {
     // near-single-character column (buttons kept their full width, so the
     // row never overflowed the page) while visually unreadable. Assert the
     // message actually gets a real content width, not just a legal one.
-    const textBox = await notice
-      .getByText(/Executive and GRC now have separate paths/)
-      .boundingBox()
+    // Wait on the text locator itself before reading its box, not just the
+    // outer container — a stricter failure mode (never becomes visible at
+    // all) surfaces here as a clear timeout instead of a confusing 0-width
+    // read if something regresses the child's layout independently of the
+    // parent's.
+    const noticeText = notice.getByText(/Executive and GRC now have separate paths/)
+    await expect(noticeText).toBeVisible({ timeout: 15000 })
+    const textBox = await noticeText.boundingBox()
     expect(textBox?.width ?? 0).toBeGreaterThan(200)
   })
 })
