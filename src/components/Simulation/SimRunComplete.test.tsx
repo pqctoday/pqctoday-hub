@@ -167,7 +167,15 @@ describe('SimRunComplete (run-end ceremony)', () => {
 describe('persona debriefs (W7.4)', () => {
   it('gives each seat its own next action and evidence obligation', () => {
     const seen = new Set<string>()
-    for (const seat of ['executive', 'architect', 'developer', 'ops', 'researcher', 'curious']) {
+    for (const seat of [
+      'executive',
+      'grc',
+      'architect',
+      'developer',
+      'ops',
+      'researcher',
+      'curious',
+    ]) {
       const { unmount } = renderCeremony({ seat })
       expect(screen.getByText(new RegExp(`Your debrief · ${seat}`, 'i'))).toBeInTheDocument()
       expect(screen.getByText(/Next action:/i)).toBeInTheDocument()
@@ -177,8 +185,9 @@ describe('persona debriefs (W7.4)', () => {
       seen.add(obligation)
       unmount()
     }
-    // every seat gets DIFFERENT content — not one debrief relabelled
-    expect(seen.size).toBe(6)
+    // every seat gets DIFFERENT content — not one debrief relabelled.
+    // GRC is deliberately distinct from executive: sponsorship vs assurance.
+    expect(seen.size).toBe(7)
   })
 
   it('says plainly when a run was mostly watched rather than done', () => {

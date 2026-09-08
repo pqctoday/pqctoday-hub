@@ -41,14 +41,27 @@ const DEBRIEFS: Record<PersonaId, PersonaDebrief> = {
       'A charter, a funded multi-year plan, and a minuted decision at the level that chartered the programme. Sponsorship is not assurance — someone still has to evidence that the work happened.',
     nextStop: { label: 'Business tools — charter and roadmap', to: '/business' },
   },
+  grc: {
+    // W7.4: GRC is a DISTINCT seat from executive, which is the whole point of
+    // the split. Sponsorship answers "who owns it and what did we accept";
+    // assurance answers "which obligations applied, and what proves it". Having
+    // a sponsor evidences nothing.
+    headline:
+      'You ran the programme against one jurisdiction and one scenario. Assurance asks a different question from sponsorship: which obligations actually applied here, and what proves the work happened.',
+    nextAction:
+      'Work the applicability out properly — sector, system scope and effective date, not country alone — then list every criterion you could not evidence and who owns closing it.',
+    evidenceObligation:
+      'Verification records against a stated evidence standard, an exceptions register with owners and review dates, and a recurring review cadence. A dossier that exists is not a dossier that was reviewed, and a deadline that applies to federal systems does not apply to you because you share a country with them.',
+    nextStop: { label: 'Compliance — obligations and evidence', to: '/compliance' },
+  },
   researcher: {
     headline:
-      'You ran the programme against one jurisdiction and one scenario. Assurance asks a different question: which obligations actually applied, and what proves it.',
+      'You watched a migration play out under one set of assumptions — a CRQC horizon, a shelf life, a set of parameter choices. Every one of those is a modelling decision, not a measurement.',
     nextAction:
-      'Work the applicability out properly — sector, system scope and effective date, not country alone — and list every criterion you could not evidence.',
+      'Change one assumption that the scenario fixed for you — pull the threat horizon in, or lengthen the data shelf life — and work out which decisions in the run would no longer hold.',
     evidenceObligation:
-      'Verification records with a stated evidence standard, an exceptions register with owners and review dates, and a recurring review cadence. A dossier that exists is not a dossier that was reviewed.',
-    nextStop: { label: 'Compliance — obligations and evidence', to: '/compliance' },
+      'Stated assumptions with their sources and dates, and a clear line between what a standard specifies and what this scenario asserted for teaching purposes. Published expert estimates are opinion surveys, not forecasts.',
+    nextStop: { label: 'Algorithms — parameters and security levels', to: '/algorithms' },
   },
   architect: {
     headline:
