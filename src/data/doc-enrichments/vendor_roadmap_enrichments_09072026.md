@@ -2818,29 +2818,6 @@ source: public/vendor-roadmaps/
 - **Extraction Timestamp**: 2026-07-07T20:41:12
 
 
-## VND-057 — Cloudflare Inc.
-
-- **Vendor ID**: VND-057
-- **Vendor Name**: Cloudflare Inc.
-- **Roadmap Title**: Cloudflare targets 2029 for full post-quantum security
-- **Roadmap URL**: https://blog.cloudflare.com/post-quantum-roadmap/
-- **Publish Date**: Unknown
-- **Local File**: vendor-roadmaps/VND-057_Cloudflare_Inc.html
-- **CSV Coverage Notes**: None
-- **PQC Algorithms Announced**: None detected
-- **Target Migration Dates**: 2029 for full post-quantum security including authentication
-- **Products / Services Covered**: Cloudflare One; Cloudflare products (general)
-- **Compliance Frameworks**: None detected
-- **Hybrid Mode Support**: None detected
-- **Current GA Status**: GA (post-quantum encryption enabled for all websites and APIs in 2022)
-- **Customer Action Required**: No mitigating action required for Cloudflare services; make post-quantum support a requirement for procurement; assess critical vendors
-- **Key Commitments & Quotes**: "We now target 2029 to be fully post-quantum (PQ) secure including, crucially, post-quantum authentication."
-- **Coverage Verification**: CONSISTENT — The document confirms the 2029 target date mentioned in the title, aligning with the unspecified CSV notes.
-- **Extraction Quality**: MEDIUM
-- **Source Document**: VND-057_Cloudflare_Inc.html (501.9 KB)
-- **Extraction Timestamp**: 2026-09-07T11:00:34
-
-
 ## VND-018 — Google LLC
 
 - **Vendor ID**: VND-018
