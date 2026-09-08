@@ -16,6 +16,8 @@ import {
   type MaturityTier,
 } from '@/components/BusinessCenter/lib/cswp39Tier'
 import { CSWP39_ZONE_DETAILS, type ZoneId } from '@/data/cswp39ZoneData'
+import { usePersonaStore } from '@/store/usePersonaStore'
+import { getBusinessRoleSequence } from '@/data/businessRoleConfig'
 
 const TIER_STYLES: Record<MaturityTier, string> = {
   1: 'bg-muted text-muted-foreground border-border',
@@ -54,8 +56,6 @@ const BOARD_QUESTIONS: { q: string; desc: string; to: string; cta: string }[] = 
     cta: 'RACI builder',
   },
 ]
-const TOP_TOOL_IDS = ['roi-calculator', 'board-pitch', 'risk-register']
-
 // "Missing for next tier" text is missingForNextTier() (cswp39Tier.ts) — moved
 // there 2026-08-24 (audit R1.4) so it reads the same T thresholds and boolean
 // gates the tier functions above it use, instead of a parallel copy.
@@ -104,14 +104,20 @@ const ZONE_ORDER: ZoneId[] = [
 export function MobileCommandCenterView() {
   const metrics = useBusinessMetrics()
   const [openZone, setOpenZone] = useState<ZoneId | null>(null)
+  const selectedPersona = usePersonaStore((s) => s.selectedPersona)
 
   const zoneTiers = useMemo(() => computeZoneTiers(metrics), [metrics])
   const stepTiers = useMemo(() => computeStepTiers(metrics), [metrics])
 
   if (metrics.isFullyEmpty) {
-    const topTools = TOP_TOOL_IDS.map((id) => BUSINESS_TOOLS.find((t) => t.id === id)).filter(
-      (t): t is (typeof BUSINESS_TOOLS)[number] => Boolean(t)
-    )
+    // Top 3 of the persona's own recommended sequence — see BusinessCenterView's
+    // WelcomeState for the desktop equivalent of this same shared config.
+    const topToolIds = getBusinessRoleSequence(selectedPersona)
+      .steps.slice(0, 3)
+      .map((s) => s.id)
+    const topTools = topToolIds
+      .map((id) => BUSINESS_TOOLS.find((t) => t.id === id))
+      .filter((t): t is (typeof BUSINESS_TOOLS)[number] => Boolean(t))
     return (
       <div className="px-4 pb-4 pt-4">
         <div className="mb-1">

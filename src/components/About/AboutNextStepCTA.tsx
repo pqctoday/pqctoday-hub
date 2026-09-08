@@ -1,6 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import { Link } from 'react-router'
-import { ArrowRight, Briefcase, Code2, Wrench, FlaskConical, Layers, Compass } from 'lucide-react'
+import {
+  ArrowRight,
+  Briefcase,
+  Code2,
+  Wrench,
+  FlaskConical,
+  Layers,
+  Compass,
+  ClipboardCheck,
+} from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button-variants'
 import { cn } from '@/lib/utils'
 import { usePersonaStore } from '@/store/usePersonaStore'
@@ -24,6 +33,14 @@ const PERSONA_CTAS: Record<PersonaId, CtaSpec> = {
     to: '/assess?mode=quick',
     destination: 'assess-quick',
     cta: 'Start the assessment',
+  },
+  grc: {
+    icon: <ClipboardCheck size={20} className="text-primary" />,
+    title: 'Scope your compliance checklist',
+    body: 'Start from the obligations register and turn what applies to you into a scoped checklist with owners and evidence links.',
+    to: '/compliance?tab=obligations',
+    destination: 'compliance-obligations',
+    cta: 'Open obligations',
   },
   developer: {
     icon: <Code2 size={20} className="text-primary" />,

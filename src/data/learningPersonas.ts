@@ -3,8 +3,11 @@
 // module id, estimatedMinutes sum (all 6 personas), and quiz-category
 // against live code; fixed one stale explanatory comment (researcher path)
 import type { QuizCategory } from '@/components/PKILearning/modules/Quiz/types'
+import { PERSONA_IDS, isPersonaId } from './personaIds'
+import type { PersonaId } from './personaIds'
 
-export type PersonaId = 'executive' | 'developer' | 'architect' | 'researcher' | 'ops' | 'curious'
+export { PERSONA_IDS, isPersonaId }
+export type { PersonaId }
 
 export type PathItem =
   | { type: 'module'; moduleId: string }
@@ -97,8 +100,8 @@ export interface LearningPersona {
 export const PERSONAS: Record<PersonaId, LearningPersona> = {
   executive: {
     id: 'executive',
-    label: 'Executive / GRC',
-    subtitle: 'Risk, governance & compliance focus',
+    label: 'Executive / Business Leader',
+    subtitle: 'Funding, decisions & oversight focus',
     icon: 'Briefcase',
     description:
       'Understand the quantum threat, build a business case, establish governance, track compliance deadlines, and plan a comprehensive migration strategy.',
@@ -220,16 +223,19 @@ export const PERSONAS: Record<PersonaId, LearningPersona> = {
     // carried by `essentials` (200 min) rather than by the full path, since the
     // capstone unlocks on essentials, not on the whole recommendedPath.
     estimatedMinutes: 985,
+    // 2026-09-07 Executive/GRC split: Essentials narrowed to the five modules a
+    // busy sponsor needs to fund and govern a program (§4 of the split plan).
+    // `quantum-threats` and `compliance-strategy` stay in the full path as
+    // optional depth; the obligations/compliance deep dive is now GRC's
+    // Essentials territory (see the `grc` persona below).
     essentials: [
       'pqc-101',
       'exec-quantum-impact',
-      'quantum-threats',
       'pqc-risk-management',
       'pqc-business-case',
       'pqc-governance',
-      'compliance-strategy',
     ],
-    essentialsMinutes: 200,
+    essentialsMinutes: 130,
     quizDescription:
       'Test your knowledge on quantum threats, risk management, data asset classification, business cases, governance, compliance strategy, cryptographic management modernization, migration planning, vendor risk, and identity & access management.',
     quizCategories: [
@@ -252,6 +258,122 @@ export const PERSONAS: Record<PersonaId, LearningPersona> = {
       'migration-program',
       'vendor-risk',
       'iam-pqc',
+      'verification-closure',
+    ],
+  },
+  // 2026-09-07 Executive/GRC split (executive-grc-split-plan.md §4). GRC is a
+  // new, distinct persona — not an alias of executive. Its full path totals
+  // 560 min (550 modules + 10 quiz) and Essentials totals 250 min, both
+  // hand-verified against each module's manifest `duration` field at this
+  // revision; re-check both sums in `learningPersonas.test.ts` if a module
+  // duration changes.
+  grc: {
+    id: 'grc',
+    label: 'GRC / Risk & Compliance',
+    subtitle: 'Obligations, risk & evidence focus',
+    icon: 'ShieldCheck',
+    description:
+      'Trace regulatory and framework obligations to their source, classify data and assign risk owners, build a scoped compliance and governance program, track cryptographic inventory evidence, review vendor assurance, and verify migration closure with an audit-ready record.',
+    recommendedPath: [
+      'pqc-101',
+      'quantum-threats',
+      'pqc-risk-management',
+      'data-asset-sensitivity',
+      'pqc-grc',
+      'compliance-strategy',
+      'standards-bodies',
+      'pqc-governance',
+      'skills-team-structure',
+      'crypto-registry',
+      'sbom',
+      'cbom',
+      'vendor-risk',
+      'crypto-agility',
+      'migration-program',
+      'verification-closure',
+      'quiz',
+    ],
+    pathItems: [
+      { type: 'module', moduleId: 'pqc-101' },
+      { type: 'module', moduleId: 'quantum-threats' },
+      { type: 'module', moduleId: 'pqc-risk-management' },
+      { type: 'module', moduleId: 'data-asset-sensitivity' },
+      { type: 'module', moduleId: 'pqc-grc' },
+      { type: 'module', moduleId: 'compliance-strategy' },
+      {
+        type: 'checkpoint',
+        id: 'grc-risk-obligations',
+        label: 'Risk & Obligations',
+        categories: [
+          'pqc-fundamentals',
+          'quantum-threats',
+          'pqc-risk-management',
+          'data-asset-sensitivity',
+          'pqc-grc',
+          'compliance-strategy',
+        ],
+      },
+      { type: 'module', moduleId: 'standards-bodies' },
+      { type: 'module', moduleId: 'pqc-governance' },
+      { type: 'module', moduleId: 'skills-team-structure' },
+      { type: 'module', moduleId: 'crypto-registry' },
+      { type: 'module', moduleId: 'sbom' },
+      { type: 'module', moduleId: 'cbom' },
+      {
+        type: 'checkpoint',
+        id: 'grc-governance-inventory',
+        label: 'Governance & Inventory Evidence',
+        categories: [
+          'standards-bodies',
+          'pqc-governance',
+          'skills-team-structure',
+          'crypto-registry',
+          'sbom',
+          'cbom',
+        ],
+      },
+      { type: 'module', moduleId: 'vendor-risk' },
+      { type: 'module', moduleId: 'crypto-agility' },
+      { type: 'module', moduleId: 'migration-program' },
+      { type: 'module', moduleId: 'verification-closure' },
+      {
+        type: 'checkpoint',
+        id: 'grc-assurance-closure',
+        label: 'Assurance & Closure',
+        categories: ['vendor-risk', 'crypto-agility', 'migration-program', 'verification-closure'],
+      },
+      { type: 'module', moduleId: 'quiz' },
+    ],
+    estimatedMinutes: 560,
+    essentials: [
+      'pqc-101',
+      'pqc-risk-management',
+      'data-asset-sensitivity',
+      'pqc-grc',
+      'compliance-strategy',
+      'pqc-governance',
+      'vendor-risk',
+      'verification-closure',
+    ],
+    essentialsMinutes: 250,
+    quizDescription:
+      'Test your knowledge on quantum risk fundamentals, risk management, data asset classification, GRC program design, compliance strategy, standards bodies, governance, team structure, cryptographic inventory (registry, SBOM, CBOM), vendor risk and assurance, crypto agility, migration programs, and verification & closure.',
+    quizCategories: [
+      'pqc-fundamentals',
+      'quantum-threats',
+      'pqc-risk-management',
+      'data-asset-sensitivity',
+      'pqc-grc',
+      'compliance-strategy',
+      'standards-bodies',
+      'pqc-governance',
+      'skills-team-structure',
+      'crypto-registry',
+      'sbom',
+      'cbom',
+      'vendor-risk',
+      'crypto-agility',
+      'migration-program',
       'verification-closure',
     ],
   },
@@ -1256,14 +1378,12 @@ export function inferPersonaFromAssessment(assessment: {
     return 'researcher'
   }
 
-  // Executive: early-stage migration, focus on risk/compliance rather than implementation
-  if (
-    (assessment.migrationStatus === 'not-started' || assessment.migrationStatus === '') &&
-    assessment.cryptoAgility !== 'fully-abstracted' &&
-    infraCount <= 2
-  ) {
-    return 'executive'
-  }
+  // Executive/GRC split (2026-09-07): this branch used to infer 'executive' from
+  // early-stage migration + low infra involvement. That signal is genuinely
+  // ambiguous between Executive and GRC — both personas can look identical on
+  // migrationStatus/cryptoAgility/infraCount alone — so it was removed rather
+  // than arbitrarily routed to one of the two. Both are now self-selected only;
+  // an early-stage, low-infra user falls through to the `return null` below.
 
   // Developer: hands-on implementer actively doing the migration. Checked BEFORE the
   // infra-count-driven ops/architect branches so a small, hands-on team on an
@@ -1307,6 +1427,9 @@ export function inferPersonaFromAssessment(assessment: {
   // 'curious' is intentionally never inferred — it is a self-selected entry point for
   // users who want to explore without a declared role. Any user who completed the
   // assessment has expressed enough intent to map to a functional persona instead.
+  // 'executive' and 'grc' are also never inferred (2026-09-07 split, see above) —
+  // both require explicit self-selection since the assessment signal alone cannot
+  // reliably distinguish a funding/oversight focus from a risk/compliance one.
   return null
 }
 
@@ -1340,6 +1463,10 @@ const ESSENTIALS_MODULE_QUIZ_CATEGORY: Record<string, string> = {
   'pqc-business-case': 'pqc-business-case',
   'pqc-governance': 'pqc-governance',
   'compliance-strategy': 'compliance-strategy',
+  'pqc-grc': 'pqc-grc',
+  'data-asset-sensitivity': 'data-asset-sensitivity',
+  'vendor-risk': 'vendor-risk',
+  'verification-closure': 'verification-closure',
 }
 
 /**

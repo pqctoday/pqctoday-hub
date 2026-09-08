@@ -153,7 +153,7 @@ export const REPLACE_ASSETS: ReplaceAsset[] = [
     hndl: true,
     deadlineLabel: 'External-facing — highest HNDL exposure',
     note: 'Enable hybrid X25519+ML-KEM-768 key exchange on edge TLS terminators. Drop-in for modern stacks (OpenSSL 3.5+, BoringSSL, recent CDNs) — no application change required.',
-    focusPersonas: ['architect', 'executive'],
+    focusPersonas: ['architect', 'executive', 'grc'],
   },
   {
     id: 'vpn',
@@ -237,7 +237,7 @@ export const REPLACE_ASSETS: ReplaceAsset[] = [
     hndl: true,
     deadlineLabel: 'API transport carries HNDL risk',
     note: 'The KMS API transport (TLS) is the near-term exposure; key-wrap algorithm support follows the provider roadmap. Prefer providers exposing hybrid KEM key-wrap.',
-    focusPersonas: ['ops', 'executive', 'developer'],
+    focusPersonas: ['ops', 'executive', 'grc', 'developer'],
   },
   {
     id: 'msg',

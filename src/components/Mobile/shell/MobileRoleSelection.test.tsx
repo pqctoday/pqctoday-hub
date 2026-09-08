@@ -10,11 +10,12 @@ afterEach(() => {
 })
 
 describe('MobileRoleSelection — first run', () => {
-  it('renders full-screen (no dialog role) with all six persona cards from RoleHomeView', () => {
+  it('renders full-screen (no dialog role) with all seven persona cards from RoleHomeView', () => {
     render(<MobileRoleSelection variant="firstRun" />)
     expect(screen.getByText("Who's asking?")).toBeInTheDocument()
     for (const label of [
-      'Executive / GRC',
+      'Executive / Business Leader',
+      'GRC / Risk & Compliance',
       'Developer / Engineer',
       'Security Architect',
       'IT Ops / DevOps',
@@ -27,7 +28,7 @@ describe('MobileRoleSelection — first run', () => {
 
   it('picking a role sets the persona and marks the picker seen', () => {
     render(<MobileRoleSelection variant="firstRun" />)
-    fireEvent.click(screen.getByRole('button', { name: /Executive \/ GRC/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Executive \/ Business Leader/ }))
     expect(usePersonaStore.getState().selectedPersona).toBe('executive')
     expect(usePersonaStore.getState().hasSeenPersonaPicker).toBe(true)
   })
@@ -50,7 +51,7 @@ describe('MobileRoleSelection — later switching', () => {
     render(<MobileRoleSelection variant="switch" open onClose={vi.fn()} />)
     expect(screen.getByRole('dialog')).toBeInTheDocument()
     expect(screen.getByText('Change role')).toBeInTheDocument()
-    expect(screen.getByText('Executive / GRC')).toBeInTheDocument()
+    expect(screen.getByText('Executive / Business Leader')).toBeInTheDocument()
   })
 
   it('picking a role sets the persona and closes the sheet', () => {

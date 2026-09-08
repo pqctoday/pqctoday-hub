@@ -23,6 +23,7 @@ import { useModuleStore } from '@/store/useModuleStore'
 import { usePersonaStore } from '@/store/usePersonaStore'
 import { useWorkshopStore, isWorkshopActive } from '@/store/useWorkshopStore'
 import { getBusinessCenterZoneEmphasis } from '@/data/personaConfig'
+import { getBusinessRoleSequence } from '@/data/businessRoleConfig'
 import { useSeedFrameworksFromCountry } from '@/hooks/assessment/useSeedFrameworksFromCountry'
 import {
   CSWP39_ZONE_ORDER,
@@ -88,15 +89,17 @@ const BOARD_QUESTIONS: { q: string; desc: string; to: string; cta: string }[] = 
   },
 ]
 
-// The three highest-value executive tools, foregrounded so the best starting
-// points aren't one extra click away at /business/tools.
-const TOP_TOOL_IDS = ['roi-calculator', 'board-pitch', 'risk-register']
-
 function WelcomeState() {
   const navigate = useNavigate()
-  const topTools = TOP_TOOL_IDS.map((id) => BUSINESS_TOOLS.find((t) => t.id === id)).filter(
-    (t): t is (typeof BUSINESS_TOOLS)[number] => Boolean(t)
-  )
+  const selectedPersona = usePersonaStore((s) => s.selectedPersona)
+  // Top 3 of the persona's own recommended sequence — foregrounded so the
+  // best starting points aren't one extra click away at /business/tools.
+  const topToolIds = getBusinessRoleSequence(selectedPersona)
+    .steps.slice(0, 3)
+    .map((s) => s.id)
+  const topTools = topToolIds
+    .map((id) => BUSINESS_TOOLS.find((t) => t.id === id))
+    .filter((t): t is (typeof BUSINESS_TOOLS)[number] => Boolean(t))
 
   return (
     <div className="space-y-6">
@@ -169,10 +172,17 @@ function WelcomeState() {
           <ShieldCheck size={16} className="mr-2" />
           Explore Compliance
         </Button>
-        <Button variant="outline" onClick={() => navigate('/learn/exec-quantum-impact')}>
-          <BookOpen size={16} className="mr-2" />
-          Start Executive Learning
-        </Button>
+        {selectedPersona === 'grc' ? (
+          <Button variant="outline" onClick={() => navigate('/learn/pqc-grc')}>
+            <BookOpen size={16} className="mr-2" />
+            Start GRC Learning
+          </Button>
+        ) : (
+          <Button variant="outline" onClick={() => navigate('/learn/exec-quantum-impact')}>
+            <BookOpen size={16} className="mr-2" />
+            Start Executive Learning
+          </Button>
+        )}
       </div>
     </div>
   )

@@ -126,6 +126,7 @@ export function extractEntityInventory(
 const PERSONA_DEPTH: Record<string, string> = {
   executive:
     'Lead with business impact, timelines, and risk. Avoid deep technical jargon. Use ROI framing aligned with NIST CSWP.39 (PQC Migration). When relevant, point to the [Command Center](/business) and planning tools like [ROI Calculator](/business/tools/roi-calculator), [Board Pitch](/business/tools/board-pitch), [CRQC Scenario](/business/tools/crqc-scenario).',
+  grc: 'Lead with scope, cited sources, and evidence gaps rather than a verdict — name what to establish, record, source or verify, and always name an owner and a review step. Avoid implying compliance from a technical status alone. When relevant, point to the [obligations register](/compliance?tab=obligations) and Command Center tools like [Compliance Checklist](/business/tools/compliance-checklist), [Risk Register](/business/tools/risk-register), [Vendor Scorecard](/business/tools/vendor-scorecard), [Audit Checklist](/business/tools/audit-checklist).',
   developer:
     'Include technical details, code examples, and implementation specifics. Point to hands-on labs in [Playground](/playground) and [OpenSSL Studio](/openssl) when relevant.',
   architect:
@@ -310,7 +311,7 @@ GUIDELINES:
    - /playground/interactive?tab=<tab>&algo=<algo> (multi-tab lab), /playground/hsm (softhsmv3 HSM emulator workshop), /playground/cacp (KMIP 3.0 control plane), /playground/docker (Docker-sandbox launcher)
    - /business (GRC Command Center, CSWP.39-aligned), /business/tools (planning tools grid)
    - /business/tools/<toolId> — actual toolIds: roi-calculator, board-pitch, crqc-scenario, risk-register, risk-treatment-plan, audit-checklist, compliance-timeline, raci-builder, policy-generator, kpi-dashboard, vendor-scorecard, contract-clause, supply-chain-matrix, roadmap-builder, stakeholder-comms, kpi-tracker, deployment-playbook
-   - /learn (catalog) — /learn?mode=<mypath|browse> (My Path guided journey vs Browse all modules). Track filtering only applies in Browse mode, so ALWAYS pair it: /learn?mode=browse&track=<trackName> (track names: Role Guides, Foundations, Strategy, Protocols, Hardware Infrastructure, Software Infrastructure, Applications, Executive, Industries). /learn?persona=<id> presets the persona path/lens (executive|developer|architect|researcher|ops|curious).
+   - /learn (catalog) — /learn?mode=<mypath|browse> (My Path guided journey vs Browse all modules). Track filtering only applies in Browse mode, so ALWAYS pair it: /learn?mode=browse&track=<trackName> (track names: Role Guides, Foundations, Strategy, Protocols, Hardware Infrastructure, Software Infrastructure, Applications, Executive, Industries). /learn?persona=<id> presets the persona path/lens (executive|grc|developer|architect|researcher|ops|curious).
    - /learn/<module-id> (learning content), /learn/<module-id>?tab=workshop (hands-on workshop/simulation)
    - /learn/<module-id>?tab=workshop&step=<n>, /learn/<module-id>?category=<cat>, /learn/<module-id>?diveDeeper=<topic>
    - /assess?step=<n> — 0-based wizard step. Comprehensive mode steps in order: 0=industry, 1=country, 2=crypto, 3=sensitivity, 4=compliance, 5=migration, 6=use-cases, 7=retention, 8=credential-lifetime, 9=scale, 10=agility, 11=infra, 12=timeline.

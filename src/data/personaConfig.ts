@@ -35,12 +35,19 @@ import { CNSA_2_0 } from './regulatoryTimelines'
  * Every set below is the union of that persona's owned phases, so the CTA can
  * never point a player at a phase their seat doesn't own — the exact drift the
  * two-vocabulary split used to allow (07082026 remediation, simulation.md item
- * 2). `executive` carries three phases (p1/p2/p3) beyond its owned set as a
- * documented, deliberate exception: the Executive Overview tour
- * (`execTourConfig.ts` `EXEC_TOUR_STAGES`) genuinely walks the exec persona
- * through those phases' content (data-asset-sensitivity, CBOM, risk-register)
- * for board-oversight framing, even though `crypto-architect` — not any
- * executive-mapped role — drives them programmatically. The drift guard in
+ * 2). `executive` carries phases beyond its owned set as a documented,
+ * deliberate exception: the Executive Overview tour (`execTourConfig.ts`
+ * `EXEC_TOUR_STAGES`) genuinely walks the exec persona through p1/p2/p3
+ * content (data-asset-sensitivity, CBOM, risk-register) for board-oversight
+ * framing, even though `crypto-architect` drives them programmatically. The
+ * 2026-09-07 Executive/GRC split (executive-grc-split-plan.md §5) moved
+ * `qrpm`/`vendor-lead`/`pmo-analyst` off `executive` onto the new `grc`
+ * persona as the nearest operational governance learning persona, so
+ * executive's ROLE_CROSSWALK-owned set shrank to `exec-sponsor`'s `p0` alone
+ * — p4/p7/verify-close/foundations are now ALSO beyond-ownership exceptions
+ * here, not owned phases, even though this list (and the tour) is unchanged.
+ * This is an educational-recommendation change, not a change to gate
+ * authority — see `roleCrosswalk.ts`. The drift guard in
  * `personaConfig.test.ts` pins this relationship (owned ⊆ set, extras ⊆
  * allowlist) so it can't silently drift further.
  *
@@ -60,16 +67,20 @@ export const PERSONA_SIM_PRACTICE_PHASES: Partial<Record<PersonaId, PhaseId[]>> 
   // B+ remediation 2.5 asked to "add developer's selection phase; add ops
   // verify-and-close" — REJECTED after checking ROLE_CROSSWALK, and recorded
   // here so it isn't re-proposed. `p4` (selection) is owned by 'qrpm' and
-  // 'pmo-analyst', both executive-mapped; 'verify-close' by 'qrpm' alone.
-  // Neither developer seat ('security-eng', 'appsec-lead') nor the ops seat
-  // ('ot-specialist') drives either phase in-sim. Adding them here would make
-  // the CTA offer a rehearsal for a phase the player's own seat cannot act in
-  // — precisely the drift `personaConfig.test.ts`'s guard exists to catch, and
-  // a worse outcome than the missing prompt it was meant to fix. If these
-  // phases should genuinely be practised by those roles, the change belongs in
-  // ROLE_CROSSWALK (seat ownership), not in this CTA map.
+  // 'pmo-analyst' (both `grc`-mapped since the 2026-09-07 split); 'verify-close'
+  // by 'qrpm' alone. Neither developer seat ('security-eng', 'appsec-lead') nor
+  // the ops seat ('ot-specialist') drives either phase in-sim. Adding them here
+  // would make the CTA offer a rehearsal for a phase the player's own seat
+  // cannot act in — precisely the drift `personaConfig.test.ts`'s guard exists
+  // to catch, and a worse outcome than the missing prompt it was meant to fix.
+  // If these phases should genuinely be practised by those roles, the change
+  // belongs in ROLE_CROSSWALK (seat ownership), not in this CTA map.
   ops: ['p5', 'p6'],
   developer: ['p5', 'p6'],
+  // GRC: exactly its ROLE_CROSSWALK-owned set (qrpm ∪ vendor-lead ∪
+  // pmo-analyst), no exceptions needed — see PERSONA_SIM_PRACTICE_NONE and the
+  // executive doc note above for why executive's own set is wider than owned.
+  grc: ['p0', 'p4', 'p7', 'verify-close', 'foundations'],
   // researcher / curious → deliberately none, see PERSONA_SIM_PRACTICE_NONE
 }
 
@@ -124,6 +135,24 @@ export const PERSONA_NAV_PATHS: Record<PersonaId, string[] | null> = {
     // "Walk the program" row (see PERSONA_MARKED_NAV_PATHS' sibling featured
     // set below), not a marked/pending one. /playground is added too, as the
     // dashed "Labs" preview row (real Playground tools, not yet exec-tailored).
+    '/simulation',
+    '/playground',
+  ],
+  // GRC (2026-09-07 split): the same route set as executive — both share the
+  // top-level areas; only within-page defaults (assessment mode, report
+  // sections, recommended tools, etc.) differ. See executive-grc-split-plan.md
+  // §5's configuration contract table.
+  grc: [
+    '/migrate',
+    '/compliance',
+    '/business',
+    '/assess',
+    '/report',
+    '/algorithms',
+    '/library',
+    '/leaders',
+    '/patents',
+    '/navigate',
     '/simulation',
     '/playground',
   ],
@@ -255,6 +284,9 @@ export const RAIL_HIDDEN_PATHS: string[] = ['/openssl']
  */
 export const PERSONA_MARKED_NAV_PATHS: Record<PersonaId, string[]> = {
   executive: ['/playground'],
+  // GRC gets the same dashed treatment on Playground as executive — plan §5:
+  // "Playground stays marked as technical practice" for this persona too.
+  grc: ['/playground'],
   // developer/architect/ops: no marked rows — see CORRECTION note above.
   developer: [],
   architect: [],
@@ -300,6 +332,8 @@ export interface PersonaAbsence {
 
 export const PERSONA_ABSENT_PATHS: Record<PersonaId, Record<string, PersonaAbsence>> = {
   executive: {},
+  // No GRC-specific absent routes (plan §5) — GRC shares executive's full route set.
+  grc: {},
   developer: {
     // Settled 2026-08-10 (B+ remediation 4.1): a developer role board links
     // /leaders while the rail excludes it — a live contradiction. Kept OFF the
@@ -393,6 +427,13 @@ export const ALGORITHM_PERSONA_DEFAULTS: Record<PersonaId, AlgorithmDefaults> = 
     filters: { status: 'Certified' },
     openSections: [],
   },
+  // Plan §5: reuse the standard transition view with certified-status
+  // defaults; certified status alone must not imply compliance is settled.
+  grc: {
+    tab: 'transition',
+    filters: { status: 'Certified' },
+    openSections: [],
+  },
   developer: {
     tab: 'transition',
     filters: { status: 'Certified' },
@@ -466,6 +507,7 @@ export const NAV_PATH_LABELS: Record<string, string> = {
  */
 export const PERSONA_RECOMMENDED_PATHS: Record<PersonaId, string[]> = {
   executive: ['/learn', '/assess', '/business', '/compliance'],
+  grc: ['/learn', '/compliance', '/assess', '/business'],
   // B+ remediation 4.6 (2026-08-10): '/openssl' is rail-hidden
   // (RAIL_HIDDEN_PATHS) — badging it "Recommended" on a landing card that
   // the rail then refuses to show was the second half of the two-front-doors
@@ -497,6 +539,7 @@ export const PERSONA_RECOMMENDED_PATHS: Record<PersonaId, string[]> = {
  */
 export const PERSONA_REVISION_DOMAINS: Record<PersonaId, readonly string[]> = {
   executive: ['compliance', 'migrate', 'threats'],
+  grc: ['compliance', 'migrate', 'library'],
   developer: ['algorithms', 'migrate', 'tool'],
   architect: ['compliance', 'migrate', 'algorithms', 'library'],
   researcher: [],
@@ -510,6 +553,9 @@ export const PERSONA_REVISION_DOMAINS: Record<PersonaId, readonly string[]> = {
  */
 export const PERSONA_RECOMMENDED_MODE: Record<PersonaId, AssessmentMode> = {
   executive: 'quick',
+  // GRC always gets the comprehensive path — plan §5: "do not inherit
+  // Executive's technical-input trimming or automatic prefills."
+  grc: 'comprehensive',
   developer: 'comprehensive',
   architect: 'comprehensive',
   researcher: 'comprehensive',
@@ -551,6 +597,9 @@ export const REGION_COUNTRY_MAP: Record<Region, string | null> = {
  */
 export const PERSONA_TIMELINE_REGION: Record<PersonaId, Region | 'All'> = {
   executive: 'americas',
+  // Global, not a persona-implied country — plan §5: applicability comes from
+  // the user's own explicit region/industry selections, not the job title.
+  grc: 'global',
   developer: 'americas',
   architect: 'global',
   researcher: 'All',
@@ -655,6 +704,9 @@ export const INDUSTRY_SLUG_TO_LABEL: Record<string, string> = {
  */
 export const PERSONA_THREATS_DEFAULT_INDUSTRIES: Record<PersonaId, string[]> = {
   executive: ['Finance & Banking', 'Government & Defense', 'Cross-cutting & Other'],
+  // No persona-implied industry (plan §5) — same rationale as researcher/curious
+  // below: GRC's applicable scope comes from the user's own industry selection.
+  grc: [],
   developer: ['Technology', 'Cross-cutting & Other'],
   architect: ['Technology', 'Telecommunications', 'Cross-cutting & Other'],
   researcher: [],
@@ -757,6 +809,21 @@ export const PERSONA_REPORT_CONFIG: Record<
     migrationRoadmap: { state: 'collapsed' },
     migrationToolkit: { state: 'collapsed' },
     recommendedActions: { state: 'open', maxItems: 5 },
+  },
+  // GRC (2026-09-07 split, plan §5): open the sections a compliance/risk
+  // reader actually works from — assessment inputs, discovery, CBOM inventory,
+  // vendor risk, plus compliance impact and recommended actions (already open
+  // by default, so no override needed for those two). Collapse (never hide —
+  // "hide no GRC report sections") the board-framing and algorithm-migration
+  // sections that are Executive's territory, not GRC's.
+  grc: {
+    assessmentProfile: { state: 'open' },
+    discovery: { state: 'open' },
+    cbom: { state: 'open' },
+    vendorRisk: { state: 'open' },
+    executiveSummary: { state: 'collapsed' },
+    algorithmMigration: { state: 'collapsed' },
+    migrationToolkit: { state: 'collapsed' },
   },
   // WS4a (2026-08-02) — this was `{}`. Five personas carried real overrides and
   // developer carried none, so an implementer got the no-persona report and the
@@ -884,6 +951,19 @@ export const BC_ZONE_EMPHASIS_BY_PERSONA: Partial<Record<PersonaId, BCZoneEmphas
       'risk-management': ['kpi-dashboard', 'risk-register'],
     },
   },
+  // GRC (2026-09-07 split, plan §5): open with Governance — audit checklist,
+  // policy, vendor scorecard first; risk register and treatment plan lead the
+  // risk-management zone.
+  grc: {
+    defaultActiveZone: 'governance',
+    headline: 'Crypto Risk — Compliance View',
+    tagline:
+      'Quantum-readiness scorecard organised around the NIST CSWP.39 strategic plan. Surface the artifacts an audit needs first: audit checklist, policy, vendor scorecard, risk register.',
+    featuredArtifacts: {
+      governance: ['audit-checklist', 'policy-draft', 'vendor-scorecard'],
+      'risk-management': ['risk-register', 'risk-treatment-plan'],
+    },
+  },
   // Architect: open with Governance — surface RACI, vendor scorecards, crypto
   // architecture diagram first (architecture-of-organisation lens).
   architect: {
@@ -969,6 +1049,11 @@ export const PERSONA_REPORT_CTAS: Record<PersonaId, ReportCTA[]> = {
     { label: 'Open Command Center', path: '/business', icon: 'BarChart3' },
     { label: 'View compliance deadlines', path: '/compliance', icon: 'Calendar' },
   ],
+  grc: [
+    { label: 'Review compliance obligations', path: '/compliance', icon: 'Calendar' },
+    { label: 'Open Command Center', path: '/business', icon: 'BarChart3' },
+    { label: 'Start learning path', path: '/learn', icon: 'BookOpen' },
+  ],
   developer: [
     { label: 'Try algorithms in Playground', path: '/playground', icon: 'FlaskConical' },
     { label: 'Browse PQC libraries', path: '/migrate', icon: 'Package' },
@@ -1038,6 +1123,39 @@ export const PERSONA_MILESTONES: Record<PersonaId, JourneyMilestoneConfig[]> = {
       route: '/migrate',
       label: 'Browse Migration Workbench',
       purpose: 'Check whether the products you already run have shipped post-quantum support.',
+    },
+  ],
+  grc: [
+    {
+      afterPhase: 'grc-risk-obligations',
+      route: '/compliance',
+      label: 'Review Compliance Obligations',
+      purpose:
+        'See which instruments actually bind you, and where the hub still needs source review.',
+    },
+    {
+      afterPhase: 'grc-risk-obligations',
+      route: '/business',
+      label: 'Scope a Compliance Checklist',
+      purpose: 'Turn what applies to you into a checklist with owners and evidence links.',
+    },
+    {
+      afterPhase: 'grc-governance-inventory',
+      route: '/business',
+      label: 'Record a Risk Treatment',
+      purpose: 'Log an exposure, its owner, and the treatment you chose.',
+    },
+    {
+      afterPhase: 'grc-governance-inventory',
+      route: '/business',
+      label: 'Review Vendor Evidence',
+      purpose: "Score a supplier's PQC claims against what they can actually prove.",
+    },
+    {
+      afterPhase: 'grc-assurance-closure',
+      route: '/business',
+      label: 'Complete a Verification Artifact',
+      purpose: 'Define exit criteria and check them before calling a migration closed.',
     },
   ],
   developer: [
@@ -1197,6 +1315,12 @@ export const PERSONA_WORKFLOW_LABELS: Record<PersonaId, Record<WorkflowPhaseId, 
     migrate: 'Select Libraries & Tools',
     timeline: 'Review Migration Deadlines',
   },
+  grc: {
+    assess: 'Scope the Compliance Assessment',
+    comply: 'Trace Obligations to Source',
+    migrate: 'Assess Vendor Evidence',
+    timeline: 'Track the Regulatory Horizon',
+  },
   architect: {
     assess: 'Architecture Risk Assessment',
     comply: 'Map Compliance Controls',
@@ -1232,6 +1356,10 @@ export const PERSONA_WORKFLOW_LABELS: Record<PersonaId, Record<WorkflowPhaseId, 
 
 export const PERSONA_MIGRATE_LAYERS: Record<PersonaId, string[]> = {
   executive: ['Cloud', 'AppServers'],
+  // No infra-layer emphasis — GRC's lens on Migrate is vendor/product risk
+  // across the whole catalog, not a technology-stack filter (plan §5:
+  // "retain all applicable result access"). Matches researcher/curious below.
+  grc: [],
   developer: ['Libraries', 'Cloud', 'Database'],
   architect: ['Cloud', 'Network', 'AppServers', 'Security Stack'],
   researcher: [],
@@ -1252,6 +1380,14 @@ export const PERSONA_LIBRARY_CATEGORIES: Record<PersonaId, string[]> = {
     'Migration Guidance',
     'Industry & Research',
     'Compliance & Certification',
+  ],
+  // Same four categories as executive, compliance-first — plan §5:
+  // "Prioritize governance, compliance, migration and source material."
+  grc: [
+    'Compliance & Certification',
+    'Government & Policy',
+    'Migration Guidance',
+    'Industry & Research',
   ],
   developer: [
     'Protocols',
@@ -1290,6 +1426,22 @@ export const PERSONA_LIBRARY_CATEGORIES: Record<PersonaId, string[]> = {
  */
 export const PERSONA_EXCLUDED_ACHIEVEMENTS: Record<PersonaId, string[]> = {
   executive: [
+    'playground-first',
+    'playground-breadth-3',
+    'playground-breadth-10',
+    'playground-hsm',
+    'playground-hybrid',
+    'first-cert',
+    'first-key',
+    'five-keys',
+    // Curious-only (CC-15)
+    'first-jargon-decoded',
+    'first-standard-read',
+    'met-the-quantum-threat',
+  ],
+  // GRC shares executive's exact nav route set (plan §5), so the same features
+  // are unreachable for the same reasons.
+  grc: [
     'playground-first',
     'playground-breadth-3',
     'playground-breadth-10',
@@ -1388,6 +1540,12 @@ export const RESEARCH_LADDER_ACHIEVEMENTS: readonly string[] = [
 export const PERSONA_COMPLIANCE_FRAMEWORK_EMPHASIS: Partial<Record<PersonaId, readonly string[]>> =
   {
     executive: ['CNSA-2', 'DORA', 'NIS2', 'SOX', 'GDPR', 'PCI-DSS'],
+    // Deliberately empty (executive-grc-split-plan.md §5): a GRC reader's
+    // applicable frameworks are already derived from their country/sector via
+    // applicabilityLens, not from a job-title-based shortlist — emphasizing
+    // frameworks by role here would imply "these apply to you" independent of
+    // scope, which is exactly what this persona exists to avoid conflating.
+    grc: [],
     developer: ['FIPS', 'FedRAMP', 'CMMC', 'CC', 'NIST', 'CNSA-2'],
     architect: ['NIST', 'BSI', 'ANSSI', 'ENISA', 'CNSA-2', 'FIPS'],
     ops: ['CNSA-2', 'FedRAMP', 'NIS2', 'PCI-DSS', 'DORA'],
@@ -1424,6 +1582,9 @@ export const PERSONA_BELT_TIER_LABELS: Partial<
   Record<PersonaId, [string, string, string, string]>
 > = {
   executive: ['Briefed', 'Aligned', 'Sponsoring', 'Board-Ready'],
+  // GRC (2026-09-07 split, plan §5) — learning labels, not certification
+  // claims: they track progress through the curriculum, not an audit outcome.
+  grc: ['Oriented', 'Scoped', 'Evidence-Ready', 'Assurance-Ready'],
   curious: ['Aware', 'Informed', 'Confident', 'Quantum-Native'],
   // B+ remediation 2.3 (2026-08-10): four of six roles previously fell through
   // to the generic karate-belt names while executive and curious got ladders

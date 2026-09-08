@@ -48,6 +48,20 @@ const EXECUTIVE_MODULES = [
   'vendor-risk',
 ] as const
 
+// GRC's own Essentials (2026-09-07 split) — mirrors EXECUTIVE_MODULES' role in
+// gating the "begin your learning path" action item, so switching persona
+// doesn't point a GRC reader at Executive's module list (or vice versa).
+const GRC_MODULES = [
+  'pqc-101',
+  'pqc-risk-management',
+  'data-asset-sensitivity',
+  'pqc-grc',
+  'compliance-strategy',
+  'pqc-governance',
+  'vendor-risk',
+  'verification-closure',
+] as const
+
 // ── Pillar → Artifact type mapping ────────────────────────────────────────
 
 /** Re-export the pillar key from the canonical source (`cswp39StepMapping.ts`)
@@ -319,6 +333,11 @@ export interface BusinessMetrics {
   // Executive learning
   execModuleProgress: ModuleProgressInfo[]
 
+  // GRC learning (2026-09-07 split) — kept separate from execModuleProgress
+  // rather than merged, since the two roles' module lists overlap only
+  // partially and a shared count would misrepresent either one's progress.
+  grcModuleProgress: ModuleProgressInfo[]
+
   // Artifacts (grouped by GRC pillar)
   artifactsByPillar: ArtifactsByPillar
 
@@ -408,6 +427,7 @@ function computeActionItems(
   productCount: number,
   governanceStarted: boolean,
   execLearningStarted: boolean,
+  grcLearningStarted: boolean,
   workflowActive: boolean,
   profile: ActionProfile = {
     industry: '',
@@ -479,7 +499,21 @@ function computeActionItems(
     })
   }
 
-  if (!execLearningStarted) {
+  // Persona-gated so switching role doesn't point a reader at the other
+  // role's module list (2026-09-07 split) — GRC never sees "executive
+  // learning path" and vice versa; every other persona keeps the prior
+  // (executive-flavored) default rather than losing the prompt entirely.
+  if (profile.persona === 'grc') {
+    if (!grcLearningStarted) {
+      items.push({
+        priority: 2,
+        icon: BookOpen,
+        title: 'Begin your GRC learning path',
+        description: 'Trace obligations to source and build your evidence base module by module.',
+        action: { label: 'Start Learning', path: '/learn/pqc-101' },
+      })
+    }
+  } else if (!execLearningStarted) {
     items.push({
       priority: 2,
       icon: BookOpen,
@@ -752,6 +786,10 @@ export function useBusinessMetrics(): BusinessMetrics {
     const execModuleProgress = EXECUTIVE_MODULES.map((id) => getModuleProgress(moduleStore, id))
     const execLearningStarted = execModuleProgress.some((m) => m.status !== 'not-started')
 
+    // ── GRC learning (2026-09-07 split) ──────────────────────────
+    const grcModuleProgress = GRC_MODULES.map((id) => getModuleProgress(moduleStore, id))
+    const grcLearningStarted = grcModuleProgress.some((m) => m.status !== 'not-started')
+
     // ── Action items ────────────────────────────────────────────
     const actionItems = computeActionItems(
       assessmentStore.assessmentStatus,
@@ -761,6 +799,7 @@ export function useBusinessMetrics(): BusinessMetrics {
       resolvedProducts.length,
       governanceStarted,
       execLearningStarted,
+      grcLearningStarted,
       workflowStore.workflowActive,
       {
         industry: assessmentStore.industry,
@@ -834,6 +873,7 @@ export function useBusinessMetrics(): BusinessMetrics {
       actionItems,
 
       execModuleProgress,
+      grcModuleProgress,
 
       artifactsByPillar,
 

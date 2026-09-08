@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /**
  * Tests for the shared, persona-agnostic PersonaBoardView skeleton. Renders
- * each of the 6 real PERSONA_JOURNEY_BOARD entries and asserts the shared
+ * each of the 7 real PERSONA_JOURNEY_BOARD entries and asserts the shared
  * rendering contract holds for all of them: headline renders, all 3 grid
  * cards render with only the 3rd highlighted, the capstone chip is present
- * for the 5 personas that define one and genuinely absent (not an empty
+ * for the 6 personas that define one and genuinely absent (not an empty
  * chip) for researcher, and researcher's customSideCard override slot fully
  * replaces the data-driven side card.
  */
@@ -30,8 +30,8 @@ function renderBoard(ui: ReactElement) {
 }
 
 describe('PersonaBoardView', () => {
-  it('covers all 6 real personas', () => {
-    expect(ALL_PERSONAS).toHaveLength(6)
+  it('covers all 7 real personas', () => {
+    expect(ALL_PERSONAS).toHaveLength(7)
   })
 
   it.each(ALL_PERSONAS)('renders the %s board headline from config', (personaId) => {
@@ -67,12 +67,12 @@ describe('PersonaBoardView', () => {
     }
   )
 
-  it('has a capstone chip for exactly the 5 personas that define one', () => {
+  it('has a capstone chip for exactly the 6 personas that define one', () => {
     const personasWithCapstone = ALL_PERSONAS.filter(
       // eslint-disable-next-line security/detect-object-injection -- id is drawn from ALL_PERSONAS itself
       (id) => PERSONA_JOURNEY_BOARD[id].capstoneChip !== undefined
     )
-    expect(personasWithCapstone).toHaveLength(5)
+    expect(personasWithCapstone).toHaveLength(6)
     expect(personasWithCapstone).not.toContain('researcher')
   })
 

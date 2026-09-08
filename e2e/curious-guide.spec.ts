@@ -122,6 +122,7 @@ test('does not render for non-curious personas', async ({ page }) => {
       JSON.stringify({
         state: {
           selectedPersona: 'executive',
+          hasAcknowledgedExecutiveGrcSplit: true,
           selectedRegion: 'global',
           experienceLevel: 'expert',
           viewAccess: 'unlocked',

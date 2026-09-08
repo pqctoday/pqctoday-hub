@@ -55,6 +55,7 @@ function emptyMetrics(): BusinessMetrics {
     completedPhases: [],
     actionItems: [],
     execModuleProgress: [],
+    grcModuleProgress: [],
     artifactsByPillar: {
       risk: [],
       compliance: [],

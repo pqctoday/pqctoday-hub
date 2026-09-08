@@ -39,7 +39,15 @@ import { latestDatedCsv, ROLE_BOARD_CONTENT_RE } from './lib/latestDatedCsv'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 
-const ROLES = ['executive', 'developer', 'architect', 'ops', 'researcher', 'curious'] as const
+const ROLES = [
+  'executive',
+  'grc',
+  'developer',
+  'architect',
+  'ops',
+  'researcher',
+  'curious',
+] as const
 const HREF_SLOTS = new Set(['cta_primary_href', 'cta_secondary_href', 'grid_card_href'])
 
 /**

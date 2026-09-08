@@ -28,6 +28,7 @@ import { MobileComplianceView } from '@/components/Mobile/screens/MobileComplian
 import { useTrustTierFilter, matchesTrustTierFilter } from '../common/TrustTierFilter'
 import { ApplicabilityPanel } from '../applicability/ApplicabilityPanel'
 import { ExecutiveTimelineView } from './views/ExecutiveTimelineView'
+import { GrcApplicabilityView } from './views/GrcApplicabilityView'
 import { ArchitectStandardsView } from './views/ArchitectStandardsView'
 import { ResearcherEvidenceView } from './views/ResearcherEvidenceView'
 import { DeveloperImplementationView } from './views/DeveloperImplementationView'
@@ -198,6 +199,8 @@ function ForYouSection({ onExportCsv }: { onExportCsv?: () => void }) {
     <>
       {persona === 'executive' ? (
         <ExecutiveTimelineView {...callbacks} onExportCsv={onExportCsv} />
+      ) : persona === 'grc' ? (
+        <GrcApplicabilityView {...callbacks} />
       ) : persona === 'architect' ? (
         <ArchitectStandardsView {...callbacks} />
       ) : persona === 'researcher' ? (

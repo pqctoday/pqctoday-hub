@@ -42,6 +42,6 @@ describe('LearnRedesignView — mobile UX layer wiring', () => {
     mockUseIsMobileShell.mockReturnValue(true)
     usePersonaStore.getState().setPersona('executive')
     renderLearn()
-    expect(screen.getByText(/My path · Executive \/ GRC/)).toBeInTheDocument()
+    expect(screen.getByText(/My path · Executive \/ Business Leader/)).toBeInTheDocument()
   })
 })

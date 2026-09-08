@@ -72,7 +72,8 @@ export interface MobileHomeBoardProps {
  * Deferred, not silently dropped: the researcher "Trace every claim" variant
  * has a live ResearcherFieldWatchCard override on desktop (reports real
  * corpus changes); this screen shows that variant's authored static side
- * card instead. A narrow, documented gap — one of thirty-six boards.
+ * card instead. A narrow, documented gap — one of forty-two boards (thirty-six
+ * before the 2026-09-07 Executive/GRC split added GRC's own six).
  *
  * Role line region/industry (handoff: "Executive / GRC · EU · Finance &
  * Banking"): reads selectedRegion/selectedIndustries live from

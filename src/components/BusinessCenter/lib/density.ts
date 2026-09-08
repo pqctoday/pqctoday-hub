@@ -9,8 +9,13 @@
  *
  * Density is derived from the existing `usePersonaStore` (no new store):
  *   - `executive` / `curious`           → 'basic'
- *   - `ops` / `architect`               → 'intermediate'
+ *   - `ops` / `architect` / `grc`       → 'intermediate'
  *   - `developer` / `researcher` / null → 'advanced'
+ *
+ * `grc` sits at 'intermediate' rather than 'basic': tracing obligations to
+ * source needs the CSWP-tier badges and per-zone evidence wires that basic
+ * density hides, even though the sub-element groupings and toolbar chrome
+ * reserved for 'advanced' aren't essential to that task.
  *
  * `experienceLevel` (curious / basics / expert) overrides the persona default
  * when set: curious → basic, basics → intermediate, expert → advanced.
@@ -25,6 +30,7 @@ const PERSONA_DEFAULT_DENSITY: Record<PersonaId, Density> = {
   curious: 'basic',
   ops: 'intermediate',
   architect: 'intermediate',
+  grc: 'intermediate',
   developer: 'advanced',
   researcher: 'advanced',
 }

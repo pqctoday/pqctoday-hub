@@ -41,9 +41,12 @@ import type { PhaseId } from '@/data/frameworkPhases'
 // extracted from executive learn modules (zero-prop, standalone components)
 // ---------------------------------------------------------------------------
 
-/** Intended primary reader. Defaults to 'business' (Executive / GRC) when unset;
- *  only the handful of protocol/implementation tools carry a technical audience
- *  so a non-coder can tell at a glance which tools are meant for them. */
+/** Intended primary reader. Defaults to 'business' (the general business reader —
+ *  Executive or GRC) when unset; only the handful of protocol/implementation
+ *  tools carry a technical audience so a non-coder can tell at a glance which
+ *  tools are meant for them. Distinct from `PersonaId`: this facet predates
+ *  the 2026-09-07 Executive/GRC split and is not re-partitioned by it — both
+ *  personas share the 'business' audience. */
 export type BusinessToolAudience = 'business' | 'architect' | 'developer'
 
 export interface BusinessTool {
@@ -53,7 +56,7 @@ export interface BusinessTool {
   category: string
   icon: React.ElementType
   keywords: string[]
-  /** Intended reader; omit for the default Executive / GRC audience. */
+  /** Intended reader; omit for the default business audience (Executive or GRC). */
   audience?: BusinessToolAudience
   /** CSWP.39 Fig 3 zone (Crypto Agility Strategic Plan). Drives which Command
    *  Center panel surfaces this tool. Required. */

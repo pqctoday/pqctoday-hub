@@ -61,7 +61,8 @@ function minutesOf(duration: string): number {
  * track, with search/status/sort/saved filtering, a grid↔list density toggle, and
  * the power-user axes (NICE proficiency, researcher taxonomy, the workforce lens)
  * in an opt-in Advanced tray. The workforce (NICE) lens is auto-surfaced in the
- * main bar for the Executive/GRC and Researcher roles (Decision 1).
+ * main bar for the Executive, GRC and Researcher roles (Decision 1; GRC added
+ * 2026-09-07 alongside the Executive/GRC persona split).
  */
 export const BrowseAllView = ({
   personaId,

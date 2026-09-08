@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react'
-import { Link, useSearchParams } from 'react-router'
+import { Link } from 'react-router'
 import { motion } from 'framer-motion'
 import { FileBarChart, ClipboardCheck, AlertCircle, ArrowRight } from 'lucide-react'
 import { ReportContent } from './ReportContent'
@@ -10,8 +10,6 @@ import { useAssessmentStore } from '../../store/useAssessmentStore'
 import { useAssessmentResultStore } from '../../store/useAssessmentResultStore'
 import { computeAssessment } from '../../hooks/assessmentUtils'
 import { computeAssessmentAsync } from '../../hooks/assessment/orchestrator'
-import type { AssessmentResult } from '../../hooks/assessmentTypes'
-import type { PersonaId } from '../../data/learningPersonas'
 import {
   WorkshopOperationLog,
   type LogEntry,
@@ -20,143 +18,18 @@ import { useModuleStore } from '../../store/useModuleStore'
 import { useWorkflowPhaseTracker } from '@/hooks/useWorkflowPhaseTracker'
 import { useIsMobileShell } from '@/hooks/useIsMobileShell'
 import { MobileReportView } from '@/components/Mobile/screens/MobileReportView'
-import {
-  REGION_COUNTRIES_MAP,
-  getReportSectionConfig,
-  type ReportSectionId,
-} from '../../data/personaConfig'
+import { useResolvedSharedReport } from '@/hooks/useResolvedSharedReport'
+import { getReportSectionConfig, type ReportSectionId } from '../../data/personaConfig'
 import { REPORT_SECTION_ORDER, REPORT_SECTION_LABELS } from '../../data/reportSectionToCswp39'
-import {
-  AVAILABLE_INDUSTRIES,
-  AVAILABLE_ALGORITHMS,
-  AVAILABLE_COMPLIANCE,
-  AVAILABLE_USE_CASES,
-  AVAILABLE_INFRASTRUCTURE,
-} from '../../hooks/assessmentData'
-import type { AssessmentInput } from '../../hooks/assessmentTypes'
 import { PageHeader } from '../common/PageHeader'
-import { logReportViewed, logReportShareLinkOpened, logReportCta } from '@/utils/analytics'
-import {
-  EXAMPLE_REPORT_URL,
-  EXAMPLE_REPORT_RESULT,
-  EXAMPLE_REPORT_PERSONA,
-} from '@/data/exampleReport'
+import { logReportViewed, logReportCta } from '@/utils/analytics'
+import { EXAMPLE_REPORT_URL } from '@/data/exampleReport'
 import { PersonaSuggestionCard } from '@/components/Assess/PersonaSuggestionCard'
 import { getBeltTierLabel } from '@/data/personaConfig'
 import { useAwarenessScore } from '@/hooks/useAwarenessScore'
-import { decodeShareToken, type ReportShareSchemaV1 } from '@/utils/reportShareToken'
 import { usePersonaStore } from '@/store/usePersonaStore'
 import { usePageActionsStore } from '@/store/usePageActionsStore'
 import { buildReportShareUrl } from './sections/reportContentActions'
-
-const VALID_SENSITIVITIES = new Set(['low', 'medium', 'high', 'critical'])
-const VALID_MIGRATIONS = new Set(['started', 'planning', 'not-started', 'unknown'])
-const VALID_RETENTION = new Set(['under-1y', '1-5y', '5-10y', '10-25y', '25-plus', 'indefinite'])
-const VALID_SYSTEM_COUNT = new Set(['1-10', '11-50', '51-200', '200-plus'])
-const VALID_TEAM_SIZE = new Set(['1-10', '11-50', '51-200', '200-plus'])
-const VALID_AGILITY = new Set(['fully-abstracted', 'partially-abstracted', 'hardcoded', 'unknown'])
-const VALID_VENDOR = new Set(['heavy-vendor', 'open-source', 'mixed', 'in-house'])
-const VALID_PRESSURE = new Set([
-  'within-1y',
-  'within-2-3y',
-  'internal-deadline',
-  'no-deadline',
-  'unknown',
-])
-const VALID_INDUSTRIES = new Set(AVAILABLE_INDUSTRIES)
-const VALID_ALGORITHMS = new Set(AVAILABLE_ALGORITHMS)
-const VALID_COMPLIANCE = new Set(AVAILABLE_COMPLIANCE)
-const VALID_USE_CASES = new Set(AVAILABLE_USE_CASES)
-const VALID_INFRA = new Set(AVAILABLE_INFRASTRUCTURE)
-const VALID_COUNTRIES = new Set(Object.values(REGION_COUNTRIES_MAP).flat())
-const VALID_PERSONAS = new Set<string>([
-  'executive',
-  'developer',
-  'architect',
-  'researcher',
-  'ops',
-  'curious',
-])
-
-function toValidPersona(persona: string | undefined): PersonaId | null {
-  return persona && VALID_PERSONAS.has(persona) ? (persona as PersonaId) : null
-}
-
-/**
- * Builds an `AssessmentInput` from a legacy pre-token share schema (v1
- * `reportShareToken`, or the even older `?i=&cy=&c=&…` per-param links —
- * see the two decode branches in the hydration effect below). Both formats
- * predate score snapshotting, so there is no sender result to honor; the
- * best we can do is recompute from whatever fields survive validation, the
- * same way `useAssessmentFormStore.getInput()` requires (non-empty industry
- * + migration status, sensitivity present or explicitly unknown). Returns
- * null when the link doesn't carry enough to produce a meaningful report.
- */
-function buildLegacyInput(fields: {
-  industry?: string
-  country?: string
-  currentCrypto?: string[]
-  dataSensitivity?: string[]
-  complianceRequirements?: string[]
-  migrationStatus?: string
-  cryptoUseCases?: string[]
-  dataRetention?: string[]
-  systemCount?: string
-  teamSize?: string
-  cryptoAgility?: string
-  infrastructure?: string[]
-  vendorDependency?: string
-  timelinePressure?: string
-}): AssessmentInput | null {
-  if (!fields.industry || !VALID_INDUSTRIES.has(fields.industry)) return null
-  const dataSensitivity = (fields.dataSensitivity ?? []).filter((s) => VALID_SENSITIVITIES.has(s))
-  const input: AssessmentInput = {
-    industry: fields.industry,
-    currentCrypto: (fields.currentCrypto ?? []).filter((a) => VALID_ALGORITHMS.has(a)),
-    dataSensitivity,
-    complianceRequirements: (fields.complianceRequirements ?? []).filter((f) =>
-      VALID_COMPLIANCE.has(f)
-    ),
-    migrationStatus:
-      fields.migrationStatus && VALID_MIGRATIONS.has(fields.migrationStatus)
-        ? (fields.migrationStatus as AssessmentInput['migrationStatus'])
-        : 'unknown',
-  }
-  if (dataSensitivity.length === 0) input.sensitivityUnknown = true
-  if (fields.country && VALID_COUNTRIES.has(fields.country)) input.country = fields.country
-  if (fields.cryptoUseCases) {
-    const useCases = fields.cryptoUseCases.filter((uc) => VALID_USE_CASES.has(uc))
-    if (useCases.length > 0) input.cryptoUseCases = useCases
-  }
-  if (fields.dataRetention) {
-    const retention = fields.dataRetention.filter((v) => VALID_RETENTION.has(v))
-    if (retention.length > 0) input.dataRetention = retention
-  }
-  if (fields.systemCount && VALID_SYSTEM_COUNT.has(fields.systemCount)) {
-    input.systemCount = fields.systemCount as NonNullable<AssessmentInput['systemCount']>
-  }
-  if (fields.teamSize && VALID_TEAM_SIZE.has(fields.teamSize)) {
-    input.teamSize = fields.teamSize as NonNullable<AssessmentInput['teamSize']>
-  }
-  if (fields.cryptoAgility && VALID_AGILITY.has(fields.cryptoAgility)) {
-    input.cryptoAgility = fields.cryptoAgility as NonNullable<AssessmentInput['cryptoAgility']>
-  }
-  if (fields.infrastructure) {
-    const infra = fields.infrastructure.filter((item) => VALID_INFRA.has(item))
-    if (infra.length > 0) input.infrastructure = infra
-  }
-  if (fields.vendorDependency && VALID_VENDOR.has(fields.vendorDependency)) {
-    input.vendorDependency = fields.vendorDependency as NonNullable<
-      AssessmentInput['vendorDependency']
-    >
-  }
-  if (fields.timelinePressure && VALID_PRESSURE.has(fields.timelinePressure)) {
-    input.timelinePressure = fields.timelinePressure as NonNullable<
-      AssessmentInput['timelinePressure']
-    >
-  }
-  return input
-}
 
 /**
  * Sections that render outside the persona-config-gated REPORT_SECTION_ORDER
@@ -316,8 +189,6 @@ export const ReportView: React.FC<{ simEmbed?: boolean }> = ({ simEmbed = false 
   const reportComputing = computeState.computing
   const reportLogEntries = computeState.log
   const persistedRef = useRef(false)
-  const [searchParams] = useSearchParams()
-
   const [expandToken, setExpandToken] = useState(0)
   const [collapseToken, setCollapseToken] = useState(0)
   const handleExpandAll = useCallback(() => setExpandToken((t) => t + 1), [])
@@ -325,19 +196,20 @@ export const ReportView: React.FC<{ simEmbed?: boolean }> = ({ simEmbed = false 
 
   const livePersona = usePersonaStore((s) => s.selectedPersona)
 
-  // ACCURACY-0708-2: a shared/example report is now an ephemeral, in-memory
-  // view — decoding a `?share=` link NEVER writes into the recipient's own
+  // ACCURACY-0708-2: a shared/example report is an ephemeral, in-memory view
+  // — decoding a `?share=` link NEVER writes into the recipient's own
   // persisted assessment or persona store (no `markComplete`, no
   // `setPersona`), so it's safe to render regardless of whatever the
   // recipient's own assessment state already is. `approximate` is true for
   // pre-snapshot links (v1 token or the even older per-param format), which
   // have no sender score to honor and must be recomputed best-effort.
-  const [sharedView, setSharedView] = useState<{
-    result: AssessmentResult
-    persona: PersonaId | null
-    approximate: boolean
-  } | null>(null)
-  const hydratedRef = useRef(false)
+  //
+  // Resolution itself lives in `useResolvedSharedReport` (shared with
+  // MobileReportView, passed down as a prop below) — extracted 2026-09-07
+  // both so mobile stops having no shared/example resolution at all, and so
+  // a same-route `?share=`/`?example=` change re-resolves instead of being
+  // missed by a mount-only guard.
+  const sharedView = useResolvedSharedReport(livePersona)
 
   const selectedPersona = sharedView ? sharedView.persona : livePersona
   const isShared = !!sharedView
@@ -355,102 +227,6 @@ export const ReportView: React.FC<{ simEmbed?: boolean }> = ({ simEmbed = false 
     ])
     return [...base, ...TOC_TRAILING.filter(keep)]
   }, [selectedPersona, isShared])
-
-  // Decode a shared/example link on first mount, purely into local state —
-  // see the `sharedView` doc comment above for why this never touches the
-  // recipient's own persisted store.
-  useEffect(() => {
-    if (hydratedRef.current) return
-    hydratedRef.current = true
-
-    // Stable, human-readable entry point for the worked example:
-    // `/report?example=1`, equivalent to opening `EXAMPLE_REPORT_URL`.
-    // Why a second path rather than just linking the canonical URL: persona
-    // hero CTAs are configured in `src/data/personaConfig.ts`, which the nav
-    // pulls into the MAIN bundle. `EXAMPLE_REPORT_URL` embeds a token minted
-    // at module-eval by `computeAssessment`, so importing it there would drag
-    // the whole assessment orchestrator into every route. A static path lets
-    // the config reference the example without that cost. Renders under the
-    // example's own authored persona so both entry points show the identical
-    // report. (Executive "See a finished example" used to point at bare
-    // `/report` and land on "No Report Yet" — see RP-5.)
-    if (searchParams.get('example') === '1') {
-      logReportShareLinkOpened()
-      setSharedView({
-        result: EXAMPLE_REPORT_RESULT,
-        // 2026-09-03 (home-scenarios remediation WS7.3): renders under the
-        // VIEWER's own persona when one is set, not always the example's
-        // authored 'curious' — a real change, not just a fallback tweak.
-        // Executive and ops home boards both link "See a finished (closure)
-        // report" here and got the curious persona's simplified public view
-        // (algorithmMigration/hndlHnfl hidden, roadmap capped at 3 steps)
-        // instead of their own. The underlying score/sections are identical
-        // either way (EXAMPLE_REPORT_RESULT never changes); only which
-        // PERSONA_REPORT_CONFIG applies does. Falls back to the example's
-        // own authored persona for a first-time visitor with none selected
-        // yet, same as before this change.
-        persona: livePersona ?? toValidPersona(EXAMPLE_REPORT_PERSONA),
-        approximate: false,
-      })
-      return
-    }
-
-    // Current token path: ?share=<base64 v2 token>, or an older v1 token
-    // still circulating from before this fix shipped.
-    const shareToken = searchParams.get('share')
-    if (shareToken) {
-      const schema = decodeShareToken(shareToken)
-      if (!schema) return
-      if (schema.v === 2) {
-        logReportShareLinkOpened()
-        setSharedView({
-          result: schema.result,
-          persona: toValidPersona(schema.persona),
-          approximate: false,
-        })
-        return
-      }
-      // v1: partial quick-track-only inputs + a score that was never
-      // actually honored — recompute best-effort and say so plainly.
-      const v1 = schema as ReportShareSchemaV1
-      const input = buildLegacyInput(v1)
-      if (!input) return
-      logReportShareLinkOpened()
-      setSharedView({
-        result: computeAssessment(input),
-        persona: toValidPersona(v1.persona),
-        approximate: true,
-      })
-      return
-    }
-
-    // Legacy individual-param path: ?i=&cy=&c=&d=&f=&m=&u=&r=&s=&t=&a=&n=&v=&p=
-    // — predates the token format entirely, so likewise has no score to
-    // honor; recompute from whichever fields survive validation.
-    const industry = searchParams.get('i')
-    if (!industry) return
-    const csv = (key: string): string[] | undefined => searchParams.get(key)?.split(',')
-    const input = buildLegacyInput({
-      industry,
-      country: searchParams.get('cy') ? decodeURIComponent(searchParams.get('cy')!) : undefined,
-      currentCrypto: csv('c'),
-      dataSensitivity: csv('d'),
-      complianceRequirements: csv('f'),
-      migrationStatus: searchParams.get('m') ?? undefined,
-      cryptoUseCases: csv('u'),
-      dataRetention: csv('r'),
-      systemCount: searchParams.get('s') ?? undefined,
-      teamSize: searchParams.get('t') ?? undefined,
-      cryptoAgility: searchParams.get('a') ?? undefined,
-      infrastructure: csv('n'),
-      vendorDependency: searchParams.get('v') ?? undefined,
-      timelinePressure: searchParams.get('p') ?? undefined,
-    })
-    if (!input) return
-    logReportShareLinkOpened()
-    setSharedView({ result: computeAssessment(input), persona: null, approximate: true })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   // Persist result and mark module complete. Deliberately keyed on
   // `ownResult` (the recipient's own live-store-driven compute), never on
@@ -536,7 +312,10 @@ export const ReportView: React.FC<{ simEmbed?: boolean }> = ({ simEmbed = false 
   // regardless of viewport width, same as Threats/Library/Compliance/
   // Migrate/Assess.
   if (isMobileShell && !simEmbed) {
-    return <MobileReportView />
+    // sharedView resolved once above (useResolvedSharedReport), not
+    // re-derived here — mobile gets the identical shared/example report a
+    // desktop reader on the same link would see, instead of none at all.
+    return <MobileReportView sharedView={sharedView} />
   }
 
   // Active compute state: assessment exists, result still pending. Show

@@ -48,10 +48,14 @@ function buildNarrative(frameworks: ComplianceFramework[]): NarrativeData | null
 
 /**
  * Persona-aware wrapper around DeadlineTimeline:
- *   executive | ops | null (first visit)   → full timeline (current behaviour)
- *   executive | ops | null (return visit)  → closed disclosure (mounts on click)
- *   curious                                 → one-line narrative summary
- *   developer | architect | researcher     → closed disclosure (mounts on click)
+ *   executive | grc | ops | null (first visit)   → full timeline (current behaviour)
+ *   executive | grc | ops | null (return visit)  → closed disclosure (mounts on click)
+ *   curious                                       → one-line narrative summary
+ *   developer | architect | researcher           → closed disclosure (mounts on click)
+ *
+ * GRC added 2026-09-07 (Executive/GRC split, plan §D) — deadline dates are
+ * core obligations-tracking territory, so GRC gets the same open-by-default
+ * treatment as executive/ops rather than the closed disclosure.
  */
 export function DeadlineTimelineGate({
   persona,
@@ -62,7 +66,10 @@ export function DeadlineTimelineGate({
   const [open, setOpen] = useState(false)
   const narrative = useMemo(() => buildNarrative(frameworks), [frameworks])
 
-  if ((persona === 'executive' || persona === 'ops' || persona === null) && !returningVisitor) {
+  if (
+    (persona === 'executive' || persona === 'grc' || persona === 'ops' || persona === null) &&
+    !returningVisitor
+  ) {
     return <DeadlineTimeline frameworks={frameworks} label={label} />
   }
 

@@ -21,6 +21,7 @@ export const ACTION_REFRAMINGS: ActionReframing[] = [
     reframings: {
       executive:
         'Commission a cryptographic asset inventory across your organization — this is the foundation for migration planning and budget estimation.',
+      grc: 'Establish and record a cryptographic asset inventory across your organization — this is the evidence base your compliance register and vendor reviews will cite.',
       developer:
         'Run a dependency-level crypto audit: scan for algorithm identifiers in your codebase and audit transitive crypto library dependencies.',
       architect:
@@ -38,6 +39,7 @@ export const ACTION_REFRAMINGS: ActionReframing[] = [
     reframings: {
       executive:
         'Commission a cryptographic asset inventory to determine which business systems require migration investment.',
+      grc: 'Establish which business systems use vulnerable algorithms and record it in the risk register — this scopes what needs a documented treatment decision.',
       developer:
         'Scan your codebase and dependency tree for quantum-vulnerable algorithm usage before planning migration.',
       architect:
@@ -54,6 +56,7 @@ export const ACTION_REFRAMINGS: ActionReframing[] = [
     reframings: {
       executive:
         'Commission a data classification exercise to understand which business data requires quantum-safe protection — this drives your HNDL risk exposure.',
+      grc: 'Establish a data classification record — this is the evidence your HNDL risk exposure and retention obligations rest on.',
       developer:
         'Audit the data sensitivity levels your code handles — PII, financial, and health data in long-lived stores drive HNDL risk.',
       curious:
@@ -68,6 +71,7 @@ export const ACTION_REFRAMINGS: ActionReframing[] = [
     reframings: {
       executive:
         'Invest in crypto-agility infrastructure — abstracting encryption from business logic reduces the cost of future algorithm transitions.',
+      grc: "Record crypto-agility as a control in the checklist, and verify it with engineering rather than assuming it's already true.",
       developer:
         'Introduce a provider/factory pattern for all crypto operations to enable algorithm-agnostic migration paths.',
       architect:
@@ -84,6 +88,7 @@ export const ACTION_REFRAMINGS: ActionReframing[] = [
     reframings: {
       executive:
         'Brief the board and senior leadership on quantum risk and the PQC migration investment timeline.',
+      grc: 'Establish a PQC awareness program with recorded completion, and verify coverage across engineering and leadership — an audit asks for evidence, not intent.',
       developer:
         'Complete PQC learning modules relevant to your stack and share findings with your engineering team.',
       architect:
@@ -100,6 +105,7 @@ export const ACTION_REFRAMINGS: ActionReframing[] = [
     reframings: {
       executive:
         'Direct your engineering leads to evaluate quantum-safe encryption libraries and estimate integration costs.',
+      grc: 'Establish which libraries and tools engineering has evaluated, and record the evidence behind each choice — this becomes part of the vendor-assurance file.',
       developer:
         'Benchmark PQC library candidates (liboqs, OpenSSL 3.5+, BoringSSL) against your performance and compatibility requirements.',
       architect:
@@ -116,6 +122,7 @@ export const ACTION_REFRAMINGS: ActionReframing[] = [
     reframings: {
       executive:
         'Prioritize TLS migration to hybrid quantum-safe encryption — this protects data in transit immediately and demonstrates compliance progress.',
+      grc: "Verify TLS migration progress against the compliance checklist, and record the evidence — 'in progress' needs a source, not just a status.",
       developer:
         'Configure hybrid ML-KEM + X25519 key exchange on your TLS endpoints — start with non-critical services to validate performance.',
       architect:
@@ -132,6 +139,7 @@ export const ACTION_REFRAMINGS: ActionReframing[] = [
     reframings: {
       executive:
         'Engage your HSM vendor about PQC firmware upgrade timelines and budget — HSMs are typically the highest-cost migration item.',
+      grc: "Establish the HSM vendor's PQC roadmap as a documented commitment, and record it in the vendor scorecard rather than a verbal assurance.",
       architect:
         'Evaluate HSM vendor PQC firmware roadmap and plan trust root migration sequence — HSMs constrain the entire certificate chain.',
       curious:
@@ -146,6 +154,7 @@ export const ACTION_REFRAMINGS: ActionReframing[] = [
     reframings: {
       executive:
         'Prioritize hybrid quantum-safe encryption for your most sensitive stored data — this mitigates the Harvest-Now-Decrypt-Later threat immediately.',
+      grc: 'Verify hybrid encryption coverage for the highest-sensitivity stores, and record the evidence — this is what a data-protection audit asks to see.',
       developer:
         'Implement hybrid PQC encryption (ML-KEM + AES) for data-at-rest in your highest-sensitivity data stores.',
       architect:
@@ -162,6 +171,7 @@ export const ACTION_REFRAMINGS: ActionReframing[] = [
     reframings: {
       executive:
         'Request PQC migration roadmaps from your SaaS and SDK vendors — their timelines may constrain your own migration schedule.',
+      grc: "Establish and record each vendor's PQC migration commitment in the vendor scorecard — a roadmap without a document is not evidence.",
       developer:
         'Check your vendor SDKs and SaaS APIs for PQC support — file feature requests and track their migration roadmaps.',
       curious:
@@ -178,6 +188,8 @@ export const PERSONA_UNKNOWN_WEIGHTS: Record<
   { agility: number; infra: number; compliance: number; migration: number }
 > = {
   executive: { agility: 0.8, infra: 0.7, compliance: 1.0, migration: 0.8 },
+  // GRC uses the standard baseline (plan §D) — no softening of unknown answers.
+  grc: { agility: 1.0, infra: 1.0, compliance: 1.0, migration: 1.0 },
   developer: { agility: 1.0, infra: 0.9, compliance: 0.8, migration: 0.9 },
   architect: { agility: 1.0, infra: 1.0, compliance: 0.9, migration: 1.0 },
   researcher: { agility: 0.85, infra: 0.8, compliance: 0.75, migration: 0.85 },
@@ -268,6 +280,71 @@ function generateExecNarrative(
     'not-started':
       'Migration has not begun — the cost of delay compounds as quantum timelines firm up.',
     unknown: 'Migration status is unclear — commission a cryptographic baseline assessment.',
+  }
+  parts.push(statusMsg[input.migrationStatus] ?? '')
+  return parts.filter(Boolean).join(' ')
+}
+
+/**
+ * GRC narrative (2026-09-07 split). Same underlying signals as the executive
+ * narrative, reframed per plan §D: name what to establish, record, source or
+ * verify rather than what to fund or direct — an obligations/evidence voice,
+ * not a board-briefing one.
+ */
+function generateGrcNarrative(
+  input: AssessmentInput,
+  riskScore: number,
+  riskLevel: string,
+  vulnerableCount: number,
+  migrationEffort: MigrationEffortItem[] | undefined,
+  pqcFrameworkCount: number,
+  hndl: HNDLRiskWindow | undefined,
+  hnfl: TNFLRiskWindow | undefined
+): string {
+  const parts: string[] = []
+  parts.push(
+    `Your ${input.industry} organization scores ${riskLevel} on quantum risk exposure (${riskScore}/100) — treat this as the starting scope for your obligations register and risk treatment plan, not a verdict.`
+  )
+  if (vulnerableCount > 0) {
+    const quickWins = migrationEffort?.filter((m) => m.estimatedScope === 'quick-win').length ?? 0
+    const majorProjects =
+      migrationEffort?.filter(
+        (m) => m.estimatedScope === 'major-project' || m.estimatedScope === 'multi-year'
+      ).length ?? 0
+    if (majorProjects > 0) {
+      parts.push(
+        `${majorProjects} algorithm migration${majorProjects > 1 ? 's' : ''} need${majorProjects === 1 ? 's' : ''} a documented treatment plan with an owner and a target date${quickWins > 0 ? `; record the ${quickWins} quick-win${quickWins > 1 ? 's' : ''} separately as evidence of early progress` : ''}.`
+      )
+    } else if (quickWins > 0) {
+      parts.push(
+        `${quickWins} quick-win migration${quickWins > 1 ? 's' : ''} can close and be recorded as evidence with minimal investment.`
+      )
+    }
+  }
+  if (hndl?.isAtRisk) {
+    parts.push(
+      `Data is being harvested today for future decryption — record the ${hndl.riskWindowYears}-year exposure window as a documented risk with a named owner and a review date, not a general concern.`
+    )
+  }
+  if (hnfl?.isAtRisk) {
+    parts.push(
+      `Credentials and signatures remain trusted ${hnfl.riskWindowYears} year${hnfl.riskWindowYears !== 1 ? 's' : ''} beyond the quantum threat window — verify your certificate lifecycle policy accounts for this before calling it closed.`
+    )
+  }
+  if (pqcFrameworkCount > 0) {
+    parts.push(
+      `${pqcFrameworkCount} compliance framework${pqcFrameworkCount > 1 ? 's' : ''} require${pqcFrameworkCount === 1 ? 's' : ''} PQC adoption — trace each to its source and record what evidence you can already show.`
+    )
+  }
+  const statusMsg: Record<string, string> = {
+    started:
+      'Migration is underway — verify the evidence trail matches what has actually shipped, not what was planned.',
+    planning:
+      'Migration is planned but not yet evidenced — establish the record now so progress is provable later.',
+    'not-started':
+      'Migration has not started — record that finding plainly rather than letting it read as compliant by omission.',
+    unknown:
+      'Migration status is undocumented — establish a baseline record before making any compliance claim.',
   }
   parts.push(statusMsg[input.migrationStatus] ?? '')
   return parts.filter(Boolean).join(' ')
@@ -516,6 +593,17 @@ export function generatePersonaNarrative(
   switch (persona) {
     case 'executive':
       return generateExecNarrative(
+        input,
+        riskScore,
+        riskLevel,
+        vulnerableCount,
+        migrationEffort,
+        pqcFrameworkCount,
+        hndl,
+        hnfl
+      )
+    case 'grc':
+      return generateGrcNarrative(
         input,
         riskScore,
         riskLevel,

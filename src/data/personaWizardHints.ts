@@ -343,6 +343,125 @@ export const PERSONA_STEP_HINTS: Record<PersonaId, Record<string, PersonaStepHin
         'When does your organization need to be quantum-safe? If you don\'t have a deadline yet, select "I don\'t know" — most organizations are still figuring this out.',
     },
   },
+  // GRC (2026-09-07 split): comprehensive mode by default, so these hints
+  // assume a fuller pass than executive's quick path. Voice per the split
+  // plan §D — name what to establish, record, source, or verify, and treat
+  // an unknown as a gap to close rather than a safe default to assume.
+  grc: {
+    industry: {
+      hint: 'Your industry determines which compliance frameworks, certification schemes, and sector-specific obligations apply to your register.',
+      hintBeginner:
+        'Pick the sector closest to your organization. This scopes the obligations register — the frameworks and requirements differ significantly between industries.',
+      title: 'What sector does your organization operate in?',
+      description: 'Industry scopes which obligations and certification schemes apply.',
+    },
+    country: {
+      hint: 'Your jurisdiction determines which regulators and mandates bind you, and when their stated dates take effect.',
+      hintBeginner:
+        'Choose your headquarters country. Different countries set different PQC deadlines and different regulators enforce them.',
+      title: 'Where is your organization headquartered?',
+      description: 'Applicable obligations and their dates vary by country.',
+    },
+    crypto: {
+      hint: 'If this isn\'t documented anywhere yet, select "I don\'t know" and record it as an open item — a crypto inventory (CBOM) is one of the first things an auditor will ask for.',
+      hintBeginner:
+        "Don't worry if you're not sure — select \"I don't know\" and treat it as a gap to close. Your security team can supply this, or the CBOM module can help you build it.",
+      hintExpert:
+        'Select all algorithm families present across your enterprise, including third-party dependencies and legacy systems — this becomes the scope of your crypto inventory.',
+      suggestUnknown: true,
+      title: 'What encryption does your organization use?',
+      titleBeginner: 'Does your organization use encryption?',
+      description:
+        'Select what is already documented, or choose "I don\'t know" to flag it for the inventory work.',
+      descriptionBeginner:
+        "If you're not sure, that's a normal starting point — \"I don't know\" records it as something to find out.",
+    },
+    sensitivity: {
+      hint: 'Think about the most sensitive data your organization is obligated to protect. For a register, focus on the highest classification you can defend.',
+      hintBeginner:
+        'Think about the most sensitive data your organization handles — customer records, financial data, trade secrets. If unsure, pick the highest level that might apply.',
+      title: 'What types of sensitive data does your organization handle?',
+      description: 'Focus on the highest classification you would need to defend to an auditor.',
+    },
+    compliance: {
+      hint: 'Select every framework your organization answers to. This becomes the starting scope for your compliance checklist — under-selecting leaves real obligations untracked.',
+      hintBeginner:
+        'These are the regulatory standards your organization must follow. If you\'re not sure which apply, select "I don\'t know" and treat it as the first thing to confirm.',
+    },
+    migration: {
+      hint: 'This is about documented status, not intent — what can you currently show evidence of, versus what is only planned or assumed?',
+      hintBeginner:
+        'Has your organization started preparing for quantum-safe encryption, and can you show evidence of it? "Not started" or "I don\'t know" are common, honest answers.',
+      title: 'Has your organization started transitioning to quantum-safe encryption?',
+      description: 'This scopes the recommended actions and the evidence you will need to gather.',
+      optionDescriptions: {
+        started: 'There is documented evidence of transition work in production or pilot programs.',
+        planning: 'There is a roadmap or budget allocated, but no evidence of execution yet.',
+        'not-started': 'No quantum-safe migration activity has started or been documented.',
+      },
+    },
+    'use-cases': {
+      hint: 'Select every business function that relies on cryptography — each one is a potential line in your obligations or risk register.',
+      hintBeginner:
+        'These are the ways your organization uses encryption — for example, secure emails, online payments, or digital signatures. Select what you know or choose "I don\'t know".',
+    },
+    retention: {
+      hint: 'Consider the longest period any sensitive data must remain protected — this is usually a documented regulatory or contractual requirement, not an estimate.',
+      hintBeginner:
+        "How long must your data stay confidential? Check regulations like GDPR or your sector's record-retention rules rather than guessing.",
+    },
+    credential: {
+      hint: 'This covers how long your certificates, signed firmware, and digital credentials must remain trusted — relevant to your audit trail and signing policy.',
+      hintBeginner:
+        'This is about how long your digital certificates and signatures need to stay valid. If unsure, select "I don\'t know" and record it as something to confirm.',
+      suggestUnknown: true,
+    },
+    scale: {
+      hint: 'Estimate the number of systems in scope for your register and the size of the team that would own remediation.',
+      hintBeginner:
+        'Give your best estimate. "Systems" includes servers, applications, and cloud services. "Team" is the people who would own tracking and remediation.',
+    },
+    agility: {
+      hint: 'This is a technical question about how cryptography is implemented. If it isn\'t documented, select "I don\'t know" and log it as an evidence gap for your engineering team to close.',
+      hintBeginner:
+        'This is a technical question your engineering team would know. Select "I don\'t know" and treat it as something to confirm rather than assume.',
+      hintExpert:
+        'Evaluate whether your crypto layer supports algorithm negotiation. Fully abstracted = algorithm changes are config updates; hardcoded = code rewrites, which changes your remediation timeline.',
+      suggestUnknown: true,
+      title: 'How flexible is your encryption infrastructure?',
+      titleBeginner: 'Can your systems easily switch encryption methods?',
+      description: 'This affects how credible a remediation timeline you can commit to in writing.',
+      descriptionBeginner:
+        'Your engineering team will know this. Select "I don\'t know" to flag it as unverified rather than assume an answer.',
+      optionDescriptions: {
+        'fully-abstracted':
+          'Encryption is behind a centralized abstraction — algorithm changes are configuration updates.',
+        'partially-abstracted':
+          'Some encryption is abstracted, but parts are embedded in application code.',
+        hardcoded:
+          'Encryption algorithms are referenced directly in business logic — changes require code rewrites.',
+        unknown: 'Not documented yet — record this as an evidence gap for engineering to close.',
+      },
+    },
+    infra: {
+      hint: 'Ask your infrastructure team about HSMs and legacy systems, and get it in writing — these are the systems a vendor-assurance review will focus on.',
+      hintBeginner:
+        'This is about specialized hardware and systems that handle encryption. If you\'re not sure what your organization uses, select "I don\'t know" and flag it for follow-up.',
+      hintExpert:
+        'Map HSMs (FIPS-validated and cloud), on-prem PKI infrastructure, legacy cryptographic appliances, and embedded devices with firmware crypto — this becomes your vendor-assurance scope.',
+      suggestUnknown: true,
+      title: 'What infrastructure handles your encryption?',
+      titleBeginner: 'Does your organization use specialized encryption hardware?',
+      description: 'This scopes which vendors need a PQC readiness scorecard.',
+      descriptionBeginner:
+        'HSMs and legacy systems are the ones worth asking a vendor to prove readiness for. If you\'re not sure, select "I don\'t know".',
+    },
+    timeline: {
+      hint: 'Select the deadline that applies based on a stated regulatory date or documented internal commitment — not an aspirational target.',
+      hintBeginner:
+        'When does your organization need to be quantum-safe? If there is no documented deadline yet, select "I don\'t know" — that itself is worth recording.',
+    },
+  },
   developer: {
     industry: {
       hint: 'Your industry determines which crypto libraries and standards are most relevant, and which compliance certifications your code must support.',
@@ -800,6 +919,36 @@ export const PERSONA_INDUSTRY_STEP_HINTS: Record<
       },
       retention: {
         hint: 'HIPAA requires at least 6 years of medical-record retention; many states extend to 10+ years, and pediatric records can reach 25 years. Long retention pushes HNDL risk higher.',
+      },
+    },
+  },
+  grc: {
+    financebanking: {
+      compliance: {
+        hint: 'PCI-DSS, SOX, GLBA, Basel III, MiFID II, DORA (EU), FINRA, and the NIST CNSA 2.0 timeline are the frameworks most commonly cited in finance — list every one your register needs to trace, not just the one your compliance officer mentions first.',
+      },
+      sensitivity: {
+        hint: 'In finance, the highest-sensitivity data are customer PII, payment card data, and trading / settlement records — each needs its own line in the register, since a breach of any is treated as severe by regulators.',
+      },
+      'use-cases': {
+        hint: 'In banking, cryptography typically backs SWIFT messaging, card-present / card-not-present payment authorization, trade settlement, and core banking database encryption — each is a control you may need to evidence separately.',
+      },
+      retention: {
+        hint: 'Banks routinely retain transaction records 7–25 years (SOX, Basel III, FINRA) — record the actual cited requirement, not an estimate; long retention pushes HNDL risk (and audit scrutiny) higher.',
+      },
+    },
+    healthcare: {
+      compliance: {
+        hint: 'HIPAA, HITECH, GDPR (for EU patient data), and FDA guidance for connected medical devices are the core frameworks — confirm each with your privacy or clinical-engineering team rather than assuming coverage.',
+      },
+      sensitivity: {
+        hint: 'In healthcare, the highest-sensitivity data are PHI (patient health records), clinical imaging, and genomic / research data — all are federally protected and each merits its own evidence trail.',
+      },
+      'use-cases': {
+        hint: 'In healthcare, cryptography typically backs EHR-system encryption, patient portal TLS, medical-device telemetry, and research-data exchange (DICOM, HL7) — each is a control an auditor may ask you to demonstrate.',
+      },
+      retention: {
+        hint: 'HIPAA requires at least 6 years of medical-record retention; many states extend to 10+ years, and pediatric records can reach 25 years — cite the actual rule that applies rather than a rounded figure.',
       },
     },
   },

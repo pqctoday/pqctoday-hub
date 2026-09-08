@@ -52,6 +52,7 @@ type SortDirection = 'asc' | 'desc'
 
 const PERSONA_SHORT_LABELS: Record<PersonaId, string> = {
   executive: 'Executive',
+  grc: 'GRC',
   developer: 'Developer',
   architect: 'Architect',
   ops: 'IT Ops',

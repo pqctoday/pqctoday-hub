@@ -7,8 +7,8 @@
 // the overwrite when the recipient already had an assessment — leaving the
 // no-prior-assessment case still mutating their store on every open.)
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router'
+import { render, screen, fireEvent } from '@testing-library/react'
+import { MemoryRouter, Link } from 'react-router'
 import '@testing-library/jest-dom'
 import { ReportView } from './ReportView'
 import { useAssessmentStore } from '../../store/useAssessmentStore'
@@ -18,6 +18,7 @@ import { usePersonaStore } from '../../store/usePersonaStore'
 import { encodeShareToken, decodeShareToken } from '@/utils/reportShareToken'
 import { computeAssessment } from '@/hooks/assessment/orchestrator'
 import type { AssessmentInput } from '@/hooks/assessmentTypes'
+import { EXAMPLE_REPORT_RESULT } from '@/data/exampleReport'
 import { usePageActionsStore } from '@/store/usePageActionsStore'
 
 vi.mock(
@@ -295,5 +296,120 @@ describe('mobile shell guard', () => {
       </MemoryRouter>
     )
     expect(await screen.findByTestId('report-content')).toBeInTheDocument()
+  })
+})
+
+// 2026-09-07 fix: MobileReportView previously had NO shared/example
+// resolution at all — it only ever read the viewer's own live assessment
+// store, so a `?share=`/`?example=1` link opened on a phone always landed on
+// "No Report Yet" regardless of what the link promised. Flagged by the
+// Executive/GRC split plan's mobile acceptance criteria ("fix shared/example
+// mobile report resolution... before claiming GRC report parity") but not
+// persona-specific — this affects every persona's shared/example links.
+describe('mobile shared/example report parity (2026-09-07)', () => {
+  beforeEach(() => {
+    useAssessmentStore.getState().reset()
+    usePersonaStore.getState().clearPersona()
+    mockUseIsMobileShell.mockReturnValue(true)
+  })
+
+  afterEach(() => {
+    mockUseIsMobileShell.mockReturnValue(false)
+  })
+
+  it('renders the worked example report on mobile for ?example=1, not "No Report Yet"', async () => {
+    render(
+      <MemoryRouter initialEntries={['/report?example=1']}>
+        <ReportView />
+      </MemoryRouter>
+    )
+    expect(screen.queryByText('No Report Yet')).not.toBeInTheDocument()
+    // The example's own risk score renders — proof the resolved shared view,
+    // not the (empty) live store, drove this screen.
+    await screen.findByText(String(EXAMPLE_REPORT_RESULT.riskScore))
+  })
+
+  it("renders the sender's exact snapshot on mobile for a ?share= token, not the viewer's own empty state", async () => {
+    const token = encodeShareToken({ result: SAMPLE_RESULT, persona: 'grc' })
+    render(
+      <MemoryRouter initialEntries={[`/report?share=${token}`]}>
+        <ReportView />
+      </MemoryRouter>
+    )
+    expect(screen.queryByText('No Report Yet')).not.toBeInTheDocument()
+    await screen.findByText(String(SAMPLE_RESULT.riskScore))
+  })
+
+  it('never writes a shared link into the recipient’s own persisted store on mobile either', async () => {
+    const token = encodeShareToken({ result: SAMPLE_RESULT, persona: 'grc' })
+    render(
+      <MemoryRouter initialEntries={[`/report?share=${token}`]}>
+        <ReportView />
+      </MemoryRouter>
+    )
+    await screen.findByText(String(SAMPLE_RESULT.riskScore))
+    expect(useAssessmentStore.getState().assessmentStatus).toBe('not-started')
+    expect(usePersonaStore.getState().selectedPersona).toBeNull()
+  })
+})
+
+// The old hydration guard ran its decode effect exactly once per mount
+// (`hydratedRef`), so tapping a second shared link while ALREADY on /report
+// — the common case for a board's "See a finished example" + a teammate's
+// direct share link, or simply re-sharing — left the FIRST link's content on
+// screen. `useResolvedSharedReport` re-resolves on every distinct
+// `searchParams` value instead.
+describe('ReportView re-resolves a shared link on a same-route query change', () => {
+  beforeEach(() => {
+    useAssessmentStore.getState().reset()
+    usePersonaStore.getState().clearPersona()
+    reportContentSpy.mockClear()
+  })
+
+  it('updates from one ?share= token to a different one without remounting', async () => {
+    const firstResult = computeAssessment({
+      industry: 'Healthcare',
+      currentCrypto: ['RSA-2048'],
+      dataSensitivity: ['medium'],
+      complianceRequirements: [],
+      migrationStatus: 'not-started',
+    })
+    const firstToken = encodeShareToken({ result: firstResult, persona: 'curious' })
+    const secondToken = encodeShareToken({ result: SAMPLE_RESULT, persona: 'grc' })
+
+    // A real react-router `<Link>`, clicked via fireEvent — this triggers
+    // genuine client-side navigation on the SAME mounted MemoryRouter/history
+    // (ReportView itself never unmounts), unlike re-rendering a new
+    // <MemoryRouter> element, which would just reset `initialEntries` rather
+    // than reproducing an in-app navigation.
+    function Harness() {
+      return (
+        <>
+          <Link to={`/report?share=${secondToken}`}>switch</Link>
+          <ReportView />
+        </>
+      )
+    }
+
+    render(
+      <MemoryRouter initialEntries={[`/report?share=${firstToken}`]}>
+        <Harness />
+      </MemoryRouter>
+    )
+    await screen.findByTestId('report-content')
+    const firstProps = reportContentSpy.mock.calls.at(-1)?.[0] as {
+      result: { riskScore: number }
+    }
+    expect(firstProps.result.riskScore).toBe(firstResult.riskScore)
+
+    fireEvent.click(screen.getByText('switch'))
+
+    // A mount-only guard would leave the FIRST token's props in place here —
+    // ReportView never unmounts across this navigation, so this only passes
+    // if the resolution hook re-ran on the new searchParams value.
+    await vi.waitFor(() => {
+      const latest = reportContentSpy.mock.calls.at(-1)?.[0] as { result: { riskScore: number } }
+      expect(latest.result.riskScore).toBe(SAMPLE_RESULT.riskScore)
+    })
   })
 })

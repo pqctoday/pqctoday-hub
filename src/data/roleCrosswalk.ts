@@ -121,7 +121,7 @@ export const ROLE_CROSSWALK: Record<FrameworkRoleId, RoleMapping> = {
     sources: ROLE_SOURCES,
     label: 'Quantum-Readiness Program Manager',
     typicalFte: '1.0',
-    persona: 'executive',
+    persona: 'grc',
     niceRoles: ['is-security-manager', 'risk-manager'],
     phases: ['p0', 'p4', 'p7', 'verify-close', 'foundations'],
     // p0 govern · p4 implement · p7 govern · verify-close closure · foundations all five
@@ -193,7 +193,7 @@ export const ROLE_CROSSWALK: Record<FrameworkRoleId, RoleMapping> = {
     sources: ROLE_SOURCES,
     label: 'Vendor / Procurement Lead',
     typicalFte: '0.5',
-    persona: 'executive',
+    persona: 'grc',
     niceRoles: ['risk-manager', 'is-security-manager'],
     phases: ['p7'],
     // p7 govern
@@ -204,7 +204,7 @@ export const ROLE_CROSSWALK: Record<FrameworkRoleId, RoleMapping> = {
     sources: ROLE_SOURCES,
     label: 'PMO Analyst',
     typicalFte: '0.5–1.0',
-    persona: 'executive',
+    persona: 'grc',
     niceRoles: ['risk-manager', 'systems-security-analyst'],
     phases: ['p4', 'foundations'],
     // p4 implement · foundations all five
@@ -308,16 +308,23 @@ export const INSTANCES_PER_PRODUCT_ESTIMATE = 12
 /**
  * Persona → framework roles fan-out, derived from `ROLE_CROSSWALK`.
  *
- * Records the intentional 1-persona→many-roles relationship (spec §7.3): e.g.
- * `executive` owns QRPM, Exec-Sponsor, Vendor-Lead and PMO-Analyst. Personas
- * that hold no program-role ownership (Researcher, Curious — audience segments,
- * not team jobs) map to `[]` and see the full neutral phase rail with no
- * "≈ your view" marker (spec §4 orphan-personas decision).
+ * Records the intentional 1-persona→many-roles relationship (spec §7.3).
+ * `executive` retains sole ownership of Exec-Sponsor only — the split plan
+ * (2026-09-07, executive-grc-split-plan.md §5) keeps that phase as executive's
+ * explicitly delegated oversight even though QRPM, Vendor-Lead and PMO-Analyst
+ * moved to `grc` as the nearest operational governance learning persona. This
+ * is an educational-recommendation change, not a change to the framework's
+ * role definitions, FTEs or gate authority — see the `ROLE_CROSSWALK` entries
+ * above for the actual per-role `persona` field. Personas that hold no
+ * program-role ownership (Researcher, Curious — audience segments, not team
+ * jobs) map to `[]` and see the full neutral phase rail with no "≈ your view"
+ * marker (spec §4 orphan-personas decision).
  */
 export const personaToRoles: Record<PersonaId, FrameworkRoleId[]> = (() => {
   // Seed every persona (incl. orphans) so the record is total over PersonaId.
   const acc: Record<PersonaId, FrameworkRoleId[]> = {
     executive: [],
+    grc: [],
     developer: [],
     architect: [],
     researcher: [],

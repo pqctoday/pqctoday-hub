@@ -15,6 +15,9 @@ async function seedPersona(page: Page, persona: string, opts: { tabsVisited?: st
   const value = JSON.stringify({
     state: {
       selectedPersona: persona,
+      // Fixture is a settled, already-onboarded persona, not a fresh
+      // Executive/GRC split moment — see usePersonaStore.ts's v11 migration.
+      hasAcknowledgedExecutiveGrcSplit: true,
       hasSeenPersonaPicker: true,
       selectedRegion: 'global',
       selectedIndustry: null,

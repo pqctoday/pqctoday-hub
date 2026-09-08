@@ -106,11 +106,11 @@ export const InteractivePlayground = () => {
 
   return (
     <Card className="p-3 md:p-6 min-h-[60vh] md:min-h-[85vh] flex flex-col">
-      {role === 'executive' && (
+      {(role === 'executive' || role === 'grc') && (
         <ExecutiveRedirectBanner
           className="mb-4 shrink-0"
           title="Interactive Playground is a hands-on engineering workbench."
-          subtitle="This surface runs real key generation, encryption and signing operations in your browser — useful for your engineering team, not for board-level PQC decisions. For executive context:"
+          subtitle="This surface runs real key generation, encryption and signing operations in your browser — useful for your engineering team, not for board-level or governance decisions. For that context:"
           ctas={[
             { label: 'Command Center →', to: '/business' },
             { label: 'Compliance landscape →', to: '/compliance' },

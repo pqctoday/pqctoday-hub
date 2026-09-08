@@ -422,6 +422,7 @@ export function getMobileVisiblePaths(persona: PersonaId | null): string[] {
   const base = ['/', '/simulation', '/learn', '/timeline', '/migrate', '/assess']
   const extra: string[] = []
   if (persona === 'curious') extra.push('/explore')
-  if (persona === 'executive' || persona === 'architect') extra.push('/business')
+  if (persona === 'executive' || persona === 'grc' || persona === 'architect')
+    extra.push('/business')
   return [...base, ...extra]
 }

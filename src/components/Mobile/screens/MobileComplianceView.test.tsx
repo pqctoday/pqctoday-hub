@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import { describe, it, expect, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
+import { MemoryRouter } from 'react-router'
 import { MobileComplianceView } from './MobileComplianceView'
 import { usePersonaStore } from '@/store/usePersonaStore'
 import { useAssessmentStore } from '@/store/useAssessmentStore'
@@ -34,13 +35,21 @@ describe('MobileComplianceView', () => {
   })
 
   it('shows an empty-profile message on Rules & Standards when nothing is scoped', () => {
-    render(<MobileComplianceView />)
+    render(
+      <MemoryRouter>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
     expect(screen.getByText('Nothing in scope yet')).toBeInTheDocument()
   })
 
   it('renders the real tier-grouped obligations for a scoped profile, not stale figures', () => {
     seedScope()
-    render(<MobileComplianceView />)
+    render(
+      <MemoryRouter>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
     const rows = buildObligations({
       country: 'United States',
       industry: 'Finance & Banking',
@@ -56,7 +65,11 @@ describe('MobileComplianceView', () => {
 
   it('tapping an obligation opens its real "about this standard" detail sheet', () => {
     seedScope()
-    render(<MobileComplianceView />)
+    render(
+      <MemoryRouter>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
     const rows = buildObligations({
       country: 'United States',
       industry: 'Finance & Banking',
@@ -73,7 +86,11 @@ describe('MobileComplianceView', () => {
 
   it('the detail sheet\'s "View extracted requirements" jumps to Requirements with that framework selected', () => {
     seedScope()
-    render(<MobileComplianceView />)
+    render(
+      <MemoryRouter>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
     const rows = buildObligations({
       country: 'United States',
       industry: 'Finance & Banking',
@@ -90,7 +107,11 @@ describe('MobileComplianceView', () => {
 
   it('shows real, live-computed cited-document counts on Requirements, not typed figures', () => {
     seedScope()
-    render(<MobileComplianceView />)
+    render(
+      <MemoryRouter>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
     fireEvent.click(screen.getByText('Requirements'))
     const rows = buildObligations({
       country: 'United States',
@@ -107,7 +128,11 @@ describe('MobileComplianceView', () => {
 
   it('Landscape shows the real persona-emphasis reduction, not the brief\'s "2 of 9"', () => {
     seedScope()
-    render(<MobileComplianceView />)
+    render(
+      <MemoryRouter>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
     fireEvent.click(screen.getByText('Landscape'))
     const emphasisCount = complianceFrameworks.filter((f) =>
       isComplianceFrameworkEmphasized('executive', f.id)
@@ -119,7 +144,11 @@ describe('MobileComplianceView', () => {
 
   it('Landscape tiles are tappable and open the real detail sheet, not a dead end', () => {
     seedScope()
-    render(<MobileComplianceView />)
+    render(
+      <MemoryRouter>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
     fireEvent.click(screen.getByText('Landscape'))
     const emphasisSet = complianceFrameworks.filter((f) =>
       isComplianceFrameworkEmphasized('executive', f.id)
@@ -130,7 +159,11 @@ describe('MobileComplianceView', () => {
   })
 
   it('Landscape explains the cut rather than dumping the full catalogue when no role is set', () => {
-    render(<MobileComplianceView />)
+    render(
+      <MemoryRouter>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
     fireEvent.click(screen.getByText('Landscape'))
     expect(screen.getByText(/No role set/i)).toBeInTheDocument()
     expect(
@@ -139,7 +172,11 @@ describe('MobileComplianceView', () => {
   })
 
   it('Records shows the real 6-term certification glossary', () => {
-    render(<MobileComplianceView />)
+    render(
+      <MemoryRouter>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
     fireEvent.click(screen.getByText('Records'))
     for (const term of ['FIPS 140-3', 'ACVP', 'CC', 'EUCC', 'CNSA 2.0', 'HNDL']) {
       expect(screen.getByText(term)).toBeInTheDocument()
@@ -147,7 +184,11 @@ describe('MobileComplianceView', () => {
   })
 
   it("CSWP.39 shows all 5 real steps with the correct section refs, not the brief's wrong ones", () => {
-    render(<MobileComplianceView />)
+    render(
+      <MemoryRouter>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
     fireEvent.click(screen.getByText('CSWP.39'))
     expect(CSWP39_STEPS).toHaveLength(5)
     for (const step of CSWP39_STEPS) {
@@ -159,7 +200,64 @@ describe('MobileComplianceView', () => {
   })
 
   it('states what was cut rather than silently dropping it', () => {
-    render(<MobileComplianceView />)
+    render(
+      <MemoryRouter>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
     expect(screen.getByText(/Progress tracking, the full Products catalogue/i)).toBeInTheDocument()
+  })
+})
+
+// 2026-09-07 Executive/GRC split: GRC's home-board links deep-link into
+// specific compliance sections (e.g. `/compliance?tab=obligations` and
+// `/compliance?tab=records`). This screen previously ignored `?tab=`
+// entirely — always landing on 'obligations' regardless of the link's
+// promise — which would have silently mispointed the 'records' links.
+describe('MobileComplianceView — ?tab= deep links', () => {
+  beforeEach(() => {
+    seedScope()
+  })
+
+  it('lands on the Records section for ?tab=records', () => {
+    render(
+      <MemoryRouter initialEntries={['/compliance?tab=records']}>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
+    expect(screen.getByRole('button', { name: 'Records', pressed: true })).toBeInTheDocument()
+  })
+
+  it("lands on Rules & Standards for ?tab=obligations (GRC's primary destination)", () => {
+    render(
+      <MemoryRouter initialEntries={['/compliance?tab=obligations']}>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
+    expect(
+      screen.getByRole('button', { name: 'Rules & Standards', pressed: true })
+    ).toBeInTheDocument()
+  })
+
+  it('falls back to Rules & Standards for an unrecognized ?tab= value', () => {
+    render(
+      <MemoryRouter initialEntries={['/compliance?tab=foryou']}>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
+    expect(
+      screen.getByRole('button', { name: 'Rules & Standards', pressed: true })
+    ).toBeInTheDocument()
+  })
+
+  it('defaults to Rules & Standards with no ?tab= at all', () => {
+    render(
+      <MemoryRouter initialEntries={['/compliance']}>
+        <MobileComplianceView />
+      </MemoryRouter>
+    )
+    expect(
+      screen.getByRole('button', { name: 'Rules & Standards', pressed: true })
+    ).toBeInTheDocument()
   })
 })
