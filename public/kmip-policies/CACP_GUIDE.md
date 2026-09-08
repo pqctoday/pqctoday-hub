@@ -402,12 +402,15 @@ and each has a hands-on surface:
   granted usage allocation can't be silently re-budgeted (§4.69). Try it:
   Learn walkthrough 9, and the Batch tab's "Rollback reaches Encapsulate"
   recipe.
-- **Conformance baseline.** The native CI gate pins an exact 97 PASS /
-  5 deprecated-skip on the 102 OASIS tests. The playground's Corpus Replay
-  matches it except three honestly-labelled wasm-seam skips — the native
-  TLS listener's MaximumResponseSize enforcement, which `KmipPlayground::
-  submit`'s direct `dispatch()` call has no seam for (94 PASS / 5 deprecated
-  / 3 transport-skip, still summing to the same 97 the native gate pins).
+- **Conformance baseline.** The native CI gate pins an exact 99 PASS /
+  3 deprecated-skip on the 102 OASIS tests (DSA Register no longer among
+  the skips — accepted for storage, **G4**). The playground's own Corpus
+  Replay figure needs re-measuring against the rebuilt wasm bundle before
+  this paragraph's wasm-seam breakdown can be corrected with real numbers
+  rather than guessed ones — the MaximumResponseSize-seam gap this
+  historically described predates tonight's Interop-gate fix, and the
+  hub's own test already asserts zero transport-skips, so this text is
+  stale independent of that fix too.
   The RNG-seed-mode gap this used to also list is closed: the three
   per-test-RngSeedMode corpus tests now pass by booting the wasm engine
   pinned to each test's mode via its constructor. Re-verified 2026-07-10
