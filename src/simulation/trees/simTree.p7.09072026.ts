@@ -152,6 +152,14 @@ const TREE: PhaseTree = {
               to: '/business/tools/risk-register',
               artifactType: 'risk-register',
             },
+            {
+              kind: 'recurrence',
+              label:
+                'Report to the SteerCo again in a later quarter — L3 is reported, not produced',
+              to: '/business/tools/kpi-dashboard',
+              recurrenceOf: 'kpi-dashboard',
+              recurrenceQuarters: 1,
+            },
           ],
         },
       ],

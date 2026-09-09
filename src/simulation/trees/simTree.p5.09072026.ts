@@ -228,6 +228,14 @@ const TREE: PhaseTree = {
               to: '/simulation',
               minDecisions: 4,
             },
+            {
+              kind: 'measure',
+              label:
+                'Migrate Tier-1 connections for real — the criterion is systems ON hybrid/PQC, not a rollout plan',
+              to: '/simulation',
+              metricId: 'migration-coverage-pct',
+              minValue: 40,
+            },
           ],
         },
         {
@@ -290,6 +298,14 @@ const TREE: PhaseTree = {
               to: '/business/tools/crypto-api-refactor-audit',
               artifactType: 'crypto-api-refactor',
             },
+            {
+              kind: 'measure',
+              label:
+                'Carry the rollout across the estate — L4 is deployment substantially COMPLETE, not documented',
+              to: '/simulation',
+              metricId: 'migration-coverage-pct',
+              minValue: 80,
+            },
           ],
           deepDive: [
             {
@@ -303,6 +319,14 @@ const TREE: PhaseTree = {
               label: 'Deep dive — Learn: Digital Assets',
               to: '/learn/digital-assets',
               moduleId: 'digital-assets',
+            },
+            {
+              kind: 'measure',
+              label:
+                'Carry the rollout across the estate — L4 is deployment substantially COMPLETE, not documented',
+              to: '/simulation',
+              metricId: 'migration-coverage-pct',
+              minValue: 80,
             },
           ],
         },

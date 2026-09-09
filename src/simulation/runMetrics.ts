@@ -46,6 +46,12 @@ export const RUN_METRICS: readonly RunMetricDef[] = [
     describes: 'Architecture decisions the player has taken on real connections in this run.',
   },
   {
+    id: 'migration-coverage-pct',
+    unit: 'percent',
+    describes:
+      'Share of the run’s MIGRATABLE connections that have been decided. Capacity-relative on purpose: "estate-wide" means all of THIS estate, and a smaller organisation must not face an unreachable absolute count.',
+  },
+  {
     id: 'evidence-records',
     unit: 'count',
     describes: 'Evidence records this run has produced, of any origin.',
@@ -79,6 +85,8 @@ export interface RunMetricInputs {
   assetsAccounted: number
   assetsTotal: number
   edgeDecisions: number
+  /** Total migratable connections in this run's architecture. */
+  edgeCapacity: number
   evidenceTotal: number
   evidenceByLearner: number
   quartersElapsed: number
@@ -97,6 +105,8 @@ export function readRunMetric(id: string, i: RunMetricInputs): number | null {
       return i.assetsTotal > 0 ? (i.assetsAccounted / i.assetsTotal) * 100 : null
     case 'migration-decisions':
       return i.edgeDecisions
+    case 'migration-coverage-pct':
+      return i.edgeCapacity > 0 ? (i.edgeDecisions / i.edgeCapacity) * 100 : null
     case 'evidence-records':
       return i.evidenceTotal
     case 'learner-evidence-records':

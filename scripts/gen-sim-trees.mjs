@@ -209,6 +209,7 @@ const KNOWN_METRICS = new Set([
   'budget-secured-pct',
   'inventory-coverage-pct',
   'migration-decisions',
+  'migration-coverage-pct',
   'evidence-records',
   'learner-evidence-records',
   'reporting-periods-elapsed',
@@ -682,6 +683,11 @@ const FRAMEWORK = {
           'soc-implementation-pqc',
           'Learn: involve the SOC — posture-registry integration and CBOM exfiltration monitoring'
         ),
+        REC(
+          'crypto-vulnerability-watch',
+          1,
+          'Re-run the watch in a later quarter — L3 requires freshness governance ENFORCED'
+        ),
       ],
     },
     {
@@ -901,6 +907,11 @@ const FRAMEWORK = {
         ),
         R('report', 'Track gates on the Report page'),
         A('kpi-tracker', 'Track the roadmap on a quarterly cadence against gate criteria'),
+        REC(
+          'kpi-tracker',
+          1,
+          'Run the quarterly review again — L3 is reviews OPERATIONAL, not scheduled'
+        ),
       ],
     },
     {
@@ -911,7 +922,14 @@ const FRAMEWORK = {
         'Pre-approve an accelerated execution plan now, before you need it — a CRQC-timeline surprise is the wrong moment to start drafting one.',
       do: 'Pre-approve a contingency package with triggers, compressed sequence and activation authority. By Year 4–5, plan the roadmap\'s own transition from a project (with an end date) to ongoing posture management (with no end date) — disbanding the program at "done" orphans the capability the moment the next algorithm break or deadline shift hits.',
       output: 'Accelerated Execution Profile',
-      steps: [A('accelerated-execution-profile', 'Pre-draft the accelerated execution profile')],
+      steps: [
+        A('accelerated-execution-profile', 'Pre-draft the accelerated execution profile'),
+        REC(
+          'accelerated-execution-profile',
+          1,
+          'Re-issue the execution profile in a later quarter — L4 is a LIVING instrument, not a filed plan'
+        ),
+      ],
     },
   ],
   p5: [
@@ -1027,6 +1045,11 @@ const FRAMEWORK = {
         // either).
         R('library', 'Reference: staged-rollout & wave-sequencing patterns in the Library'),
         E(4, 'Extend pattern decisions across the wave — cover more of your unlocked connections'),
+        M(
+          'migration-coverage-pct',
+          40,
+          'Migrate Tier-1 connections for real — the criterion is systems ON hybrid/PQC, not a rollout plan'
+        ),
       ],
     },
     {
@@ -1053,7 +1076,14 @@ const FRAMEWORK = {
         'Let AI triage and draft, but keep full human review on any AI-modified cryptographic code — that review gate never closes.',
       do: 'Use AI to triage and enrich, but keep full review rigor on AI-modified cryptographic code.',
       output: null,
-      steps: [A('crypto-api-refactor', 'Audit AI-assisted crypto refactors')],
+      steps: [
+        A('crypto-api-refactor', 'Audit AI-assisted crypto refactors'),
+        M(
+          'migration-coverage-pct',
+          80,
+          'Carry the rollout across the estate — L4 is deployment substantially COMPLETE, not documented'
+        ),
+      ],
       // Added 07062026 (Wave 3) — untouched verticals, no required-module
       // anchor; placed here since 5.7 is P5's thinnest band (1 required step).
       // NOTE: the plan also proposed the digital-id/bitcoin-flow/solana-flow/
@@ -1067,6 +1097,11 @@ const FRAMEWORK = {
       deepDive: [
         L('digital-id', 'Deep dive — Learn: Digital ID'),
         L('digital-assets', 'Deep dive — Learn: Digital Assets'),
+        M(
+          'migration-coverage-pct',
+          80,
+          'Carry the rollout across the estate — L4 is deployment substantially COMPLETE, not documented'
+        ),
       ],
     },
   ],
@@ -1331,6 +1366,11 @@ const FRAMEWORK = {
       steps: [
         A('stakeholder-comms', 'Plan dual-stack windows & deprecation comms for counterparties'),
         A('risk-register', 'Record the counterparty refusal decision in the risk register'),
+        REC(
+          'kpi-dashboard',
+          1,
+          'Report to the SteerCo again in a later quarter — L3 is reported, not produced'
+        ),
       ],
     },
     {
@@ -1785,6 +1825,23 @@ mkdirSync(join(OUT, 'archive'), { recursive: true })
 
 for (const phase of Object.keys(FRAMEWORK)) {
   const acts = FRAMEWORK[phase]
+  // Guard (added after the SAME sparse-array bug bit twice): a stray `,,` in a
+  // steps array creates a HOLE, which JSON.stringify emits as `null` and which
+  // then crashes four unrelated suites with "Cannot read properties of null".
+  // Fail here instead, naming the activity, so the next person reads one clear
+  // error rather than tracing a null step back to a comma.
+  for (const a of acts) {
+    if (!a || typeof a !== 'object')
+      throw new Error(`${phase}: empty slot in the activity array — check for a stray comma`)
+    for (const [i, st] of (a.steps ?? []).entries()) {
+      if (!st) throw new Error(`${phase}/${a.id}: steps[${i}] is empty — stray comma in the array`)
+      if (!st.kind || !st.to)
+        throw new Error(`${phase}/${a.id}: steps[${i}] has no kind/to — ${JSON.stringify(st)}`)
+    }
+    for (const [i, st] of (a.deepDive ?? []).entries()) {
+      if (!st) throw new Error(`${phase}/${a.id}: deepDive[${i}] is empty — stray comma`)
+    }
+  }
   const levelsPresent = [...new Set(acts.map((a) => a.level))].sort((x, y) => x - y)
   const levels = levelsPresent.map((level) => ({
     level,

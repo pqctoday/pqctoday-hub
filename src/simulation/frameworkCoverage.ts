@@ -161,14 +161,14 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     evidence:
       'Stand up the three inventory tracks and layered discovery; produce a queryable inventory covering Priority-A systems.',
     status: 'proxy',
-    note: 'The ≥70% Tier-1 coverage figure in the criterion is not measured by the exercise.',
+    note: "W2.5 NOT MEASURABLE: the criterion turns on '>=70% Tier-1 coverage' and 'multiple asset data sources cross-referenced'. The run has no discovery-coverage state at all - assets are revealed wholesale by one scoping artifact, so there is no ratio to grade. Would need a per-asset discovery register.",
   }),
   cell('p1', 3, {
     activityIds: ['1.6'],
     adaptedTaskIds: [],
     evidence: 'Establish continuous discovery integrated with change management.',
     status: 'proxy',
-    note: 'The ≥90% coverage figure in the criterion is not measured by the exercise.',
+    note: "W2.5 NOT MEASURABLE: '>=90% coverage' plus CI/CD, CMDB, SBOM and BIA integration. None of those integrations exist as run state; grading this on anything the run does track would measure something the criterion does not say.",
   }),
   cell('p1', 4, {
     activityIds: ['1.6-drift-cycle'],
@@ -191,12 +191,14 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     adaptedTaskIds: [],
     evidence: 'Populate a CycloneDX CBOM from inventory data and link it to the SBOM.',
     status: 'proxy',
+    note: "W2.5 NOT MEASURABLE: 'CycloneDX CBOM operational for Layers 1-2; queryable; SBOM linkage'. The run has no CBOM layer model and no SBOM linkage, so only the artifact's existence can be checked.",
   }),
   cell('p2', 3, {
     activityIds: ['2.3', '2.4–2.5'],
     adaptedTaskIds: [],
     evidence: 'Integrate the CBOM into operational processes with enforced freshness governance.',
-    status: 'proxy',
+    status: 'outcome',
+    note: "W2.5: 'freshness governance ENFORCED' is a cadence, not a CBOM revision. Requires the vulnerability watch re-run in a later reporting period. NOTE: the L3 band's remaining clause, 'CBOM covers Layers 1-3', is NOT evidenced - the run holds no per-layer CBOM state.",
   }),
   cell('p2', 4, {
     activityIds: ['2.3-cbom-refresh'],
@@ -219,6 +221,7 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     adaptedTaskIds: [],
     evidence: 'Score and sequence Tier-1 entries and produce the QRA with a prioritised backlog.',
     status: 'proxy',
+    note: "W2.5 NOT MEASURABLE: 'Formal risk scoring model applied to Tier-1 CBOM entries; prioritized migration backlog exists'. The run holds no per-entry scoring or backlog state - the risk register is a document, not a scored inventory.",
   }),
   cell('p3', 3, {
     activityIds: ['3.4-qra-recurring'],
@@ -249,21 +252,23 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     adaptedTaskIds: [],
     evidence: 'Approve a resourced multi-year roadmap with a PMO structure and KPI baseline.',
     status: 'proxy',
+    note: "W2.5 NOT MEASURABLE: 'Multi-year roadmap approved; Year 1 plan resourced; KPI baseline set'. Approval and resourcing are external facts the simulation does not model; the KPI baseline exists only as an artifact.",
   }),
   cell('p4', 3, {
     activityIds: ['4.5–4.6'],
     adaptedTaskIds: [],
     evidence:
       'Run the roadmap as a living instrument with milestone gates and maintained dependencies.',
-    status: 'proxy',
+    status: 'outcome',
+    note: "W2.5: 'Quarterly roadmap reviews OPERATIONAL' is a cadence. Requires the KPI tracker re-issued in a later reporting period, so a scheduled review is not the same as a review that happened.",
   }),
   cell('p4', 4, {
     activityIds: ['4.7'],
     adaptedTaskIds: [],
     evidence:
       'Exercise a roadmap contingency trigger; show changed dependencies, resources, milestones, and approved rationale.',
-    status: 'proxy',
-    note: 'A band exists but is cleared by pre-drafting the accelerated-execution-profile artifact; the criterion requires triggers DEFINED AND TESTED.',
+    status: 'outcome',
+    note: "W2.5: 'Roadmap is a LIVING instrument with quarterly updates' requires the execution profile re-issued in a later period.",
   }),
 
   // ── P5 Pilots & Migration ───────────────────────────────────────────────
@@ -278,21 +283,22 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     adaptedTaskIds: [],
     evidence: 'Execute pilots with measurement and a tested rollback procedure.',
     status: 'proxy',
-    note: 'Rollback is described, not exercised.',
+    note: "W2.5 NOT MEASURABLE: '2+ production pilots running with MEASURED RESULTS; rollback procedures tested'. There is no pilot register and no rollback-test state. Would need a pilot mechanic with per-pilot results.",
   }),
   cell('p5', 3, {
     activityIds: ['5.4', '5.5–5.6'],
     adaptedTaskIds: [],
     evidence: 'Scale through waves with defense-in-depth and a data-at-rest strategy.',
-    status: 'proxy',
+    status: 'outcome',
+    note: "W2.5: 'Tier-1 internet-facing systems ON hybrid/PQC' is a deployment state. Graded on migration coverage (decided connections / migratable connections) at 40%. Capacity-relative on purpose so a smaller estate does not face an unreachable absolute count.",
   }),
   cell('p5', 4, {
     activityIds: ['5.7'],
     adaptedTaskIds: [],
     evidence:
       'Use measured pilot/rollout fixtures and an algorithm-swap exercise; evaluate rollback, interoperability, and coverage rather than document creation.',
-    status: 'proxy',
-    note: 'A band exists but is cleared by the AI-assisted-migration activity; the criterion requires estate-wide deployment and a demonstrated algorithm-swap drill.',
+    status: 'outcome',
+    note: "W2.5: 'Estate-wide deployment substantially complete' graded on migration coverage at 80%, not on producing a refactor document.",
   }),
 
   // ── P6 Infrastructure & Performance ─────────────────────────────────────
@@ -310,6 +316,7 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     evidence:
       'Inventory HSMs with PQC status, draft PKI modernization, and assess the network path.',
     status: 'proxy',
+    note: "W2.5 NOT MEASURABLE: 'HSMs inventoried with PQC status; initial middlebox testing underway'. The run models no HSM inventory and no middlebox test state.",
   }),
   cell('p6', 3, {
     activityIds: ['6.4', '6.5'],
@@ -317,6 +324,7 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     evidence:
       'Establish a performance-testing methodology and capacity plan with Tier-1 baselines.',
     status: 'proxy',
+    note: "W2.5 NOT MEASURABLE: 'HSM upgrades in progress; PKI dual-stack operational; ALL production middleboxes tested; performance baselines established'. Same missing state as L2, plus no performance-baseline record.",
   }),
   cell('p6', 4, {
     activityIds: ['6.5-capacity-cycle'],
@@ -339,13 +347,15 @@ export const FRAMEWORK_COVERAGE: FrameworkCoverageCell[] = [
     adaptedTaskIds: [],
     evidence: 'Execute vendor engagement and track responses against a criticality classification.',
     status: 'proxy',
+    note: "W2.5 NOT MEASURABLE: 'TOP 10 vendors formally engaged; questionnaires sent; responses tracked'. The run has no vendor-engagement register, so there is no count to grade.",
   }),
   cell('p7', 3, {
     activityIds: ['7.3', '7.4', '7.5', '7.6'],
     adaptedTaskIds: [],
     evidence:
       'Insert PQC procurement requirements, deploy bridging patterns for blocked systems, and report a vendor scorecard.',
-    status: 'proxy',
+    status: 'outcome',
+    note: "W2.5: 'vendor scorecard REPORTED to SteerCo' is recurring reporting, evidenced by re-issuing the KPI dashboard in a later period. The contract-language clause is evidenced by the existing contract-clause artifact.",
   }),
   cell('p7', 4, {
     activityIds: ['7.7', '7.5-vendor-governance-cycle'],

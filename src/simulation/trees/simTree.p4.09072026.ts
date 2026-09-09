@@ -146,6 +146,13 @@ const TREE: PhaseTree = {
               to: '/business/tools/kpi-tracker',
               artifactType: 'kpi-tracker',
             },
+            {
+              kind: 'recurrence',
+              label: 'Run the quarterly review again — L3 is reviews OPERATIONAL, not scheduled',
+              to: '/business/tools/kpi-tracker',
+              recurrenceOf: 'kpi-tracker',
+              recurrenceQuarters: 1,
+            },
           ],
         },
       ],
@@ -168,6 +175,14 @@ const TREE: PhaseTree = {
               label: 'Pre-draft the accelerated execution profile',
               to: '/business/tools/accelerated-execution-profile',
               artifactType: 'accelerated-execution-profile',
+            },
+            {
+              kind: 'recurrence',
+              label:
+                'Re-issue the execution profile in a later quarter — L4 is a LIVING instrument, not a filed plan',
+              to: '/business/tools/accelerated-execution-profile',
+              recurrenceOf: 'accelerated-execution-profile',
+              recurrenceQuarters: 1,
             },
           ],
         },

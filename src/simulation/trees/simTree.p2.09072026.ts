@@ -133,6 +133,14 @@ const TREE: PhaseTree = {
               to: '/learn/soc-implementation-pqc',
               moduleId: 'soc-implementation-pqc',
             },
+            {
+              kind: 'recurrence',
+              label:
+                'Re-run the watch in a later quarter — L3 requires freshness governance ENFORCED',
+              to: '/business/tools/crypto-vulnerability-watch',
+              recurrenceOf: 'crypto-vulnerability-watch',
+              recurrenceQuarters: 1,
+            },
           ],
         },
       ],

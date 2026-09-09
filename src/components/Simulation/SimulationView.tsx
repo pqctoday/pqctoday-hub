@@ -1609,6 +1609,7 @@ export function SimulationView() {
     assetsAccounted: assetsDiscovered ? assets.length : 0,
     assetsTotal: assets.length,
     edgeDecisions: Object.keys(edgeDecisions).length,
+    edgeCapacity: edgeDecisionCapacity,
     evidenceTotal: evidence.length,
     evidenceByLearner: evidence.filter((e) => e.origin === 'learner').length,
     quartersElapsed: (year - RUN_START.year) * 4 + (q - RUN_START.q),

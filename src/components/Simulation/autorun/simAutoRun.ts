@@ -131,6 +131,7 @@ export function liveCompletionContext(): StepCompletionContext {
         assetsAccounted: p0Done,
         assetsTotal: p0Work.length || 1,
         edgeDecisions: Object.keys(st.edgeDecisions ?? {}).length,
+        edgeCapacity: architectureEdgeCapacity(),
         evidenceTotal: st.evidence.length,
         evidenceByLearner: st.evidence.filter((e) => e.origin === 'learner').length,
         quartersElapsed: (st.year - 2026) * 4 + (st.q - 1),
