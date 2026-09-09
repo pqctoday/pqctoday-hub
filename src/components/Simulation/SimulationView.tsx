@@ -193,6 +193,7 @@ import { TrapInsightsPanel } from './TrapInsightsPanel'
 import { useSimulationStore, RUN_START } from '@/store/useSimulationStore'
 import { FRAMEWORK_COVERAGE, hasCompleteCoverage } from '@/simulation/frameworkCoverage'
 import { readRunMetric, type RunMetricInputs } from '@/simulation/runMetrics'
+import { EmbedRunContextProvider } from '@/components/shared/embedRunContext'
 import { validateSave, previewSave } from '@/simulation/saveSchema'
 import {
   distinctRunQuarters,
@@ -3371,144 +3372,152 @@ export function SimulationView() {
                    which scrolls at body level).
                 2) GUTTERS — max-width + px so embeds don't run edge-to-edge on wide
                    screens (they have no page container in the sim). */}
-              <div className="mx-auto w-full max-w-[1800px] px-4 md:px-6 lg:px-8">
-                {/* W6.1/W6.2 — explicit simulation context. An embedded hub
+              <EmbedRunContextProvider
+                value={{ country, sector, size: sizeKey, seat, phase: sel, isSample: !assessSnap }}
+              >
+                <div className="mx-auto w-full max-w-[1800px] px-4 md:px-6 lg:px-8">
+                  {/* W6.1/W6.2 — explicit simulation context. An embedded hub
                     resource is a general tool: it does not know which run
                     opened it, which organisation the run is about, or what the
                     phase wanted from it. State all of that here rather than
                     mutating the user's real profile stores to fake it. */}
-                <div className="mb-3 rounded-lg border border-primary/30 bg-primary/5 px-3 py-2">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sim-micro">
-                    <span className="font-mono font-bold uppercase tracking-wide text-primary">
-                      Simulation context
-                    </span>
-                    <span className="text-muted-foreground">
+                  <div className="mb-3 rounded-lg border border-primary/30 bg-primary/5 px-3 py-2">
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sim-micro">
+                      <span className="font-mono font-bold uppercase tracking-wide text-primary">
+                        Simulation context
+                      </span>
+                      <span className="text-muted-foreground">
+                        <span className="font-bold text-foreground">
+                          {assessSnap ? 'Your assessed organization' : 'Sample organization'}
+                        </span>{' '}
+                        · {sizeOpt.label} · {sector} · {country} · seat: {seatOpt.label}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sim-micro leading-snug text-muted-foreground">
                       <span className="font-bold text-foreground">
-                        {assessSnap ? 'Your assessed organization' : 'Sample organization'}
+                        {FRAMEWORK_PHASES[sel]?.name ?? sel} opened this
                       </span>{' '}
-                      · {sizeOpt.label} · {sector} · {country} · seat: {seatOpt.label}
-                    </span>
+                      {SIM_TREES[sel]?.gate
+                        ? `to work toward gate ${SIM_TREES[sel]!.gate!.id}: ${SIM_TREES[sel]!.gate!.criterion}.`
+                        : 'as part of this phase.'}{' '}
+                      Views that can read a run&rsquo;s scenario are scoped to it automatically;
+                      anything that still asks for an industry or country is asking for its own
+                      filter, not a second assessment. Close with &ldquo;Back to board&rdquo; to
+                      return to this phase.
+                    </p>
                   </div>
-                  <p className="mt-1 text-sim-micro leading-snug text-muted-foreground">
-                    <span className="font-bold text-foreground">
-                      {FRAMEWORK_PHASES[sel]?.name ?? sel} opened this
-                    </span>{' '}
-                    {SIM_TREES[sel]?.gate
-                      ? `to work toward gate ${SIM_TREES[sel]!.gate!.id}: ${SIM_TREES[sel]!.gate!.criterion}.`
-                      : 'as part of this phase.'}{' '}
-                    This tool is the hub&rsquo;s own view and does not read the run&rsquo;s profile,
-                    so any filters it asks for are its own &mdash; the run&rsquo;s profile is stated
-                    above. Close with &ldquo;Back to board&rdquo; to return to this phase.
-                  </p>
-                </div>
-                {assessEmbed ? (
-                  // Re-run / refine the assessment in-sim — the REDESIGNED /assess
-                  // surface (track chooser + two-pane wizard), embedded headless.
-                  // onComplete closes back to the board (NOT /report); the wizard
-                  // writes to the assessment store, so assessSnap + the read-only org
-                  // dials / derived maturity update. Two-pane layout → full width
-                  // (no max-w-3xl, which would squish the rail + question pane).
-                  <div className="p-1 md:p-2">
-                    <AssessViewRedesign simEmbed onComplete={closeEmbed} />
-                  </div>
-                ) : learnEmbed && LearnComp ? (
-                  <EmbeddedLearnProvider initialTab={learnEmbed.tab} initialStep={learnEmbed.step}>
-                    {/* W2a: the completion ceremony fires INSIDE the sim too — the
+                  {assessEmbed ? (
+                    // Re-run / refine the assessment in-sim — the REDESIGNED /assess
+                    // surface (track chooser + two-pane wizard), embedded headless.
+                    // onComplete closes back to the board (NOT /report); the wizard
+                    // writes to the assessment store, so assessSnap + the read-only org
+                    // dials / derived maturity update. Two-pane layout → full width
+                    // (no max-w-3xl, which would squish the rail + question pane).
+                    <div className="p-1 md:p-2">
+                      <AssessViewRedesign simEmbed onComplete={closeEmbed} />
+                    </div>
+                  ) : learnEmbed && LearnComp ? (
+                    <EmbeddedLearnProvider
+                      initialTab={learnEmbed.tab}
+                      initialStep={learnEmbed.step}
+                    >
+                      {/* W2a: the completion ceremony fires INSIDE the sim too — the
                     standalone ModuleCompletionWatcher is gated !isEmbed, leaving
                     in-sim learners with no belt/score beat. This sim-scoped watcher
                     shows the reward card on the live status→completed transition. */}
-                    <SimModuleCompletionWatcher
-                      key={learnEmbed.moduleId}
-                      moduleId={learnEmbed.moduleId}
-                      title={learnEmbed.title}
-                    />
-                    <Suspense fallback={<EmbedLoading label="Loading module" />}>
-                      <LearnComp />
-                    </Suspense>
-                  </EmbeddedLearnProvider>
-                ) : ActivityComp ? (
-                  <Suspense fallback={<EmbedLoading />}>
-                    <ActivityComp />
-                  </Suspense>
-                ) : WorkshopComp ? (
-                  // Workshop/playground tools need the SAME provider stack the standalone
-                  // /playground page wraps them in (HSM + Settings + KeyStore + Operations)
-                  // — otherwise HSM-backed tools (the VPN/SSH/HSM sims) crash with
-                  // "useHsmContext must be used within HsmProvider". PlaygroundProvider is a
-                  // pure context wrapper (HSM init is lazy), so it's cheap for non-HSM tools.
-                  <PlaygroundProvider>
-                    <Suspense fallback={<EmbedLoading label="Loading workshop" />}>
-                      <WorkshopComp initialStep={workshopEmbed?.step} />
-                    </Suspense>
-                  </PlaygroundProvider>
-                ) : timelineEmbed ? (
-                  // C6: Gantt chart embedded in the sim, scoped to the player's assessed
-                  // country (or the step's ?country= / ?region= param if present).
-                  <TimelineEmbed
-                    scope={{
-                      ...parseTimelineScope(timelineEmbed.to),
-                      // fall back to assessed jurisdiction when the step carries no scope
-                      country:
-                        parseTimelineScope(timelineEmbed.to).country ??
-                        assessJurisdiction?.displayName,
-                    }}
-                  />
-                ) : catalogEmbed ? (
-                  // The redesigned Migrate (MigrationWorkbench) embedded under the sim
-                  // header — same component the /migrate route uses (its `embedded`
-                  // prop hides the PageHeader and keeps filter state off the URL). The
-                  // catalogId opens it on the matching view (discovery domain / pilots).
-                  <MigrateWorkbenchEmbed catalogId={catalogEmbed.catalogId} />
-                ) : algorithmTabEmbed ? (
-                  // C5-full: every Algorithms tab via SIM_ALGORITHM_TABS. Review tabs
-                  // (Protocol Support) mount with no confirm; "choice that counts" tabs
-                  // (Transition / Detailed) get the confirm → artifact handler.
-                  (() => {
-                    const spec = SIM_ALGORITHM_TABS[algorithmTabEmbed.refId]
-                    if (!spec) return null
-                    const Embed = spec.Component
-                    const isChoice = spec.completion !== 'review'
-                    return (
-                      <Embed
-                        onConfirm={isChoice ? handleConfirmAlgorithmTab : undefined}
-                        confirmed={isChoice ? refDone(algorithmTabEmbed.refId) : undefined}
+                      <SimModuleCompletionWatcher
+                        key={learnEmbed.moduleId}
+                        moduleId={learnEmbed.moduleId}
+                        title={learnEmbed.title}
                       />
-                    )
-                  })()
-                ) : ReferenceComp ? (
-                  // Full-page reference (Migrate, …) embedded under the header instead
-                  // of navigating the player out to its own route.
-                  <Suspense fallback={<EmbedLoading />}>
-                    {referenceEmbed?.refId === 'library' ? (
-                      <LibraryEmbed query={referenceEmbed.topic} />
-                    ) : referenceEmbed?.refId === 'compliance' ? (
-                      <ComplianceEmbed initialTab="foryou" />
-                    ) : referenceEmbed?.refId === 'compliance-cert-check' ? (
-                      <ComplianceEmbed initialTab="records" cert={referenceEmbed.cert} />
-                    ) : referenceEmbed?.refId === 'threats' ? (
-                      // The CRQC threat-horizon step opens the Horizon tab directly,
-                      // not the default Threat Catalog list (mirrors ComplianceEmbed).
-                      <ThreatsEmbed initialTab="horizon" />
-                    ) : (
-                      <ReferenceComp />
-                    )}
-                  </Suspense>
-                ) : scenarioEmbed ? (
-                  // C3: live sandbox lab embedded under the header (passes the scenario
-                  // id directly — the component falls back to the route param off-sim).
-                  <SandboxScenarioEmbed scenarioId={scenarioEmbed.scenarioId} />
-                ) : architectureEmbed ? (
-                  // WS-04: the edge-migration decision step, reachable from the ladder
-                  // in every mode — not just the Expert rail's power-user panel.
-                  <div className="p-4">
-                    <ArchitecturePanel
-                      size={size as 'small' | 'mid' | 'large' | 'global'}
-                      country={country}
-                      p5Frac={p5Frac}
+                      <Suspense fallback={<EmbedLoading label="Loading module" />}>
+                        <LearnComp />
+                      </Suspense>
+                    </EmbeddedLearnProvider>
+                  ) : ActivityComp ? (
+                    <Suspense fallback={<EmbedLoading />}>
+                      <ActivityComp />
+                    </Suspense>
+                  ) : WorkshopComp ? (
+                    // Workshop/playground tools need the SAME provider stack the standalone
+                    // /playground page wraps them in (HSM + Settings + KeyStore + Operations)
+                    // — otherwise HSM-backed tools (the VPN/SSH/HSM sims) crash with
+                    // "useHsmContext must be used within HsmProvider". PlaygroundProvider is a
+                    // pure context wrapper (HSM init is lazy), so it's cheap for non-HSM tools.
+                    <PlaygroundProvider>
+                      <Suspense fallback={<EmbedLoading label="Loading workshop" />}>
+                        <WorkshopComp initialStep={workshopEmbed?.step} />
+                      </Suspense>
+                    </PlaygroundProvider>
+                  ) : timelineEmbed ? (
+                    // C6: Gantt chart embedded in the sim, scoped to the player's assessed
+                    // country (or the step's ?country= / ?region= param if present).
+                    <TimelineEmbed
+                      scope={{
+                        ...parseTimelineScope(timelineEmbed.to),
+                        // fall back to assessed jurisdiction when the step carries no scope
+                        country:
+                          parseTimelineScope(timelineEmbed.to).country ??
+                          assessJurisdiction?.displayName,
+                      }}
                     />
-                  </div>
-                ) : null}
-              </div>
+                  ) : catalogEmbed ? (
+                    // The redesigned Migrate (MigrationWorkbench) embedded under the sim
+                    // header — same component the /migrate route uses (its `embedded`
+                    // prop hides the PageHeader and keeps filter state off the URL). The
+                    // catalogId opens it on the matching view (discovery domain / pilots).
+                    <MigrateWorkbenchEmbed catalogId={catalogEmbed.catalogId} />
+                  ) : algorithmTabEmbed ? (
+                    // C5-full: every Algorithms tab via SIM_ALGORITHM_TABS. Review tabs
+                    // (Protocol Support) mount with no confirm; "choice that counts" tabs
+                    // (Transition / Detailed) get the confirm → artifact handler.
+                    (() => {
+                      const spec = SIM_ALGORITHM_TABS[algorithmTabEmbed.refId]
+                      if (!spec) return null
+                      const Embed = spec.Component
+                      const isChoice = spec.completion !== 'review'
+                      return (
+                        <Embed
+                          onConfirm={isChoice ? handleConfirmAlgorithmTab : undefined}
+                          confirmed={isChoice ? refDone(algorithmTabEmbed.refId) : undefined}
+                        />
+                      )
+                    })()
+                  ) : ReferenceComp ? (
+                    // Full-page reference (Migrate, …) embedded under the header instead
+                    // of navigating the player out to its own route.
+                    <Suspense fallback={<EmbedLoading />}>
+                      {referenceEmbed?.refId === 'library' ? (
+                        <LibraryEmbed query={referenceEmbed.topic} />
+                      ) : referenceEmbed?.refId === 'compliance' ? (
+                        <ComplianceEmbed initialTab="foryou" />
+                      ) : referenceEmbed?.refId === 'compliance-cert-check' ? (
+                        <ComplianceEmbed initialTab="records" cert={referenceEmbed.cert} />
+                      ) : referenceEmbed?.refId === 'threats' ? (
+                        // The CRQC threat-horizon step opens the Horizon tab directly,
+                        // not the default Threat Catalog list (mirrors ComplianceEmbed).
+                        <ThreatsEmbed initialTab="horizon" />
+                      ) : (
+                        <ReferenceComp />
+                      )}
+                    </Suspense>
+                  ) : scenarioEmbed ? (
+                    // C3: live sandbox lab embedded under the header (passes the scenario
+                    // id directly — the component falls back to the route param off-sim).
+                    <SandboxScenarioEmbed scenarioId={scenarioEmbed.scenarioId} />
+                  ) : architectureEmbed ? (
+                    // WS-04: the edge-migration decision step, reachable from the ladder
+                    // in every mode — not just the Expert rail's power-user panel.
+                    <div className="p-4">
+                      <ArchitecturePanel
+                        size={size as 'small' | 'mid' | 'large' | 'global'}
+                        country={country}
+                        p5Frac={p5Frac}
+                      />
+                    </div>
+                  ) : null}
+                </div>
+              </EmbedRunContextProvider>
             </div>
           </div>
         ) : (

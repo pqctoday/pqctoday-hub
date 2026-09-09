@@ -350,6 +350,17 @@ export const COUNTRY_NAME_TO_COMPLIANCE_BLOC: Record<string, string> = Object.fr
   ACTIVE_ALL.filter((j) => j.complianceBloc).map((j) => [j.name, j.complianceBloc])
 )
 
+/**
+ * W6.3 — the /compliance region bloc for a jurisdiction CODE.
+ *
+ * COUNTRY_NAME_TO_COMPLIANCE_BLOC is keyed by display NAME because that is what
+ * the compliance CSV carries. An embedded simulation run knows its country as a
+ * CODE, so this is the code-keyed counterpart rather than a second hand-written
+ * map — both derive from the same rows.
+ */
+export const complianceRegionForCountry = (code: string): string | null =>
+  JURISDICTION_BY_CODE[code]?.complianceBloc || null
+
 export const EU_MEMBER_CODES: ReadonlySet<string> = new Set(
   ACTIVE_ALL.filter((j) => j.euMember).map((j) => j.code)
 )
